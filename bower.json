@@ -1,0 +1,6 @@
+{
+  "name": "grid",
+  "dependencies": {
+    "bootstrap-sass": "~3.3.6"
+  }
+}
