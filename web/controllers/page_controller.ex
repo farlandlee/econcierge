@@ -4,4 +4,7 @@ defmodule Grid.PageController do
   def index(conn, _params) do
     render conn, "index.html"
   end
+  def activities(conn, _params) do
+    render conn, "activities.html"
+  end
 end

@@ -3,6 +3,6 @@ defmodule Grid.PageControllerTest do
 
   test "GET /" do
     conn = get conn(), "/"
-    assert html_response(conn, 200) =~ "Codename: Grid"
+    assert html_response(conn, 200) =~ "Book Your Jackson Hole Activities"
   end
 end

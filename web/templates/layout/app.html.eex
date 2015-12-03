@@ -9,23 +9,80 @@
 
     <title>Outpost | Jackson Hole eConcierge</title>
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
+    <link rel="icon" href="<%= static_path(@conn, "/favicon.ico") %>" type="image/gif" sizes="16x16">
   </head>
 
   <body>
-    <div class="container" role="main">
-      <div class="header">
-        <ul class="nav nav-pills pull-right">
-          <li><a href="/">Index</a></li>
-        </ul>
-        <span class="logo"></span>
+    <div class="off-canvas-wrapper">
+      <div class="off-canvas-wrapper-inner" data-off-canvas-wrapper>
+        <div class="off-canvas position-left" id="offCanvas" data-off-canvas>
+          <ul class="mobile-ofc vertical menu" >
+            <li class="menu-text logo"><a href="/">Home</a></li>
+            <li><a href="#">Reservations</a></li>
+            <li><a href="#">Vacation Rentals</a></li>
+            <li><a href="#">Journal</a></li>
+            <li><a href="#">About Us</a></li>
+            <li><a href="#" class="flaticon-calendar146">&nbsp;</a></li>
+          </ul>
+        </div>
+        <div class="off-canvas-content" data-off-canvas-content>
+          <header class="page-header">
+            <div class="full-width small-collapse" >
+              <div class="title-bar" data-responsive-toggle="outpostMenu" data-hide-for="large" >
+                <button type="button" class="menu-icon" data-toggle="offCanvas"></button>
+                <div class="title-bar-title">Menu</div>
+                <div class="logo"><a href="/">Outpost</a></div>
+              </div>
+              <div class="top-bar" id="outpostMenu" >
+                <div class="top-bar-left">
+                  <ul class="menu" >
+                    <li class="logo"><a href="/">Outpost</a></li>
+
+                    <li><a href="#">Reservations</a></li>
+                    <li><a href="#">Vacation Rentals</a></li>
+                    <li><a href="#">Journal</a></li>
+                    <li><a href="#">About Us</a></li>
+                  </ul>
+                </div>
+                <div class="top-bar-right">
+                  <ul class="menu">
+                    <li><a href="#" class="flaticon-calendar146">&nbsp;</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </header>
+
+          <%= @inner %>
+
+          <footer class="page-footer">
+            <div class="row expanded">
+              <div class="small-12 medium-6 large-3 columns">
+                <div class="logo image">
+                  <a href="/"><img src="/images/logo-450.png" alt="Outpost"></a>
+                </div>
+              </div>
+              <div class="small-12 medium-6 large-6 columns">
+                <div class="creds">
+                  <a href="http://outpostjh.com">Outpost Jackson Hole</a> &bull; <a href="https://goo.gl/maps/PndaX" target="_blank" >70 s. king street jackson, wyoming 83001</a> &bull;
+                  <a href="tel:3075904790"><span class="flaticon-telephone5"></span>(307) 690-4790</a> &bull;
+                  <a href="mailto:info@outpostjh.com"><span class="flaticon-envelope54"></span>info@outpostjh.com</a> &bull;
+                  <span>Copyright &copy; 2015</span>
+                </div>
+              </div>
+              <div class="small-12 medium-6 large-3 columns">
+                <div class="obs-logo image">
+                  <a href="/"><img src="/images/obs-logo.png" alt="Re?max Obsidian Real Estate"></a>
+                </div>
+              </div>
+            </div>
+          </footer>
+          <script src="<%= static_path(@conn, "/js/vendor.js") %>"></script>
+          <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
+          <script src="https://use.typekit.net/fal4rbd.js"></script>
+          <script>try{Typekit.load({ async: true });}catch(e){}</script>
+        </div>
       </div>
-
-      <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
-      <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
-
-      <%= @inner %>
-
-    </div> <!-- /container -->
-    <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
+    </div>
   </body>
 </html>

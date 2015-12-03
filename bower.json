@@ -3,19 +3,25 @@
   "dependencies": {
     "chosen": "~1.4.2",
     "bootstrap": "~3.3.6",
-    "font-awesome": "~4.5.0"
+    "font-awesome": "~4.5.0",
+    "foundation-sites": "~6.0.5"
   },
   "overrides": {
     "chosen": {
       "main": [
-        "chosen.jquery.min.js",
-        "chosen.min.css"
+        "chosen.min.css",
+        "chosen.jquery.min.js"
       ]
     },
     "bootstrap": {
       "main": [
         "dist/css/bootstrap.min.css",
         "dist/js/bootstrap.min.js"
+      ]
+    },
+    "font-awesome": {
+      "main": [
+        "css/font-awesome.min.css"
       ]
     }
   }

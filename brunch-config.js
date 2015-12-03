@@ -2,33 +2,25 @@ exports.config = {
   // See http://brunch.io/#documentation for docs.
   files: {
     javascripts: {
-      joinTo: "js/app.js"
-
-      // To use a separate vendor.js bundle, specify two files path
-      // https://github.com/brunch/brunch/blob/stable/docs/config.md#files
-      // joinTo: {
-      //  "js/app.js": /^(web\/static\/js)/,
-      //  "js/vendor.js": /^(web\/static\/vendor)|(deps)/
-      // }
-      //
-      // To change the order of concatenation of files, explicitly mention here
-      // https://github.com/brunch/brunch/tree/master/docs#concatenation
-      // order: {
-      //   before: [
-      //     "web/static/vendor/js/jquery-2.1.1.js",
-      //     "web/static/vendor/js/bootstrap.min.js"
-      //   ]
-      // }
+      joinTo: {
+        "js/app.js": /^(web\/static\/js)/,
+        "js/vendor.js": [
+          /^(?!bower_components\/what-input\/)(bower_components)/, // what input is evil.
+          /^(deps)/
+        ]
+      }
     },
     stylesheets: {
       joinTo: {
         "css/app.css": [
-          /^(web\/static\/css)/
+          /^(web\/static\/css)/,
+          /^(bower_components\/chosen)/
         ],
         "css/admin.css": [
-          /^(web\/static\/css)/,
+          /^(web\/static\/admin\/css)/,
           /^(bower_components\/bootstrap)/,
-          /^(bower_components\/chosen)/
+          /^(bower_components\/chosen)/,
+          /^(bower_components\/font\-awesome)/
         ]
       }
     },
@@ -71,7 +63,14 @@ exports.config = {
         'cp -r bower_components/font-awesome/fonts/* priv/static/fonts/',
         'cp bower_components/chosen/*.png priv/static/css/'
       ].join(' && ')
-    ]
+    ],
+    sass: {
+      options: {
+        includePaths: [
+          'bower_components/foundation-sites/scss'
+        ]
+      }
+    }
   },
 
   modules: {
