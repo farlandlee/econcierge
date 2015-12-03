@@ -1,4 +1,4 @@
-defmodule Grid.ActivityTypeController do
+defmodule Grid.Admin.ActivityTypeController do
   use Grid.Web, :controller
 
   alias Grid.ActivityType
