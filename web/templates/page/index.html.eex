@@ -20,10 +20,10 @@
   </div>
 
   <div class="col-lg-6">
-    <h4>App Dev</h4>
+    <h4>Admin</h4>
     <ul>
       <li>
-        <a href="/activity_types">Activity Types</a>
+        <%= link "Activity Types", to: activity_type_path(@conn, :index) %>
       </li>
     </ul>
   </div>

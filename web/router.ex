@@ -9,6 +9,10 @@ defmodule Grid.Router do
     plug :put_secure_browser_headers
   end
 
+  pipeline :admin do
+    plug :put_layout, {Grid.LayoutView, "admin.html"}
+  end
+
   pipeline :api do
     plug :accepts, ["json"]
   end
@@ -17,6 +21,12 @@ defmodule Grid.Router do
     pipe_through :browser # Use the default browser stack
 
     get "/", PageController, :index
+  end
+
+  scope "/admin", Grid.Admin do
+    pipe_through :browser
+    pipe_through :admin
+    
     resources "/activity_types", ActivityTypeController
   end
 
