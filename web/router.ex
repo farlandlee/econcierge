@@ -26,8 +26,9 @@ defmodule Grid.Router do
   scope "/admin", Grid.Admin do
     pipe_through :browser
     pipe_through :admin
-    
+
     resources "/activity_types", ActivityTypeController
+    resources "/vendors", VendorController
   end
 
   # Other scopes may use custom stacks.

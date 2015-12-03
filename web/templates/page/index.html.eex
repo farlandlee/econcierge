@@ -25,6 +25,9 @@
       <li>
         <%= link "Activity Types", to: activity_type_path(@conn, :index) %>
       </li>
+      <li>
+        <%= link "Vendors", to: vendor_path(@conn, :index) %>
+      </li>
     </ul>
   </div>
 </div>
