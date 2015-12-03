@@ -1,0 +1,18 @@
+<h2>Show vendor</h2>
+
+<ul>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @vendor.name %>
+  </li>
+
+  <li>
+    <strong>Description:</strong>
+    <%= @vendor.description %>
+  </li>
+  
+</ul>
+
+<%= link "Edit", to: vendor_path(@conn, :edit, @vendor) %>
+<%= link "Back", to: vendor_path(@conn, :index) %>
