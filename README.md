@@ -1,8 +1,10 @@
 # Grid
 
+[![Build Status](https://travis-ci.com/outpostjh/grid.svg?token=pM1BoXzsi31ng6qGE9fY)](https://travis-ci.com/outpostjh/grid)
+
 ## Installation
 
-*Installing this application requires `elixir`, `node`, `bower`, and `npm` on your system.*
+*Installing this application requires `elixir`, `node`, `bower`, `npm`, `postgres` on your system.*
 
 ```sh
 $ npm install      # Install asset build tools
