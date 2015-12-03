@@ -21,6 +21,14 @@
   </div>
 
   <div class="form-group">
+    <%= label f, :activity_types, "Activities", class: "control-label" %>
+    <%= multiple_select f, :activity_types,
+        Enum.map(@activity_types, &({&1.name, &1.id})),
+        value: activity_ids(f),
+        class: "form-control" %>
+  </div>
+
+  <div class="form-group">
     <%= submit "Submit", class: "btn btn-primary" %>
   </div>
 <% end %>
