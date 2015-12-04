@@ -8,5 +8,11 @@
     "javascript-brunch": ">= 1.0 < 1.8",
     "sass-brunch": "^1.9.2",
     "uglify-js-brunch": ">= 1.0 < 1.8"
+  },
+  "devDependencies": {
+    "bower": "^1.6.8"
+  },
+  "scripts": {
+    "postinstall": "node node_modules/bower/bin/bower install"
   }
 }
