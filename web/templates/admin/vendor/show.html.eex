@@ -11,7 +11,12 @@
     <strong>Description:</strong>
     <%= @vendor.description %>
   </li>
-  
+
+  <li>
+    <strong>Activity Types</strong>
+    <%= pretty_activities(@vendor.activity_types) %>
+  </li>
+
 </ul>
 
 <%= link "Edit", to: vendor_path(@conn, :edit, @vendor) %>

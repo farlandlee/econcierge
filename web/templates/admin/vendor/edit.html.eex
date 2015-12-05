@@ -1,6 +1,7 @@
 <h2>Edit vendor</h2>
 
 <%= render "form.html", changeset: @changeset,
-                        action: vendor_path(@conn, :update, @vendor) %>
+                        action: vendor_path(@conn, :update, @vendor),
+                        activity_types: @activity_types %>
 
 <%= link "Back", to: vendor_path(@conn, :index) %>
