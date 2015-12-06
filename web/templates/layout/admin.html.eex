@@ -15,9 +15,10 @@
     <div class="container" role="main">
       <div class="header">
         <ul class="nav nav-pills pull-right">
-          <li><a href="/">Front</a></li>
+          <li><%= link "Activities", to: activity_type_path(@conn, :index) %></li>
+          <li><%= link "Vendors", to: vendor_path(@conn, :index) %></li>
         </ul>
-        <span class="logo"></span>
+        <a href="/"><span class="logo"></span></a>
       </div>
 
       <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
