@@ -1,5 +1,7 @@
 defmodule Grid.Admin.VendorController do
   use Grid.Web, :controller
+  plug Grid.PageTitle, title: "Vendor"
+
   require Logger
   alias Grid.Vendor
   alias Grid.ActivityType

@@ -68,6 +68,7 @@ exports.config = {
       [
         'mkdir -p priv/static/fonts',
         'cp -r bower_components/bootstrap/dist/fonts/* priv/static/fonts/',
+        'cp -r bower_components/font-awesome/fonts/* priv/static/fonts/',
         'cp bower_components/chosen/*.png priv/static/css/'
       ].join(' && ')
     ]

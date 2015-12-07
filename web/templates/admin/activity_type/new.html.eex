@@ -1,4 +1,3 @@
-<h2>New activity type</h2>
 
 <%= render "form.html", changeset: @changeset,
                         action: activity_type_path(@conn, :create) %>

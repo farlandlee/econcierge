@@ -12,12 +12,12 @@ defmodule Grid.VendorControllerTest do
 
   test "lists all entries on index", %{conn: conn} do
     conn = get conn, vendor_path(conn, :index)
-    assert html_response(conn, 200) =~ "Listing vendors"
+    assert html_response(conn, 200) =~ "Vendor Listing"
   end
 
   test "renders form for new resources", %{conn: conn} do
     conn = get conn, vendor_path(conn, :new)
-    assert html_response(conn, 200) =~ "New vendor"
+    assert html_response(conn, 200) =~ "New Vendor"
   end
 
   test "creates resource and redirects when data is valid", %{conn: conn} do
@@ -28,13 +28,13 @@ defmodule Grid.VendorControllerTest do
 
   test "does not create resource and renders errors when data is invalid", %{conn: conn} do
     conn = post conn, vendor_path(conn, :create), vendor: @invalid_attrs
-    assert html_response(conn, 200) =~ "New vendor"
+    assert html_response(conn, 200) =~ "New Vendor"
   end
 
   test "shows chosen resource", %{conn: conn} do
     vendor = Repo.insert! %Vendor{}
     conn = get conn, vendor_path(conn, :show, vendor)
-    assert html_response(conn, 200) =~ "Show vendor"
+    assert html_response(conn, 200) =~ "Show Vendor"
   end
 
   test "renders page not found when id is nonexistent", %{conn: conn} do
@@ -46,7 +46,7 @@ defmodule Grid.VendorControllerTest do
   test "renders form for editing chosen resource", %{conn: conn} do
     vendor = Repo.insert! %Vendor{}
     conn = get conn, vendor_path(conn, :edit, vendor)
-    assert html_response(conn, 200) =~ "Edit vendor"
+    assert html_response(conn, 200) =~ "Edit Vendor"
   end
 
   test "updates chosen resource and redirects when data is valid", %{conn: conn} do
@@ -59,7 +59,7 @@ defmodule Grid.VendorControllerTest do
   test "does not update chosen resource and renders errors when data is invalid", %{conn: conn} do
     vendor = Repo.insert! %Vendor{}
     conn = put conn, vendor_path(conn, :update, vendor), vendor: @invalid_attrs
-    assert html_response(conn, 200) =~ "Edit vendor"
+    assert html_response(conn, 200) =~ "Edit Vendor"
   end
 
   test "deletes chosen resource", %{conn: conn} do

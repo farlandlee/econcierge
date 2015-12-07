@@ -12,12 +12,12 @@ defmodule Grid.ActivityTypeControllerTest do
 
   test "lists all entries on index", %{conn: conn} do
     conn = get conn, activity_type_path(conn, :index)
-    assert html_response(conn, 200) =~ "Listing activity types"
+    assert html_response(conn, 200) =~ "Activity Type Listing"
   end
 
   test "renders form for new resources", %{conn: conn} do
     conn = get conn, activity_type_path(conn, :new)
-    assert html_response(conn, 200) =~ "New activity type"
+    assert html_response(conn, 200) =~ "New Activity Type"
   end
 
   test "creates resource and redirects when data is valid", %{conn: conn} do
@@ -28,13 +28,13 @@ defmodule Grid.ActivityTypeControllerTest do
 
   test "does not create resource and renders errors when data is invalid", %{conn: conn} do
     conn = post conn, activity_type_path(conn, :create), activity_type: @invalid_attrs
-    assert html_response(conn, 200) =~ "New activity type"
+    assert html_response(conn, 200) =~ "New Activity Type"
   end
 
   test "shows chosen resource", %{conn: conn} do
     activity_type = Repo.insert! %ActivityType{}
     conn = get conn, activity_type_path(conn, :show, activity_type)
-    assert html_response(conn, 200) =~ "Show activity type"
+    assert html_response(conn, 200) =~ "Show Activity Type"
   end
 
   test "renders page not found when id is nonexistent", %{conn: conn} do
@@ -46,7 +46,7 @@ defmodule Grid.ActivityTypeControllerTest do
   test "renders form for editing chosen resource", %{conn: conn} do
     activity_type = Repo.insert! %ActivityType{}
     conn = get conn, activity_type_path(conn, :edit, activity_type)
-    assert html_response(conn, 200) =~ "Edit activity type"
+    assert html_response(conn, 200) =~ "Edit Activity Type"
   end
 
   test "updates chosen resource and redirects when data is valid", %{conn: conn} do
@@ -59,7 +59,7 @@ defmodule Grid.ActivityTypeControllerTest do
   test "does not update chosen resource and renders errors when data is invalid", %{conn: conn} do
     activity_type = Repo.insert! %ActivityType{}
     conn = put conn, activity_type_path(conn, :update, activity_type), activity_type: @invalid_attrs
-    assert html_response(conn, 200) =~ "Edit activity type"
+    assert html_response(conn, 200) =~ "Edit Activity Type"
   end
 
   test "deletes chosen resource", %{conn: conn} do
