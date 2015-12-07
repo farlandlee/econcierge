@@ -30,6 +30,9 @@ exports.config = {
           /^(bower_components\/bootstrap)/,
           /^(bower_components\/chosen)/
         ]
+      },
+      order: {
+        before: /^(bower_components)/
       }
     },
     templates: {
