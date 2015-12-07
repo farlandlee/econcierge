@@ -30,7 +30,8 @@ defmodule Grid.Mixfile do
   #
   # Type `mix help deps` for examples and options.
   defp deps do
-    [{:phoenix, "~> 1.0.4"},
+    [{ :inflex, "~> 1.5.0" },
+     {:phoenix, "~> 1.0.4"},
      {:phoenix_ecto, "~> 1.1"},
      {:postgrex, ">= 0.0.0"},
      {:phoenix_html, "~> 2.1"},

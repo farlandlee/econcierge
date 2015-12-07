@@ -1,7 +1,4 @@
-<h2>Show vendor</h2>
-
 <ul>
-
   <li>
     <strong>Name:</strong>
     <%= @vendor.name %>
