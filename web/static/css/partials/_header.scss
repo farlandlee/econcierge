@@ -1,0 +1,80 @@
+.full-width {
+  display: block;
+  width: 100%;
+}
+.page-header {
+  margin-top: 0;
+  top: 0;
+  position: fixed;
+  width: 100%;
+  height: 50px;
+  z-index: 100;
+}
+
+.top-bar {
+  font-size: (12rem/16);
+  border-bottom: 1px solid #F6F6F6;
+  height:61px;
+  padding-top: 0;
+  padding-bottom: 0;
+  .menu {
+    text-transform: uppercase;
+    font-weight: bold;
+    > li {
+      height: 60px;
+      &:not(.logo):not(.menu-text) {
+        > a {
+          height: 60px;
+          line-height: 60px;
+          padding-top: 0;
+          padding-bottom: 0;
+          &:hover {
+            border-bottom: 4px solid $primary-color;
+          }
+        }
+      }
+    }
+  }
+  .logo {
+    a {
+      width: 225px;
+      height: 40px;
+      background: url("/images/logo-black-450.png") no-repeat center -38px;
+      background-size: 225px 86px;
+      text-indent: -9999px;
+      display: block;
+      transition-duration: 0.2s;
+      margin-right: 20px;
+      &:hover {
+        background-position: center top;
+      }
+    }
+  }
+}
+.title-bar {
+  border-bottom: 1px solid #F6F6F6;
+
+  .logo {
+    position: absolute;
+    top: 11px;
+    left: 50%;
+    margin-left: (-175px/2);
+    width: 175px;
+    a {
+      background: url("/images/logo-barn-left-black-350.png") no-repeat center top;
+      background-size: 175px 18px;
+      height: 18px;
+      width: 100%;
+      text-indent: -9999px;
+      display: block;
+    }
+  }
+}
+.top-row {
+  margin-top: 42px;
+  // Only affects medium screens and larger
+  @include breakpoint(large) {
+    margin-top: 56px;
+
+  }
+}

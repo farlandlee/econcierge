@@ -1,0 +1,32 @@
+.page-footer {
+  color: $white;
+  background-color: $black;
+  min-height: 150px;
+  padding: 3rem 0.25rem;
+  img {
+    max-width: 225px;
+  }
+  .image {
+    display:inline-block;
+    vertical-align: middle;
+  }
+  .obs-logo {
+    @include breakpoint(large) {
+      text-align: right;
+    }
+  }
+  .logo {
+    @include breakpoint(medium) {
+      text-align: left;
+    }
+  }
+  a {
+    color: $white;
+    &:hover {
+      color: $light-gray;
+    }
+  }
+  .columns {
+    text-align: center;
+  }
+}

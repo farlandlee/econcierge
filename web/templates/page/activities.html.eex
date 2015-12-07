@@ -1,0 +1,30 @@
+<div class="jumbotron">
+  <h2>Codename: Grid</h2>
+  <p class="lead">Activities</p>
+</div>
+
+<div class="row marketing">
+  <div class="col-lg-6">
+    <h4>Project Resources</h4>
+    <ul>
+      <li>
+        <a href="https://github.com/outpostjh/grid/blob/master/README.md">ReadMe</a>
+      </li>
+      <li>
+        <a href="https://github.com/outpostjh/grid">Github</a>
+      </li>
+      <li>
+        <a href="https://waffle.io/outpostjh/grid">Waffle</a>
+      </li>
+    </ul>
+  </div>
+
+  <div class="col-lg-6">
+    <h4>Admin</h4>
+    <ul>
+      <li>
+        <%= link "Activity Types", to: activity_type_path(@conn, :index) %>
+      </li>
+    </ul>
+  </div>
+</div>

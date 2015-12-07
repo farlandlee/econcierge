@@ -1,0 +1,84 @@
+div.home-main {
+  margin-bottom: 20px;
+  width: 100%;
+  max-height: .8vmax;
+}
+.home-left,
+.home-right {
+  background-size: cover;
+  height:681px;
+  position: relative;
+  max-height: 100%;
+}
+.home-left {
+  background: url('/images/eco-tour.jpg') no-repeat left center;
+}
+.home-right {
+  background: url('/images/hot-springs.jpg') no-repeat center center;
+  @include breakpoint(medium) {
+    background-position: 10px center;
+    background-size: cover;
+  }
+  > div {
+    font-size: 36px;
+    font-weight: bold;
+    color: $white;
+    position:relative;
+    top: 35%;
+    width: 100%;
+    text-align: center;
+  }
+}
+.search-label {
+  text-transform: uppercase;
+  padding-bottom: 0.5rem;
+  margin-top: -0.75rem;
+}
+.search-bar {
+  width: 100%;
+  margin: 0;
+  position: absolute;
+  bottom: 0;
+  margin-left: -0.9375rem;
+  margin-right: -0.9375rem;
+  color: $white;
+}
+.suggested-activities {
+  font-weight: bold;;
+  .menu-text {
+    font-style: italic;
+  }
+  .menu {
+    > li {
+      > a {
+        padding: 1.2rem 1.4rem;
+        text-align: center;
+      }
+    }
+  }
+}
+.home-middle {
+  .column {
+    position:relative;
+    img {
+      width: 100%;
+      height: auto;
+      padding-bottom: 3rem;
+      border-bottom: 1px solid $light-gray;
+      margin-bottom: 3rem;
+    }
+  }
+  p {
+    margin-bottom: 0;
+  }
+}
+.overlay-text {
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  top: 50%;
+  margin-top: -16px;
+  font-size: 32px;
+  color: $white;
+  font-weight: bold;
+}
