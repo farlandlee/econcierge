@@ -15,11 +15,17 @@
     <div class="container" role="main">
       <div class="header">
         <ul class="nav nav-pills pull-right">
-          <li><%= link "Activities", to: activity_type_path(@conn, :index) %></li>
-          <li><%= link "Vendors", to: vendor_path(@conn, :index) %></li>
+          <li class="<%= nav_class(@conn, Grid.Admin.ActivityTypeController) %>">
+            <%= link "Activities", to: activity_type_path(@conn, :index) %>
+          </li>
+          <li class="<%= nav_class(@conn, Grid.Admin.VendorController) %>">
+            <%= link "Vendors", to: vendor_path(@conn, :index) %>
+          </li>
         </ul>
         <a href="/"><span class="logo"></span></a>
       </div>
+
+      <%= render "_header.html", page_title: assigns[:page_title] %>
 
       <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
       <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
