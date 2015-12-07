@@ -1,6 +1,21 @@
 {
   "name": "grid",
   "dependencies": {
-    "bootstrap-sass": "~3.3.6"
+    "chosen": "~1.4.2",
+    "bootstrap": "~3.3.6"
+  },
+  "overrides": {
+    "chosen": {
+      "main": [
+        "chosen.jquery.min.js",
+        "chosen.min.css"
+      ]
+    },
+    "bootstrap": {
+      "main": [
+        "dist/css/bootstrap.min.css",
+        "dist/js/bootstrap.min.js"
+      ]
+    }
   }
 }

@@ -22,8 +22,14 @@ exports.config = {
     },
     stylesheets: {
       joinTo: {
-        "css/app.css": /^(web\/static\/css)/,
-        "css/admin.css": /^(web\/static\/admin\/css)/
+        "css/app.css": [
+          /^(web\/static\/css)/
+        ],
+        "css/admin.css": [
+          /^(web\/static\/css)/,
+          /^(bower_components\/bootstrap)/,
+          /^(bower_components\/chosen)/
+        ]
       }
     },
     templates: {
@@ -58,11 +64,13 @@ exports.config = {
       // Do not use ES6 compiler in vendor code
       ignore: [/web\/static\/vendor/]
     },
-    sass: {
-      options: {
-        includePaths: ['bower_components/bootstrap-sass/assets/stylesheets']
-      }
-    }
+    afterBrunch: [
+      [
+        'mkdir -p priv/static/fonts',
+        'cp -r bower_components/bootstrap/dist/fonts/* priv/static/fonts/',
+        'cp bower_components/chosen/*.png priv/static/css/'
+      ].join(' && ')
+    ]
   },
 
   modules: {

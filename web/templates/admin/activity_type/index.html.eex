@@ -16,7 +16,7 @@
       <td class="text-right">
         <%= link "Show", to: activity_type_path(@conn, :show, activity_type), class: "btn btn-default btn-xs" %>
         <%= link "Edit", to: activity_type_path(@conn, :edit, activity_type), class: "btn btn-default btn-xs" %>
-        <%= link "Delete", to: activity_type_path(@conn, :delete, activity_type), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
+        <%= link raw("<span class=\"glyphicon glyphicon-trash\" aria-hidden=\"true\"></span> Delete"), to: activity_type_path(@conn, :delete, activity_type), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
       </td>
     </tr>
 <% end %>
