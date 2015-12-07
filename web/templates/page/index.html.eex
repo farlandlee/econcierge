@@ -1,13 +1,14 @@
 <div class="top-row small-collapse home-main">
   <div class="small-12 medium-10 large-9 xlarge-8 xxlarge-7 columns home-left">
-      <div class="callout search-bar">
+      <div class="callout search-bar" id="search-bar">
         <form>
           <div class="row small-collapse">
             <div class="small-12 columns">
               <div class="search-label">Book Your Jackson Hole Activities</div>
             </div>
             <div class="input-group">
-              <select class="input-group-field chosen-select" data-placeholder="Rafting, Hiking, etc.">
+              <select class="input-group-field chosen-select" data-placeholder="Rafting, Hiking, Biking, etc.">
+                <option value=""></option>
                 <option value="1">Rafting</option>
                 <option value="2">Hiking</option>
                 <option value="3">Biking</option>

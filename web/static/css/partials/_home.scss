@@ -42,6 +42,54 @@ div.home-main {
   margin-left: -0.9375rem;
   margin-right: -0.9375rem;
   color: $white;
+  .chosen-container-single {
+    &.chosen-container {
+          &:before {
+          content: "\f002";
+          display: inline-block;
+          font: normal normal normal 20px/1 FontAwesome;
+          text-rendering: auto;
+          -webkit-font-smoothing: antialiased;
+          position: absolute;
+          z-index: 1;
+          top: 50%;
+          margin-top: -10px;
+          left: 5px;
+          color: #666;
+      }
+    }
+    &.chosen-container-active.chosen-with-drop {
+      .chosen-single {
+        div {
+          b {
+            &:after {
+              content: "\f0d8";
+            }
+          }
+        }
+      }
+    }
+    .chosen-single {
+      height: 40px;
+      border-radius: 0;
+      line-height: 40px;
+      padding-left: 30px;
+      div {
+        b {
+          background: none !important;
+          &:after {
+            content: "\f0d7";
+            display: inline-block;
+            font: normal normal normal 14px/1 FontAwesome;
+            text-rendering: auto;
+            color: #666;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+          }
+        }
+      }
+    }
+  }
 }
 .suggested-activities {
   font-weight: bold;;
