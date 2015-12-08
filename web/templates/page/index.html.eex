@@ -1,66 +1,73 @@
-<div class="top-row small-collapse home-main">
-  <div class="small-12 medium-10 large-9 xlarge-8 xxlarge-7 columns home-left">
-      <div class="callout search-bar" id="search-bar">
-        <form>
-          <div class="row small-collapse">
-            <div class="small-12 columns">
-              <div class="search-label">Book Your Jackson Hole Activities</div>
-            </div>
-            <div class="input-group">
-              <select class="input-group-field chosen-select" data-placeholder="Rafting, Hiking, Biking, etc.">
-                <option value=""></option>
-                <option value="1">Rafting</option>
-                <option value="2">Hiking</option>
-                <option value="3">Biking</option>
-              </select>
-              <div class="input-group-button">
-                <input type="Submit" class="button" value="Search" >
+<div class="home page">
+  <div class="top-row small-collapse home-main">
+    <div class="small-12 medium-10 large-9 xlarge-8 xxlarge-7 columns home-left">
+        <div class="callout search-bar" id="search-bar">
+          <%= form_for @conn, page_path(@conn, :activity), [as: :activity, id: "search_form", method: "get", enforce_utf8: false], fn f -> %>
+            <div class="row small-collapse">
+              <div class="small-12 columns">
+                <div class="search-label">Book Your Jackson Hole Activities</div>
+              </div>
+              <div class="input-group">
+                <%= select(
+                  f, :id,
+                  Enum.map(@activities, &({&1.name, &1.id})),
+                  [ class: "input-group-field chosen-select",
+                    "data-placeholder": "Rafting, Hiking, Biking, etc.",
+                    prompt: ""
+                  ])
+                %>
+                <div class="input-group-button">
+                  <%= submit("Search", class: "button") %>
+                </div>
               </div>
             </div>
-          </div>
-        </form>
+          <% end %>
+        </div>
+    </div>
+    <div class="small-12 medium-2 large-3 xlarge-4 xxlarge-5 small-centered medium-uncentered columns home-right">
+        <div>Winter</div>
+    </div>
+  </div>
+  <div class="row column">
+    <div class="suggested-activities">
+      <ul class="menu">
+        <li class="menu-text">Suggested</li>
+        <%= for activity <- @activities do %>
+        <li><%= link activity.name, to: page_path(@conn, :activity, "activity[id]": activity.id) %></li>
+        <%= end %>
+      </ul>
+    </div>
+  </div>
+  <div class="row small-up-1 medium-up-2 large-up-3 overlays">
+    <div class="column">
+      <div>
+        <p class="overlay-text">Home Rentals</p>
+        <img src="/images/rental.jpg" alt="Home Rentals">
       </div>
+    </div>
+    <div class="column">
+      <div>
+        <p class="overlay-text">Itineraries</p>
+        <img src="/images/margarita.jpg" alt="Itineraries">
+      </div>
+    </div>
+    <div class="column">
+      <div>
+        <p class="overlay-text">Top Trips</p>
+        <img src="/images/tour-van.jpg" alt="Top Trips">
+      </div>
+    </div>
   </div>
-  <div class="small-12 medium-2 large-3 xlarge-4 xxlarge-5 small-centered medium-uncentered columns home-right">
-      <div>Winter</div>
-  </div>
-</div>
-<div class="row column">
-  <div class="suggested-activities">
-    <ul class="menu">
-      <li class="menu-text">Suggested</li>
-      <li><a href="#">Fly Fishing</a></li>
-      <li><a href="#">Wildlife Tours</a></li>
-      <li><a href="#">Whitewater Rafting</a></li>
-      <li><a href="#">Spa Days</a></li>
-      <li><a href="#">Museums</a></li>
-      <li><a href="#">Margaritas</a></li>
-    </ul>
-  </div>
-</div>
-<div class="row small-up-1 medium-up-2 large-up-3 home-middle">
-  <div class="column">
-      <p class="overlay-text">Home Rentals</p>
-      <p><img src="/images/rental.jpg" alt="Home Rentals"></p>
-  </div>
-  <div class="column">
-      <p class="overlay-text">Itineraries</p>
-      <p><img src="/images/margarita.jpg" alt="Itineraries"></p>
-  </div>
-  <div class="column">
-      <p class="overlay-text">Top Trips</p>
-      <p><img src="/images/tour-van.jpg" alt="Top Trips"></p>
-  </div>
-</div>
-<div class="row small-up-1 medium-up-2">
-  <div class="column">
-      <p><img src="/images/group-river.jpg" alt=""></p>
-      <p class="lead">36 HOURS IN JACKSON HOLE: HERE’S WHAT WE SUGGEST</p>
-      <p class="subheader">Planning a trip to Jackson Hole can be daunting. Here’s a recent traveler’s itinerary. Book the same stay now.</p>
-  </div>
-  <div class="column">
-      <p><img src="/images/fish-the-fly.jpg" alt="Fish the Fly"></p>
-      <p class="lead">LOCAL HIGHLIGHT: FISH THE FLY</p>
-      <p class="subheader">FISH ON! Experience Fly Fishing with the local expert, Jason Balough, on the Snake River.</p>
+  <div class="row small-up-1 medium-up-2">
+    <div class="column">
+        <img src="/images/group-river.jpg" alt="">
+        <p class="lead">36 HOURS IN JACKSON HOLE: HERE’S WHAT WE SUGGEST</p>
+        <p class="subheader">Planning a trip to Jackson Hole can be daunting. Here’s a recent traveler’s itinerary. Book the same stay now.</p>
+    </div>
+    <div class="column">
+        <img src="/images/fish-the-fly.jpg" alt="Fish the Fly">
+        <p class="lead">LOCAL HIGHLIGHT: FISH THE FLY</p>
+        <p class="subheader">FISH ON! Experience Fly Fishing with the local expert, Jason Balough, on the Snake River.</p>
+    </div>
   </div>
 </div>

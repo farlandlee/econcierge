@@ -5,3 +5,119 @@
     font-weight: normal;
   }
 }
+
+.page-head {
+  background-color: $dark-gray;
+  height: 110px;
+  padding: 20px 0;
+  h1 {
+    color: $white;
+    font-weight: bold;
+    line-height: 1;
+    text-transform: uppercase;
+    margin: 0.5rem 0;
+  }
+  p {
+    color: $medium-gray;
+    font-size: 18px;
+  }
+}
+
+.search-bar {
+  width: 100%;
+  margin: 0;
+  background-color: $light-gray;
+  padding: 0.25rem;
+
+  .input-group {
+    margin-bottom:0;
+  }
+
+  .chosen-container-single {
+    max-width: 120px;
+    display:inline-block;
+    width: auto;
+    .chosen-single {
+      height: 40px;
+      border-radius: 0;
+      line-height: 40px;
+      background-image: none;
+      box-shadow: none;
+      border: 0;
+      div {
+        width: 20px;
+        b {
+          background: none !important;
+          &:after {
+            content: "\f107";
+            display: inline-block;
+            font: normal normal normal 24px/40px FontAwesome;
+            text-rendering: auto;
+            color: #666;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+          }
+        }
+      }
+    }
+    &.chosen-container-active.chosen-with-drop {
+      .chosen-single div b:after {
+        content: "\f106";
+      }
+    }
+  }
+}
+.top-categories {
+  padding: 0.9375rem;
+  margin-bottom: 2rem;
+  @include menu-expand('auto');
+  a {
+    font-weight: bold;
+    &:hover,
+    &.active {
+      font-style: italic;
+      text-decoration: underline;
+      color: $anchor-color-hover;
+    }
+  }
+}
+.overlays {
+  .column {
+    position:relative;
+    img {
+      width: 100%;
+      height: auto;
+    }
+    > div {
+      padding-bottom: 3rem;
+      border-bottom: 1px solid $light-gray;
+      margin-bottom: 3rem;
+    }
+  }
+  p {
+    margin-bottom: 0;
+  }
+}
+.overlay-text {
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  top: 50%;
+  margin-top: -16px;
+  margin-left: -0.9375rem;
+  font-size: 32px;
+  color: $white;
+  font-weight: bold;
+}
+.lead {
+  text-transform: uppercase;
+}
+a.more-info {
+  color: $secondary-color;
+  display:inline-block;
+  border-top: 1px solid $light-gray;
+  text-transform: uppercase;
+  height: 30px;
+  font-size: 12px;
+  line-height: 30px;
+}

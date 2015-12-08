@@ -1,0 +1,64 @@
+<div class="page activity">
+  <div class="top-row ">
+    <header class="page-head" >
+      <div class="row column">
+        <h1><%= @selected_activity.name %></h1>
+        <p><%= @selected_activity.description %></p>
+      </div>
+    </header>
+  </div>
+  <div class="search-bar">
+    <div class="row column">
+      <%= form_for @conn, page_path(@conn, :activity), [as: :activity, id: "search_form", method: "get", enforce_utf8: false], fn f -> %>
+        <div class="row small-collapse">
+          <div class="input-group">
+            <%= select(
+              f, :id,
+              Enum.map(@activities, &({&1.name, &1.id})),
+              [ class: "input-group-field chosen-select",
+                "data-placeholder": "Rafting, Hiking, Biking, etc.",
+                prompt: "",
+                value: @selected_activity.id,
+                id: :activity_select
+              ])
+            %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <div class="row column top-categories">
+    <ul class="menu">
+      <li><a class="active" href="#">Half Day</a></li>
+      <li><a href="#">Full Day</a></li>
+      <li><a href="#">Overnight</a></li>
+      <li><a href="#">Classes</a></li>
+    </li>
+  </div>
+  <div class="row small-up-1 medium-up-2 large-up-3">
+    <%= for vendor <- @selected_activity.vendors do %>
+      <div class="column">
+        <img src="/images/rental.jpg" alt="Home Rentals">
+        <p class="lead"><%= vendor.name %></p>
+        <p><a href="#" class="more-info">View More Info</a></p>
+      </div>
+    <% end %>
+  </div>
+  <div class="row column activity-bottom">
+    <h2>Others Have Also Booked</h2>
+  </div>
+  <div class="row small-up-1 medium-up-2 large-up-3 overlays">
+    <div class="column">
+        <p class="overlay-text">Rafting</p>
+        <img src="/images/rental.jpg" alt="Rafting">
+    </div>
+    <div class="column">
+        <p class="overlay-text">Play House</p>
+        <img src="/images/margarita.jpg" alt="Play House">
+    </div>
+    <div class="column">
+        <p class="overlay-text">Wildlife Tours</p>
+        <img src="/images/tour-van.jpg" alt="Wildlife Tours">
+    </div>
+  </div>
+</div>
