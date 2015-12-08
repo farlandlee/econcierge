@@ -28,6 +28,7 @@ defmodule Grid.Router do
     pipe_through :browser
     pipe_through :admin
 
+    get "/", DashboardController, :index
     resources "/activities", ActivityController
     resources "/vendors", VendorController
   end

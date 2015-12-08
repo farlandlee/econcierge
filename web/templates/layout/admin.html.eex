@@ -15,6 +15,9 @@
     <div class="container" role="main">
       <div class="header">
         <ul class="nav nav-pills pull-right">
+          <li class="<%= nav_class(@conn, Grid.AdminController) %>">
+            <%= link "Admin Home", to: dashboard_path(@conn, :index) %>
+          </li>
           <li class="<%= nav_class(@conn, Grid.Admin.ActivityController) %>">
             <%= link "Activities", to: activity_path(@conn, :index) %>
           </li>
