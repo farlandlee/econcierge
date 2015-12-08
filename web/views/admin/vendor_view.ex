@@ -1,7 +1,7 @@
 defmodule Grid.Admin.VendorView do
   use Grid.Web, :view
 
-  def activity_ids(%{model: %{activity: activities}}) when is_list(activities) do
+  def activity_ids(%{model: %{activities: activities}}) when is_list(activities) do
     Enum.map(activities, &(&1.id))
   end
   def activity_ids(_), do: []
