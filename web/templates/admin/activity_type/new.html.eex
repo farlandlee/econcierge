@@ -1,5 +1,0 @@
-
-<%= render "form.html", changeset: @changeset,
-                        action: activity_type_path(@conn, :create) %>
-
-<%= link "Back", to: activity_type_path(@conn, :index) %>

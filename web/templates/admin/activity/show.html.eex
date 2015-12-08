@@ -1,0 +1,11 @@
+<ul>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @activity.name %>
+  </li>
+
+</ul>
+
+<%= link "Edit", to: activity_path(@conn, :edit, @activity) %>
+<%= link "Back", to: activity_path(@conn, :index) %>

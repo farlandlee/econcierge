@@ -10,8 +10,8 @@
   </li>
 
   <li>
-    <strong>Activity Types</strong>
-    <%= pretty_activities(@vendor.activity_types) %>
+    <strong>Activities</strong>
+    <%= pretty_activities(@vendor.activities) %>
   </li>
 
 </ul>

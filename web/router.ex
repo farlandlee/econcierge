@@ -28,7 +28,7 @@ defmodule Grid.Router do
     pipe_through :browser
     pipe_through :admin
 
-    resources "/activity_types", ActivityTypeController
+    resources "/activities", ActivityController
     resources "/vendors", VendorController
   end
 

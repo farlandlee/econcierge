@@ -15,8 +15,8 @@
     <div class="container" role="main">
       <div class="header">
         <ul class="nav nav-pills pull-right">
-          <li class="<%= nav_class(@conn, Grid.Admin.ActivityTypeController) %>">
-            <%= link "Activities", to: activity_type_path(@conn, :index) %>
+          <li class="<%= nav_class(@conn, Grid.Admin.ActivityController) %>">
+            <%= link "Activities", to: activity_path(@conn, :index) %>
           </li>
           <li class="<%= nav_class(@conn, Grid.Admin.VendorController) %>">
             <%= link "Vendors", to: vendor_path(@conn, :index) %>

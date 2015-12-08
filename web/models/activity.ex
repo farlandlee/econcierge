@@ -1,14 +1,17 @@
-defmodule Grid.VendorActivityType do
+defmodule Grid.Activity do
   use Grid.Web, :model
 
-  schema "vendor_activity_types" do
-    belongs_to :vendor, Grid.Vendor
-    belongs_to :activity_type, Grid.ActivityType
+  schema "activities" do
+    field :name, :string
+    field :description, :string
+
+    has_many :vendor_activities, Grid.VendorActivity
+    has_many :vendors, through: [:vendor_activities, :vendor]
 
     timestamps
   end
 
-  @required_fields ~w(vendor_id activity_type_id)
+  @required_fields ~w(name description)
   @optional_fields ~w()
 
   @doc """

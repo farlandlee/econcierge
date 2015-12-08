@@ -2,7 +2,7 @@ defmodule Grid.VendorControllerTest do
   use Grid.ConnCase
 
   alias Grid.Vendor
-  @valid_attrs %{description: "some content", name: "some content", activity_types: []}
+  @valid_attrs %{description: "some content", name: "some content", activities: []}
   @invalid_attrs %{}
 
   setup do
@@ -23,7 +23,7 @@ defmodule Grid.VendorControllerTest do
   test "creates resource and redirects when data is valid", %{conn: conn} do
     conn = post conn, vendor_path(conn, :create), vendor: @valid_attrs
     assert redirected_to(conn) == vendor_path(conn, :index)
-    assert Repo.get_by(Vendor, @valid_attrs |> Map.delete(:activity_types))
+    assert Repo.get_by(Vendor, @valid_attrs |> Map.delete(:activities))
   end
 
   test "does not create resource and renders errors when data is invalid", %{conn: conn} do
@@ -53,7 +53,7 @@ defmodule Grid.VendorControllerTest do
     vendor = Repo.insert! %Vendor{}
     conn = put conn, vendor_path(conn, :update, vendor), vendor: @valid_attrs
     assert redirected_to(conn) == vendor_path(conn, :show, vendor)
-    assert Repo.get_by(Vendor, @valid_attrs |> Map.delete(:activity_types))
+    assert Repo.get_by(Vendor, @valid_attrs |> Map.delete(:activities))
   end
 
   test "does not update chosen resource and renders errors when data is invalid", %{conn: conn} do
