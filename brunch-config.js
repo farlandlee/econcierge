@@ -14,7 +14,8 @@ exports.config = {
       joinTo: {
         "css/app.css": [
           /^(web\/static\/css)/,
-          /^(bower_components\/chosen)/
+          /^(bower_components\/chosen)/,
+          /^(bower_components\/font\-awesome)/
         ],
         "css/admin.css": [
           /^(web\/static\/admin\/css)/,
