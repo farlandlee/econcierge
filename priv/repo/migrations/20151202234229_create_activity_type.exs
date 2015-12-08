@@ -1,4 +1,4 @@
-defmodule Grid.Repo.Migrations.CreateActivityType do
+defmodule Grid.Repo.Migrations.CreateActivity do
   use Ecto.Migration
 
   def change do

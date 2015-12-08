@@ -1,4 +1,4 @@
-defmodule Grid.Repo.Migrations.CreateVendorActivityType do
+defmodule Grid.Repo.Migrations.CreateVendorActivity do
   use Ecto.Migration
 
   def change do
@@ -10,6 +10,5 @@ defmodule Grid.Repo.Migrations.CreateVendorActivityType do
     end
     create index(:vendor_activity_types, [:vendor_id])
     create index(:vendor_activity_types, [:activity_type_id])
-
   end
 end

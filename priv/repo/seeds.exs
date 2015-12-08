@@ -10,12 +10,14 @@
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
 import Grid.Repo, only: [insert!: 1]
-alias Grid.ActivityType
+alias Grid.Activity
 alias Grid.Vendor
-alias Grid.VendorActivityType
+alias Grid.VendorActivity
 
-a = insert!(%ActivityType{name: "Fly Fishing"})
+for activity <- ~w(Snowmobiling Paragliding), do: insert!(%Activity{name: activity})
+
+a = insert!(%Activity{name: "Fly Fishing"})
 
 v = insert!(%Vendor{name: "Jackson Hole Anglers", description: "The best in fishin'"})
 
-insert!(%VendorActivityType{vendor_id: v.id, activity_type_id: a.id})
+insert!(%VendorActivity{vendor_id: v.id, activity_id: a.id})

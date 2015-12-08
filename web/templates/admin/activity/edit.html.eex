@@ -1,0 +1,4 @@
+<%= render "form.html", changeset: @changeset,
+                        action: activity_path(@conn, :update, @activity) %>
+
+<%= link "Back", to: activity_path(@conn, :index) %>

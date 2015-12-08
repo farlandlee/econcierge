@@ -5,8 +5,8 @@ defmodule Grid.Vendor do
     field :name, :string
     field :description, :string
 
-    has_many :vendor_activity_types, Grid.VendorActivityType
-    has_many :activity_types, through: [:vendor_activity_types, :activity_type]
+    has_many :vendor_activities, Grid.VendorActivity
+    has_many :activities, through: [:vendor_activities, :activity]
 
     timestamps
   end

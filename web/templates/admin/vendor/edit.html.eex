@@ -1,5 +1,5 @@
 <%= render "form.html", changeset: @changeset,
                         action: vendor_path(@conn, :update, @vendor),
-                        activity_types: @activity_types %>
+                        activities: @activities %>
 
 <%= link "Back", to: vendor_path(@conn, :index) %>

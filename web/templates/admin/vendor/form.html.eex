@@ -21,9 +21,9 @@
   </div>
 
   <div class="form-group">
-    <%= label f, :activity_types, "Activities", class: "control-label" %>
-    <%= multiple_select f, :activity_types,
-        Enum.map(@activity_types, &({&1.name, &1.id})),
+    <%= label f, :activities, "Activities", class: "control-label" %>
+    <%= multiple_select f, :activities,
+        Enum.map(@activities, &({&1.name, &1.id})),
         value: activity_ids(f),
         class: "chosen-select form-control" %>
   </div>
