@@ -2,6 +2,7 @@
   <thead>
     <tr>
       <th>Name</th>
+      <th>Description</th>
 
       <th></th>
     </tr>
@@ -10,6 +11,7 @@
 <%= for activity <- @activity do %>
     <tr>
       <td><%= activity.name %></td>
+      <td><%= activity.description %></td>
 
       <td class="text-right">
         <%= link "Show", to: activity_path(@conn, :show, activity), class: "btn btn-default btn-xs" %>
