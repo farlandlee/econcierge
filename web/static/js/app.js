@@ -23,4 +23,7 @@ import "deps/phoenix_html/web/static/js/phoenix_html";
 jQuery(function($){
   $(document).foundation();
   $(".chosen-select").chosen();
+  $("#activity_select").change(function(){
+    $('#search_form').submit();
+  });
 });
