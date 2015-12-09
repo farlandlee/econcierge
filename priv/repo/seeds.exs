@@ -14,9 +14,11 @@ alias Grid.Activity
 alias Grid.Vendor
 alias Grid.VendorActivity
 
-for activity <- ~w(Snowmobiling Paragliding), do: insert!(%Activity{name: activity})
+for activity <- ~w(Snowmobiling Paragliding) do
+  insert!(%Activity{name: activity, description: "#{activity} is the most fun you can have in JH."})
+end
 
-a = insert!(%Activity{name: "Fly Fishing"})
+a = insert!(%Activity{name: "Fly Fishing", description: "Water sports are good times."})
 
 v = insert!(%Vendor{name: "Jackson Hole Anglers", description: "The best in fishin'"})
 
