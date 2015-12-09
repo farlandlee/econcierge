@@ -20,6 +20,8 @@ config :grid, Grid.Endpoint,
 # Do not print debug messages in production
 config :logger, level: :info
 
+config :arc, bucket: "outpost-grid"
+
 config :grid, Grid.Repo,
   adapter: Ecto.Adapters.Postgres,
   url: System.get_env("DATABASE_URL"),

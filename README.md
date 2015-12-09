@@ -2,6 +2,11 @@
 
 [![Build Status](https://travis-ci.com/outpostjh/grid.svg?token=pM1BoXzsi31ng6qGE9fY)](https://travis-ci.com/outpostjh/grid)
 
+## Useful Links
+
+- [Design Docs](https://www.lucidchart.com/documents/edit/099b9222-c340-48ed-a5fe-b9a2c60176cf/0?shared=true)
+- [Staging Site](http://outpost-grid.herokuapp.com/)
+
 ## Installation
 
 *Installing this application requires `elixir`, `node`, `npm`, `postgres` on your system.*
@@ -31,7 +36,15 @@ Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
   * Mailing list: http://groups.google.com/group/phoenix-talk
   * Source: https://github.com/phoenixframework/phoenix
 
-## Production Environment variables
+## Environment variables
+
+ENV Variable     | Description                   |
+---------------- | ----------------------------- |
+AWS_ACCESS_KEY   | AWS Access Key for S3 buckets |
+AWS_SECRET_KEY   | AWS Secret Key for S3 buckets |
+
+
+### Production-only
 
 ENV Variable  | Description                                                 |
 ------------- | ----------------------------------------------------------- |

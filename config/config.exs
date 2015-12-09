@@ -5,6 +5,9 @@
 # is restricted to this project.
 use Mix.Config
 
+config :grid,
+  env: Mix.env
+
 # Configures the endpoint
 config :grid, Grid.Endpoint,
   url: [host: "localhost"],
@@ -18,6 +21,12 @@ config :grid, Grid.Endpoint,
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
+
+config :ex_aws,
+  access_key_id: [{:system, "AWS_ACCESS_KEY"}, :instance_role],
+  secret_access_key: [{:system, "AWS_SECRET_KEY"}, :instance_role]
+
+config :arc, bucket: "dev-outpost-grid"
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

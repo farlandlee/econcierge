@@ -1,20 +1,18 @@
-defmodule Grid.Vendor do
+defmodule Grid.Image do
   use Grid.Web, :model
 
-  schema "vendors" do
-    field :name, :string
-    field :description, :string
-
-    belongs_to :default_image, Grid.Image
-
-    has_many :vendor_activities, Grid.VendorActivity
-    has_many :activities, through: [:vendor_activities, :activity]
+  schema "images" do
+    field :filename, :string
+    field :alt, :string
+    field :original, :string
+    field :medium, :string
 
     timestamps
   end
 
-  @required_fields ~w(name description)
-  @optional_fields ~w()
+  @required_fields ~w(filename)
+  @optional_fields ~w(original medium alt)
+
 
   @doc """
   Creates a changeset based on the `model` and `params`.
