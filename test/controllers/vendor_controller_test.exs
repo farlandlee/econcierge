@@ -2,6 +2,9 @@ defmodule Grid.VendorControllerTest do
   use Grid.ConnCase
 
   alias Grid.Vendor
+  alias Grid.Activity
+  alias Grid.VendorActivity
+
   @valid_attrs %{description: "some content", name: "some content", activities: []}
   @invalid_attrs %{}
 
@@ -57,9 +60,18 @@ defmodule Grid.VendorControllerTest do
   end
 
   test "does not update chosen resource and renders errors when data is invalid", %{conn: conn} do
-    vendor = Repo.insert! %Vendor{}
+    vendor = Repo.insert!(%Vendor{name: "Test"})
+    activity = Repo.insert!(%Activity{name: "Fly Fishing"})
+    Repo.insert!(%VendorActivity{
+      vendor_id: vendor.id,
+      activity_id: activity.id
+    })
+
     conn = put conn, vendor_path(conn, :update, vendor), vendor: @invalid_attrs
-    assert html_response(conn, 200) =~ "Edit Vendor"
+
+    response = html_response(conn, 200)
+    assert response =~ ~s(name="vendor[name]" type="text" value="Test")
+    assert response =~ ~s(<option selected="selected" value="#{activity.id}">Fly Fishing</option></select>)
   end
 
   test "deletes chosen resource", %{conn: conn} do
