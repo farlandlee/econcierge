@@ -5,6 +5,11 @@
     <%= @activity.name %>
   </li>
 
+  <li>
+    <strong>Description:</strong>
+    <%= @activity.description %>
+  </li>
+
 </ul>
 
 <%= link "Edit", to: activity_path(@conn, :edit, @activity) %>

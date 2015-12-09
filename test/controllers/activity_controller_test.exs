@@ -17,7 +17,11 @@ defmodule Grid.ActivityControllerTest do
 
   test "renders form for new resources", %{conn: conn} do
     conn = get conn, activity_path(conn, :new)
-    assert html_response(conn, 200) =~ "New Activity"
+
+    response_body = html_response(conn, 200)
+    assert response_body =~ "New Activity"
+    assert response_body =~ "Name"
+    assert response_body =~ "Description"
   end
 
   test "creates resource and redirects when data is valid", %{conn: conn} do
@@ -34,7 +38,11 @@ defmodule Grid.ActivityControllerTest do
   test "shows chosen resource", %{conn: conn} do
     activity = Repo.insert! %Activity{}
     conn = get conn, activity_path(conn, :show, activity)
-    assert html_response(conn, 200) =~ "Show Activity"
+
+    response_body = html_response(conn, 200)
+    assert response_body =~ "Show Activity"
+    assert response_body =~ "Name"
+    assert response_body =~ "Description"
   end
 
   test "renders page not found when id is nonexistent", %{conn: conn} do
@@ -46,7 +54,11 @@ defmodule Grid.ActivityControllerTest do
   test "renders form for editing chosen resource", %{conn: conn} do
     activity = Repo.insert! %Activity{}
     conn = get conn, activity_path(conn, :edit, activity)
-    assert html_response(conn, 200) =~ "Edit Activity"
+
+    response_body = html_response(conn, 200)
+    assert response_body =~ "Edit Activity"
+    assert response_body =~ "Name"
+    assert response_body =~ "Description"
   end
 
   test "updates chosen resource and redirects when data is valid", %{conn: conn} do
@@ -59,7 +71,11 @@ defmodule Grid.ActivityControllerTest do
   test "does not update chosen resource and renders errors when data is invalid", %{conn: conn} do
     activity = Repo.insert! %Activity{}
     conn = put conn, activity_path(conn, :update, activity), activity: @invalid_attrs
-    assert html_response(conn, 200) =~ "Edit Activity"
+
+    response_body = html_response(conn, 200)
+    assert response_body =~ "Edit Activity"
+    assert response_body =~ "Name"
+    assert response_body =~ "Description"
   end
 
   test "deletes chosen resource", %{conn: conn} do
