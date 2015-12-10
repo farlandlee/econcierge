@@ -23,7 +23,7 @@ defmodule Grid.Admin.ActivityController do
       {:ok, _activity} ->
         conn
         |> put_flash(:info, "Activity created successfully.")
-        |> redirect(to: activity_path(conn, :index))
+        |> redirect(to: admin_activity_path(conn, :index))
       {:error, changeset} ->
         render(conn, "new.html", changeset: changeset)
     end
@@ -48,7 +48,7 @@ defmodule Grid.Admin.ActivityController do
       {:ok, activity} ->
         conn
         |> put_flash(:info, "Activity updated successfully.")
-        |> redirect(to: activity_path(conn, :show, activity))
+        |> redirect(to: admin_activity_path(conn, :show, activity))
       {:error, changeset} ->
         render(conn, "edit.html", activity: activity, changeset: changeset)
     end
@@ -63,6 +63,6 @@ defmodule Grid.Admin.ActivityController do
 
     conn
     |> put_flash(:info, "Activity deleted successfully.")
-    |> redirect(to: activity_path(conn, :index))
+    |> redirect(to: admin_activity_path(conn, :index))
   end
 end

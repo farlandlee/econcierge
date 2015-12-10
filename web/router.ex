@@ -21,10 +21,11 @@ defmodule Grid.Router do
     pipe_through :browser # Use the default browser stack
 
     get "/", PageController, :index
-    get "/activity", PageController, :activity
+    get "/activity/:activity_name", ActivityController, :show_by_name
+    post "/activity", ActivityController, :show
   end
 
-  scope "/admin", Grid.Admin do
+  scope "/admin", Grid.Admin, as: :admin do
     pipe_through :browser
     pipe_through :admin
 

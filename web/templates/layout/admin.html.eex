@@ -16,13 +16,13 @@
       <div class="header">
         <ul class="nav nav-pills pull-right">
           <li class="<%= nav_class(@conn, Grid.AdminController) %>">
-            <%= link "Admin Home", to: dashboard_path(@conn, :index) %>
+            <%= link "Admin Home", to: admin_dashboard_path(@conn, :index) %>
           </li>
           <li class="<%= nav_class(@conn, Grid.Admin.ActivityController) %>">
-            <%= link "Activities", to: activity_path(@conn, :index) %>
+            <%= link "Activities", to: admin_activity_path(@conn, :index) %>
           </li>
           <li class="<%= nav_class(@conn, Grid.Admin.VendorController) %>">
-            <%= link "Vendors", to: vendor_path(@conn, :index) %>
+            <%= link "Vendors", to: admin_vendor_path(@conn, :index) %>
           </li>
         </ul>
         <a href="/"><span class="logo"></span></a>

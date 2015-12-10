@@ -2,7 +2,7 @@
   <div class="top-row small-collapse home-main">
     <div class="small-12 medium-10 large-9 xlarge-8 xxlarge-7 columns home-left">
         <div class="callout search-bar" id="search-bar">
-          <%= form_for @conn, page_path(@conn, :activity), [as: :activity, id: "search_form", method: "get", enforce_utf8: false], fn f -> %>
+          <%= form_for @conn, activity_path(@conn, :show), [as: :activity, id: "search_form"], fn f -> %>
             <div class="row small-collapse">
               <div class="small-12 columns">
                 <div class="search-label">Book Your Jackson Hole Activities</div>
@@ -33,7 +33,7 @@
       <ul class="menu">
         <li class="menu-text">Suggested</li>
         <%= for activity <- @activities do %>
-        <li><%= link activity.name, to: page_path(@conn, :activity, "activity[id]": activity.id) %></li>
+        <li><%= link activity.name, to: activity_path(@conn, :show_by_name, activity.name) %></li>
         <%= end %>
       </ul>
     </div>
