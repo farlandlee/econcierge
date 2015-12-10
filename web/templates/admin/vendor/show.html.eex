@@ -16,5 +16,5 @@
 
 </ul>
 
-<%= link "Edit", to: vendor_path(@conn, :edit, @vendor) %>
-<%= link "Back", to: vendor_path(@conn, :index) %>
+<%= link "Edit", to: admin_vendor_path(@conn, :edit, @vendor) %>
+<%= link "Back", to: admin_vendor_path(@conn, :index) %>

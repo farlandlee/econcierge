@@ -14,13 +14,13 @@
       <td><%= activity.description %></td>
 
       <td class="text-right">
-        <%= link "Show", to: activity_path(@conn, :show, activity), class: "btn btn-default btn-xs" %>
-        <%= link "Edit", to: activity_path(@conn, :edit, activity), class: "btn btn-default btn-xs" %>
-        <%= link raw("<span class=\"glyphicon glyphicon-trash\" aria-hidden=\"true\"></span> Delete"), to: activity_path(@conn, :delete, activity), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
+        <%= link "Show", to: admin_activity_path(@conn, :show, activity), class: "btn btn-default btn-xs" %>
+        <%= link "Edit", to: admin_activity_path(@conn, :edit, activity), class: "btn btn-default btn-xs" %>
+        <%= link raw("<span class=\"glyphicon glyphicon-trash\" aria-hidden=\"true\"></span> Delete"), to: admin_activity_path(@conn, :delete, activity), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
       </td>
     </tr>
 <% end %>
   </tbody>
 </table>
 
-<%= link "New Activity", to: activity_path(@conn, :new) %>
+<%= link "New Activity", to: admin_activity_path(@conn, :new) %>

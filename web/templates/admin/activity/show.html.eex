@@ -12,5 +12,5 @@
 
 </ul>
 
-<%= link "Edit", to: activity_path(@conn, :edit, @activity) %>
-<%= link "Back", to: activity_path(@conn, :index) %>
+<%= link "Edit", to: admin_activity_path(@conn, :edit, @activity) %>
+<%= link "Back", to: admin_activity_path(@conn, :index) %>

@@ -44,7 +44,7 @@ defmodule Grid.Admin.VendorController do
           insert_relationships(v, vendor_params["activities"])
           conn
           |> put_flash(:info, "Vendor created successfully.")
-          |> redirect(to: vendor_path(conn, :index))
+          |> redirect(to: admin_vendor_path(conn, :index))
         {:error, changeset} ->
           render(conn, "new.html", changeset: changeset, activities: all_activities)
       end
@@ -75,7 +75,7 @@ defmodule Grid.Admin.VendorController do
           insert_relationships(vendor, vendor_params["activities"])
           conn
           |> put_flash(:info, "Vendor updated successfully.")
-          |> redirect(to: vendor_path(conn, :show, vendor))
+          |> redirect(to: admin_vendor_path(conn, :show, vendor))
         {:error, changeset} ->
           render(conn, "edit.html", vendor: vendor, changeset: changeset, activities: all_activities)
       end
@@ -92,6 +92,6 @@ defmodule Grid.Admin.VendorController do
 
     conn
     |> put_flash(:info, "Vendor deleted successfully.")
-    |> redirect(to: vendor_path(conn, :index))
+    |> redirect(to: admin_vendor_path(conn, :index))
   end
 end

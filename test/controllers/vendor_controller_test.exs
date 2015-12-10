@@ -14,48 +14,48 @@ defmodule Grid.VendorControllerTest do
   end
 
   test "lists all entries on index", %{conn: conn} do
-    conn = get conn, vendor_path(conn, :index)
+    conn = get conn, admin_vendor_path(conn, :index)
     assert html_response(conn, 200) =~ "Vendor Listing"
   end
 
   test "renders form for new resources", %{conn: conn} do
-    conn = get conn, vendor_path(conn, :new)
+    conn = get conn, admin_vendor_path(conn, :new)
     assert html_response(conn, 200) =~ "New Vendor"
   end
 
   test "creates resource and redirects when data is valid", %{conn: conn} do
-    conn = post conn, vendor_path(conn, :create), vendor: @valid_attrs
-    assert redirected_to(conn) == vendor_path(conn, :index)
+    conn = post conn, admin_vendor_path(conn, :create), vendor: @valid_attrs
+    assert redirected_to(conn) == admin_vendor_path(conn, :index)
     assert Repo.get_by(Vendor, @valid_attrs |> Map.delete(:activities))
   end
 
   test "does not create resource and renders errors when data is invalid", %{conn: conn} do
-    conn = post conn, vendor_path(conn, :create), vendor: @invalid_attrs
+    conn = post conn, admin_vendor_path(conn, :create), vendor: @invalid_attrs
     assert html_response(conn, 200) =~ "New Vendor"
   end
 
   test "shows chosen resource", %{conn: conn} do
     vendor = Repo.insert! %Vendor{}
-    conn = get conn, vendor_path(conn, :show, vendor)
+    conn = get conn, admin_vendor_path(conn, :show, vendor)
     assert html_response(conn, 200) =~ "Show Vendor"
   end
 
   test "renders page not found when id is nonexistent", %{conn: conn} do
     assert_raise Ecto.NoResultsError, fn ->
-      get conn, vendor_path(conn, :show, -1)
+      get conn, admin_vendor_path(conn, :show, -1)
     end
   end
 
   test "renders form for editing chosen resource", %{conn: conn} do
     vendor = Repo.insert! %Vendor{}
-    conn = get conn, vendor_path(conn, :edit, vendor)
+    conn = get conn, admin_vendor_path(conn, :edit, vendor)
     assert html_response(conn, 200) =~ "Edit Vendor"
   end
 
   test "updates chosen resource and redirects when data is valid", %{conn: conn} do
     vendor = Repo.insert! %Vendor{}
-    conn = put conn, vendor_path(conn, :update, vendor), vendor: @valid_attrs
-    assert redirected_to(conn) == vendor_path(conn, :show, vendor)
+    conn = put conn, admin_vendor_path(conn, :update, vendor), vendor: @valid_attrs
+    assert redirected_to(conn) == admin_vendor_path(conn, :show, vendor)
     assert Repo.get_by(Vendor, @valid_attrs |> Map.delete(:activities))
   end
 
@@ -67,7 +67,7 @@ defmodule Grid.VendorControllerTest do
       activity_id: activity.id
     })
 
-    conn = put conn, vendor_path(conn, :update, vendor), vendor: @invalid_attrs
+    conn = put conn, admin_vendor_path(conn, :update, vendor), vendor: @invalid_attrs
 
     response = html_response(conn, 200)
     assert response =~ ~s(name="vendor[name]" type="text" value="Test")
@@ -76,8 +76,8 @@ defmodule Grid.VendorControllerTest do
 
   test "deletes chosen resource", %{conn: conn} do
     vendor = Repo.insert! %Vendor{}
-    conn = delete conn, vendor_path(conn, :delete, vendor)
-    assert redirected_to(conn) == vendor_path(conn, :index)
+    conn = delete conn, admin_vendor_path(conn, :delete, vendor)
+    assert redirected_to(conn) == admin_vendor_path(conn, :index)
     refute Repo.get(Vendor, vendor.id)
   end
 end

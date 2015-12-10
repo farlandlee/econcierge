@@ -2,14 +2,14 @@
   <div class="top-row ">
     <header class="page-head" >
       <div class="row column">
-        <h1><%= @selected_activity.name %></h1>
-        <p><%= @selected_activity.description %></p>
+        <h1><%= @activity.name %></h1>
+        <p><%= @activity.description %></p>
       </div>
     </header>
   </div>
   <div class="search-bar">
     <div class="row column">
-      <%= form_for @conn, page_path(@conn, :activity), [as: :activity, id: "search_form", method: "get", enforce_utf8: false], fn f -> %>
+      <%= form_for @conn, activity_path(@conn, :show), [as: :activity, id: "search_form"], fn f -> %>
         <div class="row small-collapse">
           <div class="input-group">
             <%= select(
@@ -18,7 +18,7 @@
               [ class: "input-group-field chosen-select",
                 "data-placeholder": "Rafting, Hiking, Biking, etc.",
                 prompt: "",
-                value: @selected_activity.id,
+                value: @activity.id,
                 id: :activity_select
               ])
             %>
@@ -36,7 +36,7 @@
     </li>
   </div>
   <div class="row small-up-1 medium-up-2 large-up-3">
-    <%= for vendor <- @selected_activity.vendors do %>
+    <%= for vendor <- @activity.vendors do %>
       <div class="column">
         <img src="/images/rental.jpg" alt="Home Rentals">
         <p class="lead"><%= vendor.name %></p>
