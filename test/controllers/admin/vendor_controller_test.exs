@@ -1,4 +1,4 @@
-defmodule Grid.VendorControllerTest do
+defmodule Grid.Admin.VendorControllerTest do
   use Grid.ConnCase
 
   alias Grid.Vendor
