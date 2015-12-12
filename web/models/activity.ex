@@ -23,6 +23,7 @@ defmodule Grid.Activity do
   def changeset(model, params \\ :empty) do
     model
     |> cast(params, @required_fields, @optional_fields)
+    |> update_change(:name, &String.strip/1)
     |> validate_length(:name, min: 1, max: 255)
     |> unique_constraint(:name)
   end
