@@ -3,6 +3,7 @@ exports.config = {
   files: {
     javascripts: {
       joinTo: {
+        "js/admin.js": /^(web\/static\/admin\/js)/,
         "js/app.js": /^(web\/static\/js)/,
         "js/vendor.js": [
           /^(?!bower_components\/what-input\/)(bower_components)/, // what input is evil.
@@ -79,7 +80,8 @@ exports.config = {
 
   modules: {
     autoRequire: {
-      "js/app.js": ["web/static/js/app"]
+      "js/app.js": ["web/static/js/app"],
+      "js/admin.js": ["web/static/admin/js/admin"]
     }
   },
 

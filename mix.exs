@@ -4,7 +4,7 @@ defmodule Grid.Mixfile do
   def project do
     [app: :grid,
      version: "0.0.1",
-     elixir: "~> 1.0",
+     elixir: "~> 1.1",
      elixirc_paths: elixirc_paths(Mix.env),
      compilers: [:phoenix] ++ Mix.compilers,
      build_embedded: Mix.env == :prod,
@@ -18,8 +18,16 @@ defmodule Grid.Mixfile do
   # Type `mix help compile.app` for more information.
   def application do
     [mod: {Grid, []},
-     applications: [:phoenix, :phoenix_html, :cowboy, :logger,
-                    :phoenix_ecto, :postgrex]]
+     applications: [
+       :ex_aws,
+       :httpoison,
+       :phoenix,
+       :phoenix_html,
+       :cowboy,
+       :logger,
+       :phoenix_ecto,
+       :postgrex
+    ]]
   end
 
   # Specifies which paths to compile per environment.
@@ -30,13 +38,18 @@ defmodule Grid.Mixfile do
   #
   # Type `mix help deps` for examples and options.
   defp deps do
-    [{ :inflex, "~> 1.5.0" },
-     {:phoenix, "~> 1.0.4"},
-     {:phoenix_ecto, "~> 1.1"},
-     {:postgrex, ">= 0.0.0"},
-     {:phoenix_html, "~> 2.1"},
-     {:phoenix_live_reload, "~> 1.0", only: :dev},
-     {:cowboy, "~> 1.0"}]
+    [
+      {:arc, "~> 0.2.2"},
+      {:ex_aws, "~> 0.4.10"},
+      {:httpoison, "~> 0.7"},
+      {:inflex, "~> 1.5.0"},
+      {:phoenix, "~> 1.0.4"},
+      {:phoenix_ecto, "~> 1.1"},
+      {:postgrex, ">= 0.0.0"},
+      {:phoenix_html, "~> 2.1"},
+      {:phoenix_live_reload, "~> 1.0", only: :dev},
+      {:cowboy, "~> 1.0"}
+    ]
   end
 
   # Aliases are shortcut or tasks specific to the current project.

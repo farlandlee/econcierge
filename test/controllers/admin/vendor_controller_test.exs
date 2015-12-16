@@ -61,7 +61,7 @@ defmodule Grid.Admin.VendorControllerTest do
 
   test "does not update chosen resource and renders errors when data is invalid", %{conn: conn} do
     vendor = Repo.insert!(%Vendor{name: "Test"})
-    activity = Repo.insert!(%Activity{name: "Fly Fishing"})
+    activity = Repo.insert!(%Activity{name: "Fishing"})
     Repo.insert!(%VendorActivity{
       vendor_id: vendor.id,
       activity_id: activity.id
@@ -71,7 +71,7 @@ defmodule Grid.Admin.VendorControllerTest do
 
     response = html_response(conn, 200)
     assert response =~ ~s(name="vendor[name]" type="text" value="Test")
-    assert response =~ ~s(<option selected="selected" value="#{activity.id}">Fly Fishing</option></select>)
+    assert response =~ ~s(<option selected="selected" value="#{activity.id}">Fishing</option></select>)
   end
 
   test "deletes chosen resource", %{conn: conn} do
