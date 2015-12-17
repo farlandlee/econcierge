@@ -32,6 +32,7 @@ defmodule Grid.Router do
     get "/", DashboardController, :index
     resources "/activities", ActivityController
     resources "/vendors", VendorController
+    resources "/categories", CategoryController
   end
 
   # Other scopes may use custom stacks.
