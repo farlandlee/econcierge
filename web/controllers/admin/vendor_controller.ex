@@ -47,7 +47,7 @@ defmodule Grid.Admin.VendorController do
     alias Grid.Arc.Image, as: Arc
     spawn fn ->
       image = Repo.get!(Image, vendor.default_image_id)
-      Arc.store({params, vendor})
+      {:ok, _} = Arc.store({params, vendor})
       from(i in Image, where: i.id == ^image.id)
       |> Repo.update_all(set: [
         original: Arc.url({image.filename, vendor}, :original),
