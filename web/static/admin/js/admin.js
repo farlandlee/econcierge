@@ -1,3 +1,4 @@
+import "deps/phoenix_html/web/static/js/phoenix_html";
 
 $('.chosen-select').chosen();
 // sync img tag with data-img-for attribute to
