@@ -45,14 +45,27 @@ defmodule Grid.Admin.VendorController do
   defp upload_image(vendor, nil), do: :ok
   defp upload_image(vendor, %Plug.Upload{}=params) do
     alias Grid.Arc.Image, as: Arc
+
+    # Make a copy because the tmp file for the process might not be around
+    # after we spawn
+    name = :crypto.strong_rand_bytes(16)
+      |> Base.url_encode64
+      |> binary_part(0, 16)
+
+    new_path = System.tmp_dir() <> "/#{name}"
+    File.copy(params.path, new_path)
+
     spawn fn ->
       image = Repo.get!(Image, vendor.default_image_id)
-      {:ok, _} = Arc.store({params, vendor})
+      {:ok, _} = Arc.store({%{params | path: new_path}, vendor})
       from(i in Image, where: i.id == ^image.id)
       |> Repo.update_all(set: [
         original: Arc.url({image.filename, vendor}, :original),
         medium: Arc.url({image.filename, vendor}, :medium)
       ])
+
+      # Delete our copy
+      File.delete(new_path)
     end
   end
 
