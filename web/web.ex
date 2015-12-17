@@ -31,7 +31,7 @@ defmodule Grid.Web do
 
       alias Grid.Repo
       import Ecto.Model
-      import Ecto.Query, only: [from: 1, from: 2]
+      import Ecto.Query, only: [from: 1, from: 2, where: 3]
 
       import Grid.Router.Helpers
     end

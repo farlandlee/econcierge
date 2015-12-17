@@ -15,11 +15,17 @@
   </li>
 
   <li>
-    <strong>Image</strong>
+    <strong>Default Image</strong>
+    <%= if @vendor.default_image do %>
     <%= vendor_img @vendor, class: "img-responsive" %>
+    <% else %>
+    <%= link "Choose a default image in the Gallery", to: admin_vendor_image_path(@conn, :index, @vendor.id), class: "text-italic" %>
+    <% end %>
   </li>
 
-</ul>
 
+</ul>
 <%= link "Edit", to: admin_vendor_path(@conn, :edit, @vendor) %>
 <%= link "Back", to: admin_vendor_path(@conn, :index) %>
+
+<%= link "Image Gallery", to: admin_vendor_image_path(@conn, :index, @vendor.id), class: "pull-right" %>

@@ -21,6 +21,7 @@ defmodule Grid.Router do
     pipe_through :browser # Use the default browser stack
 
     get "/", PageController, :index
+
     get "/activity/:activity_name", ActivityController, :show_by_name
     post "/activity", ActivityController, :show
   end
@@ -30,13 +31,13 @@ defmodule Grid.Router do
     pipe_through :admin
 
     get "/", DashboardController, :index
-    resources "/activities", ActivityController
-    resources "/vendors", VendorController
-    resources "/categories", CategoryController
-  end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", Grid do
-  #   pipe_through :api
-  # end
+    resources "/activities", ActivityController
+    resources "/categories", CategoryController
+
+    resources "/vendors", VendorController do
+      resources "/images", Vendor.ImageController
+      put "/images/:id/default", Vendor.ImageController, :set_default
+    end
+  end
 end
