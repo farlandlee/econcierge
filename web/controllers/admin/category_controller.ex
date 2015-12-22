@@ -1,6 +1,6 @@
 defmodule Grid.Admin.CategoryController do
   use Grid.Web, :controller
-  plug Grid.PageTitle, title: "Category"
+  plug Grid.Plugs.PageTitle, title: "Category"
 
   import Ecto.Query
 

@@ -1,4 +1,6 @@
-<%= "<%=" %> link raw(~s(<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> <%= template_singular %>)), to: <%= singular %>_path(@conn, :new), class: "btn-sm btn-success pull-right" %>
+<%= "<%=" %> link to: <%= singular %>_path(@conn, :new), class: "btn-sm btn-success pull-right" do  <%= "%\>" %>
+  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> <%= template_singular %>
+<%= "<% end %\>" %>
 
 <table class="table">
   <thead>
@@ -16,7 +18,9 @@
       <td class="text-right">
         <%= "<%=" %> link "Show", to: <%= singular %>_path(@conn, :show, <%= singular %>), class: "btn btn-default btn-xs" <%= "%\>" %>
         <%= "<%=" %> link "Edit", to: <%= singular %>_path(@conn, :edit, <%= singular %>), class: "btn btn-default btn-xs" <%= "%\>" %>
-        <%= "<%=" %> link "Delete", to: <%= singular %>_path(@conn, :delete, <%= singular %>), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" <%= "%\>" %>
+        <%= "<%=" %> link to: <%= singular %>_path(@conn, :delete, <%= singular %>), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" do <%= "%\>" %>
+          <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Delete
+        <%= "<% end %>" %>
       </td>
     </tr>
 <%% end %>

@@ -2,7 +2,6 @@ defmodule Grid.ActivityController do
   use Grid.Web, :controller
 
   alias Grid.Activity
-  alias Grid.Vendor
 
   def show(conn, %{"activity" => %{"id" => id}}) do
     activity_name = Repo.one!(from a in Activity, where: a.id == ^id, select: a.name)

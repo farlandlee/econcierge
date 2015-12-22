@@ -1,6 +1,6 @@
 defmodule Grid.Admin.ActivityController do
   use Grid.Web, :controller
-  plug Grid.PageTitle, title: "Activity"
+  plug Grid.Plugs.PageTitle, title: "Activity"
 
   alias Grid.Activity
   alias Grid.Category

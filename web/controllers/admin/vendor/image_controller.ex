@@ -1,12 +1,11 @@
 defmodule Grid.Admin.Vendor.ImageController do
   use Grid.Web, :controller
-  plug Grid.PageTitle, title: "Vendor Image"
+  plug Grid.Plugs.PageTitle, title: "Vendor Image"
 
   alias Grid.Arc
   alias Grid.Image
   alias Grid.Vendor
 
-  plug :assign_vendor
   plug :assign_image when not action in [:index, :new, :create]
 
   def index(conn, _) do
@@ -120,24 +119,20 @@ defmodule Grid.Admin.Vendor.ImageController do
   ###########
   # Helpers #
   ###########
+
   defp new_image_changeset(vendor, params \\ :empty) do
     build(vendor, :images) |> Image.changeset(params)
   end
+
   ###########
   #  Plugs  #
   ###########
-
-  defp assign_vendor(conn, _) do
-    vendor = Repo.get!(Vendor, conn.params["vendor_id"])
-    assign(conn, :vendor, vendor)
-  end
 
   defp assign_image(conn, _) do
     vendor_id = conn.assigns.vendor.id
 
     image = from(i in {"vendor_images", Image},
-            where: i.assoc_id == ^vendor_id
-      )
+      where: i.assoc_id == ^vendor_id)
       |> Repo.get!(conn.params["id"])
 
     assign(conn, :image, image)

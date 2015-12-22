@@ -1,14 +1,12 @@
 defmodule Grid.Admin.VendorController do
   use Grid.Web, :controller
-  plug Grid.PageTitle, title: "Vendor"
+  plug Grid.Plugs.PageTitle, title: "Vendor"
 
   import Ecto.Query
 
-  require Logger
   alias Grid.Vendor
   alias Grid.Activity
   alias Grid.VendorActivity
-  alias Grid.Image
 
   plug :scrub_params, "vendor" when action in [:create, :update]
 
