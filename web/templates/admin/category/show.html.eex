@@ -9,7 +9,6 @@
     <strong>Description:</strong>
     <%= @category.description %>
   </li>
-
 </ul>
 
 <%= link "Edit", to: admin_category_path(@conn, :edit, @category) %>

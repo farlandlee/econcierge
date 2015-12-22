@@ -1,3 +1,6 @@
+<%= link raw(~s(<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Activity)),
+  to: admin_activity_path(@conn, :new), class: "btn-sm btn-success new-button" %>
+
 <table class="table">
   <thead>
     <tr>
@@ -22,5 +25,3 @@
 <% end %>
   </tbody>
 </table>
-
-<%= link "New Activity", to: admin_activity_path(@conn, :new) %>

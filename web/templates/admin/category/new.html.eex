@@ -1,4 +1,3 @@
 <%= render "form.html", changeset: @changeset,
-                        action: admin_category_path(@conn, :create) %>
-
-<%= link "Back", to: admin_category_path(@conn, :index) %>
+                        action: admin_category_path(@conn, :create),
+                        back: admin_category_path(@conn, :index) %>

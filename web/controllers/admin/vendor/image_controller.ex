@@ -1,5 +1,6 @@
 defmodule Grid.Admin.Vendor.ImageController do
   use Grid.Web, :controller
+  plug Grid.PageTitle, title: "Vendor Image"
 
   alias Grid.Arc
   alias Grid.Image
