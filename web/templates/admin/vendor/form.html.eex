@@ -29,12 +29,6 @@
   </div>
 
   <div class="form-group">
-    <%= label f, :default_image, "Vendor Image", class: "control-label" %>
-    <%= vendor_img f, class: "img-responsive", "data-img-for": "#vendor_default_image" %>
-    <%= file_input f, :default_image, class: "form-control" %>
-  </div>
-
-  <div class="form-group">
     <%= submit "Submit", class: "btn btn-primary" %>
   </div>
 <% end %>

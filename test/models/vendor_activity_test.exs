@@ -11,9 +11,8 @@ defmodule Grid.VendorActivityTest do
     assert changeset.valid?
   end
 
-  # @TODO
-  # test "changeset with invalid attributes" do
-  #   changeset = VendorActivity.changeset(%VendorActivity{}, @invalid_attrs)
-  #   refute changeset.valid?
-  # end
+  test "changeset with invalid attributes" do
+    changeset = VendorActivity.changeset(%VendorActivity{}, @invalid_attrs)
+    refute changeset.valid?
+  end
 end

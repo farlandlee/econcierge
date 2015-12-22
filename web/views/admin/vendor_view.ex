@@ -12,10 +12,9 @@ defmodule Grid.Admin.VendorView do
   end
   def vendor_img(nil, _), do: ""
   def vendor_img(vendor, opts) do
-    alias Grid.Arc.Image, as: Arc
     image = vendor.default_image
     if image do
-      if medium = Map.get(image, :medium) do
+      if image.medium do
         opts = opts
         |> Keyword.put_new(:src, image.medium)
         |> Keyword.put_new(:alt, image.alt)

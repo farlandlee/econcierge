@@ -1,0 +1,23 @@
+<h2><%= @image.filename %> | <%= @vendor.name %></h2>
+
+<ul>
+    <li>
+      <strong>Filename</strong>
+      <%= @image.filename %>
+    </li>
+    <li>
+      <strong>Caption</strong>
+      <%= caption @image %>
+    </li>
+    <li>
+      <strong>Original</strong>
+      <%= tag :img, src: @image.original, class: "img-responsive" %>
+    </li>
+    <li>
+      <strong>Medium</strong>
+      <%= tag :img, src: @image.medium, class: "img-responsive" %>
+    </li>
+</ul>
+
+<%= link "Edit", to: admin_vendor_image_path(@conn, :edit, @vendor.id, @image.id) %>
+<%= link "Back", to: admin_vendor_image_path(@conn, :index, @vendor.id) %>

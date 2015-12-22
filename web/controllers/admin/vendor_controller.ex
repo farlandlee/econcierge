@@ -22,84 +22,35 @@ defmodule Grid.Admin.VendorController do
     )
   end
 
-  defp insert_relationships(_, nil), do: :ok #@TODO is it really?
+  defp insert_relationships(_, nil), do: :ok
   defp insert_relationships(vendor, activity_ids) do
     # create relationships
     for string_id <- activity_ids, {activity_id, ""} = Integer.parse(string_id) do
       Repo.insert!(%VendorActivity{vendor_id: vendor.id, activity_id: activity_id})
     end
   end
-
-  defp change_image(changeset, image_upload)
-  defp change_image(changeset, nil), do: changeset
-  defp change_image(changeset, %Plug.Upload{filename: name}) do
-      image = %Image{}
-        |> Image.changeset(%{filename: name})
-        |> Repo.insert!
-
-      Ecto.Changeset.put_change(changeset, :default_image_id, image.id)
-  end
-
-  defp upload_image(vendor, image_upload)
-  defp upload_image(vendor, nil), do: :ok
-  defp upload_image(vendor, %Plug.Upload{}=params) do
-    alias Grid.Arc.Image, as: Arc
-
-    # Make a copy because the tmp file for the process might not be around
-    # after we spawn
-    name = :crypto.strong_rand_bytes(16)
-      |> Base.url_encode64
-      |> binary_part(0, 16)
-
-    new_path = System.tmp_dir() <> "/#{name}"
-    File.copy(params.path, new_path)
-
-    spawn fn ->
-      image = Repo.get!(Image, vendor.default_image_id)
-      {:ok, _} = Arc.store({%{params | path: new_path}, vendor})
-      from(i in Image, where: i.id == ^image.id)
-      |> Repo.update_all(set: [
-        original: Arc.url({image.filename, vendor}, :original),
-        medium: Arc.url({image.filename, vendor}, :medium)
-      ])
-
-      # Delete our copy
-      File.delete(new_path)
-    end
-  end
-
-  defp delete_image_change(%{changes: %{default_image_id: id}}=changeset) do
-    Repo.delete!(Image, id)
-    Ecto.Changeset.delete_change(changeset, :default_image_id)
-  end
-  defp delete_image_change(changeset), do: changeset
-
+  
   def index(conn, _params) do
     vendors = Repo.all(Vendor)
     render(conn, "index.html", vendors: vendors)
   end
 
   def new(conn, _params) do
-    changeset = Vendor.changeset(%Vendor{activities: [], default_image: %Image{}})
+    changeset = Vendor.changeset(%Vendor{activities: []})
     render(conn, "new.html", changeset: changeset, activities: all_activities)
   end
 
   def create(conn, %{"vendor" => vendor_params}) do
     {:ok, conn} = Repo.transaction fn ->
-      image_params = vendor_params["default_image"]
       changeset = Vendor.changeset(%Vendor{}, vendor_params)
-      |> change_image(image_params)
 
       case Repo.insert(changeset) do
         {:ok, vendor} ->
-          upload_image(vendor, image_params)
           insert_relationships(vendor, vendor_params["activities"])
           conn
           |> put_flash(:info, "Vendor created successfully.")
-          # |> notify_uploading(uploading?)
           |> redirect(to: admin_vendor_path(conn, :index))
         {:error, changeset} ->
-          changeset = delete_image_change(changeset)
           render(conn, "new.html", changeset: changeset, activities: all_activities)
       end
     end
@@ -119,22 +70,18 @@ defmodule Grid.Admin.VendorController do
 
   def update(conn, %{"id" => id, "vendor" => vendor_params}) do
     vendor = load_with_relationships(id)
-    image_params = vendor_params["default_image"]
     changeset = Vendor.changeset(vendor, vendor_params)
-    |> change_image(image_params)
     {:ok, conn} = Repo.transaction fn ->
       case Repo.update(changeset) do
         {:ok, vendor} ->
-          upload_image(vendor, image_params)
           #clear out old relationships
           Repo.delete_all(from x in VendorActivity, where: x.vendor_id == ^id)
           #and insert the new ones
           insert_relationships(vendor, vendor_params["activities"])
           conn
-          |> put_flash(:info, "Vendor updated successfully. If you changed the image, it may still be uploading.")
+          |> put_flash(:info, "Vendor updated successfully.")
           |> redirect(to: admin_vendor_path(conn, :show, vendor))
         {:error, changeset} ->
-          changeset = delete_image_change(changeset)
           render(conn, "edit.html", vendor: vendor, changeset: changeset, activities: all_activities)
       end
     end
@@ -144,8 +91,6 @@ defmodule Grid.Admin.VendorController do
   def delete(conn, %{"id" => id}) do
     vendor = Repo.get!(Vendor, id)
 
-    # Here we use delete! (with a bang) because we expect
-    # it to always work (and if it does not, it will raise).
     Repo.delete!(vendor)
 
     conn
