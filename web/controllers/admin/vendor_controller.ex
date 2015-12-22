@@ -30,7 +30,6 @@ defmodule Grid.Admin.VendorController do
     end
   end
 
-
   defp change_image(changeset, image_upload)
   defp change_image(changeset, nil), do: changeset
   defp change_image(changeset, %Plug.Upload{filename: name}) do
@@ -74,7 +73,6 @@ defmodule Grid.Admin.VendorController do
     Ecto.Changeset.delete_change(changeset, :default_image_id)
   end
   defp delete_image_change(changeset), do: changeset
-
 
   def index(conn, _params) do
     vendors = Repo.all(Vendor)

@@ -1,15 +1,9 @@
-defmodule Grid.Activity do
+defmodule Grid.Category do
   use Grid.Web, :model
 
-  schema "activities" do
+  schema "categories" do
     field :name, :string
     field :description, :string
-
-    has_many :vendor_activities, Grid.VendorActivity
-    has_many :vendors, through: [:vendor_activities, :vendor]
-
-    has_many :activity_categories, Grid.ActivityCategory
-    has_many :categories, through: [:activity_categories, :category]
 
     timestamps
   end

@@ -10,6 +10,11 @@
     <%= @activity.description %>
   </li>
 
+  <li>
+    <strong>Categories:</strong>
+    <%= Enum.map(@activity.categories, &(&1.name)) |> Enum.join(" | ") %>
+  </li>
+
 </ul>
 
 <%= link "Edit", to: admin_activity_path(@conn, :edit, @activity) %>
