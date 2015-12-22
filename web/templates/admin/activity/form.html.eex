@@ -30,5 +30,6 @@
 
   <div class="form-group">
     <%= submit "Submit", class: "btn btn-primary" %>
+    <%= link "Cancel", to: @back, class: "btn btn-default" %>
   </div>
 <% end %>

@@ -2,12 +2,14 @@ defmodule Grid.Admin.CategoryController do
   use Grid.Web, :controller
   plug Grid.PageTitle, title: "Category"
 
+  import Ecto.Query
+
   alias Grid.Category
 
   plug :scrub_params, "category" when action in [:create, :update]
 
   def index(conn, _params) do
-    categories = Repo.all(Category)
+    categories = Category |> order_by([c], [c.name]) |> Repo.all
     render(conn, "index.html", categories: categories)
   end
 

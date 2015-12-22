@@ -2,6 +2,8 @@ defmodule Grid.Admin.VendorController do
   use Grid.Web, :controller
   plug Grid.PageTitle, title: "Vendor"
 
+  import Ecto.Query
+
   require Logger
   alias Grid.Vendor
   alias Grid.Activity
@@ -29,9 +31,9 @@ defmodule Grid.Admin.VendorController do
       Repo.insert!(%VendorActivity{vendor_id: vendor.id, activity_id: activity_id})
     end
   end
-  
+
   def index(conn, _params) do
-    vendors = Repo.all(Vendor)
+    vendors = Vendor |> order_by([v], [v.name]) |> Repo.all
     render(conn, "index.html", vendors: vendors)
   end
 

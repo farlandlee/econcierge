@@ -11,7 +11,7 @@ defmodule Grid.Admin.ActivityController do
   plug :scrub_params, "activity" when action in [:create, :update]
 
   def index(conn, _params) do
-    activity = Repo.all(Activity)
+    activity = Activity |> order_by([a], [a.name]) |> Repo.all
     render(conn, "index.html", activity: activity)
   end
 

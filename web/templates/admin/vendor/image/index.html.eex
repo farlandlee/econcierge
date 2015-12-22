@@ -1,4 +1,8 @@
-<h2><%= @vendor.name %> Images</h2>
+<%= link "<< Back to #{@vendor.name}", to: admin_vendor_path(@conn, :show, @vendor.id) %>
+
+<%= link raw(~s(<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Image)),
+  to: admin_vendor_image_path(@conn, :new, @vendor.id), class: "btn-sm btn-success new-button" %>
+
 
 <table class="table">
   <thead>
@@ -32,6 +36,3 @@
 <% end %>
   </tbody>
 </table>
-
-<%= link "Add image", to: admin_vendor_image_path(@conn, :new, @vendor.id) %>
-<%= link "Back to #{@vendor.name}", to: admin_vendor_path(@conn, :show, @vendor.id), class: "pull-right" %>

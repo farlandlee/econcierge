@@ -41,7 +41,7 @@ defmodule Grid.Admin.ImageControllerTest do
 
     conn = get conn, admin_vendor_image_path(conn, :index, v.id)
     response = html_response(conn, 200)
-    assert response =~ "#{v.name} Images"
+    assert response =~ "Image Listing"
     assert response =~ "#{i.filename}"
     assert response =~ "#{i.alt}"
     assert response =~ "Set as Default"
@@ -66,7 +66,7 @@ defmodule Grid.Admin.ImageControllerTest do
 
   test "renders form for new resources", %{conn: conn, vendor: v} do
     conn = get conn, admin_vendor_image_path(conn, :new, v.id)
-    assert html_response(conn, 200) =~ "Add image for #{v.name}"
+    assert html_response(conn, 200) =~ "New Vendor Image"
     assert html_response(conn, 200) =~ "Caption"
     assert html_response(conn, 200) =~ "Choose A File to Upload"
   end
@@ -79,12 +79,12 @@ defmodule Grid.Admin.ImageControllerTest do
 
   test "does not create resource and renders errors when data is invalid", %{conn: conn, vendor: v} do
     conn = post conn, admin_vendor_image_path(conn, :create, v.id), image: @invalid_attrs
-    assert html_response(conn, 200) =~ "Add image for #{v.name}"
+    assert html_response(conn, 200) =~ "New Vendor Image"
   end
 
   test "shows chosen resource", %{conn: conn, vendor: v, image: i} do
     conn = get conn, admin_vendor_image_path(conn, :show, v.id, i.id)
-    assert html_response(conn, 200) =~ "#{i.filename} | #{v.name}"
+    assert html_response(conn, 200) =~ "Show Vendor Image"
     assert html_response(conn, 200) =~ "#{i.alt}"
     assert html_response(conn, 200) =~ "#{i.original}"
     assert html_response(conn, 200) =~ "#{i.medium}"
@@ -98,7 +98,7 @@ defmodule Grid.Admin.ImageControllerTest do
 
   test "renders form for editing chosen resource", %{conn: conn, vendor: v, image: i} do
     conn = get conn, admin_vendor_image_path(conn, :edit, v.id, i.id)
-    assert html_response(conn, 200) =~ "Edit #{i.filename}"
+    assert html_response(conn, 200) =~ "Edit Vendor Image"
     assert html_response(conn, 200) =~ "Caption"
     refute html_response(conn, 200) =~ "Choose A File to Upload"
   end
@@ -116,7 +116,7 @@ defmodule Grid.Admin.ImageControllerTest do
 
   test "does not update chosen resource and renders errors when data is invalid", %{conn: conn, vendor: v, image: i} do
     conn = put conn, admin_vendor_image_path(conn, :update, v.id, i.id), image: @invalid_attrs
-    assert html_response(conn, 200) =~ "Edit #{i.filename}"
+    assert html_response(conn, 200) =~ "Edit Vendor Image"
   end
 
   test "deletes chosen image and its intersect entity", %{conn: conn, vendor: v, image: i} do
