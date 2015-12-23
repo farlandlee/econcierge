@@ -59,6 +59,22 @@ defmodule Grid.Admin.ProductControllerTest do
     }
   end
 
+  test "only shows products belonging to vendor", %{conn: conn, vendor: v, activity: a} do
+    v2 = Repo.insert! %Vendor{name: "Other Vendor", description: "foobarbaz"}
+    #setup
+    p = Product.changeset(%Product{}, %{name: "don't show", description: "meow"})
+    |> Ecto.Changeset.put_change(:vendor_id, v2.id)
+    |> Ecto.Changeset.put_change(:activity_id, a.id)
+    |> Repo.insert!
+
+    conn = get conn, admin_vendor_product_path(conn, :index, v)
+    response = html_response(conn, 200)
+    refute response =~ p.name
+    refute response =~ p.description
+
+    Repo.delete! v2
+  end
+
   test "lists all entries on index", %{conn: conn, vendor: v, product: p, activity: a} do
     conn = get conn, admin_vendor_product_path(conn, :index, v)
     response = html_response(conn, 200)
@@ -82,7 +98,7 @@ defmodule Grid.Admin.ProductControllerTest do
     assert response =~ "#{a.name} | #{c.name}"
   end
 
-  test "creates resource and redirects when data is valid", %{conn: conn, vendor: v, product: p, activity_category: ac} do
+  test "creates resource and redirects when data is valid", %{conn: conn, vendor: v, activity_category: ac} do
     valid_attrs = @valid_attrs |> Map.put(:activity_categories, [ac.id])
     conn = post conn, admin_vendor_product_path(conn, :create, v), product: valid_attrs
     assert redirected_to(conn) == admin_vendor_product_path(conn, :index, v)
@@ -148,7 +164,7 @@ defmodule Grid.Admin.ProductControllerTest do
     assert redirected_to(conn) == admin_vendor_product_path(conn, :show, v, p)
     assert Repo.get_by(Product, update_params |> Map.take([:name, :description]))
 
-    assert pac = Repo.one!(from pac in ProductActivityCategory, where: pac.product_id == ^p.id)
+    pac = assert Repo.one!(from pac in ProductActivityCategory, where: pac.product_id == ^p.id)
     assert pac.activity_category_id == ac.id
   end
 
