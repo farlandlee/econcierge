@@ -10,7 +10,7 @@ defmodule Grid.ActivityController do
   end
   def show_by_name(conn, %{"activity_name" => activity_name}) do
     activities = Repo.all(Activity)
-    activity = Repo.one!(from a in Activity, where: a.name == ^activity_name, preload: :vendors)
+    activity = Repo.one!(from a in Activity, where: a.name == ^activity_name, preload: [vendors: :default_image])
     render(conn, "show.html", activity: activity, activities: activities)
   end
 end
