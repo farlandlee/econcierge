@@ -1,5 +1,6 @@
-<%= link raw(~s(<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Category)),
-  to: admin_category_path(@conn, :new), class: "btn-sm btn-success new-button" %>
+<%= link to: admin_category_path(@conn, :new), class: "btn-sm btn-success new-button" do %>
+  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Category
+<% end %>
 
 <table class="table">
   <thead>
@@ -19,7 +20,9 @@
       <td class="text-right">
         <%= link "Show", to: admin_category_path(@conn, :show, category), class: "btn btn-default btn-xs" %>
         <%= link "Edit", to: admin_category_path(@conn, :edit, category), class: "btn btn-default btn-xs" %>
-        <%= link "Delete", to: admin_category_path(@conn, :delete, category), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
+        <%= link to: admin_category_path(@conn, :delete, category), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" do %>
+          <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Delete
+        <% end %>
       </td>
     </tr>
 <% end %>

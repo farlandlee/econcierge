@@ -1,9 +1,9 @@
 defmodule <%= module %>Controller do
   use <%= base %>.Web, :controller
-  plug Grid.PageTitle, title: "<%= singular %>"
 
   alias <%= module %>
 
+  plug Grid.Plugs.PageTitle, title: "<%= singular %>"
   plug :scrub_params, <%= inspect singular %> when action in [:create, :update]
 
   def index(conn, _params) do

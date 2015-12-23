@@ -58,7 +58,7 @@ defmodule Grid.Arc do
   end
 
   # Override the persisted filenames:
-  def filename(version, {file, scope}) do
+  def filename(version, {file, _scope}) do
     # replace the extension, as Arc re-adds it afterwards
     "#{version}-#{file.file_name}"
     |> String.split(".")

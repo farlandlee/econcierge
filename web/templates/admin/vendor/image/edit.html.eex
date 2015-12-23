@@ -1,5 +1,5 @@
-<%= render "form.html", changeset: @changeset,
-                        action: admin_vendor_image_path(@conn, :update, @vendor.id, @changeset.model.id),
-                        back: admin_vendor_image_path(@conn, :index, @vendor.id) %>
-
-<%= link "Back", to: admin_vendor_image_path(@conn, :index, @vendor.id) %>
+<%= render "form.html",
+  changeset: @changeset,
+  action: admin_vendor_image_path(@conn, :update, @vendor.id, @changeset.model.id),
+  back: admin_vendor_image_path(@conn, :index, @vendor.id)
+%>

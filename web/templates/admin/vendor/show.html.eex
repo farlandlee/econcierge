@@ -1,3 +1,9 @@
+<%= link "« Back to Vendors", to: admin_vendor_path(@conn, :index) %>
+
+<%= link to: admin_vendor_path(@conn, :edit, @vendor.id), class: "btn-sm btn-primary new-button" do %>
+  <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Edit Vendor
+<% end %>
+
 <ul>
   <li>
     <strong>Name:</strong>
@@ -23,9 +29,14 @@
     <% end %>
   </li>
 
+  <li>
+    <strong>Products</strong>
+    <%= link "Go to products", to: admin_vendor_product_path(@conn, :index, @vendor) %>
+  </li>
+
+  <li>
+    <strong>Gallery</strong>
+    <%= link "Go to Gallery", to: admin_vendor_image_path(@conn, :index, @vendor) %>
+  </li>
 
 </ul>
-<%= link "Edit", to: admin_vendor_path(@conn, :edit, @vendor) %>
-<%= link "Back", to: admin_vendor_path(@conn, :index) %>
-
-<%= link "Image Gallery", to: admin_vendor_image_path(@conn, :index, @vendor.id), class: "pull-right" %>

@@ -1,12 +1,18 @@
 defmodule Grid.Router do
   use Grid.Web, :router
 
+  alias Grid.Plugs
+
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
     plug :fetch_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+  end
+
+  pipeline :assign_vendor do
+    plug Plugs.AssignModel, Grid.Vendor
   end
 
   pipeline :admin do
@@ -35,9 +41,13 @@ defmodule Grid.Router do
     resources "/activities", ActivityController
     resources "/categories", CategoryController
 
-    resources "/vendors", VendorController do
-      resources "/images", Vendor.ImageController
-      put "/images/:id/default", Vendor.ImageController, :set_default
+    resources "/vendors", VendorController, [alias: Vendor] do
+      pipe_through :assign_vendor
+
+      resources "/images", ImageController
+      put "/images/:id/default", ImageController, :set_default
+
+      resources "/products", ProductController
     end
   end
 end

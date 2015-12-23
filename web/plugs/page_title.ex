@@ -1,4 +1,4 @@
-defmodule Grid.PageTitle do
+defmodule Grid.Plugs.PageTitle do
   import Plug.Conn
   import Phoenix.Controller, only: [action_name: 1]
 

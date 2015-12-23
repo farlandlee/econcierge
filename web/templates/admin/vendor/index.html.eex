@@ -1,10 +1,13 @@
-<%= link raw(~s(<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Vendor)), to: admin_vendor_path(@conn, :new), class: "btn-sm btn-success new-button" %>
+<%= link to: admin_vendor_path(@conn, :new), class: "btn-sm btn-success new-button" do %>
+  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Vendor
+<% end %>
 
 <table class="table">
   <thead>
     <tr>
       <th>Name</th>
       <th>Description</th>
+      <th>Go To&hellip;</th>
       <th></th>
     </tr>
   </thead>
@@ -14,8 +17,11 @@
       <td><%= vendor.name %></td>
       <td><%= vendor.description %></td>
 
-      <td class="text-right">
+      <td>
+        <%= link "Products", to: admin_vendor_product_path(@conn, :index, vendor.id), class: "btn btn-default btn-xs" %>
         <%= link "Gallery", to: admin_vendor_image_path(@conn, :index, vendor.id), class: "btn btn-default btn-xs" %>
+      </td>
+      <td class="text-right">
         <%= link "Show", to: admin_vendor_path(@conn, :show, vendor), class: "btn btn-default btn-xs" %>
         <%= link "Edit", to: admin_vendor_path(@conn, :edit, vendor), class: "btn btn-default btn-xs" %>
         <%= link "Delete", to: admin_vendor_path(@conn, :delete, vendor), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>

@@ -32,17 +32,13 @@ insert! = fn model ->
 end
 
 # Activities!
-~w(Snowmobiling Paragliding)
+[fishing, snowmobiling | _] = ["Fly Fishing", "Snowmobiling", "Paragliding"]
 |> Enum.map(fn activity ->
   insert!.(%Activity{
     name: activity,
     description: "#{activity} is the most fun you can have in JH."
   })
 end)
-
-fishing = insert!.(%Activity{
-  name: "Fly Fishing", description: "Water sports are good times."
-})
 
 #Fishing vendors
 vendors = [
@@ -65,6 +61,10 @@ end)
 |> Enum.each(fn category ->
   insert!.(%ActivityCategory{
     activity_id: fishing.id,
+    category_id: category.id
+  })
+  insert!.(%ActivityCategory{
+    activity_id: snowmobiling.id,
     category_id: category.id
   })
 end)
