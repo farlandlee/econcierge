@@ -25,7 +25,7 @@ defmodule Grid.Admin.Vendor.ProductController do
   def new(conn, _params) do
     render(conn, "new.html",
       changeset: Product.changeset(%Product{}),
-      activity_categories: load_activity_categories
+      activity_categories: load_activity_categories(conn.assigns.vendor)
     )
   end
 
@@ -55,7 +55,7 @@ defmodule Grid.Admin.Vendor.ProductController do
   defp render_create({:error, changeset}, conn) do
     render(conn, "new.html",
       changeset: changeset,
-      activity_categories: load_activity_categories
+      activity_categories: load_activity_categories(conn.assigns.vendor)
     )
   end
 
@@ -75,7 +75,7 @@ defmodule Grid.Admin.Vendor.ProductController do
     render(conn, "edit.html",
       vendor: conn.assigns.vendor,
       changeset: changeset,
-      activity_categories: load_activity_categories
+      activity_categories: load_activity_categories(conn.assigns.vendor)
     )
   end
 
@@ -108,10 +108,11 @@ defmodule Grid.Admin.Vendor.ProductController do
   end
 
   defp render_update({:error, changeset}, conn) do
+    vendor = conn.assigns.vendor
     render(conn, "edit.html",
-      vendor: conn.assigns.vendor,
+      vendor: vendor,
       changeset: changeset,
-      activity_categories: load_activity_categories
+      activity_categories: load_activity_categories(vendor)
     )
   end
 
@@ -189,8 +190,14 @@ defmodule Grid.Admin.Vendor.ProductController do
     end
   end
 
-  def load_activity_categories do
+  def load_activity_categories(vendor) do
+    vendor_activity_ids = vendor
+      |> Repo.preload(:vendor_activities)
+      |> Map.get(:vendor_activities)
+      |> Enum.map(&(&1.activity_id))
+
     Repo.all(from ac in ActivityCategory,
+      where: ac.activity_id in ^vendor_activity_ids,
       join: a in assoc(ac, :activity),
       join: c in assoc(ac, :category),
       order_by: [asc: a.name, asc: c.name],
