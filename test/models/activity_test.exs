@@ -22,13 +22,13 @@ defmodule Grid.ActivityTest do
       |> Activity.changeset(%{@valid_attrs | name: ""})
 
     refute changeset.valid?
-    assert [name: {"should be at least %{count} characters", [count: 1]}] = changeset.errors
+    assert [name: {"should be at least %{count} character(s)", [count: 1]}] = changeset.errors
 
     changeset = %Activity{}
       |> Activity.changeset(%{@valid_attrs | name: TestHelper.long_string(300)})
 
     refute changeset.valid?
-    assert [name: {"should be at most %{count} characters", [count: 255]}] = changeset.errors
+    assert [name: {"should be at most %{count} character(s)", [count: 255]}] = changeset.errors
   end
 
   test "can't save the same name twice" do
