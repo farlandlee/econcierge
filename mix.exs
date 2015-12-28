@@ -44,7 +44,7 @@ defmodule Grid.Mixfile do
       {:httpoison, "~> 0.7"},
       {:inflex, "~> 1.5.0"},
       {:phoenix, "~> 1.0.4"},
-      {:phoenix_ecto, "~> 1.1"},
+      {:phoenix_ecto, "~> 1.2"},
       {:postgrex, ">= 0.0.0"},
       {:phoenix_html, "~> 2.1"},
       {:phoenix_live_reload, "~> 1.0", only: :dev},
