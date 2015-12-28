@@ -8,9 +8,14 @@ defmodule Grid.Admin.Vendor.ProductController do
   plug Grid.Plugs.PageTitle, title: "Product"
   plug :scrub_params, "product" when action in [:create, :update]
   plug :validate_activity_categories when action in [:create, :update]
+  plug :assign_product when action in [:edit, :show, :update, :delete]
 
   def index(conn, _params) do
-    products = Repo.all(from p in Product, preload: :activity)
+    vendor = conn.assigns.vendor
+    products = Repo.all(from p in Product,
+      where: p.vendor_id == ^vendor.id,
+      preload: :activity
+    )
     render(conn, "index.html",
       products: products,
       page_title: "#{conn.assigns.vendor.name} Products"
@@ -18,10 +23,8 @@ defmodule Grid.Admin.Vendor.ProductController do
   end
 
   def new(conn, _params) do
-    changeset = Product.changeset(%Product{})
-
     render(conn, "new.html",
-      changeset: changeset,
+      changeset: Product.changeset(%Product{}),
       activity_categories: load_activity_categories
     )
   end
@@ -56,16 +59,17 @@ defmodule Grid.Admin.Vendor.ProductController do
     )
   end
 
-  def show(conn, %{"id" => id}) do
-    product = get_with_assocs(id)
+  def show(conn, _) do
+    product = conn.assigns.product |> load_assocs
+
     render(conn, "show.html",
       product: product,
       page_tite: product.name
     )
   end
 
-  def edit(conn, %{"id" => id}) do
-    product = get_with_assocs(id)
+  def edit(conn, _) do
+    product = conn.assigns.product |> load_assocs
     changeset = Product.changeset(product)
 
     render(conn, "edit.html",
@@ -75,8 +79,8 @@ defmodule Grid.Admin.Vendor.ProductController do
     )
   end
 
-  def update(conn, %{"id" => id, "product" => product_params}) do
-    product = Repo.get!(Product, id)
+  def update(conn, %{"product" => product_params}) do
+    product = conn.assigns.product
     changeset = Product.changeset(product, product_params)
       |> Ecto.Changeset.put_change(:activity_id, conn.assigns.param_activity.id)
 
@@ -111,8 +115,8 @@ defmodule Grid.Admin.Vendor.ProductController do
     )
   end
 
-  def delete(conn, %{"id" => id}) do
-    Repo.get!(Product, id)
+  def delete(conn, _) do
+    conn.assigns.product
     |> Repo.delete!
 
     conn
@@ -124,6 +128,15 @@ defmodule Grid.Admin.Vendor.ProductController do
   #############
   ##  Plugs  ##
   #############
+
+  def assign_product(conn, _) do
+    vendor = conn.assigns.vendor
+    id = conn.params["id"]
+    product = Repo.one!(from p in Product,
+      where: p.id == ^id and p.vendor_id == ^vendor.id
+    )
+    assign(conn, :product, product)
+  end
 
   def validate_activity_categories(conn, _) do
     ac_ids = conn.params["product"]["activity_categories"] || []
@@ -163,11 +176,8 @@ defmodule Grid.Admin.Vendor.ProductController do
   ## Helpers ##
   #############
 
-  defp get_with_assocs(id) do
-    Repo.one!(from p in Product,
-      where: p.id == ^id,
-      preload: [:activity, activity_categories: :category]
-    )
+  def load_assocs(product) do
+    Repo.preload(product, [:activity, activity_categories: :category])
   end
 
   def add_product_activity_categories(activity_categories, product_id) do
