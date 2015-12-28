@@ -7,6 +7,7 @@ defmodule Grid.Admin.ProductControllerTest do
   alias Grid.Product
   alias Grid.ProductActivityCategory
   alias Grid.Vendor
+  alias Grid.VendorActivity
 
   @valid_attrs %{description: "some content", name: "some content"}
   @invalid_attrs %{name: ""}
@@ -20,6 +21,7 @@ defmodule Grid.Admin.ProductControllerTest do
   setup do
     v = Repo.insert!(@vendor)
     a = Repo.insert!(@activity)
+    va = Repo.insert!(%VendorActivity{vendor_id: v.id, activity_id: a.id})
     c = Repo.insert!(@category)
 
     ac = Repo.insert!(%ActivityCategory{
@@ -97,6 +99,23 @@ defmodule Grid.Admin.ProductControllerTest do
     assert response =~ "Activity &amp; Category"
     assert response =~ "#{a.name} | #{c.name}"
   end
+
+  test "filters activity categories by vendor activities", %{conn: conn, vendor: v, product: p} do
+    activity = Repo.insert! %Activity{name: "dontshow", description: "nodesc"}
+    category = Repo.insert! %Category{name: "NEVER"}
+    activity_category = Repo.insert! %ActivityCategory{activity_id: activity.id, category_id: category.id}
+
+    conn = get conn, admin_vendor_product_path(conn, :new, v)
+    response = html_response(conn, 200)
+    refute response =~ "#{activity.name} | #{category.name}"
+
+    conn = conn |> recycle |> get(admin_vendor_product_path(conn, :edit, v, p))
+    response = html_response(conn, 200)
+    refute response =~ "#{activity.name} | #{category.name}"
+
+    [activity, category] |> Enum.map(&Repo.delete!/1)
+  end
+
 
   test "creates resource and redirects when data is valid", %{conn: conn, vendor: v, activity_category: ac} do
     valid_attrs = @valid_attrs |> Map.put(:activity_categories, [ac.id])
