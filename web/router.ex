@@ -28,8 +28,9 @@ defmodule Grid.Router do
 
     get "/", PageController, :index
 
-    get "/activity/:activity_name", ActivityController, :show_by_name
     post "/activity", ActivityController, :show
+    get "/activity/:activity_name", ActivityController, :show_by_name
+    get "/activity/:activity_name/:category_name", ActivityController, :show_by_name_and_category
   end
 
   scope "/admin", Grid.Admin, as: :admin do

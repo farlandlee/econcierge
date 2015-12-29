@@ -41,6 +41,7 @@ defmodule Grid.Mixfile do
     [
       {:arc, "~> 0.2.2"},
       {:ex_aws, "~> 0.4.10"},
+      {:ex_machina, "~> 0.5", only: :test},
       {:httpoison, "~> 0.7"},
       {:inflex, "~> 1.5.0"},
       {:phoenix, "~> 1.0.4"},
