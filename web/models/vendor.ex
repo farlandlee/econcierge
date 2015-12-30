@@ -6,6 +6,7 @@ defmodule Grid.Vendor do
   schema "vendors" do
     field :name, :string
     field :description, :string
+    field :slug, :string
 
     belongs_to :default_image, {"vendor_images", Image}
 
@@ -29,5 +30,6 @@ defmodule Grid.Vendor do
   def changeset(model, params \\ :empty) do
     model
     |> cast(params, @required_fields, @optional_fields)
+    |> slugify
   end
 end

@@ -71,7 +71,7 @@ defmodule Grid.Admin.VendorControllerTest do
 
     response = html_response(conn, 200)
     assert response =~ ~s(name="vendor[name]" type="text" value="Test")
-    assert response =~ ~s(<option selected="selected" value="#{activity.id}">Fishing</option></select>)
+    assert response =~ ~s(<option selected="selected" value="#{activity.id}">Fishing</option>)
   end
 
   test "deletes chosen resource", %{conn: conn} do

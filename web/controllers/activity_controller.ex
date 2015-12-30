@@ -9,14 +9,14 @@ defmodule Grid.ActivityController do
   alias Grid.Vendor
 
   plug Grid.Plugs.AssignAvailableActivities
-  plug :activity_assigns when action in [:show_by_name, :show_by_name_and_category]
+  plug :activity_assigns when action in [:show_by_slug, :show_by_slug_and_category]
 
   def show(conn, %{"activity" => %{"id" => id}}) do
-    activity_name = Repo.one!(from a in Activity, where: a.id == ^id, select: a.name)
-    redirect(conn, to: activity_path(conn, :show_by_name, activity_name))
+    activity_slug = Repo.one!(from a in Activity, where: a.id == ^id, select: a.slug)
+    redirect(conn, to: activity_path(conn, :show_by_slug, activity_slug))
   end
 
-  def show_by_name(conn, _) do
+  def show_by_slug(conn, _) do
     vendors = Repo.all(
       from v in Vendor,
       join: p in Product, on: v.id == p.vendor_id,
@@ -33,8 +33,8 @@ defmodule Grid.ActivityController do
     )
   end
 
-  def show_by_name_and_category(conn, %{"category_name" => category_name}) do
-    category = Repo.one!(from c in Category, where: c.name == ^category_name)
+  def show_by_slug_and_category(conn, %{"category_slug" => category_slug}) do
+    category = Repo.get_by!(Category, slug: category_slug)
 
     # Load all unique vendors offering products for the specified
     # activity and category.
@@ -58,8 +58,8 @@ defmodule Grid.ActivityController do
   end
 
   def activity_assigns(conn, _) do
-    name = conn.params["activity_name"]
-    activity = Repo.one!(from a in Activity, where: a.name == ^name)
+    slug = conn.params["activity_slug"]
+    activity = Repo.get_by!(Activity, slug: slug)
 
     categories = Repo.all(
       from c in Category,

@@ -4,6 +4,7 @@ defmodule Grid.Product do
   schema "products" do
     field :description, :string
     field :name, :string
+
     belongs_to :vendor, Grid.Vendor
     belongs_to :activity, Grid.Activity
 

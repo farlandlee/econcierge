@@ -10,11 +10,14 @@
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
 alias Grid.Repo
+
 alias Grid.Activity
+alias Grid.ActivityCategory
+alias Grid.Category
+alias Grid.Product
+alias Grid.ProductActivityCategory
 alias Grid.Vendor
 alias Grid.VendorActivity
-alias Grid.Category
-alias Grid.ActivityCategory
 
 # only insert if the model doesn't exist unchanged from seeds
 insert! = fn model ->
@@ -55,16 +58,48 @@ vendors |> Enum.each(fn v ->
   insert!.(%VendorActivity{vendor_id: v.id, activity_id: fishing.id})
 end)
 
+#Productiones
+fishing_prod = insert!.(%Product{
+  name: "All the product",
+  description: "Buy it!",
+  vendor_id: hd(vendors).id,
+  activity_id: fishing.id
+})
+snowmo_prod = insert!.(%Product{
+  name: "Snowmobiling product",
+  description: "Buy it!",
+  vendor_id: Enum.at(vendors, 2).id,
+  activity_id: snowmobiling.id
+})
+
 # add categories for fly fishing
 ["Half Day", "Full Day", "Overnight", "Classes"]
 |> Enum.map(&(insert!.(%Category{name: &1})))
-|> Enum.each(fn category ->
-  insert!.(%ActivityCategory{
+|> Enum.map(fn category ->
+  ac = insert!.(%ActivityCategory{
     activity_id: fishing.id,
     category_id: category.id
   })
-  insert!.(%ActivityCategory{
+  insert!.(%ProductActivityCategory{
+    activity_category_id: ac.id,
+    product_id: fishing_prod.id
+  })
+
+  ac = insert!.(%ActivityCategory{
     activity_id: snowmobiling.id,
     category_id: category.id
   })
+  insert!.(%ProductActivityCategory{
+    activity_category_id: ac.id,
+    product_id: snowmo_prod.id
+  })
 end)
+
+for m <- [Activity, Category, Product, Vendor] do
+  Enum.map(Repo.all(m), fn model ->
+    model
+    |> Ecto.Changeset.change
+    |> Grid.Models.Utils.slugify
+    |> Repo.update!
+  end)
+end

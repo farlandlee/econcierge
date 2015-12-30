@@ -22,6 +22,7 @@ defmodule Grid.Web do
 
       import Ecto.Changeset
       import Ecto.Query, only: [from: 1, from: 2]
+      import Grid.Models.Utils
     end
   end
 

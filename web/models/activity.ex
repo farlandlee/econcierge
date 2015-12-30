@@ -4,6 +4,7 @@ defmodule Grid.Activity do
   schema "activities" do
     field :name, :string
     field :description, :string
+    field :slug, :string
 
     has_many :vendor_activities, Grid.VendorActivity
     has_many :vendors, through: [:vendor_activities, :vendor]
@@ -29,5 +30,6 @@ defmodule Grid.Activity do
     |> update_change(:name, &String.strip/1)
     |> validate_length(:name, min: 1, max: 255)
     |> unique_constraint(:name)
+    |> slugify
   end
 end
