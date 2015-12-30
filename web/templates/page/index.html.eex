@@ -10,9 +10,9 @@
               <div class="input-group">
                 <%= select(
                   f, :id,
-                  Enum.map(@activities, &({&1.name, &1.id})),
+                  Enum.map(@available_activities, &({&1.name, &1.id})),
                   [ class: "input-group-field chosen-select",
-                    "data-placeholder": "Rafting, Hiking, Biking, etc.",
+                    "data-placeholder": activity_examples(@available_activities),
                     prompt: ""
                   ])
                 %>
@@ -32,7 +32,7 @@
     <div class="suggested-activities">
       <ul class="menu">
         <li class="menu-text">Suggested</li>
-        <%= for activity <- @activities do %>
+        <%= for activity <- @available_activities do %>
         <li><%= link activity.name, to: activity_path(@conn, :show_by_name, activity.name) %></li>
         <%= end %>
       </ul>

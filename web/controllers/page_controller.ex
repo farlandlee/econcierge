@@ -1,10 +1,9 @@
 defmodule Grid.PageController do
   use Grid.Web, :controller
 
-  alias Grid.Activity
+  plug Grid.Plugs.AssignAvailableActivities
 
   def index(conn, _params) do
-    activities = Repo.all(Activity)
-    render(conn, "index.html", activities: activities)
+    render(conn, "index.html")
   end
 end

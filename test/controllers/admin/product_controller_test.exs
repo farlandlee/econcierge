@@ -21,7 +21,7 @@ defmodule Grid.Admin.ProductControllerTest do
   setup do
     v = Repo.insert!(@vendor)
     a = Repo.insert!(@activity)
-    va = Repo.insert!(%VendorActivity{vendor_id: v.id, activity_id: a.id})
+    Repo.insert!(%VendorActivity{vendor_id: v.id, activity_id: a.id})
     c = Repo.insert!(@category)
 
     ac = Repo.insert!(%ActivityCategory{
@@ -103,7 +103,7 @@ defmodule Grid.Admin.ProductControllerTest do
   test "filters activity categories by vendor activities", %{conn: conn, vendor: v, product: p} do
     activity = Repo.insert! %Activity{name: "dontshow", description: "nodesc"}
     category = Repo.insert! %Category{name: "NEVER"}
-    activity_category = Repo.insert! %ActivityCategory{activity_id: activity.id, category_id: category.id}
+    Repo.insert! %ActivityCategory{activity_id: activity.id, category_id: category.id}
 
     conn = get conn, admin_vendor_product_path(conn, :new, v)
     response = html_response(conn, 200)
