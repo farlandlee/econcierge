@@ -3,12 +3,7 @@ defmodule Grid.Admin.ActivityControllerTest do
 
   alias Grid.Activity
   @valid_attrs %{name: "some content", description: "some content"}
-  @invalid_attrs %{}
-
-  setup do
-    conn = conn()
-    {:ok, conn: conn}
-  end
+  @invalid_attrs %{name: "", description: ""}
 
   test "lists all entries on index", %{conn: conn} do
     conn = get conn, admin_activity_path(conn, :index)
@@ -36,7 +31,7 @@ defmodule Grid.Admin.ActivityControllerTest do
   end
 
   test "shows chosen resource", %{conn: conn} do
-    activity = Repo.insert! %Activity{}
+    activity = Factory.create(:activity)
     conn = get conn, admin_activity_path(conn, :show, activity)
 
     response_body = html_response(conn, 200)
@@ -52,24 +47,26 @@ defmodule Grid.Admin.ActivityControllerTest do
   end
 
   test "renders form for editing chosen resource", %{conn: conn} do
-    activity = Repo.insert! %Activity{}
+    activity = Factory.create(:activity)
     conn = get conn, admin_activity_path(conn, :edit, activity)
 
     response_body = html_response(conn, 200)
     assert response_body =~ "Edit Activity"
     assert response_body =~ "Name"
+    assert response_body =~ "#{activity.name}"
     assert response_body =~ "Description"
+    assert response_body =~ "#{activity.description}"
   end
 
   test "updates chosen resource and redirects when data is valid", %{conn: conn} do
-    activity = Repo.insert! %Activity{}
+    activity = Factory.create(:activity)
     conn = put conn, admin_activity_path(conn, :update, activity), activity: @valid_attrs
     assert redirected_to(conn) == admin_activity_path(conn, :show, activity)
     assert Repo.get_by(Activity, @valid_attrs)
   end
 
   test "does not update chosen resource and renders errors when data is invalid", %{conn: conn} do
-    activity = Repo.insert! %Activity{}
+    activity = Factory.create(:activity)
     conn = put conn, admin_activity_path(conn, :update, activity), activity: @invalid_attrs
 
     response_body = html_response(conn, 200)
@@ -79,7 +76,7 @@ defmodule Grid.Admin.ActivityControllerTest do
   end
 
   test "deletes chosen resource", %{conn: conn} do
-    activity = Repo.insert! %Activity{}
+    activity = Factory.create(:activity)
     conn = delete conn, admin_activity_path(conn, :delete, activity)
     assert redirected_to(conn) == admin_activity_path(conn, :index)
     refute Repo.get(Activity, activity.id)

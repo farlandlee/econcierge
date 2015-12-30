@@ -8,7 +8,7 @@ defmodule Grid.ProductActivityCategory do
     timestamps
   end
 
-  @required_fields ~w()
+  @required_fields ~w(activity_category_id product_id)
   @optional_fields ~w()
 
   @doc """

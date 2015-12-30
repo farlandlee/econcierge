@@ -20,6 +20,7 @@ defmodule Grid.ConnCase do
       # Import conveniences for testing with connections
       use Phoenix.ConnTest
 
+      alias Grid.Factory
       alias Grid.Repo
       import Ecto.Model
       import Ecto.Query, only: [from: 2]

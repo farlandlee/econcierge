@@ -3,7 +3,7 @@ defmodule Grid.ProductActivityCategoryTest do
 
   alias Grid.ProductActivityCategory
 
-  @valid_attrs %{}
+  @valid_attrs %{activity_category_id: 1, product_id: 1}
   @invalid_attrs %{}
 
   test "changeset with valid attributes" do
@@ -11,8 +11,8 @@ defmodule Grid.ProductActivityCategoryTest do
     assert changeset.valid?
   end
 
-  # test "changeset with invalid attributes" do
-  #   changeset = ProductActivityCategory.changeset(%ProductActivityCategory{}, @invalid_attrs)
-  #   refute changeset.valid?
-  # end
+  test "changeset with invalid attributes" do
+    changeset = ProductActivityCategory.changeset(%ProductActivityCategory{}, @invalid_attrs)
+    refute changeset.valid?
+  end
 end

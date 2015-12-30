@@ -12,52 +12,28 @@ defmodule Grid.Admin.ProductControllerTest do
   @valid_attrs %{description: "some content", name: "some content"}
   @invalid_attrs %{name: ""}
 
-  @vendor %Vendor{name: "ImageVendorTest", description: "ImageVendorTestVendor"}
-  @activity %Activity{name: "Activity Name", description: "activity description"}
-  @category %Category{name: "Full Day"}
-
-  @product %{name: "Product Name", description: "Product Description"}
-
   setup do
-    v = Repo.insert!(@vendor)
-    a = Repo.insert!(@activity)
-    Repo.insert!(%VendorActivity{vendor_id: v.id, activity_id: a.id})
-    c = Repo.insert!(@category)
+    p = Factory.create(:product)
 
+    Repo.insert!(%VendorActivity{vendor_id: p.vendor.id, activity_id: p.activity.id})
+
+    c = Factory.create(:category)
     ac = Repo.insert!(%ActivityCategory{
-      activity_id: a.id,
+      activity_id: p.activity.id,
       category_id: c.id
     })
-
-    p = Product.changeset(%Product{}, @product)
-    |> Ecto.Changeset.put_change(:vendor_id, v.id)
-    |> Ecto.Changeset.put_change(:activity_id, a.id)
-    |> Repo.insert!
-
-    pac = Repo.insert! %ProductActivityCategory{
+    
+    Repo.insert! %ProductActivityCategory{
       activity_category_id: ac.id,
       product_id: p.id
     }
 
-    on_exit fn ->
-      for model <- [pac, ac, c, a, p, v] do
-        try do
-          Repo.delete(model)
-        rescue
-          Ecto.StaleModelError -> :ok
-        end
-      end
-    end
-
-    conn = conn()
     {:ok,
-      conn: conn,
-      vendor: v,
-      activity: a,
       product: p,
+      vendor: p.vendor,
+      activity: p.activity,
       category: c,
-      activity_category: ac,
-      product_activity_category: pac
+      activity_category: ac
     }
   end
 

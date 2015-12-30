@@ -121,7 +121,7 @@ defmodule Grid.Admin.Vendor.ImageController do
   ###########
 
   defp new_image_changeset(vendor, params \\ :empty) do
-    build(vendor, :images) |> Image.changeset(params)
+    build_assoc(vendor, :images) |> Image.changeset(params)
   end
 
   ###########

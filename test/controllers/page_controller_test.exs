@@ -1,8 +1,6 @@
 defmodule Grid.PageControllerTest do
   use Grid.ConnCase
 
-  alias Grid.Factory
-
   test "GET /" do
     product = Factory.create(:product)
     product2 = Factory.create(:product)

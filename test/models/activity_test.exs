@@ -7,11 +7,6 @@ defmodule Grid.ActivityTest do
   @valid_attrs %{name: "some content", description: "some description"}
   @invalid_attrs %{}
 
-  setup do
-    Ecto.Adapters.SQL.restart_test_transaction(Grid.Repo)
-    :ok
-  end
-
   test "changeset with valid attributes" do
     changeset = Activity.changeset(%Activity{}, @valid_attrs)
     assert changeset.valid?
