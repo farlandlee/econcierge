@@ -14,4 +14,9 @@
     <strong>Description:</strong>
     <%= @category.description %>
   </li>
+
+  <li>
+    <strong>Slug:</strong>
+    <code><%= @category.slug %></code>
+  </li>
 </ul>

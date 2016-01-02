@@ -26,4 +26,5 @@
   "poolboy": {:hex, :poolboy, "1.5.1"},
   "postgrex": {:hex, :postgrex, "0.10.0"},
   "ranch": {:hex, :ranch, "1.2.0"},
+  "slugger": {:git, "git://github.com/h4cc/slugger.git", "cf3ca69bf38ee4fee13e9698c80873c4392fb1d0", []},
   "ssl_verify_hostname": {:hex, :ssl_verify_hostname, "1.0.5"}}

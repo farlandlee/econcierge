@@ -10,7 +10,8 @@ defmodule Grid.Factory do
 
   def factory(:category) do
     %Category{
-      name: sequence(:name, &"category-#{&1}")
+      name: sequence(:name, &"category-#{&1}"),
+      slug: sequence(:slug, &"category-#{&1}")
     }
   end
 
@@ -18,6 +19,7 @@ defmodule Grid.Factory do
     %Activity{
       name: sequence(:name, &"activity-#{&1}"),
       description: "Something fun!",
+      slug: sequence(:slug, &"activity-#{&1}")
     }
   end
 
@@ -31,6 +33,7 @@ defmodule Grid.Factory do
   def factory(:vendor) do
     %Vendor{
       name: sequence(:name, &"vendor-#{&1}"),
+      slug: sequence(:slug, &"vendor-#{&1}"),
       description: "The best!"
     }
   end

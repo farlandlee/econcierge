@@ -21,4 +21,9 @@
     <%= Enum.map(@activity.categories, &(&1.name)) |> Enum.join(" | ") %>
   </li>
 
+  <li>
+    <strong>Slug:</strong>
+    <code><%= @activity.slug %></code>
+  </li>
+
 </ul>

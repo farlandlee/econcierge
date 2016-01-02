@@ -4,6 +4,7 @@ defmodule Grid.Category do
   schema "categories" do
     field :name, :string
     field :description, :string
+    field :slug, :string
 
     timestamps
   end
@@ -23,5 +24,6 @@ defmodule Grid.Category do
     |> update_change(:name, &String.strip/1)
     |> validate_length(:name, min: 1, max: 255)
     |> unique_constraint(:name)
+    |> slugify
   end
 end

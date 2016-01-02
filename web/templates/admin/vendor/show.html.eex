@@ -39,4 +39,9 @@
     <%= link "Go to Gallery", to: admin_vendor_image_path(@conn, :index, @vendor) %>
   </li>
 
+  <li>
+    <strong>Slug:</strong>
+    <code><%= @vendor.slug %></code>
+  </li>
+
 </ul>

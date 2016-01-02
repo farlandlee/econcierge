@@ -40,6 +40,7 @@ defmodule Grid.Mixfile do
   defp deps do
     [
       {:arc, "~> 0.2.2"},
+      {:cowboy, "~> 1.0"},
       {:ex_aws, "~> 0.4.10"},
       {:ex_machina, "~> 0.5", only: :test},
       {:httpoison, "~> 0.7"},
@@ -49,7 +50,7 @@ defmodule Grid.Mixfile do
       {:postgrex, ">= 0.0.0"},
       {:phoenix_html, "~> 2.1"},
       {:phoenix_live_reload, "~> 1.0", only: :dev},
-      {:cowboy, "~> 1.0"}
+      {:slugger, git: "git://github.com/h4cc/slugger.git"}
     ]
   end
 

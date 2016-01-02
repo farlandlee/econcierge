@@ -29,10 +29,10 @@
   </div>
   <div class="row column top-categories">
     <ul class="menu">
-      <li><%= link "All", to: activity_path(@conn, :show_by_name, @activity.name), class: if(@category == nil, do: "active", else: "") %></li>
+      <li><%= link "All", to: activity_path(@conn, :show_by_slug, @activity.slug), class: if(@category == nil, do: "active", else: "") %></li>
       <%= for category <- @categories do %>
         <li>
-          <%= link category.name, to: activity_path(@conn, :show_by_name_and_category, @activity.name, category.name), class: if(@category == category, do: "active", else: "") %>
+          <%= link category.name, to: activity_path(@conn, :show_by_slug_and_category, @activity.slug, category.slug), class: if(@category == category, do: "active", else: "") %>
         </li>
       <% end %>
     </li>
