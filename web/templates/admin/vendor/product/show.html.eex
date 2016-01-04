@@ -22,6 +22,15 @@
   </li>
 
   <li>
+    <strong><%= link "Start Times", to: admin_vendor_product_start_time_path(@conn, :index, @vendor, @product) %></strong>
+    <ul>
+      <%= for time <- @product.start_times do %>
+      <li><%= time.starts_at_time %></li>
+      <% end %>
+    </ul>
+  </li>
+
+  <li>
     <strong><%= @product.activity.name %> Categories</strong>
     <ul>
       <%= for ac <- @product.activity_categories do %>

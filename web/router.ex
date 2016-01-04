@@ -12,7 +12,11 @@ defmodule Grid.Router do
   end
 
   pipeline :assign_vendor do
-    plug Plugs.AssignModel, Grid.Vendor
+    plug Plugs.AssignModel, model: Grid.Vendor, param: "vendor_id"
+  end
+
+  pipeline :assign_product do
+    plug Plugs.AssignModel, model: Grid.Product, param: "product_id"
   end
 
   pipeline :admin do
@@ -48,7 +52,11 @@ defmodule Grid.Router do
       resources "/images", ImageController
       put "/images/:id/default", ImageController, :set_default
 
-      resources "/products", ProductController
+      resources "/products", ProductController, [alias: Product] do
+        pipe_through :assign_product
+
+        resources "/start_times", StartTimeController, only: [:index, :create, :delete]
+      end
     end
   end
 end

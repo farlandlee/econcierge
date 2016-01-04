@@ -3,7 +3,7 @@ defmodule <%= module %>Controller do
 
   alias <%= module %>
 
-  plug Grid.Plugs.PageTitle, title: "<%= singular %>"
+  plug Grid.Plugs.PageTitle, title: "<%= human %>"
   plug :scrub_params, <%= inspect singular %> when action in [:create, :update]
 
   def index(conn, _params) do

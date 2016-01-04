@@ -8,7 +8,7 @@ defmodule Grid.Admin.Vendor.ProductController do
   plug Grid.Plugs.PageTitle, title: "Product"
   plug :scrub_params, "product" when action in [:create, :update]
   plug :validate_activity_categories when action in [:create, :update]
-  plug :assign_product when action in [:edit, :show, :update, :delete]
+  plug Grid.Plugs.AssignModel, Product when action in [:edit, :show, :update, :delete]
 
   def index(conn, _params) do
     vendor = conn.assigns.vendor
@@ -60,7 +60,9 @@ defmodule Grid.Admin.Vendor.ProductController do
   end
 
   def show(conn, _) do
-    product = conn.assigns.product |> load_assocs
+    product = conn.assigns.product
+      |> load_assocs
+      |> Repo.preload(:start_times)
 
     render(conn, "show.html",
       product: product,
@@ -73,7 +75,6 @@ defmodule Grid.Admin.Vendor.ProductController do
     changeset = Product.changeset(product)
 
     render(conn, "edit.html",
-      vendor: conn.assigns.vendor,
       changeset: changeset,
       activity_categories: load_activity_categories(conn.assigns.vendor)
     )
@@ -108,21 +109,18 @@ defmodule Grid.Admin.Vendor.ProductController do
   end
 
   defp render_update({:error, changeset}, conn) do
-    vendor = conn.assigns.vendor
     render(conn, "edit.html",
-      vendor: vendor,
       changeset: changeset,
-      activity_categories: load_activity_categories(vendor)
+      activity_categories: load_activity_categories(conn.assigns.vendor)
     )
   end
 
   def delete(conn, _) do
-    conn.assigns.product
-    |> Repo.delete!
+    Repo.delete!(conn.assigns.product)
 
     conn
     |> put_flash(:info, "Product deleted successfully.")
-    |> redirect(to: admin_vendor_product_path(conn, :index, conn.assigns.vendor.id))
+    |> redirect(to: admin_vendor_product_path(conn, :index, conn.assigns.vendor))
   end
 
 
