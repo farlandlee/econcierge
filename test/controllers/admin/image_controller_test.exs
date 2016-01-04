@@ -1,43 +1,23 @@
-defmodule Grid.Admin.ImageControllerTest do
+defmodule Grid.Admin.VendorImageControllerTest do
   use Grid.ConnCase
 
   alias Grid.Image
   alias Grid.Vendor
 
-  import Ecto.Model, only: [build: 2]
-
   @valid_attrs %{"alt" => "New caption"}
   @invalid_attrs %{}
 
   @table {"vendor_images", Image}
-  @vendor %Vendor{name: "ImageVendorTest", description: "ImageVendorTestVendor"}
-  @image_params %{filename: "filename.jpg", alt: "Some alt text", medium: "/priv/test/foobar.jpg", original: "/priv/test/original-foobar.jpg"}
 
-  defp build_image(vendor, fields) do
-    build(vendor, :images)
-    |> Map.merge(fields)
-  end
   setup do
-    v = Repo.insert!(@vendor)
-    i = build_image(v, @image_params) |> Repo.insert!
+    v = Factory.create(:vendor)
+    i = Factory.create_vendor_image(assoc_id: v.id)
 
-
-    conn = conn()
-
-    on_exit fn ->
-      for model <- [v, i] do
-        try do
-          Repo.delete(model)
-        rescue
-          Ecto.StaleModelError -> :ok
-        end
-      end
-    end
-    {:ok, conn: conn, vendor: v, image: i}
+    {:ok, vendor: v, image: i}
   end
 
   test "lists all entries on index", %{conn: conn, vendor: v, image: i} do
-    no_alt_img = build_image(v, %{filename: "no_alt.jpg"}) |> Repo.insert!
+    no_alt_img = Factory.create_vendor_image(assoc_id: v.id, alt: "")
 
     conn = get conn, admin_vendor_image_path(conn, :index, v.id)
     response = html_response(conn, 200)
@@ -48,8 +28,6 @@ defmodule Grid.Admin.ImageControllerTest do
 
     assert response =~ "#{no_alt_img.filename}"
     assert response =~ "No caption"
-
-    Repo.delete!(no_alt_img)
   end
 
   test "set default image", %{conn: conn, vendor: v, image: i} do

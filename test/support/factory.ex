@@ -1,18 +1,36 @@
 defmodule Grid.Factory do
   use ExMachina.Ecto, repo: Grid.Repo
 
-  alias Grid.Category
+  import Ecto
+
   alias Grid.Activity
   alias Grid.ActivityCategory
-  alias Grid.Vendor
+  alias Grid.Category
   alias Grid.Product
   alias Grid.ProductActivityCategory
+  alias Grid.Vendor
+
+  alias Grid.Repo #hack for creating abstracts
 
   def factory(:category) do
     %Category{
       name: sequence(:name, &"category-#{&1}"),
       slug: sequence(:slug, &"category-#{&1}")
     }
+  end
+
+  def factory(:vendor_image) do
+    name = sequence(:filename, &"file-#{&1}.jpg")
+    build_assoc(%Vendor{}, :images, [
+      filename: name,
+      alt: "Caption text for #{name}",
+      medium: "priv/images/medium-#{name}",
+      original: "priv/images/original-#{name}"
+    ])
+  end
+
+  def create_vendor_image(attrs \\ %{}) do
+    build(:vendor_image, attrs) |> Repo.insert!
   end
 
   def factory(:activity) do

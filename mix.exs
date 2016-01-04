@@ -45,10 +45,10 @@ defmodule Grid.Mixfile do
       {:ex_machina, "~> 0.5", only: :test},
       {:httpoison, "~> 0.7"},
       {:inflex, "~> 1.5.0"},
-      {:phoenix, "~> 1.0.4"},
-      {:phoenix_ecto, "~> 1.2"},
+      {:phoenix, "~> 1.1"},
+      {:phoenix_ecto, "~> 2.0"},
       {:postgrex, ">= 0.0.0"},
-      {:phoenix_html, "~> 2.1"},
+      {:phoenix_html, "~> 2.3"},
       {:phoenix_live_reload, "~> 1.0", only: :dev},
       {:slugger, git: "git://github.com/h4cc/slugger.git"}
     ]

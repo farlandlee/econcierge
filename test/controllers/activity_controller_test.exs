@@ -4,7 +4,7 @@ defmodule Grid.ActivityControllerTest do
   alias Grid.Factory
 
   setup do
-    {:ok, conn: conn(), product: Factory.create(:product)}
+    {:ok, product: Factory.create(:product)}
   end
 
   test "POST /", %{conn: conn, product: p} do
@@ -13,22 +13,25 @@ defmodule Grid.ActivityControllerTest do
   end
 
   test "Get /<activity_slug>", %{conn: conn, product: p} do
-    conn = get(conn, activity_path(conn, :show_by_slug, p.activity.slug))
+    path = activity_path(conn, :show_by_slug, p.activity.slug)
+    conn = get(conn, path)
+
     response = html_response(conn, 200)
     assert response =~ p.activity.name
     assert response =~ p.vendor.name
-    assert response =~ ~s(<a class="active" href="/activity/#{p.activity.slug}">All</a>)
+    assert response =~ ~s(<a class="active" href="#{path}">All</a>)
   end
 
   test "Get /<activity_name>/<category_name>", %{conn: conn, product: p} do
     Factory.with_activity_category(p)
     a = p.activity |> Repo.preload(:categories)
     c = hd(a.categories)
+    path = activity_path(conn, :show_by_slug_and_category, p.activity.slug, c.slug)
+    conn = get(conn, path)
 
-    conn = get(conn, activity_path(conn, :show_by_slug_and_category, p.activity.slug, c.slug))
     response = html_response(conn, 200)
     assert response =~ p.activity.name
     assert response =~ p.vendor.name
-    assert response =~ ~s(<a class="active" href="/activity/#{p.activity.slug}/#{c.slug}">#{c.name}</a>)
+    assert response =~ ~s(<a class="active" href="#{path}">#{c.name}</a>)
   end
 end
