@@ -6,7 +6,7 @@ defmodule Grid.Admin.Vendor.ImageController do
   alias Grid.Image
   alias Grid.Vendor
 
-  plug :assign_image when not action in [:index, :new, :create]
+  plug Grid.Plugs.AssignModel, {"vendor_images", Image} when not action in [:index, :new, :create]
 
   def index(conn, _) do
     vendor = conn.assigns.vendor |> Repo.preload(:images)
@@ -14,9 +14,8 @@ defmodule Grid.Admin.Vendor.ImageController do
   end
 
   def new(conn, _) do
-    vendor = conn.assigns.vendor
-    changeset = new_image_changeset(vendor)
-    render(conn, "new.html", vendor: vendor, changeset: changeset)
+    changeset = new_image_changeset(conn.assigns.vendor)
+    render(conn, "new.html", changeset: changeset)
   end
 
   def create(conn, %{"image" => img_params = %{"file" => file}}) do
@@ -35,55 +34,45 @@ defmodule Grid.Admin.Vendor.ImageController do
         """)
         |> redirect(to: admin_vendor_image_path(conn, :index, vendor.id))
       {:error, changeset} ->
-        render(conn, "new.html", vendor: vendor, changeset: changeset)
+        render(conn, "new.html", changeset: changeset)
     end
   end
 
   def create(conn, _invalid_params) do
-    vendor = conn.assigns.vendor
-    changeset = new_image_changeset(vendor)
+    changeset = new_image_changeset(conn.assigns.vendor)
 
     conn
     |> put_flash(:error, "Invalid parameters")
-    |> render("new.html", vendor: vendor, changeset: changeset)
+    |> render("new.html", changeset: changeset)
   end
 
   def show(conn, _) do
-    render(conn, "show.html",
-      image: conn.assigns.image,
-      vendor: conn.assigns.vendor
-    )
+    render(conn, "show.html")
   end
 
   def edit(conn, _) do
-    render(conn, "edit.html",
-      vendor: conn.assigns.vendor,
-      changeset: conn.assigns.image |> Image.changeset()
-    )
+    render(conn, "edit.html", changeset: Image.changeset(conn.assigns.image))
   end
 
   @doc "Only an image's `alt` can be updated by this method"
   def update(conn, %{"image" => %{"alt" => alt}}) do
-    vendor = conn.assigns.vendor
-    changeset = Image.changeset(conn.assigns.image, %{"alt" => alt})
-
-    case Repo.update(changeset) do
+    conn.assigns.image
+    |> Image.changeset(%{"alt" => alt})
+    |> Repo.update
+    |> case do
       {:ok, image} ->
         conn
         |> put_flash(:info, "Image successfully updated.")
-        |> redirect(to: admin_vendor_image_path(conn, :show, vendor.id, image.id))
+        |> redirect(to: admin_vendor_image_path(conn, :show, conn.assigns.vendor, image))
       {:error, changeset} ->
-        render(conn, "edit.html", changeset: changeset, vendor: vendor)
+        render(conn, "edit.html", changeset: changeset)
     end
   end
 
   def update(conn, _invalid_params) do
     conn
     |> put_flash(:error, "Invalid image parameters.")
-    |> render("edit.html",
-      vendor: conn.assigns.vendor,
-      changeset: conn.assigns.image |> Image.changeset()
-    )
+    |> render("edit.html", changeset: Image.changeset(conn.assigns.image))
   end
 
   def set_default(conn, _) do
@@ -97,23 +86,20 @@ defmodule Grid.Admin.Vendor.ImageController do
     case Repo.update(vendor_changeset) do
       {:ok, vendor} ->
         conn
-        |> redirect(to: admin_vendor_image_path(conn, :index, vendor.id))
+        |> redirect(to: admin_vendor_image_path(conn, :index, vendor))
       {:error, _changeset} ->
         conn
         |> put_flash(:error, "There was a problem setting the default image")
-        |> redirect(to: admin_vendor_image_path(conn, :index, vendor.id))
+        |> redirect(to: admin_vendor_image_path(conn, :index, vendor))
     end
   end
 
   def delete(conn, _) do
-    conn.assigns.image
-    |> Repo.delete!
-
-    vendor_id = conn.assigns.vendor.id
+    Repo.delete!(conn.assigns.image)
 
     conn
     |> put_flash(:info, "Image deleted successfully.")
-    |> redirect(to: admin_vendor_image_path(conn, :index, vendor_id))
+    |> redirect(to: admin_vendor_image_path(conn, :index, conn.assigns.vendor))
   end
 
   ###########
@@ -122,19 +108,5 @@ defmodule Grid.Admin.Vendor.ImageController do
 
   defp new_image_changeset(vendor, params \\ :empty) do
     build_assoc(vendor, :images) |> Image.changeset(params)
-  end
-
-  ###########
-  #  Plugs  #
-  ###########
-
-  defp assign_image(conn, _) do
-    vendor_id = conn.assigns.vendor.id
-
-    image = from(i in {"vendor_images", Image},
-      where: i.assoc_id == ^vendor_id)
-      |> Repo.get!(conn.params["id"])
-
-    assign(conn, :image, image)
   end
 end

@@ -25,12 +25,7 @@ defmodule Grid.ActivityController do
       preload: :default_image
     )
 
-    render(conn, "show.html",
-      activity: conn.assigns.activity,
-      categories: conn.assigns.categories,
-      vendors: vendors,
-      category: nil
-    )
+    render(conn, "show.html", vendors: vendors, category: nil)
   end
 
   def show_by_slug_and_category(conn, %{"category_slug" => category_slug}) do
@@ -49,12 +44,7 @@ defmodule Grid.ActivityController do
       preload: :default_image
     )
 
-    render(conn, "show.html",
-      activity: conn.assigns.activity,
-      categories: conn.assigns.categories,
-      vendors: vendors,
-      category: category
-    )
+    render(conn, "show.html", vendors: vendors, category: category)
   end
 
   def activity_assigns(conn, _) do

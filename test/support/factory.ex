@@ -8,9 +8,15 @@ defmodule Grid.Factory do
   alias Grid.Category
   alias Grid.Product
   alias Grid.ProductActivityCategory
+  alias Grid.StartTime
   alias Grid.Vendor
 
-  alias Grid.Repo #hack for creating abstracts
+  def factory(:start_time) do
+    %StartTime{
+      product: build(:product),
+      starts_at_time: Ecto.Time.utc(:usec)
+    }
+  end
 
   def factory(:category) do
     %Category{
@@ -30,7 +36,7 @@ defmodule Grid.Factory do
   end
 
   def create_vendor_image(attrs \\ %{}) do
-    build(:vendor_image, attrs) |> Repo.insert!
+    build(:vendor_image, attrs) |> Grid.Repo.insert!
   end
 
   def factory(:activity) do

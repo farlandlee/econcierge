@@ -9,26 +9,8 @@ defmodule Grid.Admin.VendorController do
   alias Grid.VendorActivity
 
   plug :scrub_params, "vendor" when action in [:create, :update]
-
-  defp all_activities do
-    Repo.all(Activity)
-  end
-
-  defp load_with_relationships(id) do
-    Repo.one!(
-      from v in Vendor,
-        where: v.id == ^id,
-        preload: [:activities, :default_image]
-    )
-  end
-
-  defp insert_relationships(_, nil), do: :ok
-  defp insert_relationships(vendor, activity_ids) do
-    # create relationships
-    for string_id <- activity_ids, {activity_id, ""} = Integer.parse(string_id) do
-      Repo.insert!(%VendorActivity{vendor_id: vendor.id, activity_id: activity_id})
-    end
-  end
+  plug Grid.Plugs.AssignModel, Vendor when not action in [:index, :new, :create]
+  plug :load_assocs when not action in [:index, :new, :create]
 
   def index(conn, _params) do
     vendors = Vendor |> order_by([v], [v.name]) |> Repo.all
@@ -57,25 +39,24 @@ defmodule Grid.Admin.VendorController do
     conn
   end
 
-  def show(conn, %{"id" => id}) do
-    vendor = load_with_relationships(id)
-    render(conn, "show.html", vendor: vendor)
+  def show(conn, _) do
+    render(conn, "show.html", vendor: conn.assigns.vendor)
   end
 
-  def edit(conn, %{"id" => id}) do
-    vendor = load_with_relationships(id)
+  def edit(conn, _) do
+    vendor = conn.assigns.vendor
     changeset = Vendor.changeset(vendor)
     render(conn, "edit.html", vendor: vendor, changeset: changeset, activities: all_activities)
   end
 
-  def update(conn, %{"id" => id, "vendor" => vendor_params}) do
-    vendor = load_with_relationships(id)
+  def update(conn, %{"vendor" => vendor_params}) do
+    vendor = conn.assigns.vendor
     changeset = Vendor.changeset(vendor, vendor_params)
     {:ok, conn} = Repo.transaction fn ->
       case Repo.update(changeset) do
         {:ok, vendor} ->
           #clear out old relationships
-          Repo.delete_all(from x in VendorActivity, where: x.vendor_id == ^id)
+          Repo.delete_all(from x in VendorActivity, where: x.vendor_id == ^vendor.id)
           #and insert the new ones
           insert_relationships(vendor, vendor_params["activities"])
           conn
@@ -88,13 +69,36 @@ defmodule Grid.Admin.VendorController do
     conn
   end
 
-  def delete(conn, %{"id" => id}) do
-    vendor = Repo.get!(Vendor, id)
-
-    Repo.delete!(vendor)
+  def delete(conn, _) do
+    Repo.delete!(conn.assigns.vendor)
 
     conn
     |> put_flash(:info, "Vendor deleted successfully.")
     |> redirect(to: admin_vendor_path(conn, :index))
+  end
+
+  #############
+  ##  Plugs  ##
+  #############
+
+  def load_assocs(conn, _) do
+    vendor = conn.assigns.vendor |> Repo.preload([:activities, :default_image])
+    assign(conn, :vendor, vendor)
+  end
+
+  #############
+  ## Helpers ##
+  #############
+
+  defp all_activities do
+    Repo.all(Activity)
+  end
+
+  defp insert_relationships(_, nil), do: :ok
+  defp insert_relationships(vendor, activity_ids) do
+    # create relationships
+    for string_id <- activity_ids, {activity_id, ""} = Integer.parse(string_id) do
+      Repo.insert!(%VendorActivity{vendor_id: vendor.id, activity_id: activity_id})
+    end
   end
 end
