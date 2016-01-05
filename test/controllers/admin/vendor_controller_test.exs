@@ -2,7 +2,6 @@ defmodule Grid.Admin.VendorControllerTest do
   use Grid.ConnCase
 
   alias Grid.Vendor
-  alias Grid.Activity
   alias Grid.VendorActivity
 
   @valid_attrs %{description: "some content", name: "some content", activities: []}

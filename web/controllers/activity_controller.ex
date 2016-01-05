@@ -20,6 +20,7 @@ defmodule Grid.ActivityController do
     vendors = Repo.all(
       from v in Vendor,
       join: p in Product, on: v.id == p.vendor_id,
+      where: p.published == true,
       where: p.activity_id == ^conn.assigns.activity.id,
       distinct: true,
       preload: :default_image
@@ -38,6 +39,7 @@ defmodule Grid.ActivityController do
       join: p in Product, on: v.id == p.vendor_id,
       join: pac in ProductActivityCategory, on: p.id == pac.product_id,
       join: ac in ActivityCategory, on: pac.activity_category_id == ac.id,
+      where: p.published == true,
       where: p.activity_id == ^conn.assigns.activity.id,
       where: ac.category_id == ^category.id,
       distinct: true,

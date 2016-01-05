@@ -58,13 +58,15 @@ fishing_prod = insert!.(%Product{
   name: "All the product",
   description: "Buy it!",
   vendor_id: hd(fishing_vendors).id,
-  activity_id: fishing.id
+  activity_id: fishing.id,
+  published: true
 })
 snowmo_prod = insert!.(%Product{
   name: "Snowmobiling product",
   description: "Buy it!",
   vendor_id: hd(snowmobiling_vendors).id,
-  activity_id: snowmobiling.id
+  activity_id: snowmobiling.id,
+  published: true
 })
 
 # add categories for fly fishing

@@ -4,6 +4,7 @@ defmodule Grid.Product do
   schema "products" do
     field :description, :string
     field :name, :string
+    field :published, :boolean, default: :false
 
     belongs_to :vendor, Grid.Vendor
     belongs_to :activity, Grid.Activity
@@ -15,7 +16,7 @@ defmodule Grid.Product do
     timestamps
   end
 
-  @required_fields ~w(description name)
+  @required_fields ~w(description name published)
   @optional_fields ~w()
 
   @doc """

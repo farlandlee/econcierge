@@ -29,6 +29,11 @@
       <% end %>
     </ul>
   </li>
+  
+  <li>
+    <strong>Published:</strong>
+    <%= check_icon @product.published %>
+  </li>
 
   <li>
     <strong><%= @product.activity.name %> Categories</strong>

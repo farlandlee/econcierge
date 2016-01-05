@@ -67,7 +67,8 @@ defmodule Grid.Factory do
       name: sequence(:name, &"product-#{&1}"),
       description: "Buy it!",
       vendor: build(:vendor),
-      activity: build(:activity)
+      activity: build(:activity),
+      published: true
     }
   end
 
