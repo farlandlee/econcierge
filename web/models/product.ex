@@ -8,7 +8,9 @@ defmodule Grid.Product do
 
     belongs_to :vendor, Grid.Vendor
     belongs_to :activity, Grid.Activity
+    belongs_to :default_price, Grid.Price
 
+    has_many :prices, Grid.Price
     has_many :start_times, Grid.StartTime
     has_many :product_activity_categories, Grid.ProductActivityCategory
     has_many :activity_categories, through: [:product_activity_categories, :activity_category]

@@ -1,25 +1,17 @@
-defmodule Grid.Vendor do
+defmodule Grid.Price do
   use Grid.Web, :model
 
-  alias Grid.Image
-
-  schema "vendors" do
+  schema "prices" do
+    field :amount, :float
     field :name, :string
     field :description, :string
-    field :slug, :string
-
-    belongs_to :default_image, {"vendor_images", Image}
-
-    has_many :vendor_activities, Grid.VendorActivity
-    has_many :activities, through: [:vendor_activities, :activity]
-
-    has_many :images, {"vendor_images", Image}, foreign_key: :assoc_id
+    belongs_to :product, Grid.Product
 
     timestamps
   end
 
-  @required_fields ~w(name description)
-  @optional_fields ~w()
+  @required_fields ~w(amount name)
+  @optional_fields ~w(description)
 
   @doc """
   Creates a changeset based on the `model` and `params`.
@@ -30,10 +22,10 @@ defmodule Grid.Vendor do
   def changeset(model, params \\ :empty) do
     model
     |> cast(params, @required_fields, @optional_fields)
+    |> update_change(:amount, &(Float.round(&1, 2)))
     |> update_change(:name, &String.strip/1)
     |> update_change(:description, &String.strip/1)
     |> validate_length(:name, min: 1, max: 255)
     |> validate_length(:description, min: 1, max: 255)
-    |> slugify
   end
 end

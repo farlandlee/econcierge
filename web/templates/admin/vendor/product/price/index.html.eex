@@ -1,0 +1,43 @@
+<%= link "« Back to #{@product.name}", to: admin_vendor_product_path(@conn, :show, @vendor, @product) %>
+
+<%= link to: admin_vendor_product_price_path(@conn, :new, @vendor, @product), class: "btn-sm btn-success pull-right" do  %>
+  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add price
+<% end %>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Amount</th>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Default Price?</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for price <- @prices do %>
+    <tr>
+      <td>$<%= price.amount %></td>
+      <td><%= price.name %></td>
+      <td><%= price.description %></td>
+
+      <td>
+      <%= if price.id == @product.default_price_id do %>
+        <em>Current default</em>
+      <% else %>
+        <%= link "Set as Default", to: admin_vendor_product_price_path(@conn, :set_default, @vendor, @product, price), method: :put, class: "btn btn-primary" %>
+      <% end %>
+      </td>
+
+      <td class="text-right">
+        <%= link "Show", to: admin_vendor_product_price_path(@conn, :show, @vendor, @product, price), class: "btn btn-default btn-xs" %>
+        <%= link "Edit", to: admin_vendor_product_price_path(@conn, :edit, @vendor, @product, price), class: "btn btn-default btn-xs" %>
+        <%= link to: admin_vendor_product_price_path(@conn, :delete, @vendor, @product, price), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" do %>
+          <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Delete
+        <% end %>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>

@@ -62,7 +62,7 @@ defmodule Grid.Admin.Vendor.ProductController do
   def show(conn, _) do
     product = conn.assigns.product
       |> load_assocs
-      |> Repo.preload(:start_times)
+      |> Repo.preload([:start_times, :prices])
 
     render(conn, "show.html",
       product: product,

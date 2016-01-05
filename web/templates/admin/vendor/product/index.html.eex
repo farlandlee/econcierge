@@ -1,4 +1,4 @@
-<%= link "« Back to #{@vendor.name}", to: admin_vendor_path(@conn, :show, @vendor.id) %>
+<%= link "« Back to #{@vendor.name}", to: admin_vendor_path(@conn, :show, @vendor) %>
 
 <%= link to: admin_vendor_product_path(@conn, :new, @vendor), class: "btn-sm btn-success new-button" do %>
   <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Product
@@ -24,7 +24,11 @@
       <td><%= product.description %></td>
       <td> <%= check_icon product.published %> </td>
 
-      <td><%= link "Start times", to: admin_vendor_product_start_time_path(@conn, :index, @vendor, product), class: "btn btn-default btn-xs" %>
+      <td>
+        <%= link "Start times", to: admin_vendor_product_start_time_path(@conn, :index, @vendor, product), class: "btn btn-default btn-xs" %>
+        <%= link "Prices", to: admin_vendor_product_price_path(@conn, :index, @vendor, product), class: "btn btn-default btn-xs" %>
+      </td>
+
       <td class="text-right">
         <%= link "Show", to: admin_vendor_product_path(@conn, :show, @vendor, product), class: "btn btn-default btn-xs" %>
         <%= link "Edit", to: admin_vendor_product_path(@conn, :edit, @vendor, product), class: "btn btn-default btn-xs" %>
