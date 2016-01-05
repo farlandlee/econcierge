@@ -55,7 +55,8 @@ defmodule Grid.ActivityController do
       from c in Category,
       join: ac in ActivityCategory, on: c.id == ac.category_id,
       join: pac in ProductActivityCategory, on: ac.id == pac.activity_category_id,
-      where: ac.activity_id == ^activity.id
+      where: ac.activity_id == ^activity.id,
+      distinct: true
     )
 
     conn
