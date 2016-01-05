@@ -10,6 +10,7 @@
       <th>Name</th>
       <th>Activity</th>
       <th>Description</th>
+      <th>Published?</th>
 
       <th>Go to&hellip;</th>
       <th></th>
@@ -21,6 +22,7 @@
       <td><%= product.name %></td>
       <td><%= product.activity.name %></td>
       <td><%= product.description %></td>
+      <td> <%= check_icon product.published %> </td>
 
       <td><%= link "Start times", to: admin_vendor_product_start_time_path(@conn, :index, @vendor, product), class: "btn btn-default btn-xs" %>
       <td class="text-right">

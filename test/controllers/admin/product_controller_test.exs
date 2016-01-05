@@ -22,7 +22,7 @@ defmodule Grid.Admin.ProductControllerTest do
       activity_id: p.activity.id,
       category_id: c.id
     })
-    
+
     Repo.insert! %ProductActivityCategory{
       activity_category_id: ac.id,
       product_id: p.id
@@ -60,6 +60,7 @@ defmodule Grid.Admin.ProductControllerTest do
     assert response =~ "Name"
     assert response =~ "Activity"
     assert response =~ "Description"
+    assert response =~ "Published?"
 
     assert response =~ a.name
     assert response =~ p.name
@@ -72,6 +73,7 @@ defmodule Grid.Admin.ProductControllerTest do
     assert response =~ "New Product"
     assert response =~ "Name"
     assert response =~ "Description"
+    assert response =~ "Published"
     assert response =~ "Activity &amp; Category"
     assert response =~ "#{a.name} | #{c.name}"
   end

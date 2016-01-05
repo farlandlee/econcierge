@@ -12,6 +12,7 @@ defmodule Grid.Plugs.AssignAvailableActivities do
     activities = Repo.all(
       from a in Activity,
       join: p in Product, on: a.id == p.activity_id,
+      where: p.published == true,
       distinct: true,
       order_by: :name
     )
