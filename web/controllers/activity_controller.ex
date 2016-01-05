@@ -11,6 +11,7 @@ defmodule Grid.ActivityController do
   plug Grid.Plugs.AssignAvailableActivities
   plug :activity_assigns when action in [:show_by_slug, :show_by_slug_and_category]
 
+  def show(conn, %{"activity" => %{"id" => ""}}), do: redirect(conn, to: "/")
   def show(conn, %{"activity" => %{"id" => id}}) do
     activity_slug = Repo.one!(from a in Activity, where: a.id == ^id, select: a.slug)
     redirect(conn, to: activity_path(conn, :show_by_slug, activity_slug))

@@ -14,6 +14,11 @@ defmodule Grid.ActivityControllerTest do
     assert html_response(conn, 302) =~ "/activity/#{p.activity.slug}"
   end
 
+  test "POST with empty activity id", %{conn: conn, product: p} do
+    conn = post(conn, activity_path(conn, :show), activity: %{id: ""})
+    assert html_response(conn, 302) =~ "/"
+  end
+
   test "Get /<activity_slug>", %{conn: conn, product: p} do
     path = activity_path(conn, :show_by_slug, p.activity.slug)
     conn = get(conn, path)
