@@ -1,6 +1,6 @@
-<%= link "« Back to #{@vendor.name}", to: admin_vendor_path(@conn, :show, @vendor.id) %>
+<%= link "« Back to #{@vendor.name}", to: admin_vendor_path(@conn, :show, @vendor) %>
 
-<%= link to: admin_vendor_image_path(@conn, :new, @vendor.id), class: "btn-sm btn-success new-button" do %>
+<%= link to: admin_vendor_image_path(@conn, :new, @vendor), class: "btn-sm btn-success new-button" do %>
   <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Image
 <% end %>
 
@@ -25,13 +25,13 @@
       <%= if image.id == @vendor.default_image_id do %>
         <em>Current default</em>
       <% else %>
-        <%= link "Set as Default", to: admin_vendor_image_path(@conn, :set_default, @vendor.id, image.id), method: :put, class: "btn btn-primary" %>
+        <%= link "Set as Default", to: admin_vendor_image_path(@conn, :set_default, @vendor, image), method: :put, class: "btn btn-primary" %>
       <% end %>
       </td>
       <td class="text-right">
-        <%= link "Show", to: admin_vendor_image_path(@conn, :show, @vendor.id, image.id), class: "btn btn-default btn-xs" %>
-        <%= link "Edit", to: admin_vendor_image_path(@conn, :edit, @vendor.id, image.id), class: "btn btn-default btn-xs" %>
-        <%= link "Delete", to: admin_vendor_image_path(@conn, :delete, @vendor.id, image.id), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
+        <%= link "Show", to: admin_vendor_image_path(@conn, :show, @vendor, image), class: "btn btn-default btn-xs" %>
+        <%= link "Edit", to: admin_vendor_image_path(@conn, :edit, @vendor, image), class: "btn btn-default btn-xs" %>
+        <%= link "Delete", to: admin_vendor_image_path(@conn, :delete, @vendor, image), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
       </td>
     </tr>
 <% end %>

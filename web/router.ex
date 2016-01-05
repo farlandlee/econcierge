@@ -56,6 +56,9 @@ defmodule Grid.Router do
         pipe_through :assign_product
 
         resources "/start_times", StartTimeController, only: [:index, :create, :delete]
+
+        resources "/prices", PriceController
+        put "/prices/:id/default", PriceController, :set_default
       end
     end
   end

@@ -121,7 +121,7 @@ defmodule Grid.Admin.ProductControllerTest do
     assert response =~ "#{p.description}"
     assert response =~ "Activity:"
     assert response =~ "#{a.name}"
-    assert response =~ "#{a.name} Categories"
+    assert response =~ "Categories"
     assert response =~ "#{c.name}"
     # has link to edit
     assert response =~ "Edit Product"

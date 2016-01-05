@@ -31,33 +31,23 @@ defmodule Grid.Plugs.AssignModel do
     }
   end
 
-  def call(conn, %{model: Grid.Product}=opts) do
-    product = Grid.Product
-      |> where(vendor_id: ^conn.assigns.vendor.id)
+  def call(conn, opts) do
+    assignment = opts.model
+      |> constraint(opts.model, conn)
       |> Repo.get!(conn.params[opts.param])
 
-    assign(conn, opts.as, product)
+    assign(conn, opts.as, assignment)
   end
 
-  def call(conn, %{model: Grid.StartTime}=opts) do
-    start_time = Grid.StartTime
-      |> where(product_id: ^conn.assigns.product.id)
-      |> Repo.get!(conn.params[opts.param])
+  defp constraint(query, Grid.Product, conn), do:
+    where(query, vendor_id: ^conn.assigns.vendor.id)
 
-    assign(conn, opts.as, start_time)
-  end
+  defp constraint(query, Grid.StartTime, conn), do:
+    where(query, product_id: ^conn.assigns.product.id)
 
-  def call(conn, %{model: {"vendor_images", _}=t}=opts) do
-    image = t
-      |> where(assoc_id: ^conn.assigns.vendor.id)
-      |> Repo.get!(conn.params[opts.param])
+  defp constraint(query, {"vendor_images", _}, conn), do:
+    where(query, assoc_id: ^conn.assigns.vendor.id)
 
-    assign(conn, opts.as, image)
-  end
+  defp constraint(query, _, _), do: query
 
-  def call(conn, options) do
-    id = conn.params[options.param]
-    model = Repo.get!(options.model, id)
-    assign(conn, options.as, model)
-  end
 end

@@ -6,10 +6,20 @@ defmodule Grid.Factory do
   alias Grid.Activity
   alias Grid.ActivityCategory
   alias Grid.Category
+  alias Grid.Price
   alias Grid.Product
   alias Grid.ProductActivityCategory
   alias Grid.StartTime
   alias Grid.Vendor
+
+  def factory(:price) do
+    %Price{
+      product: build(:product),
+      name: sequence(:name, &"price-#{&1}"),
+      description: sequence(:description, &"Too much moneys by: #{&1}"),
+      amount: (:random.uniform() * 1000) |> Float.floor(2)
+    }
+  end
 
   def factory(:start_time) do
     %StartTime{

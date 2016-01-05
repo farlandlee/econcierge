@@ -19,7 +19,7 @@ defmodule Grid.Admin.VendorImageControllerTest do
   test "lists all entries on index", %{conn: conn, vendor: v, image: i} do
     no_alt_img = Factory.create_vendor_image(assoc_id: v.id, alt: "")
 
-    conn = get conn, admin_vendor_image_path(conn, :index, v.id)
+    conn = get conn, admin_vendor_image_path(conn, :index, v)
     response = html_response(conn, 200)
     assert response =~ "Image Listing"
     assert response =~ "#{i.filename}"
@@ -31,11 +31,11 @@ defmodule Grid.Admin.VendorImageControllerTest do
   end
 
   test "set default image", %{conn: conn, vendor: v, image: i} do
-    conn = put conn, admin_vendor_image_path(conn, :set_default, v.id, i.id)
-    assert redirected_to(conn) =~ admin_vendor_image_path(conn, :index, v.id)
+    conn = put conn, admin_vendor_image_path(conn, :set_default, v, i)
+    assert redirected_to(conn) =~ admin_vendor_image_path(conn, :index, v)
 
     conn = recycle(conn)
-    conn = get conn, admin_vendor_image_path(conn, :index, v.id)
+    conn = get conn, admin_vendor_image_path(conn, :index, v)
     assert html_response(conn, 200) =~ "Current default"
 
     v = Repo.get!(Vendor, v.id)
@@ -56,12 +56,12 @@ defmodule Grid.Admin.VendorImageControllerTest do
   # end
 
   test "does not create resource and renders errors when data is invalid", %{conn: conn, vendor: v} do
-    conn = post conn, admin_vendor_image_path(conn, :create, v.id), image: @invalid_attrs
+    conn = post conn, admin_vendor_image_path(conn, :create, v), image: @invalid_attrs
     assert html_response(conn, 200) =~ "New Vendor Image"
   end
 
   test "shows chosen resource", %{conn: conn, vendor: v, image: i} do
-    conn = get conn, admin_vendor_image_path(conn, :show, v.id, i.id)
+    conn = get conn, admin_vendor_image_path(conn, :show, v, i)
     assert html_response(conn, 200) =~ "Show Vendor Image"
     assert html_response(conn, 200) =~ "#{i.alt}"
     assert html_response(conn, 200) =~ "#{i.original}"
@@ -70,36 +70,36 @@ defmodule Grid.Admin.VendorImageControllerTest do
 
   test "renders page not found when id is nonexistent", %{conn: conn, vendor: v} do
     assert_raise Ecto.NoResultsError, fn ->
-      get conn, admin_vendor_image_path(conn, :show, v.id, -1)
+      get conn, admin_vendor_image_path(conn, :show, v, -1)
     end
   end
 
   test "renders form for editing chosen resource", %{conn: conn, vendor: v, image: i} do
-    conn = get conn, admin_vendor_image_path(conn, :edit, v.id, i.id)
+    conn = get conn, admin_vendor_image_path(conn, :edit, v, i)
     assert html_response(conn, 200) =~ "Edit Vendor Image"
     assert html_response(conn, 200) =~ "Caption"
     refute html_response(conn, 200) =~ "Choose A File to Upload"
   end
 
   test "updates chosen resource and redirects when data is valid", %{conn: conn, vendor: v, image: i} do
-    conn = put conn, admin_vendor_image_path(conn, :update, v.id, i.id), image: @valid_attrs
-    assert redirected_to(conn) == admin_vendor_image_path(conn, :show, v.id, i.id)
+    conn = put conn, admin_vendor_image_path(conn, :update, v, i), image: @valid_attrs
+    assert redirected_to(conn) == admin_vendor_image_path(conn, :show, v, i)
 
     conn = recycle(conn)
-    conn = get conn, admin_vendor_image_path(conn, :show, v.id, i.id)
+    conn = get conn, admin_vendor_image_path(conn, :show, v, i)
     assert html_response(conn, 200) =~ @valid_attrs["alt"]
 
     assert Repo.get_by(@table, %{alt: @valid_attrs["alt"]})
   end
 
   test "does not update chosen resource and renders errors when data is invalid", %{conn: conn, vendor: v, image: i} do
-    conn = put conn, admin_vendor_image_path(conn, :update, v.id, i.id), image: @invalid_attrs
+    conn = put conn, admin_vendor_image_path(conn, :update, v, i), image: @invalid_attrs
     assert html_response(conn, 200) =~ "Edit Vendor Image"
   end
 
   test "deletes chosen image and its intersect entity", %{conn: conn, vendor: v, image: i} do
-    conn = delete conn, admin_vendor_image_path(conn, :delete, v.id, i.id)
-    assert redirected_to(conn) == admin_vendor_image_path(conn, :index, v.id)
+    conn = delete conn, admin_vendor_image_path(conn, :delete, v, i)
+    assert redirected_to(conn) == admin_vendor_image_path(conn, :index, v)
     refute Repo.get(@table, i.id)
   end
 end
