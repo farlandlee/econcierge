@@ -1,14 +1,3 @@
-# Script for populating the database. You can run it as:
-#
-#     mix run priv/repo/seeds.exs
-#
-# Inside the script, you can read and write to any of your
-# repositories directly:
-#
-#     Grid.Repo.insert!(%SomeModel{})
-#
-# We recommend using the bang functions (`insert!`, `update!`
-# and so on) as they will fail if something goes wrong.
 alias Grid.Repo
 
 alias Grid.Activity
@@ -43,32 +32,38 @@ end
   })
 end)
 
-#Fishing vendors
-vendors = [
+fishing_vendors = [
   {"Jackson Hole Anglers", "Fishing is wahoo"},
   {"Some Fishing Company", "Yay for fishing"},
   {"Boats and Rods", "All the fish."},
   {"Casting Flys", "Meow meow meow."}
 ]
 |> Enum.map(fn {name, description} ->
-  insert!.(%Vendor{name: name, description: description})
-end)
-# hook them up to the fishing activity
-vendors |> Enum.each(fn v ->
+  v = insert!.(%Vendor{name: name, description: description})
   insert!.(%VendorActivity{vendor_id: v.id, activity_id: fishing.id})
+  v
+end)
+
+snowmobiling_vendors = [
+  {"Powerful White Lines", "Do you know what the street value of this mountain is?"}
+]
+|> Enum.map(fn {name, description} ->
+  v = insert!.(%Vendor{name: name, description: description})
+  insert!.(%VendorActivity{vendor_id: v.id, activity_id: snowmobiling.id})
+  v
 end)
 
 #Productiones
 fishing_prod = insert!.(%Product{
   name: "All the product",
   description: "Buy it!",
-  vendor_id: hd(vendors).id,
+  vendor_id: hd(fishing_vendors).id,
   activity_id: fishing.id
 })
 snowmo_prod = insert!.(%Product{
   name: "Snowmobiling product",
   description: "Buy it!",
-  vendor_id: Enum.at(vendors, 2).id,
+  vendor_id: hd(snowmobiling_vendors).id,
   activity_id: snowmobiling.id
 })
 
