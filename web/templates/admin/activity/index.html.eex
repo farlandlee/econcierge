@@ -8,15 +8,19 @@
       <th>Name</th>
       <th>Description</th>
 
+      <th>Go To&hellip;</th>
       <th></th>
     </tr>
   </thead>
   <tbody>
-<%= for activity <- @activity do %>
+  <%= for activity <- @activity do %>
     <tr>
       <td><%= activity.name %></td>
       <td><%= activity.description %></td>
 
+      <td>
+        <%= link "Gallery", to: admin_activity_image_path(@conn, :index, activity), class: "btn btn-default btn-xs" %>
+      </td>
       <td class="text-right">
         <%= link "Show", to: admin_activity_path(@conn, :show, activity), class: "btn btn-default btn-xs" %>
         <%= link "Edit", to: admin_activity_path(@conn, :edit, activity), class: "btn btn-default btn-xs" %>
@@ -25,6 +29,6 @@
         <% end %>
       </td>
     </tr>
-<% end %>
+  <% end %>
   </tbody>
 </table>

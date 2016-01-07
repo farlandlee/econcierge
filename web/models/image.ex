@@ -2,7 +2,7 @@ defmodule Grid.Image do
   use Grid.Web, :model
 
   # Images are an abstraction over relationship-specific
-  # images, such as VendorImage or ActivityImage.
+  # images, such as `VendorImage` or `ActivityImage`.
   # See the "Polymorphic associations" header on
   # the Ecto.Schema docs for more.
   # https://hexdocs.pm/ecto/Ecto.Schema.html

@@ -49,6 +49,20 @@ defmodule Grid.Factory do
     build(:vendor_image, attrs) |> Grid.Repo.insert!
   end
 
+  def factory(:activity_image) do
+    name = sequence(:filename, &"file-#{&1}.jpg")
+    build_assoc(%Activity{}, :images, [
+      filename: name,
+      alt: "Caption text for #{name}",
+      medium: "priv/images/medium-#{name}",
+      original: "priv/images/original-#{name}"
+    ])
+  end
+
+  def create_activity_image(attrs \\ %{}) do
+    build(:activity_image, attrs) |> Grid.Repo.insert!
+  end
+
   def factory(:activity) do
     %Activity{
       name: sequence(:name, &"activity-#{&1}"),

@@ -48,6 +48,9 @@ defmodule Grid.Plugs.AssignModel do
   defp constraint(query, {"vendor_images", _}, conn), do:
     where(query, assoc_id: ^conn.assigns.vendor.id)
 
+  defp constraint(query, {"activity_images", _}, conn), do:
+    where(query, assoc_id: ^conn.assigns.activity.id)
+
   defp constraint(query, _, _), do: query
 
 end

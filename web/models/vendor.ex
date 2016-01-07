@@ -9,11 +9,10 @@ defmodule Grid.Vendor do
     field :slug, :string
 
     belongs_to :default_image, {"vendor_images", Image}
+    has_many :images, {"vendor_images", Image}, foreign_key: :assoc_id
 
     has_many :vendor_activities, Grid.VendorActivity
     has_many :activities, through: [:vendor_activities, :activity]
-
-    has_many :images, {"vendor_images", Image}, foreign_key: :assoc_id
 
     timestamps
   end

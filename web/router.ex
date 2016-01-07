@@ -19,6 +19,10 @@ defmodule Grid.Router do
     plug Plugs.AssignModel, model: Grid.Product, param: "product_id"
   end
 
+  pipeline :assign_activity do
+    plug Plugs.AssignModel, model: Grid.Activity, param: "activity_id"
+  end
+
   pipeline :admin do
     plug :put_layout, {Grid.LayoutView, "admin.html"}
   end
@@ -43,7 +47,13 @@ defmodule Grid.Router do
 
     get "/", DashboardController, :index
 
-    resources "/activities", ActivityController
+    resources "/activities", ActivityController, [alias: Activity] do
+      pipe_through :assign_activity
+
+      resources "/images", ImageController
+      put "/images/:id/default", ImageController, :set_default
+    end
+
     resources "/categories", CategoryController
 
     resources "/vendors", VendorController, [alias: Vendor] do
