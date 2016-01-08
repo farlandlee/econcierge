@@ -26,4 +26,13 @@
     <code><%= @activity.slug %></code>
   </li>
 
+  <li>
+    <strong>Default Image</strong>
+    <%= if @activity.default_image do %>
+    <%= activity_img @activity, class: "img-responsive" %>
+    <% else %>
+    <%= link "Choose a default image in the Gallery", to: admin_activity_image_path(@conn, :index, @activity), class: "text-italic" %>
+    <% end %>
+  </li>
+
 </ul>

@@ -1,10 +1,15 @@
 defmodule Grid.Activity do
   use Grid.Web, :model
 
+  alias Grid.Image
+
   schema "activities" do
     field :name, :string
     field :description, :string
     field :slug, :string
+
+    belongs_to :default_image, {"activity_images", Image}
+    has_many :images, {"activity_images", Image}, foreign_key: :assoc_id
 
     has_many :vendor_activities, Grid.VendorActivity
     has_many :vendors, through: [:vendor_activities, :vendor]

@@ -1,0 +1,5 @@
+<%= render "form.html",
+  changeset: @changeset,
+  action: admin_activity_image_path(@conn, :update, @activity.id, @changeset.model.id),
+  back: admin_activity_image_path(@conn, :index, @activity.id)
+%>

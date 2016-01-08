@@ -8,3 +8,4 @@ defmodule Grid.Repo.Migrations.ChangeVendorDefaultImageReference do
     end
   end
 end
+  

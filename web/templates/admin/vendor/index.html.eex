@@ -12,14 +12,14 @@
     </tr>
   </thead>
   <tbody>
-<%= for vendor <- @vendors do %>
+  <%= for vendor <- @vendors do %>
     <tr>
       <td><%= vendor.name %></td>
       <td><%= vendor.description %></td>
 
       <td>
-        <%= link "Products", to: admin_vendor_product_path(@conn, :index, vendor.id), class: "btn btn-default btn-xs" %>
-        <%= link "Gallery", to: admin_vendor_image_path(@conn, :index, vendor.id), class: "btn btn-default btn-xs" %>
+        <%= link "Products", to: admin_vendor_product_path(@conn, :index, vendor), class: "btn btn-default btn-xs" %>
+        <%= link "Gallery", to: admin_vendor_image_path(@conn, :index, vendor), class: "btn btn-default btn-xs" %>
       </td>
       <td class="text-right">
         <%= link "Show", to: admin_vendor_path(@conn, :show, vendor), class: "btn btn-default btn-xs" %>
@@ -27,6 +27,6 @@
         <%= link "Delete", to: admin_vendor_path(@conn, :delete, vendor), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
       </td>
     </tr>
-<% end %>
+  <% end %>
   </tbody>
 </table>
