@@ -9,8 +9,9 @@ defmodule Grid.Admin.Vendor.Product.PriceController do
   plug Grid.Plugs.AssignModel, Price when action in [:show, :edit, :update, :delete, :set_default]
 
   def index(conn, _params) do
-    prices = Repo.all(Price)
-    render(conn, "index.html", prices: prices, page_title: "Prices for #{conn.assigns.product.name}")
+    product = conn.assigns.product |> Repo.preload(:prices)
+
+    render(conn, "index.html", prices: product.prices, page_title: "Prices for #{product.name}")
   end
 
   def new(conn, _params) do
