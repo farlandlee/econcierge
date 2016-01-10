@@ -46,9 +46,9 @@ defmodule Grid.Admin.ActivityController do
   end
 
   def show(conn, %{"id" => id}) do
-    activity = Repo.get!(Activity, id) |> Repo.preload([:categories, :default_image])
+    activity = Repo.get!(Activity, id) |> Repo.preload([:categories, :images])
 
-    render(conn, "show.html", activity: activity)
+    render(conn, "show.html", activity: activity, page_title: activity.name)
   end
 
   def edit(conn, %{"id" => id}) do

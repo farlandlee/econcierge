@@ -34,7 +34,56 @@ defmodule Grid.Admin.VendorControllerTest do
 
   test "shows chosen resource", %{conn: conn, vendor: vendor} do
     conn = get conn, admin_vendor_path(conn, :show, vendor)
-    assert html_response(conn, 200) =~ "Show Vendor"
+    assert html_response(conn, 200) =~ "#{vendor.name}"
+  end
+
+  test "shows images", %{conn: conn, vendor: v} do
+    i = Factory.create_vendor_image(assoc_id: v.id)
+    no_alt_img = Factory.create_vendor_image(assoc_id: v.id, alt: "")
+
+    conn = get conn, admin_vendor_path(conn, :show, v)
+    response = html_response(conn, 200)
+    assert response =~ "Images"
+    assert response =~ "Add Image"
+    assert response =~ "#{i.filename}"
+    assert response =~ "#{i.alt}"
+    assert response =~ "Set as default"
+
+    assert response =~ "#{no_alt_img.filename}"
+    assert response =~ "No caption"
+  end
+
+  test "shows products", %{conn: conn} do
+    product = Factory.create(:product)
+    vendor = product.vendor
+    activity = product.activity
+    conn = get conn, admin_vendor_path(conn, :show, vendor)
+    response = html_response(conn, 200)
+    assert response =~ "Products"
+    assert response =~ "Add Product"
+    assert response =~ "Name"
+    assert response =~ "Activity"
+    assert response =~ "Description"
+    assert response =~ "Published?"
+
+    assert response =~ activity.name
+    assert response =~ product.name
+    assert response =~ product.description
+  end
+
+  test "only shows products belonging to vendor", %{conn: conn} do
+    p = Factory.create(:product)
+    v = p.vendor
+    a = p.activity
+    #setup
+    p2 = Factory.build(:product)
+    |> Ecto.Changeset.change
+    |> Ecto.Changeset.put_change(:activity_id, a.id)
+    |> Repo.insert!
+
+    conn = get conn, admin_vendor_path(conn, :show, v)
+    response = html_response(conn, 200)
+    refute response =~ p2.name
   end
 
   test "renders page not found when id is nonexistent", %{conn: conn} do

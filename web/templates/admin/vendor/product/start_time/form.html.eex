@@ -1,0 +1,7 @@
+<%= form_for Grid.StartTime.changeset(%Grid.StartTime{}), @action, [class: "pull-right"], fn f -> %>
+
+  <div class="form-group">
+    <%= time_select f, :starts_at_time, class: "form-control" %>
+    <%= submit "Add Start Time", class: "btn btn-xs btn-success", style: "border: 0" %>
+  </div>
+<% end %>

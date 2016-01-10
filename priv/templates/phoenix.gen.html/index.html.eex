@@ -1,4 +1,4 @@
-<%= "<%=" %> link to: <%= singular %>_path(@conn, :new), class: "btn-sm btn-success pull-right" do  <%= "%\>" %>
+<%= "<%=" %> link to: <%= singular %>_path(@conn, :new), class: "btn btn-success header-action" do  <%= "%\>" %>
   <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add <%= template_singular %>
 <%= "<% end %\>" %>
 
@@ -16,11 +16,22 @@
 <%= for {k, _} <- attrs do %>      <td><%= "<%=" %> <%= singular %>.<%= k %> <%= "%\>" %></td>
 <% end %>
       <td class="text-right">
-        <%= "<%=" %> link "Show", to: <%= singular %>_path(@conn, :show, <%= singular %>), class: "btn btn-default btn-xs" <%= "%\>" %>
-        <%= "<%=" %> link "Edit", to: <%= singular %>_path(@conn, :edit, <%= singular %>), class: "btn btn-default btn-xs" <%= "%\>" %>
-        <%= "<%=" %> link to: <%= singular %>_path(@conn, :delete, <%= singular %>), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" do <%= "%\>" %>
-          <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Delete
-        <%= "<% end %\>" %>
+        <div class="dropdown actions">
+          <button class="btn btn-xs btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+            Actions <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-right">
+            <li>
+              <%= "<%=" %> link "Show", to: <%= singular %>_path(@conn, :show, <%= singular %>), class: "show" <%= "%\>" %>
+            </li>
+            <li>
+              <%= "<%=" %> link "Edit", to: <%= singular %>_path(@conn, :edit, <%= singular %>), class: "edit" <%= "%\>" %>
+            </li>
+            <li>
+              <%= "<%=" %> link "Delete", to: <%= singular %>_path(@conn, :delete, <%= singular %>), method: :delete, data: [confirm: "Are you sure?"], class: "delete" <%= "%\>" %>
+            </li>
+          </ul>
+        </div>
       </td>
     </tr>
 <%% end %>

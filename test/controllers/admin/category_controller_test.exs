@@ -26,18 +26,6 @@ defmodule Grid.Admin.CategoryControllerTest do
     assert html_response(conn, 200) =~ "New Category"
   end
 
-  test "shows chosen resource", %{conn: conn} do
-    category = Factory.create(:category)
-    conn = get conn, admin_category_path(conn, :show, category)
-    assert html_response(conn, 200) =~ "Show Category"
-  end
-
-  test "renders page not found when id is nonexistent", %{conn: conn} do
-    assert_raise Ecto.NoResultsError, fn ->
-      get conn, admin_category_path(conn, :show, -1)
-    end
-  end
-
   test "renders form for editing chosen resource", %{conn: conn} do
     category = Factory.create(:category)
     conn = get conn, admin_category_path(conn, :edit, category)
@@ -47,7 +35,7 @@ defmodule Grid.Admin.CategoryControllerTest do
   test "updates chosen resource and redirects when data is valid", %{conn: conn} do
     category = Factory.create(:category)
     conn = put conn, admin_category_path(conn, :update, category), category: @valid_attrs
-    assert redirected_to(conn) == admin_category_path(conn, :show, category)
+    assert redirected_to(conn) == admin_category_path(conn, :index)
     assert Repo.get_by(Category, @valid_attrs)
   end
 

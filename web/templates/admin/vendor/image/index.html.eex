@@ -1,39 +1,38 @@
-<%= link "« Back to #{@vendor.name}", to: admin_vendor_path(@conn, :show, @vendor) %>
-
-<%= link to: admin_vendor_image_path(@conn, :new, @vendor), class: "btn-sm btn-success new-button" do %>
-  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Image
-<% end %>
-
-
 <table class="table">
   <thead>
     <tr>
       <th>Filename</th>
-      <th>Image</th>
       <th>Caption</th>
       <th>Default Image?</th>
       <th></th>
     </tr>
   </thead>
   <tbody>
-<%= for image <- @vendor.images do %>
+  <%= for image <- @images do %>
     <tr>
-      <td><%= image.filename %></td>
-      <td><%= tag :img, src: image.medium, class: "img-responsive" %></td>
+      <td><%= link image.filename, to: admin_vendor_image_path(@conn, :show, @vendor, image) %></td>
       <td><%= caption image %> </td>
       <td>
-      <%= if image.id == @vendor.default_image_id do %>
-        <em>Current default</em>
-      <% else %>
-        <%= link "Set as Default", to: admin_vendor_image_path(@conn, :set_default, @vendor, image), method: :put, class: "btn btn-primary" %>
-      <% end %>
+        <%= Grid.AdminView.default_switcher @vendor.default_image_id, image.id,
+        admin_vendor_image_path(@conn, :set_default, @vendor, image) %>
       </td>
+
       <td class="text-right">
-        <%= link "Show", to: admin_vendor_image_path(@conn, :show, @vendor, image), class: "btn btn-default btn-xs" %>
-        <%= link "Edit", to: admin_vendor_image_path(@conn, :edit, @vendor, image), class: "btn btn-default btn-xs" %>
-        <%= link "Delete", to: admin_vendor_image_path(@conn, :delete, @vendor, image), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
+        <div class="dropdown actions">
+          <button class="btn btn-xs btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+            Actions <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-right">
+            <li>
+              <%= link "Edit", to: admin_vendor_image_path(@conn, :edit, @vendor, image), class: "edit" %>
+            </li>
+            <li>
+              <%= link "Delete", to: admin_vendor_image_path(@conn, :delete, @vendor, image), method: :delete, data: [confirm: "Are you sure?"], class: "delete" %>
+            </li>
+          </ul>
+        </div>
       </td>
     </tr>
-<% end %>
+  <% end %>
   </tbody>
 </table>

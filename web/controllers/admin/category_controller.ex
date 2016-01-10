@@ -31,11 +31,6 @@ defmodule Grid.Admin.CategoryController do
     end
   end
 
-  def show(conn, %{"id" => id}) do
-    category = Repo.get!(Category, id)
-    render(conn, "show.html", category: category)
-  end
-
   def edit(conn, %{"id" => id}) do
     category = Repo.get!(Category, id)
     changeset = Category.changeset(category)
@@ -50,7 +45,7 @@ defmodule Grid.Admin.CategoryController do
       {:ok, category} ->
         conn
         |> put_flash(:info, "Category updated successfully.")
-        |> redirect(to: admin_category_path(conn, :show, category))
+        |> redirect(to: admin_category_path(conn, :index))
       {:error, changeset} ->
         render(conn, "edit.html", category: category, changeset: changeset)
     end

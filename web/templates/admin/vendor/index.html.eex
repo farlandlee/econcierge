@@ -1,4 +1,4 @@
-<%= link to: admin_vendor_path(@conn, :new), class: "btn-sm btn-success new-button" do %>
+<%= link to: admin_vendor_path(@conn, :new), class: "btn btn-success header-action" do %>
   <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Vendor
 <% end %>
 
@@ -7,24 +7,30 @@
     <tr>
       <th>Name</th>
       <th>Description</th>
-      <th>Go To&hellip;</th>
+
       <th></th>
     </tr>
   </thead>
   <tbody>
   <%= for vendor <- @vendors do %>
     <tr>
-      <td><%= vendor.name %></td>
+      <td><%= link vendor.name, to: admin_vendor_path(@conn, :show, vendor) %></td>
       <td><%= vendor.description %></td>
 
-      <td>
-        <%= link "Products", to: admin_vendor_product_path(@conn, :index, vendor), class: "btn btn-default btn-xs" %>
-        <%= link "Gallery", to: admin_vendor_image_path(@conn, :index, vendor), class: "btn btn-default btn-xs" %>
-      </td>
       <td class="text-right">
-        <%= link "Show", to: admin_vendor_path(@conn, :show, vendor), class: "btn btn-default btn-xs" %>
-        <%= link "Edit", to: admin_vendor_path(@conn, :edit, vendor), class: "btn btn-default btn-xs" %>
-        <%= link "Delete", to: admin_vendor_path(@conn, :delete, vendor), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
+        <div class="dropdown actions">
+          <button class="btn btn-xs btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+            Actions <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-right">
+            <li>
+              <%= link "Edit", to: admin_vendor_path(@conn, :edit, vendor), class: "edit" %>
+            </li>
+            <li>
+              <%= link "Delete", to: admin_vendor_path(@conn, :delete, vendor), method: :delete, data: [confirm: "Are you sure?"], class: "delete" %>
+            </li>
+          </ul>
+        </div>
       </td>
     </tr>
   <% end %>

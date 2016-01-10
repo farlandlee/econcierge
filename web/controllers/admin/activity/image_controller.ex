@@ -6,12 +6,7 @@ defmodule Grid.Admin.Activity.ImageController do
   alias Grid.Image
   alias Grid.Activity
 
-  plug Grid.Plugs.AssignModel, {"activity_images", Image} when not action in [:index, :new, :create]
-
-  def index(conn, _) do
-    activity = conn.assigns.activity |> Repo.preload(:images)
-    render(conn, "index.html", activity: activity)
-  end
+  plug Grid.Plugs.AssignModel, {"activity_images", Image} when action in [:show, :edit, :update, :delete, :set_default]
 
   def new(conn, _) do
     changeset = new_image_changeset(conn.assigns.activity)
@@ -32,7 +27,7 @@ defmodule Grid.Admin.Activity.ImageController do
         |> put_flash(:info, """
         Image successfully added, but if it doesn't appear it may still be uploading.
         """)
-        |> redirect(to: admin_activity_image_path(conn, :index, activity.id))
+        |> redirect(to: admin_activity_path(conn, :show, activity.id))
       {:error, changeset} ->
         render(conn, "new.html", changeset: changeset)
     end
@@ -47,7 +42,7 @@ defmodule Grid.Admin.Activity.ImageController do
   end
 
   def show(conn, _) do
-    render(conn, "show.html")
+    render(conn, "show.html", page_title: conn.assigns.image.filename)
   end
 
   def edit(conn, _) do
@@ -86,11 +81,11 @@ defmodule Grid.Admin.Activity.ImageController do
     case Repo.update(activity_changeset) do
       {:ok, activity} ->
         conn
-        |> redirect(to: admin_activity_image_path(conn, :index, activity))
+        |> redirect(to: admin_activity_path(conn, :show, activity))
       {:error, _changeset} ->
         conn
         |> put_flash(:error, "There was a problem setting the default image")
-        |> redirect(to: admin_activity_image_path(conn, :index, activity))
+        |> redirect(to: admin_activity_path(conn, :show, activity))
     end
   end
 
@@ -99,7 +94,7 @@ defmodule Grid.Admin.Activity.ImageController do
 
     conn
     |> put_flash(:info, "Image deleted successfully.")
-    |> redirect(to: admin_activity_image_path(conn, :index, conn.assigns.activity))
+    |> redirect(to: admin_activity_path(conn, :show, conn.assigns.activity))
   end
 
   ###########

@@ -50,24 +50,24 @@ defmodule Grid.Router do
     resources "/activities", ActivityController, [alias: Activity] do
       pipe_through :assign_activity
 
-      resources "/images", ImageController
+      resources "/images", ImageController, except: [:index]
       put "/images/:id/default", ImageController, :set_default
     end
 
-    resources "/categories", CategoryController
+    resources "/categories", CategoryController, except: [:show]
 
     resources "/vendors", VendorController, [alias: Vendor] do
       pipe_through :assign_vendor
 
-      resources "/images", ImageController
+      resources "/images", ImageController, except: [:index]
       put "/images/:id/default", ImageController, :set_default
 
-      resources "/products", ProductController, [alias: Product] do
+      resources "/products", ProductController, [alias: Product, except: [:index]] do
         pipe_through :assign_product
 
-        resources "/start_times", StartTimeController, only: [:index, :create, :delete]
+        resources "/start_times", StartTimeController, only: [:create, :delete]
 
-        resources "/prices", PriceController
+        resources "/prices", PriceController, except: [:index, :show]
         put "/prices/:id/default", PriceController, :set_default
       end
     end

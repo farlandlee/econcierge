@@ -1,21 +1,17 @@
 defmodule Grid.Admin.Vendor.ImageController do
   use Grid.Web, :controller
-  plug Grid.Plugs.PageTitle, title: "Vendor Image"
 
   alias Grid.Arc
   alias Grid.Image
   alias Grid.Vendor
 
+  plug Grid.Plugs.PageTitle, title: "Vendor Image"
   plug Grid.Plugs.AssignModel, {"vendor_images", Image} when not action in [:index, :new, :create]
 
-  def index(conn, _) do
-    vendor = conn.assigns.vendor |> Repo.preload(:images)
-    render(conn, "index.html", vendor: vendor)
-  end
-
   def new(conn, _) do
-    changeset = new_image_changeset(conn.assigns.vendor)
-    render(conn, "new.html", changeset: changeset)
+    vendor = conn.assigns.vendor
+    changeset = new_image_changeset(vendor)
+    render(conn, "new.html", changeset: changeset, page_title: "Add Image for #{vendor.name}")
   end
 
   def create(conn, %{"image" => img_params = %{"file" => file}}) do
@@ -32,7 +28,7 @@ defmodule Grid.Admin.Vendor.ImageController do
         |> put_flash(:info, """
         Image successfully added, but if it doesn't appear it may still be uploading.
         """)
-        |> redirect(to: admin_vendor_image_path(conn, :index, vendor.id))
+        |> redirect(to: admin_vendor_path(conn, :show, vendor.id))
       {:error, changeset} ->
         render(conn, "new.html", changeset: changeset)
     end
@@ -47,7 +43,7 @@ defmodule Grid.Admin.Vendor.ImageController do
   end
 
   def show(conn, _) do
-    render(conn, "show.html")
+    render(conn, "show.html", page_title: conn.assigns.image.filename)
   end
 
   def edit(conn, _) do
@@ -86,11 +82,11 @@ defmodule Grid.Admin.Vendor.ImageController do
     case Repo.update(vendor_changeset) do
       {:ok, vendor} ->
         conn
-        |> redirect(to: admin_vendor_image_path(conn, :index, vendor))
+        |> redirect(to: admin_vendor_path(conn, :show, vendor))
       {:error, _changeset} ->
         conn
         |> put_flash(:error, "There was a problem setting the default image")
-        |> redirect(to: admin_vendor_image_path(conn, :index, vendor))
+        |> redirect(to: admin_vendor_path(conn, :show, vendor))
     end
   end
 
@@ -99,7 +95,7 @@ defmodule Grid.Admin.Vendor.ImageController do
 
     conn
     |> put_flash(:info, "Image deleted successfully.")
-    |> redirect(to: admin_vendor_image_path(conn, :index, conn.assigns.vendor))
+    |> redirect(to: admin_vendor_path(conn, :show, conn.assigns.vendor))
   end
 
   ###########

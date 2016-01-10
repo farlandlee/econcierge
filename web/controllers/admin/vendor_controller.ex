@@ -9,8 +9,8 @@ defmodule Grid.Admin.VendorController do
   alias Grid.VendorActivity
 
   plug :scrub_params, "vendor" when action in [:create, :update]
-  plug Grid.Plugs.AssignModel, Vendor when not action in [:index, :new, :create]
-  plug :load_assocs when not action in [:index, :new, :create]
+  plug Grid.Plugs.AssignModel, Vendor when action in [:show, :edit, :update, :delete]
+  plug :load_assocs when action in [:show, :edit, :update, :delete]
 
   def index(conn, _params) do
     vendors = Vendor |> order_by([v], [v.name]) |> Repo.all
@@ -40,7 +40,8 @@ defmodule Grid.Admin.VendorController do
   end
 
   def show(conn, _) do
-    render(conn, "show.html", vendor: conn.assigns.vendor)
+    vendor = Repo.preload(conn.assigns.vendor, [:images, products: [:activity]])
+    render(conn, "show.html", vendor: vendor, page_title: vendor.name)
   end
 
   def edit(conn, _) do

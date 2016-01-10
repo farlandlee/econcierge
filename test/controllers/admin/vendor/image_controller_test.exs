@@ -16,26 +16,12 @@ defmodule Grid.Admin.VendorImageControllerTest do
     {:ok, vendor: v, image: i}
   end
 
-  test "lists all entries on index", %{conn: conn, vendor: v, image: i} do
-    no_alt_img = Factory.create_vendor_image(assoc_id: v.id, alt: "")
-
-    conn = get conn, admin_vendor_image_path(conn, :index, v)
-    response = html_response(conn, 200)
-    assert response =~ "Image Listing"
-    assert response =~ "#{i.filename}"
-    assert response =~ "#{i.alt}"
-    assert response =~ "Set as Default"
-
-    assert response =~ "#{no_alt_img.filename}"
-    assert response =~ "No caption"
-  end
-
   test "set default image", %{conn: conn, vendor: v, image: i} do
     conn = put conn, admin_vendor_image_path(conn, :set_default, v, i)
-    assert redirected_to(conn) =~ admin_vendor_image_path(conn, :index, v)
+    assert redirected_to(conn) =~ admin_vendor_path(conn, :show, v)
 
     conn = recycle(conn)
-    conn = get conn, admin_vendor_image_path(conn, :index, v)
+    conn = get conn, admin_vendor_path(conn, :show, v)
     assert html_response(conn, 200) =~ "Current default"
 
     v = Repo.get!(Vendor, v.id)
@@ -43,8 +29,8 @@ defmodule Grid.Admin.VendorImageControllerTest do
   end
 
   test "renders form for new resources", %{conn: conn, vendor: v} do
-    conn = get conn, admin_vendor_image_path(conn, :new, v.id)
-    assert html_response(conn, 200) =~ "New Vendor Image"
+    conn = get conn, admin_vendor_image_path(conn, :new, v)
+    assert html_response(conn, 200) =~ "Add Image for #{v.name}"
     assert html_response(conn, 200) =~ "Caption"
     assert html_response(conn, 200) =~ "Choose A File to Upload"
   end
@@ -52,7 +38,7 @@ defmodule Grid.Admin.VendorImageControllerTest do
 #@TODO how do we spoof file upload?
   # test "creates resource and redirects when data is valid", %{conn: conn, vendor: v} do
   #   conn = post conn, admin_vendor_image_path(conn, :create, v.id), image: @valid_attrs
-  #   assert redirected_to(conn) == admin_vendor_image_path(conn, :index, v.id)
+  #   assert redirected_to(conn) == admin_vendor_path(conn, :show, v.id)
   # end
 
   test "does not create resource and renders errors when data is invalid", %{conn: conn, vendor: v} do
@@ -62,7 +48,7 @@ defmodule Grid.Admin.VendorImageControllerTest do
 
   test "shows chosen resource", %{conn: conn, vendor: v, image: i} do
     conn = get conn, admin_vendor_image_path(conn, :show, v, i)
-    assert html_response(conn, 200) =~ "Show Vendor Image"
+    assert html_response(conn, 200) =~ "#{i.filename}"
     assert html_response(conn, 200) =~ "#{i.alt}"
     assert html_response(conn, 200) =~ "#{i.original}"
     assert html_response(conn, 200) =~ "#{i.medium}"
@@ -99,7 +85,7 @@ defmodule Grid.Admin.VendorImageControllerTest do
 
   test "deletes chosen image and its intersect entity", %{conn: conn, vendor: v, image: i} do
     conn = delete conn, admin_vendor_image_path(conn, :delete, v, i)
-    assert redirected_to(conn) == admin_vendor_image_path(conn, :index, v)
+    assert redirected_to(conn) == admin_vendor_path(conn, :show, v)
     refute Repo.get(@table, i.id)
   end
 end

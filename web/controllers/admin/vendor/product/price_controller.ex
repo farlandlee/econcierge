@@ -8,13 +8,6 @@ defmodule Grid.Admin.Vendor.Product.PriceController do
   plug :scrub_params, "price" when action in [:create, :update]
   plug Grid.Plugs.AssignModel, Price when action in [:show, :edit, :update, :delete, :set_default]
 
-  def index(conn, _params) do
-    product = conn.assigns.product
-    prices = assoc(product, :prices) |> Repo.all
-
-    render(conn, "index.html", prices: prices, page_title: "Prices for #{product.name}")
-  end
-
   def new(conn, _params) do
     changeset = Price.changeset(%Price{})
     render(conn, "new.html", changeset: changeset)
@@ -29,15 +22,10 @@ defmodule Grid.Admin.Vendor.Product.PriceController do
       {:ok, _price} ->
         conn
         |> put_flash(:info, "Price created successfully.")
-        |> redirect(to: admin_vendor_product_price_path(conn, :index, conn.assigns.vendor, conn.assigns.product))
+        |> redirect(to: admin_vendor_product_path(conn, :show, conn.assigns.vendor, conn.assigns.product))
       {:error, changeset} ->
         render(conn, "new.html", changeset: changeset)
     end
-  end
-
-  def show(conn, _) do
-    price = conn.assigns.price
-    render(conn, "show.html", price: price)
   end
 
   def edit(conn, _) do
@@ -54,7 +42,7 @@ defmodule Grid.Admin.Vendor.Product.PriceController do
       {:ok, price} ->
         conn
         |> put_flash(:info, "Price updated successfully.")
-        |> redirect(to: admin_vendor_product_price_path(conn, :show, conn.assigns.vendor, conn.assigns.product, price))
+        |> redirect(to: admin_vendor_product_path(conn, :show, conn.assigns.vendor, conn.assigns.product))
       {:error, changeset} ->
         render(conn, "edit.html", price: price, changeset: changeset)
     end
@@ -65,7 +53,7 @@ defmodule Grid.Admin.Vendor.Product.PriceController do
 
     conn
     |> put_flash(:info, "Price deleted successfully.")
-    |> redirect(to: admin_vendor_product_price_path(conn, :index, conn.assigns.vendor, conn.assigns.product))
+    |> redirect(to: admin_vendor_product_path(conn, :show, conn.assigns.vendor, conn.assigns.product))
   end
 
   def set_default(conn, _) do
@@ -76,11 +64,11 @@ defmodule Grid.Admin.Vendor.Product.PriceController do
     case Repo.update(product_changeset) do
       {:ok, product} ->
         conn
-        |> redirect(to: admin_vendor_product_price_path(conn, :index, conn.assigns.vendor, product))
+        |> redirect(to: admin_vendor_product_path(conn, :show, conn.assigns.vendor, product))
       {:error, _changeset} ->
         conn
         |> put_flash(:error, "There was a problem changing the default price")
-        |> redirect(to: admin_vendor_product_price_path(conn, :index, conn.assigns.vendor, product))
+        |> redirect(to: admin_vendor_product_path(conn, :show, conn.assigns.vendor, product))
     end
   end
 end
