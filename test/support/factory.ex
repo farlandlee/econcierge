@@ -45,8 +45,12 @@ defmodule Grid.Factory do
     ])
   end
 
-  def create_vendor_image(attrs \\ %{}) do
-    build(:vendor_image, attrs) |> Grid.Repo.insert!
+  def factory(:activity) do
+    %Activity{
+      name: sequence(:name, &"activity-#{&1}"),
+      description: "Something fun!",
+      slug: sequence(:slug, &"activity-#{&1}")
+    }
   end
 
   def factory(:activity_image) do
@@ -57,18 +61,6 @@ defmodule Grid.Factory do
       medium: "priv/images/medium-#{name}",
       original: "priv/images/original-#{name}"
     ])
-  end
-
-  def create_activity_image(attrs \\ %{}) do
-    build(:activity_image, attrs) |> Grid.Repo.insert!
-  end
-
-  def factory(:activity) do
-    %Activity{
-      name: sequence(:name, &"activity-#{&1}"),
-      description: "Something fun!",
-      slug: sequence(:slug, &"activity-#{&1}")
-    }
   end
 
   def factory(:activity_category) do
@@ -101,6 +93,14 @@ defmodule Grid.Factory do
       product: build(:product),
       activity_category: build(:activity_category)
     }
+  end
+
+  def create_vendor_image(attrs \\ %{}) do
+    build(:vendor_image, attrs) |> Grid.Repo.insert!
+  end
+
+  def create_activity_image(attrs \\ %{}) do
+    build(:activity_image, attrs) |> Grid.Repo.insert!
   end
 
   def with_activity_category(%Product{} = product) do

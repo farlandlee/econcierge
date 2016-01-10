@@ -20,7 +20,6 @@ defmodule Grid.Web do
     quote do
       use Ecto.Schema
 
-      import Ecto
       import Ecto.Changeset
       import Ecto.Query, only: [from: 1, from: 2]
       import Grid.Models.Utils
@@ -33,7 +32,6 @@ defmodule Grid.Web do
 
       alias Grid.Repo
       import Ecto
-      import Ecto.Model
       import Ecto.Query, only: [from: 1, from: 2, where: 3]
 
       import Grid.Router.Helpers

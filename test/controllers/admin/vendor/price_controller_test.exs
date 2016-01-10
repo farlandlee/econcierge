@@ -62,7 +62,7 @@ defmodule Grid.PriceControllerTest do
   end
 
   test "rounds price to two places", %{conn: conn, vendor: vendor, product: product, price: price} do
-    conn = put conn, admin_vendor_product_price_path(conn, :update, vendor, product, price), price: %{@valid_attrs | amount: "3.999"}
+    put conn, admin_vendor_product_price_path(conn, :update, vendor, product, price), price: %{@valid_attrs | amount: "3.999"}
     price = Repo.get!(Price, price.id)
     assert price.amount == 4.00
   end

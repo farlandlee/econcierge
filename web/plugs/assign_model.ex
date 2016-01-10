@@ -1,9 +1,8 @@
 defmodule Grid.Plugs.AssignModel do
 
   alias Grid.Repo
-  alias Grid.Product
 
-  import Ecto.Query
+  import Ecto, only: [assoc: 2]
   import Phoenix.Naming, only: [resource_name: 1]
   import Plug.Conn
 
@@ -32,25 +31,24 @@ defmodule Grid.Plugs.AssignModel do
   end
 
   def call(conn, opts) do
-    assignment = opts.model
-      |> constraint(opts.model, conn)
+    assignment = constraint(opts.model, conn)
       |> Repo.get!(conn.params[opts.param])
 
     assign(conn, opts.as, assignment)
   end
 
-  defp constraint(query, Grid.Product, conn), do:
-    where(query, vendor_id: ^conn.assigns.vendor.id)
+  defp constraint(Grid.Product, conn), do:
+    assoc(conn.assigns.vendor, :products)
 
-  defp constraint(query, Grid.StartTime, conn), do:
-    where(query, product_id: ^conn.assigns.product.id)
+  defp constraint(Grid.StartTime, conn), do:
+    assoc(conn.assigns.product, :start_times)
 
-  defp constraint(query, {"vendor_images", _}, conn), do:
-    where(query, assoc_id: ^conn.assigns.vendor.id)
+  defp constraint({"vendor_images", _}, conn), do:
+    assoc(conn.assigns.vendor, :images)
 
-  defp constraint(query, {"activity_images", _}, conn), do:
-    where(query, assoc_id: ^conn.assigns.activity.id)
+  defp constraint({"activity_images", _}, conn), do:
+    assoc(conn.assigns.activity, :images)
 
-  defp constraint(query, _, _), do: query
+  defp constraint(model, _), do: model
 
 end
