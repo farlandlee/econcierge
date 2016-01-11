@@ -39,6 +39,7 @@ defmodule Grid.ActivityControllerTest do
     assert response =~ p.activity.name
     refute response =~ p.vendor.name
     assert response =~ ~s(<a class="active" href="#{path}">All</a>)
+    assert response =~ ~s(Sorry, no offerings for #{p.activity.name} at this time.)
   end
 
 
