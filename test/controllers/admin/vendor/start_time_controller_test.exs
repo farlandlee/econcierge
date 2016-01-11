@@ -22,10 +22,10 @@ defmodule Grid.Admin.Vendor.Product.StartTimeControllerTest do
     assert response =~ Ecto.Time.to_string(start_time.starts_at_time)
   end
 
-  test "Index doesn't show other products' start times", %{conn: conn, vendor: vendor, product: product, start_time: start_time} do
+  test "Index doesn't show other products' start times", %{conn: conn, vendor: vendor, product: product} do
     conn = get conn, admin_vendor_product_start_time_path(conn, :index, vendor, product)
     other_vendors_products_time = create(:start_time)
-    assert response = html_response(conn, 200)
+    response = html_response(conn, 200)
     refute response =~ other_vendors_products_time.starts_at_time |> Ecto.Time.to_string
   end
 
@@ -39,7 +39,7 @@ defmodule Grid.Admin.Vendor.Product.StartTimeControllerTest do
 
     conn = get conn, admin_vendor_product_start_time_path(conn, :index, v, s1.product)
 
-    assert response = html_response(conn, 200)
+    response = html_response(conn, 200)
     assert response =~ s1.starts_at_time |> Ecto.Time.to_string
     refute response =~ s2.starts_at_time |> Ecto.Time.to_string
   end

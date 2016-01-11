@@ -31,7 +31,6 @@ defmodule Grid.Admin.Vendor.Product.StartTimeController do
         |> put_flash(:info, "Start time created successfully.")
         |> redirect(to: admin_vendor_product_start_time_path(conn, :index, conn.assigns.vendor, product))
       {:error, changeset} ->
-        start_times = Repo.all(StartTime)
         render(conn, "index.html",
           start_times: start_times_for(product),
           changeset: changeset,
@@ -48,9 +47,8 @@ defmodule Grid.Admin.Vendor.Product.StartTimeController do
   end
 
   def start_times_for(product) do
-    StartTime
+    assoc(product, :start_times)
     |> order_by(:starts_at_time)
-    |> where(product_id: ^product.id)
     |> Repo.all
   end
 end

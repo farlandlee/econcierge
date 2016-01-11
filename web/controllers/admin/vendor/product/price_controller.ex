@@ -9,9 +9,10 @@ defmodule Grid.Admin.Vendor.Product.PriceController do
   plug Grid.Plugs.AssignModel, Price when action in [:show, :edit, :update, :delete, :set_default]
 
   def index(conn, _params) do
-    product = conn.assigns.product |> Repo.preload(:prices)
+    product = conn.assigns.product
+    prices = assoc(product, :prices) |> Repo.all
 
-    render(conn, "index.html", prices: product.prices, page_title: "Prices for #{product.name}")
+    render(conn, "index.html", prices: prices, page_title: "Prices for #{product.name}")
   end
 
   def new(conn, _params) do
@@ -73,7 +74,7 @@ defmodule Grid.Admin.Vendor.Product.PriceController do
       |> Ecto.Changeset.put_change(:default_price_id, conn.assigns.price.id)
 
     case Repo.update(product_changeset) do
-      {:ok, vendor} ->
+      {:ok, product} ->
         conn
         |> redirect(to: admin_vendor_product_price_path(conn, :index, conn.assigns.vendor, product))
       {:error, _changeset} ->

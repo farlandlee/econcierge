@@ -12,10 +12,8 @@ defmodule Grid.Admin.Vendor.ProductController do
 
   def index(conn, _params) do
     vendor = conn.assigns.vendor
-    products = Repo.all(from p in Product,
-      where: p.vendor_id == ^vendor.id,
-      preload: :activity
-    )
+    products = assoc(vendor, :products) |> Repo.all |> Repo.preload(:activity)
+
     render(conn, "index.html",
       products: products,
       page_title: "#{conn.assigns.vendor.name} Products"
