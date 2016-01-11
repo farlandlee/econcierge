@@ -70,7 +70,7 @@
 .top-categories {
   padding: 0.9375rem;
   margin-bottom: 2rem;
-  @include menu-expand('auto');
+  @include menu-expand();
   a {
     font-weight: bold;
     &:hover,
