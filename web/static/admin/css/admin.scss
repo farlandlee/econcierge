@@ -1,3 +1,4 @@
+@import "login";
 /*
  * Base structure
  */
@@ -19,8 +20,12 @@ body {
 
 /*
  * Top navigation
- * Hide default border to remove 1px line.
  */
+
+.navbar-brand>img {
+  display: inline;
+}
+
 .navbar-fixed-top {
   border: 0;
 }

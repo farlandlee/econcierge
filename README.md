@@ -42,6 +42,8 @@ ENV Variable     | Description                   |
 ---------------- | ----------------------------- |
 AWS_ACCESS_KEY   | AWS Access Key for S3 buckets |
 AWS_SECRET_KEY   | AWS Secret Key for S3 buckets |
+GOOGLE_CLIENT_ID       | Google API Client Id |
+GOOGLE_CLIENT_SECRET   | Google Client Secret |
 
 
 ### Production-only

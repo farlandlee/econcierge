@@ -9,6 +9,7 @@ defmodule Grid.Router do
     plug :fetch_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug Plugs.AssignUser
   end
 
   pipeline :assign_vendor do
@@ -25,20 +26,28 @@ defmodule Grid.Router do
 
   pipeline :admin do
     plug :put_layout, {Grid.LayoutView, "admin.html"}
-  end
-
-  pipeline :api do
-    plug :accepts, ["json"]
+    plug Plugs.Authenticate
   end
 
   scope "/", Grid do
-    pipe_through :browser # Use the default browser stack
+    pipe_through :browser
 
     get "/", PageController, :index
 
-    post "/activity", ActivityController, :show
-    get "/activity/:activity_slug", ActivityController, :show_by_slug
-    get "/activity/:activity_slug/:category_slug", ActivityController, :show_by_slug_and_category
+    scope "/activity" do
+      post "/", ActivityController, :show
+      get "/:activity_slug", ActivityController, :show_by_slug
+      get "/:activity_slug/:category_slug", ActivityController, :show_by_slug_and_category
+    end
+  end
+
+  scope "/auth", Grid do
+    pipe_through :browser
+
+    get "/", AuthController, :index
+    get "/logout", AuthController, :logout
+    get "/:provider", AuthController, :login
+    get "/:provider/callback", AuthController, :callback
   end
 
   scope "/admin", Grid.Admin, as: :admin do
@@ -47,11 +56,13 @@ defmodule Grid.Router do
 
     get "/", DashboardController, :index
 
+    get "/users", UserController, :index
+
     resources "/activities", ActivityController, [alias: Activity] do
       pipe_through :assign_activity
 
       resources "/experiences", ExperienceController, except: [:show]
-      
+
       resources "/images", ImageController, except: [:index]
       put "/images/:id/default", ImageController, :set_default
     end

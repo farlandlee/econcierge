@@ -8,11 +8,10 @@ defmodule Grid.Admin.Vendor.Product.StartTimeControllerTest do
   @invalid_attrs %{starts_at_time: ""}
 
   setup do
-    conn = conn()
     start_time = create(:start_time)
     product = start_time.product
     vendor = product.vendor
-    {:ok, conn: conn, start_time: start_time, vendor: vendor, product: product}
+    {:ok, start_time: start_time, vendor: vendor, product: product}
   end
 
   test "creates resource and redirects when data is valid", %{conn: conn, vendor: vendor, product: product} do

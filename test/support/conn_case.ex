@@ -27,6 +27,8 @@ defmodule Grid.ConnCase do
 
       import Grid.Router.Helpers
 
+      import Grid.ConnCase
+
       # The default endpoint for testing
       @endpoint Grid.Endpoint
     end
@@ -37,6 +39,22 @@ defmodule Grid.ConnCase do
       Ecto.Adapters.SQL.restart_test_transaction(Grid.Repo, [])
     end
 
-    {:ok, conn: Phoenix.ConnTest.conn()}
+    conn = if tags[:no_auth] do
+      Phoenix.ConnTest.conn()
+    else
+      user = Grid.Repo.insert! %Grid.User{
+        name: "Test User",
+        email: "test@outpostjh.com"
+      }
+      Phoenix.ConnTest.conn()
+      |> Plug.Conn.assign(:current_user, user)
+    end
+    {:ok, conn: conn, user: user}
+  end
+
+  def recycle_with_auth(conn) do
+    conn
+    |> Phoenix.ConnTest.recycle()
+    |> Plug.Conn.assign(:current_user, conn.assigns.current_user)
   end
 end

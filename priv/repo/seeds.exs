@@ -3,6 +3,7 @@ alias Grid.Repo
 alias Grid.Activity
 alias Grid.Category
 alias Grid.Product
+alias Grid.User
 alias Grid.Vendor
 alias Grid.VendorActivity
 alias Grid.Experience
@@ -23,6 +24,11 @@ insert! = fn model ->
     model -> model
   end
 end
+
+insert!.(%User{
+  name: "Development User",
+  email: "dev@outpostjh.com"
+})
 
 # Activities!
 [fishing, snowmobiling | _] = ["Fly Fishing", "Snowmobiling", "Paragliding"]

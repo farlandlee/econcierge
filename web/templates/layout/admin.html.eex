@@ -28,11 +28,19 @@
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                <span class="glyphicon glyphicon-user"></span> <span class="caret"></span>
+              <p class="navbar-text"><%= @current_user.email %></p>
+              <a href="#" class="dropdown-toggle navbar-brand" data-toggle="dropdown" role="button" aria-expanded="false">
+                <%= if @current_user.image do %>
+                <img src="<%= @current_user.image %>">
+                <% else %>
+                <span class="glyphicon glyphicon-user"></span>
+                <% end %>
+                <span class="caret"></span>
               </a>
               <ul class="dropdown-menu" role="menu">
-                <li class="info">Admin</li>
+                <li class="info">
+                    <%= link "Log Out", to: auth_path(@conn, :logout) %>
+                </li>
               </ul>
             </li>
           </ul>
@@ -55,6 +63,9 @@
             </li>
             <li class="<%= nav_class(@conn, Grid.Admin.VendorController) %>">
               <%= link "Vendors", to: admin_vendor_path(@conn, :index) %>
+            </li>
+            <li class="<%= nav_class(@conn, Grid.Admin.UserController) %>">
+              <%= link "Users", to: admin_user_path(@conn, :index) %>
             </li>
           </ul>
         </div>

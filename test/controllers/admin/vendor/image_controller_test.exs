@@ -20,8 +20,7 @@ defmodule Grid.Admin.VendorImageControllerTest do
     conn = put conn, admin_vendor_image_path(conn, :set_default, v, i)
     assert redirected_to(conn) =~ admin_vendor_path(conn, :show, v)
 
-    conn = recycle(conn)
-    conn = get conn, admin_vendor_path(conn, :show, v)
+    conn = conn |> recycle_with_auth |> get(admin_vendor_path(conn, :show, v))
     assert html_response(conn, 200) =~ "Current default"
 
     v = Repo.get!(Vendor, v.id)
@@ -71,8 +70,7 @@ defmodule Grid.Admin.VendorImageControllerTest do
     conn = put conn, admin_vendor_image_path(conn, :update, v, i), image: @valid_attrs
     assert redirected_to(conn) == admin_vendor_image_path(conn, :show, v, i)
 
-    conn = recycle(conn)
-    conn = get conn, admin_vendor_image_path(conn, :show, v, i)
+    conn = conn |> recycle_with_auth |> get(admin_vendor_image_path(conn, :show, v, i))
     assert html_response(conn, 200) =~ @valid_attrs["alt"]
 
     assert Repo.get_by(@table, %{alt: @valid_attrs["alt"]})
