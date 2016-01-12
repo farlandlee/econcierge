@@ -16,26 +16,12 @@ defmodule Grid.Admin.Activity.ImageControllerTest do
     {:ok, activity: a, image: i}
   end
 
-  test "lists all entries on index", %{conn: conn, activity: a, image: i} do
-    no_alt_img = Factory.create_activity_image(assoc_id: a.id, alt: "")
-
-    conn = get conn, admin_activity_image_path(conn, :index, a)
-    response = html_response(conn, 200)
-    assert response =~ "Image Listing"
-    assert response =~ "#{i.filename}"
-    assert response =~ "#{i.alt}"
-    assert response =~ "Set as Default"
-
-    assert response =~ "#{no_alt_img.filename}"
-    assert response =~ "No caption"
-  end
-
   test "set default image", %{conn: conn, activity: a, image: i} do
     conn = put conn, admin_activity_image_path(conn, :set_default, a, i)
-    assert redirected_to(conn) =~ admin_activity_image_path(conn, :index, a)
+    assert redirected_to(conn) =~ admin_activity_path(conn, :show, a)
 
     conn = recycle(conn)
-    conn = get conn, admin_activity_image_path(conn, :index, a)
+    conn = get conn, admin_activity_path(conn, :show, a)
     assert html_response(conn, 200) =~ "Current default"
 
     a = Repo.get!(Activity, a.id)
@@ -52,7 +38,7 @@ defmodule Grid.Admin.Activity.ImageControllerTest do
 #@TODO how do we spoof file upload?
   # test "creates resource and redirects when data is valid", %{conn: conn, activity: a} do
   #   conn = post conn, admin_activity_image_path(conn, :create, a.id), image: @valid_attrs
-  #   assert redirected_to(conn) == admin_activity_image_path(conn, :index, a.id)
+  #   assert redirected_to(conn) == admin_activity_path(conn, :show, a.id)
   # end
 
   test "does not create resource and renders errors when data is invalid", %{conn: conn, activity: a} do
@@ -62,7 +48,7 @@ defmodule Grid.Admin.Activity.ImageControllerTest do
 
   test "shows chosen resource", %{conn: conn, activity: a, image: i} do
     conn = get conn, admin_activity_image_path(conn, :show, a, i)
-    assert html_response(conn, 200) =~ "Show Activity Image"
+    assert html_response(conn, 200) =~ "#{i.filename}"
     assert html_response(conn, 200) =~ "#{i.alt}"
     assert html_response(conn, 200) =~ "#{i.original}"
     assert html_response(conn, 200) =~ "#{i.medium}"
@@ -99,7 +85,7 @@ defmodule Grid.Admin.Activity.ImageControllerTest do
 
   test "deletes chosen image and its intersect entity", %{conn: conn, activity: a, image: i} do
     conn = delete conn, admin_activity_image_path(conn, :delete, a, i)
-    assert redirected_to(conn) == admin_activity_image_path(conn, :index, a)
+    assert redirected_to(conn) == admin_activity_path(conn, :show, a)
     refute Repo.get(@table, i.id)
   end
 end

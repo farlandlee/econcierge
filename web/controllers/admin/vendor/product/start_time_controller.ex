@@ -3,52 +3,28 @@ defmodule Grid.Admin.Vendor.Product.StartTimeController do
 
   alias Grid.StartTime
 
-  import Ecto.Query
-
-  plug Grid.Plugs.PageTitle, title: "Start Time"
   plug :scrub_params, "start_time" when action == :create
   plug Grid.Plugs.AssignModel, StartTime when action == :delete
 
-  def index(conn, _) do
-    product = conn.assigns.product
-    changeset = StartTime.changeset(%StartTime{})
-    render(conn, "index.html",
-      start_times: start_times_for(product),
-      changeset: changeset,
-      page_title: "#{product.name} Start Times"
-    )
-  end
-
   def create(conn, %{"start_time" => start_time_params}) do
     product = conn.assigns.product
+    redirect_path = admin_vendor_product_path(conn, :show, conn.assigns.vendor, product)
 
     changeset = StartTime.changeset(%StartTime{}, start_time_params)
-      |> Ecto.Changeset.put_change(:product_id, conn.assigns.product.id)
+      |> Ecto.Changeset.put_change(:product_id, product.id)
 
     case Repo.insert(changeset) do
       {:ok, _start_time} ->
+        redirect(conn, to: redirect_path)
+      {:error, _} ->
         conn
-        |> put_flash(:info, "Start time created successfully.")
-        |> redirect(to: admin_vendor_product_start_time_path(conn, :index, conn.assigns.vendor, product))
-      {:error, changeset} ->
-        render(conn, "index.html",
-          start_times: start_times_for(product),
-          changeset: changeset,
-          page_title: "#{product.name} Start Times"
-        )
+        |> put_flash(:error, "Error creating start time.")
+        |> redirect(to: redirect_path)
     end
   end
 
   def delete(conn, _) do
     Repo.delete!(conn.assigns.start_time)
-    conn
-    |> put_flash(:info, "Start time deleted successfully.")
-    |> redirect(to: admin_vendor_product_start_time_path(conn, :index, conn.assigns.vendor, conn.assigns.product))
-  end
-
-  def start_times_for(product) do
-    assoc(product, :start_times)
-    |> order_by(:starts_at_time)
-    |> Repo.all
+    redirect(conn, to: admin_vendor_product_path(conn, :show, conn.assigns.vendor, conn.assigns.product))
   end
 end

@@ -10,16 +10,6 @@ defmodule Grid.Admin.Vendor.ProductController do
   plug :validate_activity_categories when action in [:create, :update]
   plug Grid.Plugs.AssignModel, Product when action in [:edit, :show, :update, :delete]
 
-  def index(conn, _params) do
-    vendor = conn.assigns.vendor
-    products = assoc(vendor, :products) |> Repo.all |> Repo.preload(:activity)
-
-    render(conn, "index.html",
-      products: products,
-      page_title: "#{conn.assigns.vendor.name} Products"
-    )
-  end
-
   def new(conn, _params) do
     render(conn, "new.html",
       changeset: Product.changeset(%Product{}),
@@ -37,6 +27,8 @@ defmodule Grid.Admin.Vendor.ProductController do
         {:ok, product} ->
           conn.assigns.param_activity_categories
           |> add_product_activity_categories(product.id)
+
+          product
         {:error, changeset} ->
           Repo.rollback(changeset)
       end
@@ -44,10 +36,10 @@ defmodule Grid.Admin.Vendor.ProductController do
     |> render_create(conn)
   end
 
-  defp render_create({:ok, _product}, conn) do
+  defp render_create({:ok, product}, conn) do
     conn
     |> put_flash(:info, "Product created successfully.")
-    |> redirect(to: admin_vendor_product_path(conn, :index, conn.assigns.vendor.id))
+    |> redirect(to: admin_vendor_product_path(conn, :show, conn.assigns.vendor, product))
   end
 
   defp render_create({:error, changeset}, conn) do
@@ -64,7 +56,7 @@ defmodule Grid.Admin.Vendor.ProductController do
 
     render(conn, "show.html",
       product: product,
-      page_tite: product.name
+      page_title: product.name
     )
   end
 
@@ -118,7 +110,7 @@ defmodule Grid.Admin.Vendor.ProductController do
 
     conn
     |> put_flash(:info, "Product deleted successfully.")
-    |> redirect(to: admin_vendor_product_path(conn, :index, conn.assigns.vendor))
+    |> redirect(to: admin_vendor_path(conn, :show, conn.assigns.vendor))
   end
 
 

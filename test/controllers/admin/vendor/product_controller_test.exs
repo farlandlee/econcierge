@@ -1,12 +1,14 @@
 defmodule Grid.Admin.ProductControllerTest do
   use Grid.ConnCase
 
+  import Ecto.Query
+  import Grid.Factory
+
   alias Grid.Activity
   alias Grid.ActivityCategory
   alias Grid.Category
   alias Grid.Product
   alias Grid.ProductActivityCategory
-  alias Grid.Vendor
   alias Grid.VendorActivity
 
   @valid_attrs %{description: "some content", name: "some content"}
@@ -37,34 +39,59 @@ defmodule Grid.Admin.ProductControllerTest do
     }
   end
 
-  test "only shows products belonging to vendor", %{conn: conn, vendor: v, activity: a} do
-    v2 = Repo.insert! %Vendor{name: "Other Vendor", description: "foobarbaz"}
-    #setup
-    p = Product.changeset(%Product{}, %{name: "don't show", description: "meow"})
-    |> Ecto.Changeset.put_change(:vendor_id, v2.id)
-    |> Ecto.Changeset.put_change(:activity_id, a.id)
-    |> Repo.insert!
-
-    conn = get conn, admin_vendor_product_path(conn, :index, v)
+  test "Show lists prices", %{conn: conn} do
+    price = create(:price)
+    product = price.product
+    vendor = product.vendor
+    conn = get conn, admin_vendor_product_path(conn, :show, vendor, product)
     response = html_response(conn, 200)
-    refute response =~ p.name
-    refute response =~ p.description
-
-    Repo.delete! v2
+    assert response =~ "Prices"
+    assert response =~ "Add Price"
+    assert response =~ "#{product.name}"
+    assert response =~ "Amount"
+    assert response =~ "$#{price.amount}"
+    assert response =~ "Name"
+    assert response =~ "#{price.name}"
+    assert response =~ "Description"
+    assert response =~ "#{price.description}"
   end
 
-  test "lists all entries on index", %{conn: conn, vendor: v, product: p, activity: a} do
-    conn = get conn, admin_vendor_product_path(conn, :index, v)
-    response = html_response(conn, 200)
-    assert response =~ "#{v.name} Products"
-    assert response =~ "Name"
-    assert response =~ "Activity"
-    assert response =~ "Description"
-    assert response =~ "Published?"
+  test "Show lists start times", %{conn: conn} do
+    start_time = create(:start_time)
+    product = start_time.product
+    vendor = product.vendor
 
-    assert response =~ a.name
-    assert response =~ p.name
-    assert response =~ p.description
+    conn = get conn, admin_vendor_product_path(conn, :show, vendor, product)
+    response = html_response(conn, 200)
+    assert response =~ "Start Times"
+    assert response =~ "Add Start Time"
+    assert response =~ Ecto.Time.to_string(start_time.starts_at_time)
+  end
+
+  test "Show page doesn't show other products' start times", %{conn: conn} do
+    start_time = create(:start_time)
+    product = start_time.product
+    vendor = product.vendor
+
+    conn = get conn, admin_vendor_product_path(conn, :show, vendor, product)
+    other_vendors_products_time = create(:start_time)
+    response = html_response(conn, 200)
+    refute response =~ other_vendors_products_time.starts_at_time |> Ecto.Time.to_string
+  end
+
+  test "Only shows start times for this product", %{conn: conn, vendor: v} do
+    [s1, s2] = create_pair(:start_time)
+    # set products to same vendor
+    Grid.Product
+    |> where([p], p.id in ^([s1.product.id, s2.product.id]))
+    |> update(set: [vendor_id: ^v.id])
+    |> Repo.update_all([])
+
+    conn = get conn, admin_vendor_product_path(conn, :show, v, s1.product)
+
+    response = html_response(conn, 200)
+    assert response =~ s1.starts_at_time |> Ecto.Time.to_string
+    refute response =~ s2.starts_at_time |> Ecto.Time.to_string
   end
 
   test "renders form for new resources", %{conn: conn, vendor: v, category: c, activity: a} do
@@ -94,12 +121,14 @@ defmodule Grid.Admin.ProductControllerTest do
     [activity, category] |> Enum.map(&Repo.delete!/1)
   end
 
-
   test "creates resource and redirects when data is valid", %{conn: conn, vendor: v, activity_category: ac} do
     valid_attrs = @valid_attrs |> Map.put(:activity_categories, [ac.id])
     conn = post conn, admin_vendor_product_path(conn, :create, v), product: valid_attrs
-    assert redirected_to(conn) == admin_vendor_product_path(conn, :index, v)
-    assert Repo.get_by(Product, @valid_attrs)
+
+    product = Repo.get_by(Product, @valid_attrs)
+
+    assert product
+    assert redirected_to(conn) == admin_vendor_product_path(conn, :show, v, product)
   end
 
   test "does not create resource and redirects when no activity category is selected", %{conn: conn, vendor: v} do
@@ -115,16 +144,14 @@ defmodule Grid.Admin.ProductControllerTest do
   test "shows chosen resource", %{conn: conn, vendor: v, product: p, category: c, activity: a} do
     conn = get conn, admin_vendor_product_path(conn, :show, v, p)
     response = html_response(conn, 200)
-    assert response =~ "Name:"
     assert response =~ "#{p.name}"
-    assert response =~ "Description:"
     assert response =~ "#{p.description}"
-    assert response =~ "Activity:"
+    assert response =~ "Activity"
     assert response =~ "#{a.name}"
     assert response =~ "Categories"
     assert response =~ "#{c.name}"
     # has link to edit
-    assert response =~ "Edit Product"
+    assert response =~ "Edit"
   end
 
   test "renders page not found when id is nonexistent", %{conn: conn, vendor: v} do
@@ -178,7 +205,7 @@ defmodule Grid.Admin.ProductControllerTest do
 
   test "deletes chosen resource", %{conn: conn, vendor: v, product: p} do
     conn = delete conn, admin_vendor_product_path(conn, :delete, v, p)
-    assert redirected_to(conn) == admin_vendor_product_path(conn, :index, v)
+    assert redirected_to(conn) == admin_vendor_path(conn, :show, v)
     refute Repo.get(Product, p.id)
   end
 end

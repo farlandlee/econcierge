@@ -1,5 +1,3 @@
-<%= link "« Back to #{@product.name}", to: admin_vendor_product_path(@conn, :show, @vendor, @product) %>
-
 <table class="table">
   <thead>
     <tr>
@@ -22,31 +20,3 @@
 <% end %>
   </tbody>
 </table>
-
-<hr>
-
-<h4>
-  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-  Add Start Time
-</h4>
-<%= form_for @changeset, admin_vendor_product_start_time_path(@conn, :create, @vendor, @product), fn f -> %>
-  <%= if @changeset.action do %>
-    <div class="alert alert-danger">
-      <p>Oops, something went wrong! Please check the errors below:</p>
-      <ul>
-        <%= for {attr, message} <- f.errors do %>
-          <li><%= humanize(attr) %> <%= message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="form-group">
-    <%= label f, :starts_at_time, "Starts at time", class: "control-label" %>
-    <%= time_select f, :starts_at_time, class: "form-control" %>
-  </div>
-
-  <div class="form-group">
-    <%= submit "Add", class: "btn btn-primary" %>
-  </div>
-<% end %>

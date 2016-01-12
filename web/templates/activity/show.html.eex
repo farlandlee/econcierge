@@ -43,7 +43,7 @@
       Sorry, no offerings for <%= @activity.name %> at this time.
     <%= else %>
       <%= for vendor <- @vendors do %>
-      <%= vendor_img vendor, class: "img-responsive" %>
+      <%= img vendor.default_image, class: "img-responsive" %>
       <p class="lead"><%= vendor.name %></p>
       <p><a href="#" class="more-info">View More Info</a></p>
       <% end %>

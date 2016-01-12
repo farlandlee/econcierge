@@ -96,6 +96,38 @@ form.link, form.button {
   display: inline;
 }
 
-.new-button {
-  float: right;
+.header-action {
+  position: absolute;
+  top: 20px;
+  right: 40px;
+  @media screen and (max-width: 599px) {
+    position: static;
+    float: right;
+  }
+}
+
+.dropdown.actions .dropdown-menu>li>a:hover,
+/* fix for delete button in bootstrap dropdown */
+.dropdown.actions .dropdown-menu form a:hover {
+  color: #fff;
+  text-decoration: none;
+  &.show {
+    color: #222;
+  }
+  &.edit {
+    background-color: #337ab7;
+  }
+  &.delete{
+    background-color: #d9534f;
+  }
+}
+/* fix for delete button in bootstrap dropdown */
+.dropdown.actions .dropdown-menu form a {
+    display: block;
+    padding: 3px 20px;
+    clear: both;
+    font-weight: 400;
+    line-height: 1.42857143;
+    color: #333;
+    white-space: nowrap;
 }

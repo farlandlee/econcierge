@@ -8,19 +8,9 @@ defmodule Grid.PriceControllerTest do
 
   setup do
     price = create(:price)
-    {:ok, price: price, product: price.product, vendor: price.product.vendor}
-  end
-
-  test "lists all entries on index", %{conn: conn, vendor: vendor, product: product, price: price} do
-    conn = get conn, admin_vendor_product_price_path(conn, :index, vendor, product)
-    response = html_response(conn, 200)
-    assert response =~ "Prices for #{product.name}"
-    assert response =~ "Amount"
-    assert response =~ "$#{price.amount}"
-    assert response =~ "Name"
-    assert response =~ "#{price.name}"
-    assert response =~ "Description"
-    assert response =~ "#{price.description}"
+    product = price.product
+    vendor = product.vendor
+    {:ok, price: price, product: product, vendor: vendor}
   end
 
   test "renders form for new resources", %{conn: conn, vendor: vendor, product: product} do
@@ -30,24 +20,13 @@ defmodule Grid.PriceControllerTest do
 
   test "creates resource and redirects when data is valid", %{conn: conn, vendor: vendor, product: product} do
     conn = post conn, admin_vendor_product_price_path(conn, :create, vendor, product), price: @valid_attrs
-    assert redirected_to(conn) == admin_vendor_product_price_path(conn, :index, vendor, product)
+    assert redirected_to(conn) == admin_vendor_product_path(conn, :show, vendor, product)
     assert Repo.get_by(Price, @valid_attrs)
   end
 
   test "does not create resource and renders errors when data is invalid", %{conn: conn, vendor: vendor, product: product} do
     conn = post conn, admin_vendor_product_price_path(conn, :create, vendor, product), price: @invalid_attrs
     assert html_response(conn, 200) =~ "New Price"
-  end
-
-  test "shows chosen resource", %{conn: conn, vendor: vendor, product: product, price: price} do
-    conn = get conn, admin_vendor_product_price_path(conn, :show, vendor, product, price)
-    assert html_response(conn, 200) =~ "Show Price"
-  end
-
-  test "renders page not found when id is nonexistent", %{conn: conn, vendor: vendor, product: product} do
-    assert_error_sent 404, fn ->
-      get conn, admin_vendor_product_price_path(conn, :show, vendor, product, -1)
-    end
   end
 
   test "renders form for editing chosen resource", %{conn: conn, vendor: vendor, product: product, price: price} do
@@ -57,7 +36,7 @@ defmodule Grid.PriceControllerTest do
 
   test "updates chosen resource and redirects when data is valid", %{conn: conn, vendor: vendor, product: product, price: price} do
     conn = put conn, admin_vendor_product_price_path(conn, :update, vendor, product, price), price: @valid_attrs
-    assert redirected_to(conn) == admin_vendor_product_price_path(conn, :show, vendor, product, price)
+    assert redirected_to(conn) == admin_vendor_product_path(conn, :show, vendor, product)
     assert Repo.get_by(Price, @valid_attrs)
   end
 
@@ -74,16 +53,16 @@ defmodule Grid.PriceControllerTest do
 
   test "deletes chosen resource", %{conn: conn, vendor: vendor, product: product, price: price} do
     conn = delete conn, admin_vendor_product_price_path(conn, :delete, vendor, product, price)
-    assert redirected_to(conn) == admin_vendor_product_price_path(conn, :index, vendor, product)
+    assert redirected_to(conn) == admin_vendor_product_path(conn, :show, vendor, product)
     refute Repo.get(Price, price.id)
   end
 
   test "set default price", %{conn: conn, vendor: vendor, product: product, price: price} do
     conn = put conn, admin_vendor_product_price_path(conn, :set_default, vendor, product, price)
-    assert redirected_to(conn) =~ admin_vendor_product_price_path(conn, :index, vendor, product)
+    assert redirected_to(conn) =~ admin_vendor_product_path(conn, :show, vendor, product)
 
     conn = recycle(conn)
-    conn = get conn, admin_vendor_product_price_path(conn, :index, vendor, product)
+    conn = get conn, admin_vendor_product_path(conn, :show, vendor, product)
     assert html_response(conn, 200) =~ "Current default"
 
     product = Repo.get!(Grid.Product, product.id)
