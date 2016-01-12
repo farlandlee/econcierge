@@ -14,8 +14,10 @@ defmodule Grid.Activity do
     has_many :vendor_activities, Grid.VendorActivity
     has_many :vendors, through: [:vendor_activities, :vendor]
 
-    has_many :activity_categories, Grid.ActivityCategory
-    has_many :categories, through: [:activity_categories, :category]
+    has_many :experiences, Grid.Experience
+
+    has_many :categories, through: [:experiences, :experience_categories, :category]
+    has_many :products, through: [:experiences, :products]
 
     timestamps
   end

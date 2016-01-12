@@ -40,7 +40,7 @@ defmodule Grid.Admin.VendorController do
   end
 
   def show(conn, _) do
-    vendor = Repo.preload(conn.assigns.vendor, [:images, products: [:activity]])
+    vendor = Repo.preload(conn.assigns.vendor, [:images, products: [:experience]])
     render(conn, "show.html", vendor: vendor, page_title: vendor.name)
   end
 

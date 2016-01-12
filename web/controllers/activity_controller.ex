@@ -2,10 +2,7 @@ defmodule Grid.ActivityController do
   use Grid.Web, :controller
 
   alias Grid.Activity
-  alias Grid.ActivityCategory
   alias Grid.Category
-  alias Grid.Product
-  alias Grid.ProductActivityCategory
   alias Grid.Vendor
 
   plug Grid.Plugs.AssignAvailableActivities
@@ -20,9 +17,10 @@ defmodule Grid.ActivityController do
   def show_by_slug(conn, _) do
     vendors = Repo.all(
       from v in Vendor,
-      join: p in Product, on: v.id == p.vendor_id,
+      join: p in assoc(v, :products),
+      join: a in assoc(p, :activities),
       where: p.published == true,
-      where: p.activity_id == ^conn.assigns.activity.id,
+      where: a.id == ^conn.assigns.activity.id,
       distinct: true,
       preload: :default_image
     )
@@ -37,12 +35,12 @@ defmodule Grid.ActivityController do
     # activity and category.
     vendors = Repo.all(
       from v in Vendor,
-      join: p in Product, on: v.id == p.vendor_id,
-      join: pac in ProductActivityCategory, on: p.id == pac.product_id,
-      join: ac in ActivityCategory, on: pac.activity_category_id == ac.id,
+      join: p in assoc(v, :products),
+      join: c in assoc(p, :categories),
+      join: a in assoc(p, :activities),
+      where: c.id == ^category.id,
+      where: a.id == ^conn.assigns.activity.id,
       where: p.published == true,
-      where: p.activity_id == ^conn.assigns.activity.id,
-      where: ac.category_id == ^category.id,
       distinct: true,
       preload: :default_image
     )
@@ -56,9 +54,10 @@ defmodule Grid.ActivityController do
 
     categories = Repo.all(
       from c in Category,
-      join: ac in ActivityCategory, on: c.id == ac.category_id,
-      join: pac in ProductActivityCategory, on: ac.id == pac.activity_category_id,
-      where: ac.activity_id == ^activity.id,
+      join: p in assoc(c, :products),
+      join: a in assoc(p, :activities),
+      where: a.id == ^activity.id,
+      where: p.published == true,
       distinct: true
     )
 

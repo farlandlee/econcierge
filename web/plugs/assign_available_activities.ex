@@ -4,14 +4,13 @@ defmodule Grid.Plugs.AssignAvailableActivities do
 
   alias Grid.Repo
   alias Grid.Activity
-  alias Grid.Product
 
   def init(default), do: default
 
   def call(conn, _) do
     activities = Repo.all(
       from a in Activity,
-      join: p in Product, on: a.id == p.activity_id,
+      join: p in assoc(a, :products),
       where: p.published == true,
       distinct: true,
       order_by: :name

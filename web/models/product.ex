@@ -7,19 +7,20 @@ defmodule Grid.Product do
     field :published, :boolean, default: :false
 
     belongs_to :vendor, Grid.Vendor
-    belongs_to :activity, Grid.Activity
+    belongs_to :experience, Grid.Experience
     belongs_to :default_price, Grid.Price
 
     has_many :prices, Grid.Price
     has_many :start_times, Grid.StartTime
-    has_many :product_activity_categories, Grid.ProductActivityCategory
-    has_many :activity_categories, through: [:product_activity_categories, :activity_category]
+
+    has_many :categories, through: [:experience, :experience_categories, :category]
+    has_many :activities, through: [:experience, :activity]
 
     timestamps
   end
 
-  @required_fields ~w(description name published)
-  @optional_fields ~w()
+  @required_fields ~w(description name published vendor_id)
+  @optional_fields ~w(experience_id)
 
   @doc """
   Creates a changeset based on the `model` and `params`.
@@ -30,6 +31,8 @@ defmodule Grid.Product do
   def changeset(model, params \\ :empty) do
     model
     |> cast(params, @required_fields, @optional_fields)
+    |> foreign_key_constraint(:vendor_id)
+    |> foreign_key_constraint(:experience_id)
     |> update_change(:name, &String.strip/1)
     |> update_change(:description, &String.strip/1)
     |> validate_length(:name, min: 1, max: 255)

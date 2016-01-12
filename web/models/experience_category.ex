@@ -1,14 +1,16 @@
-defmodule Grid.ProductActivityCategory do
+defmodule Grid.ExperienceCategory do
   use Grid.Web, :model
 
-  schema "product_activity_categories" do
-    belongs_to :activity_category, Grid.ActivityCategory
-    belongs_to :product, Grid.Product
+  schema "experience_categories" do
+    belongs_to :experience, Grid.Experience
+    belongs_to :category, Grid.Category
+
+    has_many :experiences, Grid.Experience
 
     timestamps
   end
 
-  @required_fields ~w(activity_category_id product_id)
+  @required_fields ~w(experience_id category_id)
   @optional_fields ~w()
 
   @doc """
@@ -20,5 +22,6 @@ defmodule Grid.ProductActivityCategory do
   def changeset(model, params \\ :empty) do
     model
     |> cast(params, @required_fields, @optional_fields)
+    |> foreign_key_constraint(:experience_id)
   end
 end
