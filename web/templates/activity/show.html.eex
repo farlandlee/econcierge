@@ -38,13 +38,17 @@
     </li>
   </div>
   <div class="row small-up-1 medium-up-2 large-up-3">
-    <%= for vendor <- @vendors do %>
-      <div class="column">
-        <%= vendor_img vendor, class: "img-responsive" %>
-        <p class="lead"><%= vendor.name %></p>
-        <p><a href="#" class="more-info">View More Info</a></p>
-      </div>
+    <div class="column">
+    <%= if Enum.empty?(@vendors) do %>
+      Sorry, no offerings for <%= @activity.name %> at this time.
+    <%= else %>
+      <%= for vendor <- @vendors do %>
+      <%= vendor_img vendor, class: "img-responsive" %>
+      <p class="lead"><%= vendor.name %></p>
+      <p><a href="#" class="more-info">View More Info</a></p>
+      <% end %>
     <% end %>
+    </div>
   </div>
   <div class="row column activity-bottom">
     <h2>Others Have Also Booked</h2>
