@@ -12,6 +12,7 @@ div.home-main {
 }
 .home-left {
   background: url('/images/eco-tour.jpg') no-repeat left center;
+  background-size: cover;
 }
 .home-right {
   background: url('/images/hot-springs.jpg') no-repeat center center;
@@ -32,7 +33,7 @@ div.home-main {
 .search-label {
   text-transform: uppercase;
   padding-bottom: 0.5rem;
-  margin-top: (-0.9375rem/2);
+  //margin-top: (-0.9375rem/2);
 }
 
 .suggested-activities {
@@ -54,8 +55,10 @@ div.home-main {
   @extend .search-bar;
   position: absolute;
   bottom: 0;
-  margin-left: -0.9375rem;
-  margin-right: -0.9375rem;
+  //margin-left: -0.9375rem;
+  //margin-right: -0.9375rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
   padding-bottom: 0.9375rem * 2;
   color: $white;
   margin-bottom: 0;

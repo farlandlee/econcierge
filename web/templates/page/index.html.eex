@@ -1,6 +1,6 @@
 <div class="home page">
   <div class="top-row small-collapse home-main">
-    <div class="small-12 medium-10 large-9 xlarge-8 xxlarge-7 columns home-left">
+    <div class="small-12 medium-12 large-12 xlarge12 xxlarge-12 columns home-left">
         <div class="callout search-bar" id="search-bar">
           <%= form_for @conn, activity_path(@conn, :show), [as: :activity, id: "search_form"], fn f -> %>
             <div class="row small-collapse">
@@ -23,9 +23,6 @@
             </div>
           <% end %>
         </div>
-    </div>
-    <div class="small-12 medium-2 large-3 xlarge-4 xxlarge-5 small-centered medium-uncentered columns home-right">
-        <div>Winter</div>
     </div>
   </div>
   <div class="row column">
