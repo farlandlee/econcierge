@@ -3,7 +3,7 @@ defmodule Grid.ProductTest do
 
   alias Grid.Product
 
-  @valid_attrs %{description: "some content", name: "some content"}
+  @valid_attrs %{description: "some content", name: "some content", vendor_id: 1}
   @invalid_attrs %{}
 
   test "changeset with valid attributes" do

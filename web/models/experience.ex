@@ -1,22 +1,23 @@
-defmodule Grid.Category do
+defmodule Grid.Experience do
   use Grid.Web, :model
 
-  schema "categories" do
+  schema "experiences" do
     field :name, :string
     field :description, :string
     field :slug, :string
+    belongs_to :activity, Grid.Activity
+    belongs_to :image, Grid.Image
 
     has_many :experience_categories, Grid.ExperienceCategory
-    has_many :experiences, through: [:experience_categories, :experience]
+    has_many :categories, through: [:experience_categories, :category]
 
-    has_many :activities, through: [:experiences, :activity]
-    has_many :products, through: [:experiences, :products]
+    has_many :products, Grid.Product
 
     timestamps
   end
 
-  @required_fields ~w(name description)
-  @optional_fields ~w()
+  @required_fields ~w(name description activity_id)
+  @optional_fields ~w(image_id)
 
   @doc """
   Creates a changeset based on the `model` and `params`.
@@ -27,9 +28,8 @@ defmodule Grid.Category do
   def changeset(model, params \\ :empty) do
     model
     |> cast(params, @required_fields, @optional_fields)
-    |> update_change(:name, &String.strip/1)
-    |> validate_length(:name, min: 1, max: 255)
     |> unique_constraint(:name)
+    |> foreign_key_constraint(:activity_id)
     |> slugify
   end
 end

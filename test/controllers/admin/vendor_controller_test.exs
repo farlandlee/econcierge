@@ -8,7 +8,9 @@ defmodule Grid.Admin.VendorControllerTest do
   @invalid_attrs %{name: ""}
 
   setup do
-    {:ok, vendor: Factory.create(:vendor)}
+    v = Factory.create(:vendor)
+    Factory.create(:vendor_activity, vendor: v)
+    {:ok, vendor: v}
   end
 
   test "lists all entries on index", %{conn: conn} do
@@ -56,17 +58,17 @@ defmodule Grid.Admin.VendorControllerTest do
   test "shows products", %{conn: conn} do
     product = Factory.create(:product)
     vendor = product.vendor
-    activity = product.activity
+    experience = product.experience
     conn = get conn, admin_vendor_path(conn, :show, vendor)
     response = html_response(conn, 200)
     assert response =~ "Products"
     assert response =~ "Add Product"
     assert response =~ "Name"
-    assert response =~ "Activity"
+    assert response =~ "Experience"
     assert response =~ "Description"
     assert response =~ "Published?"
 
-    assert response =~ activity.name
+    assert response =~ experience.name
     assert response =~ product.name
     assert response =~ product.description
   end
@@ -74,11 +76,11 @@ defmodule Grid.Admin.VendorControllerTest do
   test "only shows products belonging to vendor", %{conn: conn} do
     p = Factory.create(:product)
     v = p.vendor
-    a = p.activity
+    e = p.experience
     #setup
     p2 = Factory.build(:product)
     |> Ecto.Changeset.change
-    |> Ecto.Changeset.put_change(:activity_id, a.id)
+    |> Ecto.Changeset.put_change(:experience_id, e.id)
     |> Repo.insert!
 
     conn = get conn, admin_vendor_path(conn, :show, v)

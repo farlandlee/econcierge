@@ -1,0 +1,42 @@
+<%= link to: admin_activity_experience_path(@conn, :new, @activity), class: "btn btn-success header-action" do  %>
+  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add experience
+<% end %>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Slug</th>
+      <th>Categories</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for experience <- @experiences do %>
+    <tr>
+      <td><%= experience.name %></td>
+      <td><%= experience.description %></td>
+      <td><%= experience.slug %></td>
+      <td><%= pretty_name_list(experience.categories) %> </td>
+
+      <td class="text-right">
+        <div class="dropdown actions">
+          <button class="btn btn-xs btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+            Actions <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-right">
+            <li>
+              <%= link "Edit", to: admin_activity_experience_path(@conn, :edit, @activity, experience), class: "edit" %>
+            </li>
+            <li>
+              <%= link "Delete", to: admin_activity_experience_path(@conn, :delete, @activity, experience), method: :delete, data: [confirm: "Are you sure?"], class: "delete" %>
+            </li>
+          </ul>
+        </div>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>

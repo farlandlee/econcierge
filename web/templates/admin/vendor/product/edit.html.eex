@@ -3,5 +3,5 @@
     changeset: @changeset,
     action: admin_vendor_product_path(@conn, :update, @vendor, @changeset.model),
     back: admin_vendor_path(@conn, :show, @vendor),
-    activity_categories: @activity_categories
+    experiences: @experiences
 %>

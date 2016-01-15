@@ -39,7 +39,7 @@ defmodule Grid.Admin.Vendor.Product.PriceController do
     changeset = Price.changeset(price, price_params)
 
     case Repo.update(changeset) do
-      {:ok, price} ->
+      {:ok, _price} ->
         conn
         |> put_flash(:info, "Price updated successfully.")
         |> redirect(to: admin_vendor_product_path(conn, :show, conn.assigns.vendor, conn.assigns.product))

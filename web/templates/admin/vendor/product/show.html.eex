@@ -7,14 +7,11 @@
 <p class="lead"><%= @product.description %></p>
 <dl class="dl-horizontal">
 
-  <dt>Activity</dt>
-  <dd><%= @product.activity.name %></dd>
+  <dt>Experience</dt>
+  <dd><%= @product.experience.name %></dd>
 
   <dt>Published</dt>
   <dd><%= check_icon @product.published %></dd>
-
-  <dt>Categories</dt>
-  <dd><%= Enum.map(@product.activity_categories, &(&1.category.name)) |> Enum.join(" | ") %></dd>
 
 </dl>
 <div class="panel panel-default">

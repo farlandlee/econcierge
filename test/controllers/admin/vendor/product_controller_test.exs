@@ -4,38 +4,28 @@ defmodule Grid.Admin.ProductControllerTest do
   import Ecto.Query
   import Grid.Factory
 
-  alias Grid.Activity
-  alias Grid.ActivityCategory
-  alias Grid.Category
   alias Grid.Product
-  alias Grid.ProductActivityCategory
-  alias Grid.VendorActivity
 
   @valid_attrs %{description: "some content", name: "some content"}
   @invalid_attrs %{name: ""}
 
   setup do
-    p = Factory.create(:product)
-
-    Repo.insert!(%VendorActivity{vendor_id: p.vendor.id, activity_id: p.activity.id})
-
     c = Factory.create(:category)
-    ac = Repo.insert!(%ActivityCategory{
-      activity_id: p.activity.id,
-      category_id: c.id
-    })
+    a = Factory.create(:activity)
+    v = Factory.create(:vendor)
+    Factory.create(:vendor_activity, vendor: v, activity: a)
 
-    Repo.insert! %ProductActivityCategory{
-      activity_category_id: ac.id,
-      product_id: p.id
-    }
+    e = Factory.create(:experience, activity: a)
+    p = Factory.create(:product, vendor: v, experience: e)
+
+    Factory.create(:experience_category, experience: e, category: c)
 
     {:ok,
       product: p,
-      vendor: p.vendor,
-      activity: p.activity,
+      vendor: v,
+      activity: a,
       category: c,
-      activity_category: ac
+      experience: e
     }
   end
 
@@ -94,35 +84,32 @@ defmodule Grid.Admin.ProductControllerTest do
     refute response =~ s2.starts_at_time |> Ecto.Time.to_string
   end
 
-  test "renders form for new resources", %{conn: conn, vendor: v, category: c, activity: a} do
+  test "renders form for new resources", %{conn: conn, vendor: v, experience: e} do
     conn = get conn, admin_vendor_product_path(conn, :new, v.id)
     response = html_response(conn, 200)
     assert response =~ "New Product"
-    assert response =~ "Name"
-    assert response =~ "Description"
-    assert response =~ "Published"
-    assert response =~ "Activity &amp; Category"
-    assert response =~ "#{a.name} | #{c.name}"
+    assert response =~ "Experience"
+    assert response =~ "#{e.name}"
   end
 
-  test "filters activity categories by vendor activities", %{conn: conn, vendor: v, product: p} do
-    activity = Repo.insert! %Activity{name: "dontshow", description: "nodesc"}
-    category = Repo.insert! %Category{name: "NEVER"}
-    Repo.insert! %ActivityCategory{activity_id: activity.id, category_id: category.id}
+  # TODO: Start HERE!!!!!!
+  test "filters experiences by vendor activities", %{conn: conn, vendor: v, product: p} do
+    some_other_experience = Factory.create(:experience)
 
     conn = get conn, admin_vendor_product_path(conn, :new, v)
     response = html_response(conn, 200)
-    refute response =~ "#{activity.name} | #{category.name}"
+    refute response =~ some_other_experience.name
+    assert response =~ p.experience.name
 
     conn = conn |> recycle |> get(admin_vendor_product_path(conn, :edit, v, p))
     response = html_response(conn, 200)
-    refute response =~ "#{activity.name} | #{category.name}"
-
-    [activity, category] |> Enum.map(&Repo.delete!/1)
+    refute response =~ some_other_experience.name
+    assert response =~ p.experience.name
   end
 
-  test "creates resource and redirects when data is valid", %{conn: conn, vendor: v, activity_category: ac} do
-    valid_attrs = @valid_attrs |> Map.put(:activity_categories, [ac.id])
+  test "creates resource and redirects when data is valid", %{conn: conn, vendor: v} do
+    e = Factory.create(:experience)
+    valid_attrs = @valid_attrs |> Map.put(:experience, e.id)
     conn = post conn, admin_vendor_product_path(conn, :create, v), product: valid_attrs
 
     product = Repo.get_by(Product, @valid_attrs)
@@ -131,25 +118,13 @@ defmodule Grid.Admin.ProductControllerTest do
     assert redirected_to(conn) == admin_vendor_product_path(conn, :show, v, product)
   end
 
-  test "does not create resource and redirects when no activity category is selected", %{conn: conn, vendor: v} do
-    conn = post conn, admin_vendor_product_path(conn, :create, v), product: @invalid_attrs
-    assert redirected_to(conn) == admin_vendor_product_path(conn, :new, v)
-  end
-
-  test "does not create resource and renders errors when params are invalid", %{conn: conn, vendor: v, activity_category: ac} do
-    conn = post conn, admin_vendor_product_path(conn, :create, v), product: Map.put(@invalid_attrs, :activity_categories, [ac.id])
-    assert html_response(conn, 200) =~ "New Product"
-  end
-
-  test "shows chosen resource", %{conn: conn, vendor: v, product: p, category: c, activity: a} do
+  test "shows chosen resource", %{conn: conn, vendor: v, product: p} do
     conn = get conn, admin_vendor_product_path(conn, :show, v, p)
     response = html_response(conn, 200)
     assert response =~ "#{p.name}"
     assert response =~ "#{p.description}"
-    assert response =~ "Activity"
-    assert response =~ "#{a.name}"
-    assert response =~ "Categories"
-    assert response =~ "#{c.name}"
+    assert response =~ "Experience"
+    assert response =~ "#{p.experience.name}"
     # has link to edit
     assert response =~ "Edit"
   end
@@ -160,46 +135,30 @@ defmodule Grid.Admin.ProductControllerTest do
     end
   end
 
-  test "renders form for editing chosen resource", %{conn: conn, vendor: v, product: p, category: c, activity: a} do
+  test "renders form for editing chosen resource", %{conn: conn, vendor: v, product: p} do
     conn = get conn, admin_vendor_product_path(conn, :edit, v, p)
     response = html_response(conn, 200)
     assert response =~ "Edit Product"
     assert response =~ "Name"
-    assert response =~ "#{p.name}"
+    assert response =~ p.name
     assert response =~ "Description"
-    assert response =~ "#{p.description}"
-    assert response =~ "Activity &amp; Category"
-    assert response =~ "#{a.name} | #{c.name}"
+    assert response =~ p.description
+    assert response =~ "Experience"
+    assert response =~ p.experience.name
   end
 
   test "updates chosen resource and redirects when data is valid", %{conn: conn, vendor: v, product: p, activity: a} do
-    c = Repo.insert!(%Category{name: "All night long, all night."})
-    ac = Repo.insert!(%ActivityCategory{
-      activity_id: a.id,
-      category_id: c.id
-    })
+    e = Factory.create(:experience, activity: a)
+
     update_params = %{
-      name: "poopies",
+      name: "fun adventure!",
       description: "wahoo",
-      activity_categories: [ac.id]
+      experience_id: e.id
     }
 
     conn = put conn, admin_vendor_product_path(conn, :update, v, p), product: update_params
     assert redirected_to(conn) == admin_vendor_product_path(conn, :show, v, p)
     assert Repo.get_by(Product, update_params |> Map.take([:name, :description]))
-
-    pac = assert Repo.one!(from pac in ProductActivityCategory, where: pac.product_id == ^p.id)
-    assert pac.activity_category_id == ac.id
-  end
-
-  test "poops the bed and redirects when you update without activity categories", %{conn: conn, vendor: v, product: p} do
-    conn = put conn, admin_vendor_product_path(conn, :update, v, p), product: @valid_attrs
-    assert redirected_to(conn) == admin_vendor_product_path(conn, :edit, v, p)
-  end
-
-  test "does not update chosen resource and renders errors when data is invalid", %{conn: conn, vendor: v, product: p, activity_category: ac} do
-    conn = put conn, admin_vendor_product_path(conn, :update, v, p), product: Map.put(@invalid_attrs, :activity_categories, [ac.id])
-    assert html_response(conn, 200) =~ "Edit Product"
   end
 
 

@@ -24,7 +24,7 @@
     <%= label f, :activities, "Activities", class: "control-label" %>
     <%= multiple_select f, :activities,
         Enum.map(@activities, &({&1.name, &1.id})),
-        value: activity_ids(f),
+        value: ids(f.model.activities),
         class: "chosen-select form-control" %>
   </div>
 

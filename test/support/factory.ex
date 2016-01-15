@@ -4,13 +4,15 @@ defmodule Grid.Factory do
   import Ecto
 
   alias Grid.Activity
-  alias Grid.ActivityCategory
   alias Grid.Category
+  alias Grid.Experience
+  alias Grid.ExperienceActivity
+  alias Grid.ExperienceCategory
   alias Grid.Price
   alias Grid.Product
-  alias Grid.ProductActivityCategory
   alias Grid.StartTime
   alias Grid.Vendor
+  alias Grid.VendorActivity
 
   def factory(:price) do
     %Price{
@@ -53,6 +55,22 @@ defmodule Grid.Factory do
     }
   end
 
+  def factory(:experience) do
+    %Experience{
+      name: sequence(:name, &"exerience-#{&1}"),
+      description: "Mind Expanding!",
+      slug: sequence(:slug, &"experience-#{&1}"),
+      activity: build(:activity)
+    }
+  end
+
+  def factory(:experience_category) do
+    %ExperienceCategory{
+      experience: build(:experience),
+      category: build(:category)
+    }
+  end
+
   def factory(:activity_image) do
     name = sequence(:filename, &"file-#{&1}.jpg")
     build_assoc(%Activity{}, :images, [
@@ -63,13 +81,6 @@ defmodule Grid.Factory do
     ])
   end
 
-  def factory(:activity_category) do
-    %ActivityCategory{
-      activity: build(:activity),
-      category: build(:category)
-    }
-  end
-
   def factory(:vendor) do
     %Vendor{
       name: sequence(:name, &"vendor-#{&1}"),
@@ -78,20 +89,20 @@ defmodule Grid.Factory do
     }
   end
 
-  def factory(:product) do
-    %Product{
-      name: sequence(:name, &"product-#{&1}"),
-      description: "Buy it!",
+  def factory(:vendor_activity) do
+    %VendorActivity{
       vendor: build(:vendor),
-      activity: build(:activity),
-      published: true
+      activity: build(:activity)
     }
   end
 
-  def factory(:product_activity_category) do
-    %ProductActivityCategory{
-      product: build(:product),
-      activity_category: build(:activity_category)
+  def factory(:product) do
+    %Product{
+      name: sequence(:name, &"product-#{&1}"),
+      description: sequence(:description, &"product-description-#{&1}"),
+      vendor: build(:vendor),
+      experience: build(:experience),
+      published: true
     }
   end
 
@@ -101,15 +112,5 @@ defmodule Grid.Factory do
 
   def create_activity_image(attrs \\ %{}) do
     build(:activity_image, attrs) |> Grid.Repo.insert!
-  end
-
-  def with_activity_category(%Product{} = product) do
-    create(
-      :product_activity_category,
-      product: product,
-      activity_category: build(:activity_category, activity: product.activity)
-    )
-
-    product
   end
 end

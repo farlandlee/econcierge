@@ -1,12 +1,13 @@
 alias Grid.Repo
 
 alias Grid.Activity
-alias Grid.ActivityCategory
 alias Grid.Category
 alias Grid.Product
-alias Grid.ProductActivityCategory
 alias Grid.Vendor
 alias Grid.VendorActivity
+alias Grid.Experience
+alias Grid.ExperienceCategory
+alias Grid.Price
 
 # only insert if the model doesn't exist unchanged from seeds
 insert! = fn model ->
@@ -32,11 +33,17 @@ end
   })
 end)
 
+# Categories!
+[full, half | _] = ["Full Day", "Half Day", "Overnight"]
+|> Enum.map(fn category ->
+  insert!.(%Category{
+    name: category,
+    description: category
+  })
+end)
+
 fishing_vendors = [
-  {"Jackson Hole Anglers", "Fishing is wahoo"},
-  {"Some Fishing Company", "Yay for fishing"},
-  {"Boats and Rods", "All the fish."},
-  {"Casting Flys", "Meow meow meow."}
+  {"FishCo", "Fishing is wahoo"}
 ]
 |> Enum.map(fn {name, description} ->
   v = insert!.(%Vendor{name: name, description: description})
@@ -45,7 +52,7 @@ fishing_vendors = [
 end)
 
 snowmobiling_vendors = [
-  {"Powerful White Lines", "Do you know what the street value of this mountain is?"}
+  {"SnowMoCo", "Do you know what the street value of this mountain is?"}
 ]
 |> Enum.map(fn {name, description} ->
   v = insert!.(%Vendor{name: name, description: description})
@@ -53,46 +60,54 @@ snowmobiling_vendors = [
   v
 end)
 
-#Productiones
+#Products
+fish_exp = insert!.(%Experience{
+  name: "Moose to Wilson",
+  description: "Good Views",
+  activity_id: fishing.id
+})
 fishing_prod = insert!.(%Product{
-  name: "All the product",
+  name: "Two Person Float",
   description: "Buy it!",
   vendor_id: hd(fishing_vendors).id,
-  activity_id: fishing.id,
+  experience_id: fish_exp.id,
   published: true
+})
+insert!.(%ExperienceCategory{
+  experience_id: fish_exp.id,
+  category_id: half.id
+})
+insert!.(%Price{
+  product_id: fishing_prod.id,
+  name: "Adult",
+  description: "Over 18",
+  amount: 180.0
+})
+
+snowmo_exp = insert!.(%Experience{
+  name: "Granite Hotsprings",
+  description: "Sled & Soak",
+  activity_id: snowmobiling.id
 })
 snowmo_prod = insert!.(%Product{
-  name: "Snowmobiling product",
+  name: "Double Sled",
   description: "Buy it!",
   vendor_id: hd(snowmobiling_vendors).id,
-  activity_id: snowmobiling.id,
+  experience_id: snowmo_exp.id,
   published: true
 })
+insert!.(%ExperienceCategory{
+  experience_id: snowmo_exp.id,
+  category_id: full.id
+})
+insert!.(%Price{
+  product_id: snowmo_prod.id,
+  name: "Adult",
+  description: "Over 18",
+  amount: 250.0
+})
 
-# add categories for fly fishing
-["Half Day", "Full Day", "Overnight", "Classes"]
-|> Enum.map(&(insert!.(%Category{name: &1})))
-|> Enum.map(fn category ->
-  ac = insert!.(%ActivityCategory{
-    activity_id: fishing.id,
-    category_id: category.id
-  })
-  insert!.(%ProductActivityCategory{
-    activity_category_id: ac.id,
-    product_id: fishing_prod.id
-  })
-
-  ac = insert!.(%ActivityCategory{
-    activity_id: snowmobiling.id,
-    category_id: category.id
-  })
-  insert!.(%ProductActivityCategory{
-    activity_category_id: ac.id,
-    product_id: snowmo_prod.id
-  })
-end)
-
-for m <- [Activity, Category, Product, Vendor] do
+for m <- [Activity, Category, Product, Vendor, Experience] do
   Enum.map(Repo.all(m), fn model ->
     model
     |> Ecto.Changeset.change

@@ -3,90 +3,66 @@ defmodule Grid.Admin.ActivityController do
   plug Grid.Plugs.PageTitle, title: "Activity"
 
   alias Grid.Activity
-  alias Grid.Category
-  alias Grid.ActivityCategory
 
   import Ecto.Query
 
   plug :scrub_params, "activity" when action in [:create, :update]
 
   def index(conn, _params) do
-    activity = Activity |> order_by([a], [a.name]) |> Repo.all
+    activity = Activity |> order_by(:name) |> Repo.all
     render(conn, "index.html", activity: activity)
   end
 
   def new(conn, _params) do
     changeset = Activity.changeset(%Activity{categories: []})
-    render(conn, "new.html",
-      changeset: changeset,
-      categories: get_ordered_categories
-    )
+    render(conn, "new.html", changeset: changeset)
   end
 
   def create(conn, %{"activity" => activity_params}) do
     changeset = Activity.changeset(%Activity{}, activity_params)
 
-    {:ok, conn} = Repo.transaction fn ->
-      case Repo.insert(changeset) do
-        {:ok, activity} ->
-          insert_categories(activity, activity_params["categories"])
-
-          conn
-          |> put_flash(:info, "Activity created successfully.")
-          |> redirect(to: admin_activity_path(conn, :index))
-        {:error, changeset} ->
-          render(conn, "new.html",
-            changeset: changeset,
-            categories: get_ordered_categories
-          )
-      end
+    case Repo.insert(changeset) do
+      {:ok, _activity} ->
+        conn
+        |> put_flash(:info, "Activity created successfully.")
+        |> redirect(to: admin_activity_path(conn, :index))
+      {:error, changeset} ->
+        render(conn, "new.html", changeset: changeset)
     end
-
-    conn
   end
 
   def show(conn, %{"id" => id}) do
-    activity = Repo.get!(Activity, id) |> Repo.preload([:categories, :images])
+    activity = Repo.get!(Activity, id) |> Repo.preload([[experiences: :categories], :images])
 
     render(conn, "show.html", activity: activity, page_title: activity.name)
   end
 
   def edit(conn, %{"id" => id}) do
-    activity = Repo.get!(Activity, id) |> Repo.preload(:categories)
+    activity = Repo.get!(Activity, id)
 
     changeset = Activity.changeset(activity)
     render(conn, "edit.html",
       activity: activity,
-      changeset: changeset,
-      categories: get_ordered_categories
+      changeset: changeset
     )
   end
 
   def update(conn, %{"id" => id, "activity" => activity_params}) do
-    activity = Repo.get!(Activity, id) |> Repo.preload(:categories)
+    activity = Repo.get!(Activity, id)
 
     changeset = Activity.changeset(activity, activity_params)
 
-    {:ok, conn} = Repo.transaction fn ->
-      case Repo.update(changeset) do
-        {:ok, activity} ->
-          # Update associated categories
-          Repo.delete_all(from ac in ActivityCategory, where: ac.activity_id == ^id)
-          insert_categories(activity, activity_params["categories"])
-
-          conn
-          |> put_flash(:info, "Activity updated successfully.")
-          |> redirect(to: admin_activity_path(conn, :show, activity))
-        {:error, changeset} ->
-          render(conn, "edit.html",
-            activity: activity,
-            changeset: changeset,
-            categories: get_ordered_categories
-          )
-      end
+    case Repo.update(changeset) do
+      {:ok, _activity} ->
+        conn
+        |> put_flash(:info, "Activity updated successfully.")
+        |> redirect(to: admin_activity_path(conn, :show, activity))
+      {:error, changeset} ->
+        render(conn, "edit.html",
+          activity: activity,
+          changeset: changeset
+        )
     end
-
-    conn
   end
 
   def delete(conn, %{"id" => id}) do
@@ -99,24 +75,5 @@ defmodule Grid.Admin.ActivityController do
     conn
     |> put_flash(:info, "Activity deleted successfully.")
     |> redirect(to: admin_activity_path(conn, :index))
-  end
-
-  ##########
-  # Helpers
-  ##########
-
-  defp insert_categories(_, nil), do: :ok
-  defp insert_categories(activity, category_ids) do
-    # create relationships
-    for id <- category_ids, {category_id, ""} = Integer.parse(id) do
-      Repo.insert!(%ActivityCategory{
-        activity_id: activity.id,
-        category_id: category_id
-      })
-    end
-  end
-
-  defp get_ordered_categories do
-    Category |> order_by([c], [c.name]) |> Repo.all
   end
 end

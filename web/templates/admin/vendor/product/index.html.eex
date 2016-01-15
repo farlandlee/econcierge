@@ -2,7 +2,7 @@
   <thead>
     <tr>
       <th>Name</th>
-      <th>Activity</th>
+      <th>Experience</th>
       <th>Description</th>
       <th>Published?</th>
 
@@ -13,7 +13,7 @@
 <%= for product <- @products do %>
     <tr>
       <td><%= link product.name, to: admin_vendor_product_path(@conn, :show, @vendor, product) %></td>
-      <td><%= product.activity.name %></td>
+      <td><%= product.experience.name %></td>
       <td><%= product.description %></td>
       <td> <%= check_icon product.published %> </td>
 

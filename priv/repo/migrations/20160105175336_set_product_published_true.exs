@@ -1,13 +1,22 @@
 defmodule Grid.Repo.Migrations.SetProductPublishedTrue do
   use Ecto.Migration
   import Ecto.Query
-  
+
+  defmodule Product do
+    use Grid.Web, :model
+    schema "products" do
+      field :published, :boolean
+
+      Ecto.Schema.timestamps
+    end
+  end
+
   def up do
-    from(p in Grid.Product, update: [set: [published: true]])
+    from(p in Product, update: [set: [published: true]])
     |> Grid.Repo.update_all([])
   end
   def down do
-    from(p in Grid.Product, update: [set: [published: nil]])
+    from(p in Product, update: [set: [published: nil]])
     |> Grid.Repo.update_all([])
   end
 end

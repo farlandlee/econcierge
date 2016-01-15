@@ -42,7 +42,7 @@ defmodule Grid.Admin.CategoryController do
     changeset = Category.changeset(category, category_params)
 
     case Repo.update(changeset) do
-      {:ok, category} ->
+      {:ok, _category} ->
         conn
         |> put_flash(:info, "Category updated successfully.")
         |> redirect(to: admin_category_path(conn, :index))

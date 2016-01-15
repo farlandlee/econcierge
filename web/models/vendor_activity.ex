@@ -20,5 +20,7 @@ defmodule Grid.VendorActivity do
   def changeset(model, params \\ :empty) do
     model
     |> cast(params, @required_fields, @optional_fields)
+    |> foreign_key_constraint(:vendor_id)
+    |> foreign_key_constraint(:activity_id)
   end
 end

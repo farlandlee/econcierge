@@ -97,18 +97,4 @@ defmodule Grid.Admin.ActivityControllerTest do
     assert redirected_to(conn) == admin_activity_path(conn, :index)
     refute Repo.get(Activity, activity.id)
   end
-
-  test "assigns includes the correct categories" do
-    # Create a product with activity category
-    p = Factory.create(:product)
-    ac = Factory.create(:activity_category, activity: p.activity)
-    Factory.create(:product_activity_category, product: p, activity_category: ac)
-
-    # Create another product with the same activity category
-    p2 = Factory.create(:product, activity: p.activity)
-    Factory.create(:product_activity_category, product: p2, activity_category: ac)
-
-    conn = Grid.ActivityController.activity_assigns(%Plug.Conn{params: %{"activity_slug" => p.activity.slug}}, nil)
-    assert length(conn.assigns.categories) == 1
-  end
 end
