@@ -14,7 +14,7 @@
 <div class="panel panel-default">
   <div class="panel-heading">
     <%= link to: admin_activity_experience_path(@conn, :new, @activity), class: "btn btn-xs btn-success pull-right" do %>
-      <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Image
+      <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Experience
     <% end %>
     <h3 class="panel-title">Experiences</h3>
   </div>
