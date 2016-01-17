@@ -17,16 +17,15 @@ defmodule Grid.AdminView do
       method: :put,
       class: "btn-sm btn-primary"
   end
-  
-  def activity_ids(%{model: %{activities: activities}}) when is_list(activities) do
-    Enum.map(activities, &(&1.id))
-  end
-  def activity_ids(_), do: []
 
-  def pretty_activities(activities) do
-    activities
+  def ids(items) when is_list(items) do
+    Enum.map(items, &(&1.id))
+  end
+  def ids(_), do: []
+
+  def pretty_name_list(items) do
+    items
     |> Enum.map(&(&1.name))
     |> Enum.join(" | ")
   end
-
 end

@@ -6,7 +6,6 @@ defmodule Grid.Factory do
   alias Grid.Activity
   alias Grid.Category
   alias Grid.Experience
-  alias Grid.ExperienceActivity
   alias Grid.ExperienceCategory
   alias Grid.Price
   alias Grid.Product
