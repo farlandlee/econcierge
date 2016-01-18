@@ -25,6 +25,7 @@ defmodule Grid.Mixfile do
        :phoenix_html,
        :cowboy,
        :logger,
+       :oauth2,
        :phoenix_ecto,
        :postgrex
     ]]
@@ -45,6 +46,7 @@ defmodule Grid.Mixfile do
       {:ex_machina, "~> 0.5", only: :test},
       {:httpoison, "~> 0.7"},
       {:inflex, "~> 1.5.0"},
+      {:oauth2, "~> 0.5.0"},
       {:phoenix, "~> 1.1"},
       {:phoenix_ecto, "~> 2.0"},
       {:postgrex, ">= 0.0.0"},

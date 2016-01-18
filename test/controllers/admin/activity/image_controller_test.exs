@@ -20,8 +20,7 @@ defmodule Grid.Admin.Activity.ImageControllerTest do
     conn = put conn, admin_activity_image_path(conn, :set_default, a, i)
     assert redirected_to(conn) =~ admin_activity_path(conn, :show, a)
 
-    conn = recycle(conn)
-    conn = get conn, admin_activity_path(conn, :show, a)
+    conn = conn |> recycle_with_auth |> get(admin_activity_path(conn, :show, a))
     assert html_response(conn, 200) =~ "Current default"
 
     a = Repo.get!(Activity, a.id)
@@ -71,8 +70,7 @@ defmodule Grid.Admin.Activity.ImageControllerTest do
     conn = put conn, admin_activity_image_path(conn, :update, a, i), image: @valid_attrs
     assert redirected_to(conn) == admin_activity_image_path(conn, :show, a, i)
 
-    conn = recycle(conn)
-    conn = get conn, admin_activity_image_path(conn, :show, a, i)
+    conn = conn |> recycle_with_auth |> get(admin_activity_image_path(conn, :show, a, i))
     assert html_response(conn, 200) =~ @valid_attrs["alt"]
 
     assert Repo.get_by(@table, %{alt: @valid_attrs["alt"]})

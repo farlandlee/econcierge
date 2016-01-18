@@ -61,8 +61,7 @@ defmodule Grid.PriceControllerTest do
     conn = put conn, admin_vendor_product_price_path(conn, :set_default, vendor, product, price)
     assert redirected_to(conn) =~ admin_vendor_product_path(conn, :show, vendor, product)
 
-    conn = recycle(conn)
-    conn = get conn, admin_vendor_product_path(conn, :show, vendor, product)
+    conn = conn |> recycle_with_auth |> get(admin_vendor_product_path(conn, :show, vendor, product))
     assert html_response(conn, 200) =~ "Current default"
 
     product = Repo.get!(Grid.Product, product.id)

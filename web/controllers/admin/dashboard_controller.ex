@@ -1,8 +1,7 @@
 defmodule Grid.Admin.DashboardController do
   use Grid.Web, :controller
-  plug Grid.Plugs.PageTitle, title: "Dashboard"
 
   def index(conn, _) do
-    render conn, "index.html", page_title: "Dashboard"
+    render conn, "index.html", page_title: "Outpost Admin Dashboard"
   end
 end

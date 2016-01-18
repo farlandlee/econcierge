@@ -101,7 +101,7 @@ defmodule Grid.Admin.ProductControllerTest do
     refute response =~ some_other_experience.name
     assert response =~ p.experience.name
 
-    conn = conn |> recycle |> get(admin_vendor_product_path(conn, :edit, v, p))
+    conn = conn |> recycle_with_auth |> get(admin_vendor_product_path(conn, :edit, v, p))
     response = html_response(conn, 200)
     refute response =~ some_other_experience.name
     assert response =~ p.experience.name

@@ -1,1 +1,1 @@
-<p>This space intentionally left blank.</p>
+<p class="lead">Welcome, <%= @current_user.name %></p>
