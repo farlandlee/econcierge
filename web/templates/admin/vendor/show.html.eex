@@ -11,7 +11,7 @@
   <dd><code><%= @vendor.slug %></code></dd>
 
   <dt>Activities</dt>
-  <dd><%= pretty_activities(@vendor.activities) %></dd>
+  <dd><%= Grid.AdminView.pretty_name_list(@vendor.activities) %></dd>
 </dl>
 
 <div class="panel panel-default">
