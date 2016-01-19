@@ -1,7 +1,3 @@
-<%= link to: admin_activity_experience_path(@conn, :new, @activity), class: "btn btn-success header-action" do  %>
-  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add experience
-<% end %>
-
 <table class="table">
   <thead>
     <tr>
