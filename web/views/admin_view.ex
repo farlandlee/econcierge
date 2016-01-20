@@ -1,6 +1,16 @@
 defmodule Grid.AdminView do
   use Grid.Web, :view
 
+  def environment_tag do
+    {class, text} = case Application.get_env(:grid, :env) do
+      :prod -> {"text-success", "Production"}
+      :dev -> {"", "Development"}
+      :test -> {"text-primary", "Test"}
+      _ -> {"text-warning", "Unknown Environment"}
+    end
+    content_tag :span, text, class: class
+  end
+
   @doc """
   Takes two ids and a path.
   If the ids are the same, outputs a button that does nothing.
