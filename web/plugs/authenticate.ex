@@ -11,6 +11,7 @@ defmodule Grid.Plugs.Authenticate do
       nil ->
         conn
         |> put_flash(:error, "You must be signed in to see that.")
+        |> put_session(:redirected_from, conn.request_path)
         |> redirect(to: Helpers.auth_path(conn, :index))
         |> halt
       _ -> conn
