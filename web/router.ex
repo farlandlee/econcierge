@@ -34,10 +34,16 @@ defmodule Grid.Router do
 
     get "/", PageController, :index
 
-    scope "/activity" do
+    scope "/browse" do
       post "/", ActivityController, :show
-      get "/:activity_slug", ActivityController, :show_by_slug
-      get "/:activity_slug/:category_slug", ActivityController, :show_by_slug_and_category
+      scope "/:activity_slug" do
+        get "/vendors", ActivityController, :vendors_by_activity_slug
+        get "/experiences", ActivityController, :experiences_by_activity_slug
+        scope "/:category_slug" do
+          get "/vendors", ActivityController, :vendors_by_activity_and_category_slugs
+          get "/experiences", ActivityController, :experiences_by_activity_and_category_slugs
+        end
+      end
     end
   end
 

@@ -30,7 +30,7 @@
       <ul class="menu">
         <li class="menu-text">Suggested</li>
         <%= for activity <- @available_activities do %>
-        <li><%= link activity.name, to: activity_path(@conn, :show_by_slug, activity.slug) %></li>
+        <li><%= link activity.name, to: activity_path(@conn, :vendors_by_activity_slug, activity.slug) %></li>
         <%= end %>
       </ul>
     </div>

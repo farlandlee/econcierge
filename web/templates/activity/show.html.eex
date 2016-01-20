@@ -10,6 +10,7 @@
   <div class="search-bar">
     <div class="row column">
       <%= form_for @conn, activity_path(@conn, :show), [as: :activity, id: "search_form"], fn f -> %>
+        <%= hidden_input f, :target, value: @target %>
         <div class="row small-collapse">
           <div class="input-group">
             <%= select(
@@ -27,28 +28,42 @@
       <% end %>
     </div>
   </div>
-  <div class="row column top-categories">
-    <ul class="menu">
-      <li><%= link "All", to: activity_path(@conn, :show_by_slug, @activity.slug), class: if(@category == nil, do: "active", else: "") %></li>
-      <%= for category <- @categories do %>
+  <div class="row top-categories">
+    <div class="small-10 large-10 columns">
+      <ul class="menu">
+        <li><%= link "All", to: activity_path(@conn, String.to_existing_atom("#{@target}_by_activity_slug"), @activity.slug), class: if(@category == nil, do: "active", else: "") %></li>
+        <%= for category <- @categories do %>
+          <li>
+            <%= link category.name, to: activity_path(@conn, String.to_existing_atom("#{@target}_by_activity_and_category_slugs"), @activity.slug, category.slug), class: if(@category == category, do: "active", else: "") %>
+          </li>
+        <% end %>
+      </li>
+    </div>
+    <div class="small-2 large-2 columns">
+      <ul class="menu">
         <li>
-          <%= link category.name, to: activity_path(@conn, :show_by_slug_and_category, @activity.slug, category.slug), class: if(@category == category, do: "active", else: "") %>
+          <%= link "Vendors", to: target_path(:vendors, @activity, @category), class: if(@target == :vendors, do: "active", else: "") %>
         </li>
-      <% end %>
-    </li>
+        <li>
+          <%= link "Experiences", to: target_path(:experiences, @activity, @category), class: if(@target == :experiences, do: "active", else: "") %>
+        </li>
+      </ul>
+    </div>
   </div>
   <div class="row small-up-1 medium-up-2 large-up-3">
+    <%= if Enum.empty?(@items) do %>
     <div class="column">
-    <%= if Enum.empty?(@vendors) do %>
       Sorry, no offerings for <%= @activity.name %> at this time.
+    </div>
     <%= else %>
-      <%= for vendor <- @vendors do %>
-      <%= img vendor.default_image, class: "img-responsive" %>
-      <p class="lead"><%= vendor.name %></p>
-      <p><a href="#" class="more-info">View More Info</a></p>
+      <%= for item <- @items do %>
+      <div class="column">
+        <%= img_for item, class: "img-responsive" %>
+        <p class="lead"><%= item.name %></p>
+        <p><a href="#" class="more-info">View More Info</a></p>
+      </div>
       <% end %>
     <% end %>
-    </div>
   </div>
   <div class="row column activity-bottom">
     <h2>Others Have Also Booked</h2>
