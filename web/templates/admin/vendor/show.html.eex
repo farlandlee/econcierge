@@ -23,6 +23,7 @@
   </div>
   <%= render Grid.Admin.Vendor.ProductView, "index.html",
     conn: @conn,
+    display_name_of: :experience,
     vendor: @vendor,
     products: @vendor.products
   %>

@@ -5,17 +5,18 @@
       <th>Description</th>
       <th>Slug</th>
       <th>Categories</th>
-
+      <th>Image</th>
       <th></th>
     </tr>
   </thead>
   <tbody>
-<%= for experience <- @experiences do %>
+<%= for experience <- @experiences, activity = experience.activity_id do %>
     <tr>
-      <td><%= experience.name %></td>
+      <td><%= link experience.name, to: admin_activity_experience_path(@conn, :show, activity, experience) %></td>
       <td><%= experience.description %></td>
       <td><%= experience.slug %></td>
       <td><%= Grid.AdminView.pretty_name_list(experience.categories) %> </td>
+      <td><%= Grid.Admin.Activity.ImageView.filename experience.image %></td>
 
       <td class="text-right">
         <div class="dropdown actions">
@@ -24,10 +25,10 @@
           </button>
           <ul class="dropdown-menu dropdown-menu-right">
             <li>
-              <%= link "Edit", to: admin_activity_experience_path(@conn, :edit, @activity, experience), class: "edit" %>
+              <%= link "Edit", to: admin_activity_experience_path(@conn, :edit, activity, experience), class: "edit" %>
             </li>
             <li>
-              <%= link "Delete", to: admin_activity_experience_path(@conn, :delete, @activity, experience), method: :delete, data: [confirm: "Are you sure?"], class: "delete" %>
+              <%= link "Delete", to: admin_activity_experience_path(@conn, :delete, activity, experience), method: :delete, data: [confirm: "Are you sure?"], class: "delete" %>
             </li>
           </ul>
         </div>

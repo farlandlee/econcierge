@@ -23,12 +23,7 @@ defmodule Grid.Admin.Vendor.ImageController do
     case Repo.insert(changeset) do
       {:ok, image} ->
         _async_upload_task = Arc.upload_image(image, file, vendor)
-
-        conn
-        |> put_flash(:info, """
-        Image successfully added, but if it doesn't appear it may still be uploading.
-        """)
-        |> redirect(to: admin_vendor_path(conn, :show, vendor.id))
+        redirect(conn, to: admin_vendor_path(conn, :show, vendor.id))
       {:error, changeset} ->
         render(conn, "new.html", changeset: changeset)
     end

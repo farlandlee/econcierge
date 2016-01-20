@@ -38,6 +38,28 @@ defmodule Grid.Admin.Activity.ExperienceControllerTest do
     assert experience.activity.id == a.id
   end
 
+  test "Shows experience", %{conn: conn, experience: exp} do
+    conn = get conn, admin_activity_experience_path(conn, :show, exp.activity, exp)
+    resp = html_response(conn, 200)
+
+    assert resp =~ "#{exp.name}"
+    assert resp =~ "#{exp.description}"
+    assert resp =~ "Slug"
+    assert resp =~ "#{exp.slug}"
+    assert resp =~ "Categories"
+    assert resp =~ "Image"
+  end
+
+  test "Shows products", %{conn: conn} do
+    product = %{experience: exp} = Factory.create(:product)
+
+    conn = get conn, admin_activity_experience_path(conn, :show, exp.activity, exp)
+    resp = html_response(conn, 200)
+    assert resp =~ "Products"
+    assert resp =~ "#{product.name}"
+    assert resp =~ "#{product.vendor.name}"
+  end
+
   test "does not create resource and renders errors when data is invalid", %{conn: conn, activity: a} do
     conn = post conn, admin_activity_experience_path(conn, :create, a), experience: @invalid_attrs
     assert html_response(conn, 200) =~ "New Experience"

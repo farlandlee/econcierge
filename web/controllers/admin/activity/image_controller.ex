@@ -1,11 +1,11 @@
 defmodule Grid.Admin.Activity.ImageController do
   use Grid.Web, :controller
-  plug Grid.Plugs.PageTitle, title: "Activity Image"
 
   alias Grid.Arc
   alias Grid.Image
   alias Grid.Activity
 
+  plug Grid.Plugs.PageTitle, title: "Activity Image"
   plug Grid.Plugs.AssignModel, {"activity_images", Image} when action in [:show, :edit, :update, :delete, :set_default]
 
   def new(conn, _) do
@@ -22,12 +22,7 @@ defmodule Grid.Admin.Activity.ImageController do
     case Repo.insert(changeset) do
       {:ok, image} ->
         _async_upload_task = Arc.upload_image(image, file, activity)
-
-        conn
-        |> put_flash(:info, """
-        Image successfully added, but if it doesn't appear it may still be uploading.
-        """)
-        |> redirect(to: admin_activity_path(conn, :show, activity.id))
+        redirect(conn, to: admin_activity_path(conn, :show, activity.id))
       {:error, changeset} ->
         render(conn, "new.html", changeset: changeset)
     end
