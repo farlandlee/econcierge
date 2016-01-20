@@ -14,7 +14,7 @@ defmodule Grid.Product do
     has_many :start_times, Grid.StartTime
 
     has_many :categories, through: [:experience, :experience_categories, :category]
-    has_many :activities, through: [:experience, :activity]
+    has_one :activity, through: [:experience, :activity]
 
     timestamps
   end
