@@ -66,9 +66,14 @@ defmodule Grid.Arc do
     |> Enum.join(".")
   end
 
-  # Override the storage directory:
-  # Reimplement per model
-  def storage_dir(_version, {_file, %Grid.Vendor{id: id}}) do
-    "vendor/#{id}"
+  @doc """
+    iex> Grid.Arc.storage_dir(nil, {nil, %Grid.Vendor{id: 1}})
+    "vendor/1"
+    iex> Grid.Arc.storage_dir(nil, {nil, %Grid.Activity{id: 1}})
+    "activity/1"
+  """
+  def storage_dir(_version, {_file, %{__struct__: module, id: id}}) do
+    "#{Phoenix.Naming.resource_name(module)}/#{id}"
   end
+
 end
