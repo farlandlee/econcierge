@@ -20,21 +20,20 @@ defmodule Grid.Plugs.AssignModel do
   end
 
   def init(options) when is_list options do
-    defaults = Keyword.fetch!(options, :model)
+    options = Enum.into(options, %{})
+    defaults = Map.fetch!(options, :model)
       |> init
 
-    %{
-      param: Keyword.get(options, :param, defaults.param),
-      as: Keyword.get(options, :as, defaults.as),
-      model: defaults.model
-    }
+    Map.merge(defaults, options)
   end
 
   def call(conn, opts) do
     assignment = constraint(opts.model, conn)
       |> Repo.get!(conn.params[opts.param])
 
-    assign(conn, opts.as, assignment)
+    conn
+    |> assign(opts.as, assignment)
+    |> breadcrumb(opts.model, assignment)
   end
 
   defp constraint(Grid.Product, conn), do:
@@ -51,4 +50,9 @@ defmodule Grid.Plugs.AssignModel do
 
   defp constraint(model, _), do: model
 
+  defp breadcrumb(conn, module, model) do
+    breadcrumbs = Map.get(conn.private, :grid_resource_breadcrumbs, [])
+    breadcrumbs = [{:show, module, model}, {:index, module} | breadcrumbs]
+    put_private(conn, :grid_resource_breadcrumbs, breadcrumbs)
+  end
 end

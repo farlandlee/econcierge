@@ -7,6 +7,10 @@ defmodule Grid.Admin.Vendor.ProductController do
   plug :scrub_params, "product" when action in [:create, :update]
   plug Grid.Plugs.AssignModel, Product when action in [:edit, :show, :update, :delete]
 
+  def index(conn, _) do
+    redirect(conn, to: admin_vendor_path(conn, :show, conn.assigns.vendor))
+  end
+
   def new(conn, _params) do
     render(conn, "new.html",
       changeset: Product.changeset(%Product{}),

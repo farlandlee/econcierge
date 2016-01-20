@@ -1,12 +1,14 @@
 defmodule Grid.Admin.ActivityController do
   use Grid.Web, :controller
-  plug Grid.Plugs.PageTitle, title: "Activity"
 
   alias Grid.Activity
+  alias Grid.Plugs
 
   import Ecto.Query
 
+  plug Plugs.PageTitle, title: "Activity"
   plug :scrub_params, "activity" when action in [:create, :update]
+  plug Plugs.AssignModel, Activity when action in [:show, :edit]
 
   def index(conn, _params) do
     activity = Activity |> order_by(:name) |> Repo.all
@@ -31,8 +33,8 @@ defmodule Grid.Admin.ActivityController do
     end
   end
 
-  def show(conn, %{"id" => id}) do
-    activity = Repo.get!(Activity, id)
+  def show(conn, _) do
+    activity = conn.assigns.activity
       |> Repo.preload([
         :images,
         [experiences: [:categories, :image]]
@@ -41,14 +43,9 @@ defmodule Grid.Admin.ActivityController do
     render(conn, "show.html", activity: activity, page_title: activity.name)
   end
 
-  def edit(conn, %{"id" => id}) do
-    activity = Repo.get!(Activity, id)
-
-    changeset = Activity.changeset(activity)
-    render(conn, "edit.html",
-      activity: activity,
-      changeset: changeset
-    )
+  def edit(conn, _) do
+    changeset = Activity.changeset(conn.assigns.activity)
+    render(conn, "edit.html", changeset: changeset)
   end
 
   def update(conn, %{"id" => id, "activity" => activity_params}) do

@@ -16,6 +16,11 @@ defmodule Grid.Admin.Activity.ImageControllerTest do
     {:ok, activity: a, image: i}
   end
 
+  test "Index redirects to activity", %{conn: conn, activity: activity} do
+    conn = get conn, admin_activity_image_path(conn, :index, activity)
+    assert redirected_to(conn) == admin_activity_path(conn, :show, activity)
+  end
+
   test "set default image", %{conn: conn, activity: a, image: i} do
     conn = put conn, admin_activity_image_path(conn, :set_default, a, i)
     assert redirected_to(conn) =~ admin_activity_path(conn, :show, a)

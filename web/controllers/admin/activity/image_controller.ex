@@ -1,12 +1,18 @@
 defmodule Grid.Admin.Activity.ImageController do
   use Grid.Web, :controller
 
+  alias Grid.Activity
   alias Grid.Arc
   alias Grid.Image
-  alias Grid.Activity
+  alias Grid.Plugs
 
-  plug Grid.Plugs.PageTitle, title: "Activity Image"
-  plug Grid.Plugs.AssignModel, {"activity_images", Image} when action in [:show, :edit, :update, :delete, :set_default]
+  plug Plugs.PageTitle, title: "Activity Image"
+  plug Plugs.AssignModel, {"activity_images", Image}
+    when action in [:show, :edit, :update, :delete, :set_default]
+
+  def index(conn, _) do
+    redirect(conn, to: admin_activity_path(conn, :show, conn.assigns.activity))
+  end
 
   def new(conn, _) do
     changeset = new_image_changeset(conn.assigns.activity)

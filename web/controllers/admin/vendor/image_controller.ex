@@ -8,6 +8,10 @@ defmodule Grid.Admin.Vendor.ImageController do
   plug Grid.Plugs.PageTitle, title: "Vendor Image"
   plug Grid.Plugs.AssignModel, {"vendor_images", Image} when not action in [:index, :new, :create]
 
+  def index(conn, _) do
+    redirect(conn, to: admin_vendor_path(conn, :show, conn.assigns.vendor))
+  end
+
   def new(conn, _) do
     vendor = conn.assigns.vendor
     changeset = new_image_changeset(vendor)
