@@ -31,10 +31,13 @@ defmodule Grid.AuthController do
     if user_params["hd"] == "outpostjh.com" do
       user = get_or_create_user(user_params)
 
+      redirect_to = get_session(conn, :redirected_from) || admin_dashboard_path(conn, :index)
+
       conn
       |> put_session(:user_id, user.id)
+      |> delete_session(:redirected_from)
       |> configure_session(renew: true)
-      |> redirect(to: admin_dashboard_path(conn, :index))
+      |> redirect(to: redirect_to)
     else
       conn
       |> put_flash(:error, "Invalid email domain.")
