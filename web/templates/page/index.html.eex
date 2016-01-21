@@ -3,6 +3,7 @@
     <div class="small-12 medium-12 large-12 xlarge12 xxlarge-12 columns home-left">
         <div class="callout search-bar" id="search-bar">
           <%= form_for @conn, activity_path(@conn, :show), [as: :activity, id: "search_form"], fn f -> %>
+            <%= hidden_input f, :target, value: "vendors" %>
             <div class="row small-collapse">
               <div class="small-12 columns">
                 <div class="search-label">Book Your Jackson Hole Activities</div>
