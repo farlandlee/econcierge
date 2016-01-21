@@ -67,7 +67,7 @@ defmodule Grid.Router do
     resources "/activities", ActivityController, [alias: Activity] do
       pipe_through :assign_activity
 
-      resources "/experiences", ExperienceController, except: [:show]
+      resources "/experiences", ExperienceController
 
       resources "/images", ImageController, except: [:index]
       put "/images/:id/default", ImageController, :set_default

@@ -6,7 +6,7 @@ defmodule Grid.Experience do
     field :description, :string
     field :slug, :string
     belongs_to :activity, Grid.Activity
-    belongs_to :image, Grid.Image
+    belongs_to :image, {"activity_images", Grid.Image}
 
     has_many :experience_categories, Grid.ExperienceCategory
     has_many :categories, through: [:experience_categories, :category]
@@ -30,6 +30,7 @@ defmodule Grid.Experience do
     |> cast(params, @required_fields, @optional_fields)
     |> unique_constraint(:name)
     |> foreign_key_constraint(:activity_id)
+    |> foreign_key_constraint(:image_id)
     |> slugify
   end
 end

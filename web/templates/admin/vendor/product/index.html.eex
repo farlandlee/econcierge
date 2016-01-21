@@ -2,7 +2,7 @@
   <thead>
     <tr>
       <th>Name</th>
-      <th>Experience</th>
+      <th><%= vendor_or_experience_header @display_name_of %></th>
       <th>Description</th>
       <th>Published?</th>
 
@@ -10,10 +10,10 @@
     </tr>
   </thead>
   <tbody>
-<%= for product <- @products do %>
+<%= for product <- @products, vendor = product.vendor, vendor_id = product.vendor_id do %>
     <tr>
-      <td><%= link product.name, to: admin_vendor_product_path(@conn, :show, @vendor, product) %></td>
-      <td><%= product.experience.name %></td>
+      <td><%= link product.name, to: admin_vendor_product_path(@conn, :show, vendor_id, product) %></td>
+      <th><%= vendor_or_experience @display_name_of, product %></th>
       <td><%= product.description %></td>
       <td> <%= check_icon product.published %> </td>
 
@@ -24,10 +24,10 @@
           </button>
           <ul class="dropdown-menu dropdown-menu-right">
             <li>
-              <%= link "Edit", to: admin_vendor_product_path(@conn, :edit, @vendor, product), class: "edit" %>
+              <%= link "Edit", to: admin_vendor_product_path(@conn, :edit, vendor_id, product), class: "edit" %>
             </li>
             <li>
-              <%= link "Delete", to: admin_vendor_product_path(@conn, :delete, @vendor, product), method: :delete, data: [confirm: "Are you sure?"], class: "delete" %>
+              <%= link "Delete", to: admin_vendor_product_path(@conn, :delete, vendor_id, product), method: :delete, data: [confirm: "Are you sure?"], class: "delete" %>
             </li>
           </ul>
         </div>

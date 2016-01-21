@@ -1,6 +1,5 @@
 defmodule Grid.Admin.VendorController do
   use Grid.Web, :controller
-  plug Grid.Plugs.PageTitle, title: "Vendor"
 
   import Ecto.Query
 
@@ -8,6 +7,7 @@ defmodule Grid.Admin.VendorController do
   alias Grid.Activity
   alias Grid.VendorActivity
 
+  plug Grid.Plugs.PageTitle, title: "Vendor"
   plug :scrub_params, "vendor" when action in [:create, :update]
   plug Grid.Plugs.AssignModel, Vendor when action in [:show, :edit, :update, :delete]
   plug :load_assocs when action in [:show, :edit, :update, :delete]

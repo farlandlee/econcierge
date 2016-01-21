@@ -10,13 +10,12 @@ defmodule Grid.Admin.Activity.ExperienceController do
   plug Grid.Plugs.PageTitle, title: "Experience"
   plug :scrub_params, "experience" when action in [:create, :update]
 
+
   def new(conn, _params) do
     changeset = Experience.changeset(%Experience{})
-    render(conn, "new.html",
-      changeset: changeset,
-      activities: load_ordered(Activity),
-      categories: load_ordered(Category)
-    )
+    conn
+    |> assign_form_selection_models
+    |> render("new.html", changeset: changeset)
   end
 
   def create(conn, %{"experience" => experience_params}) do
@@ -33,11 +32,9 @@ defmodule Grid.Admin.Activity.ExperienceController do
           |> put_flash(:info, "Experience created successfully.")
           |> redirect(to: admin_activity_path(conn, :show, activity))
         {:error, changeset} ->
-          render(conn, "new.html",
-            changeset: changeset,
-            activities: load_ordered(Activity),
-            categories: load_ordered(Category)
-          )
+          conn
+          |> assign_form_selection_models
+          |> render("new.html", changeset: changeset)
       end
     end)
 
@@ -45,23 +42,29 @@ defmodule Grid.Admin.Activity.ExperienceController do
   end
 
   def show(conn, %{"id" => id}) do
-    experience = Repo.get!(Experience, id)
-    render(conn, "show.html", experience: experience)
-  end
-
-  def edit(conn, %{"id" => id}) do
-    experience = Repo.get!(Experience, id) |> Repo.preload([:activity, :categories])
-    changeset = Experience.changeset(experience)
-    render(conn, "edit.html",
+    experience = get_experience_with_assocs(id)
+    products = experience
+      |> assoc(:products)
+      |> Repo.all
+      |> Repo.preload(:vendor)
+    render(conn, "show.html",
+      products: products,
       experience: experience,
-      changeset: changeset,
-      activities: load_ordered(Activity),
-      categories: load_ordered(Category)
+      page_title: experience.name
     )
   end
 
+  def edit(conn, %{"id" => id}) do
+    experience = get_experience_with_assocs(id)
+    changeset = Experience.changeset(experience)
+
+    conn
+    |> assign_form_selection_models
+    |> render("edit.html", changeset: changeset, experience: experience)
+  end
+
   def update(conn, %{"id" => id, "experience" => experience_params}) do
-    experience = Repo.get!(Experience, id) |> Repo.preload([:activity, :categories])
+    experience = get_experience_with_assocs(id)
     changeset = Experience.changeset(experience, experience_params)
 
     {_, conn} = Repo.transaction(fn ->
@@ -73,12 +76,9 @@ defmodule Grid.Admin.Activity.ExperienceController do
           |> put_flash(:info, "Experience updated successfully.")
           |> redirect(to: admin_activity_path(conn, :show, experience.activity))
         {:error, changeset} ->
-          render(conn, "edit.html",
-            experience: experience,
-            changeset: changeset,
-            activities: load_ordered(Activity),
-            categories: load_ordered(Category)
-          )
+          conn
+          |> assign_form_selection_models
+          |> render("edit.html", changeset: changeset, experience: experience)
       end
     end)
 
@@ -113,7 +113,13 @@ defmodule Grid.Admin.Activity.ExperienceController do
     end
   end
 
-  defp load_ordered(model) do
-    model |> order_by(:name) |> Repo.all
+  defp assign_form_selection_models(conn) do
+    conn
+    |> assign(:images, conn.assigns.activity |> assoc(:images) |> Repo.all())
+    |> assign(:categories, Category |> order_by(:name) |> Repo.all())
+  end
+
+  defp get_experience_with_assocs(id) do
+    Repo.get!(Experience, id) |> Repo.preload([:activity, :categories, :image])
   end
 end
