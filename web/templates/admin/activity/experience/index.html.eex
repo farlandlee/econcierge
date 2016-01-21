@@ -16,7 +16,7 @@
       <td><%= experience.description %></td>
       <td><%= experience.slug %></td>
       <td><%= Grid.AdminView.pretty_name_list(experience.categories) %> </td>
-      <td><%= Grid.Admin.Activity.ImageView.filename experience.image %></td>
+      <td><%= Grid.Admin.ImageView.filename experience.image %></td>
 
       <td class="text-right">
         <div class="dropdown actions">

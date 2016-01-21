@@ -1,12 +1,11 @@
 defmodule Grid.Admin.Vendor.ImageView do
-  use Grid.Web, :view
-  alias Grid.Image
 
-  def caption(%Image{alt: alt})
-  when alt == "" or alt == nil do
-    content_tag(:i, "No caption")
-  end
-  def caption(%Image{alt: alt}) do
-    content_tag(:p, alt)
+  def render(template, assigns) do
+    assigns = assigns
+      |> Map.put(:image_path, :admin_vendor_image_path)
+      |> Map.put(:ancestor_path, :admin_vendor_path)
+      |> Map.put(:ancestor, assigns.vendor)
+      |> Map.delete(:vendor)
+    Grid.Admin.ImageView.render(template, assigns)
   end
 end

@@ -1,3 +1,0 @@
-<%= render "form.html", changeset: @changeset,
-                        action: admin_activity_image_path(@conn, :create, @activity.id),
-                        back: admin_activity_path(@conn, :show, @activity.id) %>

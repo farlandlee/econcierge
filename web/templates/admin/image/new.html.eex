@@ -1,0 +1,5 @@
+<%= render "form.html",
+  changeset: @changeset,
+  action: image_path(@image_path, [@conn, :create, @ancestor]),
+  back: image_path(@ancestor_path, [@conn, :show, @ancestor])
+%>

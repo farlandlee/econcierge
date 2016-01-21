@@ -10,11 +10,15 @@
   <tbody>
   <%= for image <- @images do %>
     <tr>
-      <td><%= link image.filename, to: admin_vendor_image_path(@conn, :show, @vendor, image) %></td>
+      <td><%= link image.filename, to: image_path(@image_path, [@conn, :show, @ancestor, image]) %></td>
       <td><%= caption image %> </td>
       <td>
-        <%= Grid.AdminView.default_switcher @vendor.default_image_id, image.id,
-        admin_vendor_image_path(@conn, :set_default, @vendor, image) %>
+      <%= if image.error do %>
+        There was an error processing this image.
+      <% else %>
+        <%= Grid.AdminView.default_switcher @ancestor.default_image_id, image.id,
+        image_path(@image_path, [@conn, :set_default, @ancestor, image]) %>
+      <% end %>
       </td>
 
       <td class="text-right">
@@ -24,10 +28,10 @@
           </button>
           <ul class="dropdown-menu dropdown-menu-right">
             <li>
-              <%= link "Edit", to: admin_vendor_image_path(@conn, :edit, @vendor, image), class: "edit" %>
+              <%= link "Edit", to: image_path(@image_path, [@conn, :edit, @ancestor, image]), class: "edit" %>
             </li>
             <li>
-              <%= link "Delete", to: admin_vendor_image_path(@conn, :delete, @vendor, image), method: :delete, data: [confirm: "Are you sure?"], class: "delete" %>
+              <%= link "Delete", to: image_path(@image_path, [@conn, :delete, @ancestor, image]), method: :delete, data: [confirm: "Are you sure?"], class: "delete" %>
             </li>
           </ul>
         </div>
