@@ -13,7 +13,7 @@
 <%= for product <- @products, vendor = product.vendor, vendor_id = product.vendor_id do %>
     <tr>
       <td><%= link product.name, to: admin_vendor_product_path(@conn, :show, vendor_id, product) %></td>
-      <th><%= vendor_or_experience @display_name_of, product %></th>
+      <td><%= vendor_or_experience @display_name_of, product %></td>
       <td><%= product.description %></td>
       <td> <%= check_icon product.published %> </td>
 
