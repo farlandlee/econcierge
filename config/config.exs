@@ -6,7 +6,8 @@
 use Mix.Config
 
 config :grid,
-  env: Mix.env
+  env: Mix.env,
+  postmark_server_token: "POSTMARK_API_TEST"
 
 # Configures the endpoint
 config :grid, Grid.Endpoint,
@@ -16,6 +17,7 @@ config :grid, Grid.Endpoint,
   render_errors: [accepts: ~w(html json)],
   pubsub: [name: Grid.PubSub,
            adapter: Phoenix.PubSub.PG2]
+
 
 # Configures Elixir's Logger
 config :logger, :console,
