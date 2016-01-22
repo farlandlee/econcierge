@@ -39,4 +39,10 @@ defmodule Grid.Product do
     |> validate_length(:name, min: 1, max: 255)
     |> validate_length(:description, min: 1, max: 255)
   end
+
+  @copyable_fields ~w(description name vendor_id experience_id)a
+  def clone(product) do
+    fields = product |> Map.take(@copyable_fields)
+    Map.merge(%__MODULE__{}, fields)
+  end
 end

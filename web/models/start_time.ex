@@ -22,4 +22,12 @@ defmodule Grid.StartTime do
     |> cast(params, @required_fields, @optional_fields)
     |> foreign_key_constraint(:product_id)
   end
+
+  @copyable_fields ~w(starts_at_time)a
+  def clone(start_time, product_id: product_id) do
+    fields = start_time
+      |> Map.take(@copyable_fields)
+      |> Map.put(:product_id, product_id)
+    Map.merge(%__MODULE__{}, fields)
+  end
 end

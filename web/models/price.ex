@@ -31,4 +31,12 @@ defmodule Grid.Price do
     |> validate_length(:description, min: 1, max: 255)
     |> validate_number(:people_count, greater_than_or_equal_to: 0)
   end
+
+  @copyable_fields ~w(amount name description)a
+  def clone(price, product_id: product_id) do
+    fields = price
+      |> Map.take(@copyable_fields)
+      |> Map.put(:product_id, product_id)
+    Map.merge(%__MODULE__{}, fields)
+  end
 end
