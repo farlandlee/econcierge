@@ -9,6 +9,5 @@ defmodule Grid.Repo.Migrations.CreateStartTime do
       timestamps
     end
     create index(:start_times, [:product_id])
-
   end
 end

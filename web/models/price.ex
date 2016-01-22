@@ -23,6 +23,7 @@ defmodule Grid.Price do
   def changeset(model, params \\ :empty) do
     model
     |> cast(params, @required_fields, @optional_fields)
+    |> foreign_key_constraint(:product_id)
     |> update_change(:amount, &(Float.round(&1, 2)))
     |> update_change(:name, &String.strip/1)
     |> update_change(:description, &String.strip/1)
