@@ -7,8 +7,11 @@ defmodule Grid.Admin.Activity.ImageController do
   alias Grid.Plugs
 
   plug Plugs.PageTitle, title: "Activity Image"
-  plug Plugs.AssignModel, {"activity_images", Image}
-    when action in [:show, :edit, :update, :delete, :set_default]
+  plug Plugs.Breadcrumb, index: Image
+
+  @assign_model_actions [:show, :edit, :update, :delete, :set_default]
+  plug Plugs.AssignModel, {"activity_images", Image} when action in @assign_model_actions
+  plug Plugs.Breadcrumb, [show: Image] when action in [:show, :edit]
 
   def index(conn, _) do
     redirect(conn, to: admin_activity_path(conn, :show, conn.assigns.activity))

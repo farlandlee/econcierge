@@ -3,10 +3,15 @@ defmodule Grid.Admin.Vendor.ImageController do
 
   alias Grid.Arc
   alias Grid.Image
+  alias Grid.Plugs
   alias Grid.Vendor
 
-  plug Grid.Plugs.PageTitle, title: "Vendor Image"
-  plug Grid.Plugs.AssignModel, {"vendor_images", Image} when not action in [:index, :new, :create]
+  plug Plugs.PageTitle, title: "Vendor Image"
+  plug Plugs.Breadcrumb, index: Image
+
+  @assign_model_actions [:show, :edit, :update, :delete, :set_default]
+  plug Plugs.AssignModel, {"vendor_images", Image} when action in @assign_model_actions
+  plug Plugs.Breadcrumb, [show: Image] when action in [:show, :edit]
 
   def index(conn, _) do
     redirect(conn, to: admin_vendor_path(conn, :show, conn.assigns.vendor))

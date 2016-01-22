@@ -7,8 +7,10 @@ defmodule Grid.Admin.ActivityController do
   import Ecto.Query
 
   plug Plugs.PageTitle, title: "Activity"
+  plug Plugs.Breadcrumb, index: Activity
   plug :scrub_params, "activity" when action in [:create, :update]
-  plug Plugs.AssignModel, Activity when action in [:show, :edit]
+  plug Plugs.AssignModel, Activity when action in [:update, :show, :edit, :delete]
+  plug Plugs.Breadcrumb, [show: Activity] when action in [:show, :edit]
 
   def index(conn, _params) do
     activity = Activity |> order_by(:name) |> Repo.all
@@ -48,30 +50,21 @@ defmodule Grid.Admin.ActivityController do
     render(conn, "edit.html", changeset: changeset)
   end
 
-  def update(conn, %{"id" => id, "activity" => activity_params}) do
-    activity = Repo.get!(Activity, id)
-
-    changeset = Activity.changeset(activity, activity_params)
+  def update(conn, %{"activity" => activity_params}) do
+    changeset = Activity.changeset(conn.assigns.activity, activity_params)
 
     case Repo.update(changeset) do
-      {:ok, _activity} ->
+      {:ok, activity} ->
         conn
         |> put_flash(:info, "Activity updated successfully.")
         |> redirect(to: admin_activity_path(conn, :show, activity))
       {:error, changeset} ->
-        render(conn, "edit.html",
-          activity: activity,
-          changeset: changeset
-        )
+        render(conn, "edit.html", changeset: changeset)
     end
   end
 
-  def delete(conn, %{"id" => id}) do
-    activity = Repo.get!(Activity, id)
-
-    # Here we use delete! (with a bang) because we expect
-    # it to always work (and if it does not, it will raise).
-    Repo.delete!(activity)
+  def delete(conn, _) do
+    Repo.delete!(conn.assigns.activity)
 
     conn
     |> put_flash(:info, "Activity deleted successfully.")

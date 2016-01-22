@@ -1,13 +1,19 @@
 defmodule Grid.Admin.Vendor.ProductController do
   use Grid.Web, :controller
 
+  alias Grid.Plugs
   alias Grid.Product
   alias Grid.Price
   alias Grid.StartTime
 
-  plug Grid.Plugs.PageTitle, title: "Product"
+
+  plug Plugs.PageTitle, title: "Product"
+  plug Plugs.Breadcrumb, index: Product
   plug :scrub_params, "product" when action in [:create, :update]
-  plug Grid.Plugs.AssignModel, Product when action in [:clone, :edit, :show, :update, :delete]
+
+  @assign_model_actions [:clone, :edit, :show, :update, :delete]
+  plug Plugs.AssignModel, Product when action in @assign_model_actions
+  plug Plugs.Breadcrumb, [show: Product] when action in [:edit, :show]
 
   def index(conn, _) do
     redirect(conn, to: admin_vendor_path(conn, :show, conn.assigns.vendor))

@@ -10,7 +10,7 @@ defmodule Grid.Plugs.AssignModel do
     %{
       model: model,
       param: "id",
-      as: model |> resource_name |> String.to_existing_atom
+      as: assignment_name(model)
     }
   end
 
@@ -27,13 +27,19 @@ defmodule Grid.Plugs.AssignModel do
     Map.merge(defaults, options)
   end
 
-  def call(conn, opts) do
-    assignment = constraint(opts.model, conn)
-      |> Repo.get!(conn.params[opts.param])
+  def call(conn, %{model: model, param: param, as: as}) do
+    assignment_id = conn.params[param]
+    assignment = model
+      |> constraint(conn)
+      |> Repo.get!(assignment_id)
 
-    conn
-    |> assign(opts.as, assignment)
-    |> breadcrumb(opts.model, assignment)
+    assign(conn, as, assignment)
+  end
+
+  def assignment_name(module) do
+    module
+    |> resource_name
+    |> String.to_existing_atom
   end
 
   defp constraint(Grid.Product, conn), do:
@@ -49,10 +55,4 @@ defmodule Grid.Plugs.AssignModel do
     assoc(conn.assigns.activity, :images)
 
   defp constraint(model, _), do: model
-
-  defp breadcrumb(conn, module, model) do
-    breadcrumbs = Map.get(conn.private, :grid_resource_breadcrumbs, [])
-    breadcrumbs = [{:show, module, model}, {:index, module} | breadcrumbs]
-    put_private(conn, :grid_resource_breadcrumbs, breadcrumbs)
-  end
 end
