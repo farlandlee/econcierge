@@ -3,8 +3,8 @@
     <div class="alert alert-danger">
       <p>Oops, something went wrong! Please check the errors below:</p>
       <ul>
-        <%= for {attr, message} <- f.errors do %>
-          <li><%= humanize(attr) %> <%= message %></li>
+        <%= for {attr, message} <- format_form_errors(@changeset) do %>
+          <li><%= attr %> <%= message %></li>
         <% end %>
       </ul>
     </div>
@@ -16,6 +16,11 @@
       <span class="input-group-addon">$</span>
       <%= text_input f, :amount, class: "form-control" %>
     </div>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :people_count, "Number of People", class: "control-label" %>
+    <%= number_input f, :people_count, class: "form-control", min: 0 %>
   </div>
 
   <div class="form-group">

@@ -16,6 +16,7 @@ defmodule Grid.Factory do
   def factory(:price) do
     %Price{
       product: build(:product),
+      people_count: 1,
       name: sequence(:name, &"price-#{&1}"),
       description: sequence(:description, &"Too much moneys by: #{&1}"),
       amount: (:random.uniform() * 1000) |> Float.floor(2)

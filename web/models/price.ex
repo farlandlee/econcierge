@@ -5,12 +5,13 @@ defmodule Grid.Price do
     field :amount, :float
     field :name, :string
     field :description, :string
+    field :people_count, :integer
     belongs_to :product, Grid.Product
 
     timestamps
   end
 
-  @required_fields ~w(amount name)
+  @required_fields ~w(amount name people_count)
   @optional_fields ~w(description)
 
   @doc """
@@ -27,5 +28,6 @@ defmodule Grid.Price do
     |> update_change(:description, &String.strip/1)
     |> validate_length(:name, min: 1, max: 255)
     |> validate_length(:description, min: 1, max: 255)
+    |> validate_number(:people_count, greater_than_or_equal_to: 0)
   end
 end

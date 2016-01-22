@@ -3,8 +3,8 @@ defmodule Grid.PriceControllerTest do
 
   alias Grid.Price
   import Grid.Factory
-  @valid_attrs %{amount: "120.5", description: "some content", name: "some content"}
-  @invalid_attrs %{amount: "poopies"}
+  @valid_attrs %{amount: "120.5", description: "some content", name: "some content", people_count: 1}
+  @invalid_attrs %{amount: "poopies", people_count: -1}
 
   setup do
     price = create(:price)

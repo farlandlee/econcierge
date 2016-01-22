@@ -3,6 +3,7 @@
     <tr>
       <th>Name</th>
       <th>Amount</th>
+      <th>Number of People</th>
       <th>Description</th>
       <th>Default Price?</th>
 
@@ -14,6 +15,7 @@
     <tr>
       <td><%= price.name %></td>
       <td>$<%= price.amount %></td>
+      <td><%= price.people_count %></td>
       <td><%= price.description %></td>
 
       <td>
