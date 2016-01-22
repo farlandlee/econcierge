@@ -29,6 +29,11 @@ defmodule Grid.Admin.ProductControllerTest do
     }
   end
 
+  test "Index redirects to vendor", %{conn: conn, vendor: vendor} do
+    conn = get conn, admin_vendor_product_path(conn, :index, vendor)
+    assert redirected_to(conn) == admin_vendor_path(conn, :show, vendor)
+  end
+
   test "Show lists prices", %{conn: conn} do
     price = create(:price)
     product = price.product

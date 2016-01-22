@@ -69,7 +69,7 @@ defmodule Grid.Router do
 
       resources "/experiences", ExperienceController
 
-      resources "/images", ImageController, except: [:index]
+      resources "/images", ImageController
       put "/images/:id/default", ImageController, :set_default
     end
 
@@ -78,15 +78,15 @@ defmodule Grid.Router do
     resources "/vendors", VendorController, [alias: Vendor] do
       pipe_through :assign_vendor
 
-      resources "/images", ImageController, except: [:index]
+      resources "/images", ImageController
       put "/images/:id/default", ImageController, :set_default
 
-      resources "/products", ProductController, [alias: Product, except: [:index]] do
+      resources "/products", ProductController, [alias: Product] do
         pipe_through :assign_product
 
         resources "/start_times", StartTimeController, only: [:create, :delete]
 
-        resources "/prices", PriceController, except: [:index, :show]
+        resources "/prices", PriceController
         put "/prices/:id/default", PriceController, :set_default
       end
     end

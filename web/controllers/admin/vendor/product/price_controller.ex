@@ -6,7 +6,15 @@ defmodule Grid.Admin.Vendor.Product.PriceController do
 
   plug Grid.Plugs.PageTitle, title: "Price"
   plug :scrub_params, "price" when action in [:create, :update]
-  plug Grid.Plugs.AssignModel, Price when action in [:show, :edit, :update, :delete, :set_default]
+  plug Grid.Plugs.AssignModel, Price when action in [:edit, :update, :delete, :set_default]
+
+  def index(conn, _) do
+    redirect(conn, to: admin_vendor_product_path(conn, :show, conn.assigns.vendor, conn.assigns.product))
+  end
+
+  def show(conn, _) do
+    redirect(conn, to: admin_vendor_product_path(conn, :show, conn.assigns.vendor, conn.assigns.product))
+  end
 
   def new(conn, _params) do
     changeset = Price.changeset(%Price{})

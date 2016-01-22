@@ -71,6 +71,13 @@
           </ul>
         </div>
         <div class="col-xs-10 col-sm-10 col-xs-offset-2 col-sm-offset-2 col-md-10 col-md-offset-2 main">
+          <ol class="breadcrumb">
+          <%=
+            for breadcrumb <- Grid.Admin.BreadcrumbsView.breadcrumbs(@conn) do
+              Grid.Admin.BreadcrumbsView.crumb(breadcrumb)
+            end
+          %>
+          </ol>
           <%= render "_header.html", page_title: assigns[:page_title] %>
 
           <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>

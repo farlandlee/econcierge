@@ -13,6 +13,16 @@ defmodule Grid.PriceControllerTest do
     {:ok, price: price, product: product, vendor: vendor}
   end
 
+  test "Index redirects to product", %{conn: conn, vendor: vendor, product: product} do
+    conn = get conn, admin_vendor_product_price_path(conn, :index, vendor, product)
+    assert redirected_to(conn) == admin_vendor_product_path(conn, :show, vendor, product)
+  end
+
+  test "Show redirects to product", %{conn: conn, vendor: vendor, product: product, price: price} do
+    conn = get conn, admin_vendor_product_price_path(conn, :show, vendor, product, price)
+    assert redirected_to(conn) == admin_vendor_product_path(conn, :show, vendor, product)
+  end
+
   test "renders form for new resources", %{conn: conn, vendor: vendor, product: product} do
     conn = get conn, admin_vendor_product_price_path(conn, :new, vendor, product)
     assert html_response(conn, 200) =~ "New Price"

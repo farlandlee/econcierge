@@ -6,7 +6,7 @@ defmodule Grid.Image do
   # See the "Polymorphic associations" header on
   # the Ecto.Schema docs for more.
   # https://hexdocs.pm/ecto/Ecto.Schema.html
-  schema "abstract table: images" do
+  schema "images" do
     field :filename, :string
     field :alt, :string
     field :original, :string

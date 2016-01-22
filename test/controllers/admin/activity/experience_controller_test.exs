@@ -31,10 +31,9 @@ defmodule Grid.Admin.Activity.ExperienceControllerTest do
     conn = post conn, admin_activity_experience_path(conn, :create, a), experience: attrs
 
     assert redirected_to(conn) == admin_activity_path(conn, :show, a)
-
     experience = Repo.get_by(Experience, attrs |> Map.drop([:activity_id, :category_id]))
       |> Repo.preload([:activity, :categories])
-      
+
     assert experience
     assert Enum.find(experience.categories, fn(cat) -> cat.id == c.id end)
     assert experience.activity.id == a.id

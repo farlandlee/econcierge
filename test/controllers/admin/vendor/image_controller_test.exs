@@ -16,6 +16,11 @@ defmodule Grid.Admin.VendorImageControllerTest do
     {:ok, vendor: v, image: i}
   end
 
+  test "Index redirects to vendor", %{conn: conn, vendor: vendor} do
+    conn = get conn, admin_vendor_image_path(conn, :index, vendor)
+    assert redirected_to(conn) == admin_vendor_path(conn, :show, vendor)
+  end
+
   test "set default image", %{conn: conn, vendor: v, image: i} do
     conn = put conn, admin_vendor_image_path(conn, :set_default, v, i)
     assert redirected_to(conn) =~ admin_vendor_path(conn, :show, v)
