@@ -137,3 +137,17 @@ form.link, form.button {
     color: #333;
     white-space: nowrap;
 }
+
+/* DataTable header mousing */
+table.dataTable th:not(:empty) {
+  cursor: pointer;
+  .glyphicon {
+    float: right;
+    margin-top: 4px;
+    margin-right: 5px;
+    font-size: 12px;
+  }
+  &.sorting .glyphicon {
+    color: #777;
+  }
+}
