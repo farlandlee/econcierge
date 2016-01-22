@@ -5,6 +5,8 @@ defmodule Grid.Admin.ProductControllerTest do
   import Grid.Factory
 
   alias Grid.Product
+  alias Grid.StartTime
+  alias Grid.Price
 
   @valid_attrs %{description: "some content", name: "some content"}
   @invalid_attrs %{name: ""}
@@ -171,5 +173,15 @@ defmodule Grid.Admin.ProductControllerTest do
     conn = delete conn, admin_vendor_product_path(conn, :delete, v, p)
     assert redirected_to(conn) == admin_vendor_path(conn, :show, v)
     refute Repo.get(Product, p.id)
+  end
+
+  test "deletes product with start time and price", %{conn: conn, vendor: v, product: p} do
+    start_time = Factory.create(:start_time, product: p)
+    price = Factory.create(:price, product: p)
+    conn = delete conn, admin_vendor_product_path(conn, :delete, v, p)
+    assert redirected_to(conn) == admin_vendor_path(conn, :show, v)
+    refute Repo.get(Product, p.id)
+    refute Repo.get(StartTime, start_time.id)
+    refute Repo.get(Price, price.id)
   end
 end

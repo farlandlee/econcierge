@@ -33,6 +33,7 @@ defmodule Grid.Product do
     |> cast(params, @required_fields, @optional_fields)
     |> foreign_key_constraint(:vendor_id)
     |> foreign_key_constraint(:experience_id)
+    |> foreign_key_constraint(:default_price_id)
     |> update_change(:name, &String.strip/1)
     |> update_change(:description, &String.strip/1)
     |> validate_length(:name, min: 1, max: 255)
