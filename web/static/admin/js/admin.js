@@ -10,3 +10,25 @@ $('[data-img-for]').each(function() {
     $img.attr('src', URL.createObjectURL(e.target.files[0]))
   });
 });
+
+$('table').each(function () {
+  $(this).DataTable({
+    // STOP ALL THE THINGS
+    searching: false,
+    paging: false,
+    bInfo: false,
+    // SHHHHHHHHHHHHHH
+    language: {
+      emptyTable: false,
+      zeroRecords: false
+    },
+    aoColumnDefs: [
+      // last row (Actions) isn't sortable
+      {bSortable: false, aTargets: [-1]}
+    ]
+  });
+  // Put neat little sorting icons on all the things that are sortable!
+  $(this).find('th:not(:empty)').each(function () {
+    $(this).append('<span class="glyphicon glyphicon-sort"></span>');
+  });
+})

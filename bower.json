@@ -4,7 +4,8 @@
     "chosen": "~1.4.2",
     "bootstrap": "~3.3.6",
     "font-awesome": "~4.5.0",
-    "foundation-sites": "~6.1.1"
+    "foundation-sites": "~6.1.1",
+    "datatables.net": "~1.10.10"
   },
   "overrides": {
     "chosen": {
