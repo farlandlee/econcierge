@@ -1,4 +1,4 @@
-<%= link to: admin_category_path(@conn, :new), class: "btn btn-success header-action" do %>
+<%= link to: admin_activity_category_path(@conn, :new, @activity), class: "btn btn-success header-action" do %>
   <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Category
 <% end %>
 
@@ -26,10 +26,10 @@
           </button>
           <ul class="dropdown-menu dropdown-menu-right">
             <li>
-              <%= link "Edit", to: admin_category_path(@conn, :edit, category), class: "edit" %>
+              <%= link "Edit", to: admin_activity_category_path(@conn, :edit, @activity, category), class: "edit" %>
             </li>
             <li>
-              <%= link "Delete", to: admin_category_path(@conn, :delete, category), method: :delete, data: [confirm: "Are you sure?"], class: "delete" %>
+              <%= link "Delete", to: admin_activity_category_path(@conn, :delete, @activity, category), method: :delete, data: [confirm: "Are you sure?"], class: "delete" %>
             </li>
           </ul>
         </div>

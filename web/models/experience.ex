@@ -5,6 +5,7 @@ defmodule Grid.Experience do
     field :name, :string
     field :description, :string
     field :slug, :string
+    
     belongs_to :activity, Grid.Activity
     belongs_to :image, {"activity_images", Grid.Image}
 

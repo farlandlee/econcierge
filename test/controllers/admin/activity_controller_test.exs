@@ -60,6 +60,27 @@ defmodule Grid.Admin.ActivityControllerTest do
     assert response =~ "No caption"
   end
 
+  test "shows experiences", %{conn: conn, activity: a} do
+    exp = Factory.create(:experience, activity: a)
+    conn = get conn, admin_activity_path(conn, :show, a)
+    response = html_response(conn, 200)
+    assert response =~ "Experiences"
+    assert response =~ "#{exp.slug}"
+    assert response =~ "#{exp.name}"
+    assert response =~ "#{exp.description}"
+    assert response =~ "No Image"
+  end
+
+  test "shows categories", %{conn: conn, activity: a} do
+    cat = Factory.create(:category, activity: a)
+    conn = get conn, admin_activity_path(conn, :show, a)
+    response = html_response(conn, 200)
+    assert response =~ "Categories"
+    assert response =~ "#{cat.slug}"
+    assert response =~ "#{cat.name}"
+    assert response =~ "#{cat.description}"
+  end
+
   test "renders page not found when id is nonexistent", %{conn: conn} do
     assert_raise Ecto.NoResultsError, fn ->
       get conn, admin_activity_path(conn, :show, -1)

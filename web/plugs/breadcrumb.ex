@@ -5,13 +5,6 @@ defmodule Grid.Plugs.Breadcrumb do
 
   defstruct action: nil, model: nil
 
-  defp breadcrumb(conn, module, model) do
-    breadcrumbs = Map.get(conn.private, :grid_resource_breadcrumbs, [])
-    breadcrumbs = [{:show, module, model}, {:index, module} | breadcrumbs]
-    put_private(conn, :grid_resource_breadcrumbs, breadcrumbs)
-  end
-
-
   def init(show: module) when is_atom module do
     [%__MODULE__{action: :show, model: module}]
   end

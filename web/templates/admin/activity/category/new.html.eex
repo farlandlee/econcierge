@@ -1,0 +1,3 @@
+<%= render "form.html", changeset: @changeset,
+                        action: admin_activity_category_path(@conn, :create, @activity),
+                        back: admin_activity_category_path(@conn, :index, @activity) %>

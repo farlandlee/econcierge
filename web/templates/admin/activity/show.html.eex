@@ -24,6 +24,20 @@
 
 <div class="panel panel-default">
   <div class="panel-heading">
+    <%= link to: admin_activity_category_path(@conn, :new, @activity), class: "btn btn-xs btn-success pull-right" do %>
+      <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Category
+    <% end %>
+    <h3 class="panel-title">Categories</h3>
+  </div>
+  <%= render Grid.Admin.Activity.CategoryView, "index.html",
+    conn: @conn,
+    activity: @activity,
+    categories: @activity.categories %>
+</div>
+
+
+<div class="panel panel-default">
+  <div class="panel-heading">
     <%= link to: admin_activity_image_path(@conn, :new, @activity), class: "btn btn-xs btn-success pull-right" do %>
       <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Image
     <% end %>

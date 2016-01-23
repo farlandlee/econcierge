@@ -8,8 +8,8 @@ defmodule Grid.Admin.Activity.ExperienceController do
   import Ecto.Query, only: [from: 2, order_by: 2]
 
   plug Grid.Plugs.PageTitle, title: "Experience"
+  plug Grid.Plugs.Breadcrumb, index: Experience
   plug :scrub_params, "experience" when action in [:create, :update]
-
 
   def new(conn, _params) do
     changeset = Experience.changeset(%Experience{})

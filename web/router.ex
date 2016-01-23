@@ -72,11 +72,12 @@ defmodule Grid.Router do
 
       resources "/experiences", ExperienceController
 
+      resources "/categories", CategoryController
+
       resources "/images", ImageController
       put "/images/:id/default", ImageController, :set_default
     end
 
-    resources "/categories", CategoryController, except: [:show]
 
     resources "/vendors", VendorController, [alias: Vendor] do
       pipe_through :assign_vendor
