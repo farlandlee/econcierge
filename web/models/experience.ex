@@ -5,7 +5,7 @@
     field :name, :string
     field :description, :string
     field :slug, :string
-    
+
     belongs_to :activity, Grid.Activity
     belongs_to :image, {"activity_images", Grid.Image}
 
@@ -17,8 +17,9 @@
     timestamps
   end
 
-  @required_fields ~w(name description activity_id)
-  @optional_fields ~w(image_id)
+  @creation_fields ~w(activity_id)
+  @required_fields ~w(name description)
+  @optional_fields ~w(image_id slug)
 
   @doc """
   Creates a changeset based on the `model` and `params`.
@@ -30,8 +31,14 @@
     model
     |> cast(params, @required_fields, @optional_fields)
     |> unique_constraint(:name)
-    |> foreign_key_constraint(:activity_id)
     |> foreign_key_constraint(:image_id)
-    |> slugify
+    |> cast_slug
+  end
+
+  def creation_changeset(params, activity_id) do
+    %__MODULE__{}
+    |> changeset(params)
+    |> cast(%{activity_id: activity_id}, @creation_fields, [])
+    |> foreign_key_constraint(:activity_id)
   end
 end

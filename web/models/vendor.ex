@@ -5,7 +5,6 @@ defmodule Grid.Vendor do
 
   alias Grid.Image
 
-
   schema "vendors" do
     field :name, :string
     field :description, :string
@@ -36,7 +35,7 @@ defmodule Grid.Vendor do
   end
 
   @required_fields ~w(name description)
-  @optional_fields ~w()
+  @optional_fields ~w(slug default_image_id)
 
   @doc """
   Creates a changeset based on the `model` and `params`.
@@ -51,6 +50,7 @@ defmodule Grid.Vendor do
     |> update_change(:description, &String.strip/1)
     |> validate_length(:name, min: 1, max: 255)
     |> validate_length(:description, min: 1, max: 255)
-    |> slugify
+    |> foreign_key_constraint(:default_image_id)
+    |> cast_slug
   end
 end

@@ -20,8 +20,7 @@ defmodule Grid.Admin.Activity.CategoryController do
 
   def create(conn, %{"category" => category_params}) do
     activity = conn.assigns.activity
-    category_params = Map.put(category_params, "activity_id", activity.id)
-    changeset = Category.changeset(%Category{}, category_params)
+    changeset = Category.creation_changeset(category_params, activity.id)
 
     case Repo.insert(changeset) do
       {:ok, _category} ->

@@ -24,7 +24,7 @@ defmodule Grid.Repo.Migrations.SetSlugs do
 
   def change do
     migration = case direction do
-      :up -> &Grid.Models.Utils.slugify/1
+      :up -> &Grid.Models.Utils.cast_slug/1
       :down -> &(Ecto.Changeset.change(&1, slug: nil))
     end
     for table <- @table_modules do

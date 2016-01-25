@@ -7,16 +7,14 @@ defmodule Grid.Admin.Activity.ExperienceControllerTest do
     description: "Some Description"
   }
 
-  @invalid_attrs %{}
+  @invalid_attrs %{name: nil}
 
   setup do
-    e = Factory.create(:experience)
-    Factory.create(:experience_category, experience: e)
+    e = %{activity: a} = Factory.create(:experience)
+    c = Factory.create(:category, activity: a)
+    Factory.create(:experience_category, experience: e, category: c)
 
-    {:ok,
-      experience: e,
-      activity: Factory.create(:activity)
-    }
+    {:ok, experience: e, activity: a}
   end
 
   test "renders form for new resources", %{conn: conn, activity: a} do
@@ -80,9 +78,8 @@ defmodule Grid.Admin.Activity.ExperienceControllerTest do
     assert Repo.get_by(Experience, @valid_attrs |> Map.drop([:activity_id, :category_id]))
   end
 
-  test "does not update chosen resource and renders errors when data is invalid", %{conn: conn, activity: a} do
-    experience = Repo.insert! %Experience{}
-    conn = put conn, admin_activity_experience_path(conn, :update, a, experience), experience: @invalid_attrs
+  test "does not update chosen resource and renders errors when data is invalid", %{conn: conn, activity: a, experience: e} do
+    conn = put conn, admin_activity_experience_path(conn, :update, a, e), experience: @invalid_attrs
     assert html_response(conn, 200) =~ "Edit Experience"
   end
 

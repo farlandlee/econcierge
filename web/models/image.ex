@@ -11,7 +11,7 @@ defmodule Grid.Image do
     field :alt, :string
     field :original, :string
     field :medium, :string
-    
+
     field :error, :boolean, default: false
 
     field :assoc_id, :integer
@@ -19,8 +19,10 @@ defmodule Grid.Image do
     timestamps
   end
 
+  @creation_fields ~w(assoc_id)
   @required_fields ~w(filename)
-  @optional_fields ~w(original medium alt error)
+  @optional_fields ~w(alt error)
+  @source_fields ~w(original medium)
 
 
   @doc """
@@ -34,5 +36,18 @@ defmodule Grid.Image do
     |> cast(params, @required_fields, @optional_fields)
     |> update_change(:alt, &String.strip/1)
     |> validate_length(:alt, max: 255)
+  end
+
+  def source_changeset(model, params) do
+    model
+    |> changeset(params)
+    |> cast(params, @source_fields, [])
+  end
+
+  def creation_changeset(assoc, params = %{"file" => f}) do
+    params = Map.put(params, "filename", f.filename)
+    Ecto.build_assoc(assoc, :images)
+    |> changeset(params)
+    |> cast(%{}, @creation_fields, [])
   end
 end

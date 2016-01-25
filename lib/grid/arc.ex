@@ -26,7 +26,7 @@ defmodule Grid.Arc do
         url_scope = {image.filename, context}
 
         image
-        |> Image.changeset(%{
+        |> Image.source_changeset(%{
           "original" => url(url_scope, :original),
           "medium" => url(url_scope, :medium),
           "error" => false

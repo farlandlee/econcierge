@@ -19,16 +19,13 @@ defmodule Grid.Admin.Vendor.ImageController do
 
   def new(conn, _) do
     vendor = conn.assigns.vendor
-    changeset = new_image_changeset(vendor)
+    changeset = Image.changeset(%Image{})
     render(conn, "new.html", changeset: changeset, page_title: "Add Image for #{vendor.name}")
   end
 
   def create(conn, %{"image" => img_params = %{"file" => file}}) do
     vendor = conn.assigns.vendor
-    img_params = Map.put(img_params, "filename", file.filename)
-
-    changeset = new_image_changeset(vendor, img_params)
-
+    changeset = Image.creation_changeset(vendor, img_params)
     case Repo.insert(changeset) do
       {:ok, image} ->
         _async_upload_task = Arc.upload_image(image, file, vendor)
@@ -39,7 +36,7 @@ defmodule Grid.Admin.Vendor.ImageController do
   end
 
   def create(conn, _invalid_params) do
-    changeset = new_image_changeset(conn.assigns.vendor)
+    changeset = Image.changeset(%Image{})
 
     conn
     |> put_flash(:error, "Invalid parameters")
@@ -54,10 +51,9 @@ defmodule Grid.Admin.Vendor.ImageController do
     render(conn, "edit.html", changeset: Image.changeset(conn.assigns.image))
   end
 
-  @doc "Only an image's `alt` can be updated by this method"
-  def update(conn, %{"image" => %{"alt" => alt}}) do
+  def update(conn, %{"image" => params}) do
     conn.assigns.image
-    |> Image.changeset(%{"alt" => alt})
+    |> Image.changeset(params)
     |> Repo.update
     |> case do
       {:ok, image} ->
@@ -80,8 +76,7 @@ defmodule Grid.Admin.Vendor.ImageController do
     image = conn.assigns.image
 
     vendor_changeset = vendor
-      |> Vendor.changeset(%{})
-      |> Ecto.Changeset.put_change(:default_image_id, image.id)
+      |> Vendor.changeset(%{default_image_id: image.id})
 
     case Repo.update(vendor_changeset) do
       {:ok, vendor} ->
@@ -100,13 +95,5 @@ defmodule Grid.Admin.Vendor.ImageController do
     conn
     |> put_flash(:info, "Image deleted successfully.")
     |> redirect(to: admin_vendor_path(conn, :show, conn.assigns.vendor))
-  end
-
-  ###########
-  # Helpers #
-  ###########
-
-  defp new_image_changeset(vendor, params \\ :empty) do
-    build_assoc(vendor, :images) |> Image.changeset(params)
   end
 end

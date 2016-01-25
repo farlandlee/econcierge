@@ -16,8 +16,9 @@ defmodule Grid.Category do
     timestamps
   end
 
-  @required_fields ~w(name description activity_id)
-  @optional_fields ~w()
+  @creation_fields ~w(activity_id)
+  @required_fields ~w(name description)
+  @optional_fields ~w(slug)
 
   @doc """
   Creates a changeset based on the `model` and `params`.
@@ -31,6 +32,13 @@ defmodule Grid.Category do
     |> update_change(:name, &String.strip/1)
     |> validate_length(:name, min: 1, max: 255)
     |> unique_constraint(:name, name: :category_name_activity_id_index)
-    |> slugify(constraint_name: :category_slug_activity_id_index)
+    |> cast_slug(constraint_options: [name: :category_slug_activity_id_index])
+  end
+
+  def creation_changeset(params, activity_id) do
+    %__MODULE__{}
+    |> changeset(params)
+    |> cast(%{activity_id: activity_id}, @creation_fields, [])
+    |> foreign_key_constraint(:activity_id)
   end
 end

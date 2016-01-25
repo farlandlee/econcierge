@@ -116,19 +116,12 @@ defmodule Grid.Admin.VendorControllerTest do
     assert response =~ product.description
   end
 
-  test "only shows products belonging to vendor", %{conn: conn} do
-    p = Factory.create(:product)
-    v = p.vendor
-    e = p.experience
-    #setup
-    p2 = Factory.build(:product)
-    |> Ecto.Changeset.change
-    |> Ecto.Changeset.put_change(:experience_id, e.id)
-    |> Repo.insert!
+  test "only shows products belonging to this vendor", %{conn: conn, vendor: v} do
+    other_vendors_product = Factory.build(:product)
 
     conn = get conn, admin_vendor_path(conn, :show, v)
     response = html_response(conn, 200)
-    refute response =~ p2.name
+    refute response =~ other_vendors_product.name
   end
 
   test "renders page not found when id is nonexistent", %{conn: conn} do
