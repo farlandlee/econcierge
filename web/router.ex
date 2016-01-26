@@ -14,14 +14,17 @@ defmodule Grid.Router do
 
   pipeline :assign_vendor do
     plug Plugs.AssignModel, model: Grid.Vendor, param: "vendor_id"
+    plug Plugs.Breadcrumb, resource: Grid.Vendor
   end
 
   pipeline :assign_product do
     plug Plugs.AssignModel, model: Grid.Product, param: "product_id"
+    plug Plugs.Breadcrumb, resource: Grid.Product
   end
 
   pipeline :assign_activity do
     plug Plugs.AssignModel, model: Grid.Activity, param: "activity_id"
+    plug Plugs.Breadcrumb, resource: Grid.Activity
   end
 
   pipeline :admin do

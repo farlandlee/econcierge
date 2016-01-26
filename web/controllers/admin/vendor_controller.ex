@@ -3,14 +3,19 @@ defmodule Grid.Admin.VendorController do
 
   import Ecto.Query
 
-  alias Grid.Vendor
   alias Grid.Activity
+  alias Grid.Plugs
+  alias Grid.Vendor
   alias Grid.VendorActivity
 
-  plug Grid.Plugs.PageTitle, title: "Vendor"
+  plug Plugs.PageTitle, title: "Vendor"
   plug :scrub_params, "vendor" when action in [:create, :update]
-  plug Grid.Plugs.AssignModel, Vendor when action in [:show, :edit, :update, :delete]
-  plug :load_assocs when action in [:show, :edit, :update, :delete]
+  plug Plugs.Breadcrumb, index: Vendor
+
+  @assign_model_actions [:show, :edit, :update, :delete]
+  plug Plugs.AssignModel, Vendor when action in @assign_model_actions
+  plug :load_assocs when action in @assign_model_actions
+  plug Plugs.Breadcrumb, [show: Vendor] when action in [:show, :edit]
 
   def index(conn, _params) do
     vendors = Vendor |> order_by([v], [v.name]) |> Repo.all

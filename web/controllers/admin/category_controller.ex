@@ -7,6 +7,7 @@ defmodule Grid.Admin.CategoryController do
   alias Grid.Category
 
   plug :scrub_params, "category" when action in [:create, :update]
+  plug Grid.Plugs.Breadcrumb, index: Category
 
   def index(conn, _params) do
     categories = Category |> order_by([c], [c.name]) |> Repo.all
