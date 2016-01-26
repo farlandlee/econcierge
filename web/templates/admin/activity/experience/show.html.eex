@@ -17,7 +17,7 @@
   <dd>
   <%= if @experience.image do %>
     <%= link to: admin_activity_image_path(@conn, :show, @activity, @experience.image) do %>
-      <%= Grid.Admin.Activity.ImageView.img @experience.image %>
+      <%= Grid.Admin.ImageView.img @experience.image %>
     <% end %>
   <% else %>
     "No Image"

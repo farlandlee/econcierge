@@ -11,6 +11,7 @@
   <% end %>
 
   <%= if @changeset.model.filename do %>
+    <p><%= @changeset.model.filename %></p>
     <%= tag :img, src: @changeset.model.original, class: "img-responsive" %>
   <% else %>
     <div class="form-group">

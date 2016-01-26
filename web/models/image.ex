@@ -11,6 +11,8 @@ defmodule Grid.Image do
     field :alt, :string
     field :original, :string
     field :medium, :string
+    
+    field :error, :boolean, default: false
 
     field :assoc_id, :integer
 
@@ -18,7 +20,7 @@ defmodule Grid.Image do
   end
 
   @required_fields ~w(filename)
-  @optional_fields ~w(original medium alt)
+  @optional_fields ~w(original medium alt error)
 
 
   @doc """

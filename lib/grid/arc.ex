@@ -20,21 +20,38 @@ defmodule Grid.Arc do
     new_path = System.tmp_dir() <> "/#{name}"
     File.copy(file.path, new_path)
 
-    Task.async fn ->
-      try do
+    spawn fn ->
+      {pid, ref} = spawn_monitor fn ->
         {:ok, _} = store({%{file | path: new_path}, context})
         url_scope = {image.filename, context}
 
         image
         |> Image.changeset(%{
           "original" => url(url_scope, :original),
-          "medium" => url(url_scope, :medium)
+          "medium" => url(url_scope, :medium),
+          "error" => false
         })
         |> Repo.update!
-      after
-        File.rm!(new_path)
       end
+
+      timeout = Application.get_env(:arc, :version_timeout, 15_000) + 2_000
+
+      receive do
+        {:DOWN, ^ref, :process, ^pid, :normal} -> :ok
+        {:DOWN, ^ref, :process, ^pid, reason} -> set_errored(image)
+      after
+        timeout -> set_errored(image)
+      end
+
+      File.rm!(new_path)
+
     end
+  end
+
+  defp set_errored(image) do
+    image
+    |> Image.changeset(%{"error" => true})
+    |> Repo.update!
   end
 
   #######################
