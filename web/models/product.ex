@@ -42,7 +42,9 @@ defmodule Grid.Product do
 
   @copyable_fields ~w(description name vendor_id experience_id)a
   def clone(product) do
-    fields = product |> Map.take(@copyable_fields)
+    fields = product
+      |> Map.take(@copyable_fields)
+      |> Map.put(:name, "#{product.name} Clone")
     Map.merge(%__MODULE__{}, fields)
   end
 end
