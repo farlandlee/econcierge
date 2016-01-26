@@ -31,6 +31,6 @@ defmodule Grid.Category do
     |> update_change(:name, &String.strip/1)
     |> validate_length(:name, min: 1, max: 255)
     |> unique_constraint(:name, name: :category_name_activity_id_index)
-    |> slugify
+    |> slugify(constraint_name: :category_slug_activity_id_index)
   end
 end
