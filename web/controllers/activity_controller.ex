@@ -35,8 +35,9 @@ defmodule Grid.ActivityController do
   end
 
   def vendors_by_activity_and_category_slugs(conn, %{"activity_slug" => _, "category_slug" => category_slug}) do
-    category = Repo.get_by!(Category, slug: category_slug)
-
+    category = Category
+      |> Repo.get_by!(slug: category_slug, activity_id: conn.assigns.activity.id)
+      
     # Load all unique vendors offering products for the specified
     # activity and category.
     vendors = Repo.all(
@@ -68,7 +69,8 @@ defmodule Grid.ActivityController do
   end
 
   def experiences_by_activity_and_category_slugs(conn, %{"activity_slug" => _, "category_slug" => category_slug}) do
-    category = Repo.get_by!(Category, slug: category_slug)
+    category = Category
+      |> Repo.get_by!(slug: category_slug, activity_id: conn.assigns.activity.id)
 
     experiences = Repo.all(
       from e in Experience,
