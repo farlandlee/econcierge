@@ -59,9 +59,6 @@
             <li class="<%= nav_class(@conn, Grid.Admin.ActivityController) %>">
               <%= link "Activities", to: admin_activity_path(@conn, :index) %>
             </li>
-            <li class="<%= nav_class(@conn, Grid.Admin.CategoryController) %>">
-              <%= link "Categories", to: admin_category_path(@conn, :index) %>
-            </li>
             <li class="<%= nav_class(@conn, Grid.Admin.VendorController) %>">
               <%= link "Vendors", to: admin_vendor_path(@conn, :index) %>
             </li>

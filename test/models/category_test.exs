@@ -3,7 +3,7 @@ defmodule Grid.CategoryTest do
 
   alias Grid.Category
 
-  @valid_attrs %{name: "some content", description: "some description"}
+  @valid_attrs %{name: "some content", description: "some description", activity_id: 1}
   @invalid_attrs %{}
 
   test "changeset with valid attributes" do

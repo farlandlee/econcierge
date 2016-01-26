@@ -36,6 +36,7 @@ defmodule Grid.Factory do
 
   def factory(:category) do
     %Category{
+      activity: build(:activity),
       name: sequence(:name, &"category-#{&1}"),
       slug: sequence(:slug, &"category-#{&1}")
     }

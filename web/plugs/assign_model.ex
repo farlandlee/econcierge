@@ -42,17 +42,20 @@ defmodule Grid.Plugs.AssignModel do
     |> String.to_existing_atom
   end
 
+
   defp constraint(Grid.Product, conn), do:
     assoc(conn.assigns.vendor, :products)
 
   defp constraint(Grid.StartTime, conn), do:
     assoc(conn.assigns.product, :start_times)
 
-  defp constraint({"vendor_images", _}, conn), do:
-    assoc(conn.assigns.vendor, :images)
+  defp constraint(Grid.Category, conn), do:
+    assoc(conn.assigns.activity, :categories)
 
-  defp constraint({"activity_images", _}, conn), do:
-    assoc(conn.assigns.activity, :images)
+  defp constraint({table, Grid.Image}, conn) do
+    assign = table |> String.split("_") |> hd |> String.to_existing_atom
+    assoc(conn.assigns[assign], :images)
+  end
 
   defp constraint(model, _), do: model
 end

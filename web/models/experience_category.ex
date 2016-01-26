@@ -5,8 +5,6 @@ defmodule Grid.ExperienceCategory do
     belongs_to :experience, Grid.Experience
     belongs_to :category, Grid.Category
 
-    has_many :experiences, Grid.Experience
-
     timestamps
   end
 
@@ -23,5 +21,6 @@ defmodule Grid.ExperienceCategory do
     model
     |> cast(params, @required_fields, @optional_fields)
     |> foreign_key_constraint(:experience_id)
+    |> foreign_key_constraint(:category_id)
   end
 end

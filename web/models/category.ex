@@ -6,16 +6,17 @@ defmodule Grid.Category do
     field :description, :string
     field :slug, :string
 
+    belongs_to :activity, Grid.Activity
+
     has_many :experience_categories, Grid.ExperienceCategory
     has_many :experiences, through: [:experience_categories, :experience]
 
-    has_many :activities, through: [:experiences, :activity]
     has_many :products, through: [:experiences, :products]
 
     timestamps
   end
 
-  @required_fields ~w(name description)
+  @required_fields ~w(name description activity_id)
   @optional_fields ~w()
 
   @doc """
@@ -29,7 +30,7 @@ defmodule Grid.Category do
     |> cast(params, @required_fields, @optional_fields)
     |> update_change(:name, &String.strip/1)
     |> validate_length(:name, min: 1, max: 255)
-    |> unique_constraint(:name)
+    |> unique_constraint(:name, name: :category_name_activity_id_index)
     |> slugify
   end
 end

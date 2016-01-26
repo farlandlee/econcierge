@@ -39,6 +39,7 @@ defmodule Grid.Admin.ActivityController do
     activity = conn.assigns.activity
       |> Repo.preload([
         :images,
+        :categories,
         [experiences: [:categories, :image]]
       ])
 
