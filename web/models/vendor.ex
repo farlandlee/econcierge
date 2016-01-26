@@ -1,7 +1,10 @@
 defmodule Grid.Vendor do
   use Grid.Web, :model
 
+  import Ecto.Query
+
   alias Grid.Image
+
 
   schema "vendors" do
     field :name, :string
@@ -21,6 +24,21 @@ defmodule Grid.Vendor do
 
   @required_fields ~w(name description)
   @optional_fields ~w()
+
+  def alphabetical(query \\ __MODULE__) do
+    query |> order_by(:name)
+  end
+
+  def with_activity(query \\ __MODULE__, activity_id)
+  def with_activity(query, nil) do
+    query
+  end
+  def with_activity(query, id) do
+    query
+    |> join(:inner, [v], va in assoc(v, :vendor_activities))
+    |> join(:inner, [v, va], a in assoc(va, :activity))
+    |> where([v, va, a], a.id == ^id)
+  end
 
   @doc """
   Creates a changeset based on the `model` and `params`.

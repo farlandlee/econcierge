@@ -13,6 +13,10 @@ defmodule Grid.Factory do
   alias Grid.Vendor
   alias Grid.VendorActivity
 
+  def random() do
+    :random.uniform()
+  end
+
   def factory(:price) do
     %Price{
       product: build(:product),
@@ -85,7 +89,7 @@ defmodule Grid.Factory do
     %Vendor{
       name: sequence(:name, &"vendor-#{&1}"),
       slug: sequence(:slug, &"vendor-#{&1}"),
-      description: "The best!"
+      description: "The best! #{random()}"
     }
   end
 

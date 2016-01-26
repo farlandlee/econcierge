@@ -17,14 +17,21 @@ defmodule Grid.Admin.VendorController do
   plug :load_assocs when action in @assign_model_actions
   plug Plugs.Breadcrumb, [show: Vendor] when action in [:show, :edit]
 
-  def index(conn, _params) do
-    vendors = Vendor |> order_by([v], [v.name]) |> Repo.all
-    render(conn, "index.html", vendors: vendors)
+  def index(conn, params) do
+    activity_id = params["activity_id"]
+    vendors = Vendor.alphabetical
+      |> Vendor.with_activity(activity_id)
+      |> preload(:activities)
+      |> Repo.all
+
+    conn
+    |> assign_activity_filter(activity_id)
+    |> render("index.html", vendors: vendors, activities: all_activities())
   end
 
   def new(conn, _params) do
     changeset = Vendor.changeset(%Vendor{activities: []})
-    render(conn, "new.html", changeset: changeset, activities: all_activities)
+    render(conn, "new.html", changeset: changeset, activities: all_activities())
   end
 
   def create(conn, %{"vendor" => vendor_params}) do
@@ -38,7 +45,7 @@ defmodule Grid.Admin.VendorController do
           |> put_flash(:info, "Vendor created successfully.")
           |> redirect(to: admin_vendor_path(conn, :index))
         {:error, changeset} ->
-          render(conn, "new.html", changeset: changeset, activities: all_activities)
+          render(conn, "new.html", changeset: changeset, activities: all_activities())
       end
     end
     conn
@@ -52,7 +59,7 @@ defmodule Grid.Admin.VendorController do
   def edit(conn, _) do
     vendor = conn.assigns.vendor
     changeset = Vendor.changeset(vendor)
-    render(conn, "edit.html", vendor: vendor, changeset: changeset, activities: all_activities)
+    render(conn, "edit.html", vendor: vendor, changeset: changeset, activities: all_activities())
   end
 
   def update(conn, %{"vendor" => vendor_params}) do
@@ -69,7 +76,7 @@ defmodule Grid.Admin.VendorController do
           |> put_flash(:info, "Vendor updated successfully.")
           |> redirect(to: admin_vendor_path(conn, :show, vendor))
         {:error, changeset} ->
-          render(conn, "edit.html", vendor: vendor, changeset: changeset, activities: all_activities)
+          render(conn, "edit.html", vendor: vendor, changeset: changeset, activities: all_activities())
       end
     end
     conn
@@ -95,6 +102,14 @@ defmodule Grid.Admin.VendorController do
   #############
   ## Helpers ##
   #############
+
+  def assign_activity_filter(conn, id) do
+    assignment = case id do
+      nil -> nil
+      id -> Repo.get!(Activity, id)
+    end
+    assign(conn, :activity_filter, assignment)
+  end
 
   defp all_activities do
     Repo.all(Activity)
