@@ -17,6 +17,8 @@ config :grid, Grid.Endpoint,
   cache_static_manifest: "priv/static/manifest.json",
   secret_key_base: System.get_env("SECRET_KEY_BASE")
 
+config :grid,
+  postmark_server_token: System.get_env("POSTMARK_SERVER_TOKEN")
 # Do not print debug messages in production
 config :logger,
   level: :info,

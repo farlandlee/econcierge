@@ -49,6 +49,7 @@ defmodule Grid.Mixfile do
       {:oauth2, "~> 0.5.0"},
       {:phoenix, "~> 1.1"},
       {:phoenix_ecto, "~> 2.0"},
+      {:poison, "~> 1.5"},
       {:postgrex, ">= 0.0.0"},
       {:phoenix_html, "~> 2.3"},
       {:phoenix_live_reload, "~> 1.0", only: :dev},

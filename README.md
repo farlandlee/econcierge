@@ -38,16 +38,16 @@ Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
 ## Environment variables
 
-ENV Variable     | Description                   |
----------------- | ----------------------------- |
-AWS_ACCESS_KEY   | AWS Access Key for S3 buckets |
-AWS_SECRET_KEY   | AWS Secret Key for S3 buckets |
-GOOGLE_CLIENT_ID       | Google API Client Id |
-GOOGLE_CLIENT_SECRET   | Google Client Secret |
-
+ENV Variable           | Description                   |
+---------------------- | ----------------------------- |
+AWS_ACCESS_KEY         | AWS Access Key for S3 buckets |
+AWS_SECRET_KEY         | AWS Secret Key for S3 buckets |
+GOOGLE_CLIENT_ID       | Google API Client Id          |
+GOOGLE_CLIENT_SECRET   | Google Client Secret          |
 
 ### Production-only
 
-ENV Variable  | Description                                                 |
-------------- | ----------------------------------------------------------- |
-DATABASE_URL  | Database connection url, e.g. postgres://un:pw@host:port/db |
+ENV Variable            | Description                                                 |
+----------------------- | ----------------------------------------------------------- |
+DATABASE_URL            | Database connection url, e.g. postgres://un:pw@host:port/db |
+POSTMARK_SERVER_TOKEN   | Postmark Server Token                                       |
