@@ -8,14 +8,38 @@ defmodule Grid.Admin.VendorControllerTest do
   @invalid_attrs %{name: ""}
 
   setup do
-    v = Factory.create(:vendor)
-    Factory.create(:vendor_activity, vendor: v)
-    {:ok, vendor: v}
+    va = Factory.create(:vendor_activity)
+    {:ok, vendor: va.vendor, activity: va.activity, vendor_activity: va}
   end
 
-  test "lists all entries on index", %{conn: conn} do
+  test "lists all entries on index", %{conn: conn, vendor: vendor, activity: activity} do
+    other_vendor = Factory.create(:vendor)
     conn = get conn, admin_vendor_path(conn, :index)
-    assert html_response(conn, 200) =~ "Vendor Listing"
+    response = html_response(conn, 200)
+
+    assert response =~ "Vendor Listing"
+    assert response =~ "Filter by Activity"
+    assert response =~ vendor.name
+    assert response =~ vendor.description
+    assert response =~ activity.name
+    assert response =~ other_vendor.name
+    assert response =~ other_vendor.description
+  end
+
+  test "Filters by activity", %{conn: conn, vendor: vendor, activity: activity} do
+    %{vendor: other_vendor, activity: other_activity} = Factory.create(:vendor_activity)
+
+    conn = get conn, admin_vendor_path(conn, :index, activity_id: activity.id)
+    response = html_response(conn, 200)
+
+    assert response =~ "Vendor Listing"
+    assert response =~ vendor.name
+    assert response =~ vendor.description
+    assert response =~ "Clear Filter"
+    assert response =~ other_activity.name
+
+    refute response =~ other_vendor.name
+    refute response =~ other_vendor.description
   end
 
   test "renders form for new resources", %{conn: conn} do
