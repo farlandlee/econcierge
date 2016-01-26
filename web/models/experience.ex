@@ -1,4 +1,4 @@
-defmodule Grid.Experience do
+  defmodule Grid.Experience do
   use Grid.Web, :model
 
   schema "experiences" do

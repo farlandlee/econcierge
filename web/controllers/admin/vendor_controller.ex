@@ -19,7 +19,8 @@ defmodule Grid.Admin.VendorController do
 
   def index(conn, params) do
     activity_id = params["activity_id"]
-    vendors = Vendor.alphabetical
+    vendors = Vendor
+      |> Repo.alphabetical
       |> Vendor.with_activity(activity_id)
       |> preload(:activities)
       |> Repo.all
@@ -112,7 +113,7 @@ defmodule Grid.Admin.VendorController do
   end
 
   defp all_activities do
-    Repo.all(Activity)
+    Activity |> Repo.alphabetical |> Repo.all
   end
 
   defp insert_relationships(_, nil), do: :ok

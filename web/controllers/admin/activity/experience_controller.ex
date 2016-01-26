@@ -5,7 +5,7 @@ defmodule Grid.Admin.Activity.ExperienceController do
   alias Grid.Activity
   alias Grid.Category
 
-  import Ecto.Query, only: [from: 2, order_by: 2]
+  import Ecto.Query
 
   plug Grid.Plugs.PageTitle, title: "Experience"
   plug :scrub_params, "experience" when action in [:create, :update]
@@ -45,8 +45,9 @@ defmodule Grid.Admin.Activity.ExperienceController do
     experience = get_experience_with_assocs(id)
     products = experience
       |> assoc(:products)
+      |> Repo.alphabetical
+      |> preload(:vendor)
       |> Repo.all
-      |> Repo.preload(:vendor)
     render(conn, "show.html",
       products: products,
       experience: experience,

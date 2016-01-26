@@ -21,15 +21,15 @@ defmodule Grid.ActivityController do
   end
 
   def vendors_by_activity_slug(conn, %{"activity_slug" => _}) do
-    vendors = Repo.all(
-      from v in Vendor,
+    vendors = from(v in Vendor,
       join: p in assoc(v, :products),
       join: a in assoc(p, :activity),
       where: p.published == true,
       where: a.id == ^conn.assigns.activity.id,
       distinct: true,
-      preload: :default_image
-    )
+      preload: :default_image)
+    |> Repo.alphabetical
+    |> Repo.all
 
     render(conn, "show.html", items: vendors, category: nil, target: :vendors)
   end
@@ -39,8 +39,7 @@ defmodule Grid.ActivityController do
 
     # Load all unique vendors offering products for the specified
     # activity and category.
-    vendors = Repo.all(
-      from v in Vendor,
+    vendors = from(v in Vendor,
       join: p in assoc(v, :products),
       join: c in assoc(p, :categories),
       join: a in assoc(p, :activity),
@@ -48,21 +47,22 @@ defmodule Grid.ActivityController do
       where: a.id == ^conn.assigns.activity.id,
       where: p.published == true,
       distinct: true,
-      preload: :default_image
-    )
+      preload: :default_image)
+    |> Repo.alphabetical
+    |> Repo.all
 
     render(conn, "show.html", items: vendors, category: category, target: :vendors)
   end
 
   def experiences_by_activity_slug(conn, %{"activity_slug" => _}) do
-    experiences = Repo.all(
-      from e in Experience,
+    experiences = from(e in Experience,
       join: p in assoc(e, :products),
       where: e.activity_id == ^conn.assigns.activity.id,
       where: p.published == true,
       distinct: true,
-      preload: :image
-    )
+      preload: :image)
+    |> Repo.alphabetical
+    |> Repo.all
 
     render(conn, "show.html", items: experiences, category: nil, target: :experiences)
   end
@@ -70,16 +70,16 @@ defmodule Grid.ActivityController do
   def experiences_by_activity_and_category_slugs(conn, %{"activity_slug" => _, "category_slug" => category_slug}) do
     category = Repo.get_by!(Category, slug: category_slug)
 
-    experiences = Repo.all(
-      from e in Experience,
+    experiences = from(e in Experience,
       join: p in assoc(e, :products),
       join: c in assoc(p, :categories),
       where: c.id == ^category.id,
       where: e.activity_id == ^conn.assigns.activity.id,
       where: p.published == true,
       distinct: true,
-      preload: :image
-    )
+      preload: :image)
+    |> Repo.alphabetical
+    |> Repo.all
 
     render(conn, "show.html", items: experiences, category: category, target: :experiences)
   end
@@ -88,14 +88,14 @@ defmodule Grid.ActivityController do
     slug = conn.params["activity_slug"]
     activity = Repo.get_by!(Activity, slug: slug)
 
-    categories = Repo.all(
-      from c in Category,
+    categories = from(c in Category,
       join: p in assoc(c, :products),
       join: a in assoc(p, :activity),
       where: a.id == ^activity.id,
       where: p.published == true,
-      distinct: true
-    )
+      distinct: true)
+    |> Repo.alphabetical
+    |> Repo.all
 
     conn
     |> assign(:activity, activity)
