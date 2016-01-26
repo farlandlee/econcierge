@@ -17,6 +17,7 @@ defmodule Grid.ModelCase do
   using do
     quote do
       alias Grid.Repo
+      alias Grid.Factory
       import Ecto.Model
       import Ecto.Query, only: [from: 2]
       import Grid.ModelCase
