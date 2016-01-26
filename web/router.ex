@@ -81,6 +81,7 @@ defmodule Grid.Router do
       resources "/images", ImageController
       put "/images/:id/default", ImageController, :set_default
 
+      get "/products/:id/clone", ProductController, :clone
       resources "/products", ProductController, [alias: Product] do
         pipe_through :assign_product
 

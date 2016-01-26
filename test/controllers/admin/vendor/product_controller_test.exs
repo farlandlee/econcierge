@@ -168,12 +168,12 @@ defmodule Grid.Admin.ProductControllerTest do
     assert Repo.get_by(Product, update_params |> Map.take([:name, :description]))
   end
 
-
   test "deletes chosen resource", %{conn: conn, vendor: v, product: p} do
     conn = delete conn, admin_vendor_product_path(conn, :delete, v, p)
     assert redirected_to(conn) == admin_vendor_path(conn, :show, v)
     refute Repo.get(Product, p.id)
   end
+
 
   test "deletes product with start time and price", %{conn: conn, vendor: v, product: p} do
     start_time = Factory.create(:start_time, product: p)
@@ -184,4 +184,49 @@ defmodule Grid.Admin.ProductControllerTest do
     refute Repo.get(StartTime, start_time.id)
     refute Repo.get(Price, price.id)
   end
+
+  test "clone", %{conn: conn, product: p, vendor: v} do
+    start_time = Factory.build(:start_time, product_id: p.id) |> Repo.insert!
+    price = Factory.build(:price, product_id: p.id) |> Repo.insert!
+    default_price = Factory.build(:price, product_id: p.id) |> Repo.insert!
+    p = p |> Ecto.Changeset.change(default_price_id: default_price.id) |> Repo.update!
+
+    conn = get conn, admin_vendor_product_path(conn, :clone, v, p)
+
+    twins = where(Product,
+      description: ^p.description,
+      name: ^p.name,
+      vendor_id: ^p.vendor_id,
+      experience_id: ^p.experience_id) |> Repo.all
+
+    # two products match that get_by
+    assert match?([_, _], twins)
+    clone = Enum.find(twins, &(&1.id != p.id))
+    assert clone
+
+    show_clone_url = admin_vendor_product_path(conn, :show, v, clone)
+    assert redirected_to(conn) == show_clone_url
+
+    conn = conn |> recycle_with_auth |> get(show_clone_url)
+    response = html_response(conn, 200)
+    assert response
+
+    # cloned product correctly
+    assert response =~ "#{p.name}"
+    assert response =~ "#{p.description}"
+    assert response =~ "#{p.experience.name}"
+    # cloned default price
+    assert response =~ "Current default"
+    assert response =~ "#{default_price.amount}"
+    assert response =~ "#{default_price.name}"
+    assert response =~ "#{default_price.description}"
+    # cloned other price
+    assert response =~ "Set as default"
+    assert response =~ "#{price.amount}"
+    assert response =~ "#{price.name}"
+    assert response =~ "#{price.description}"
+    # cloned start time
+    assert response =~ Ecto.Time.to_string(start_time.starts_at_time)
+  end
+  
 end

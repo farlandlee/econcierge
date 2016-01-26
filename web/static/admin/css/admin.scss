@@ -120,6 +120,9 @@ form.link, form.button {
   &.show {
     color: #222;
   }
+  &.copy {
+    background-color: #4cae4c;
+  }
   &.edit {
     background-color: #337ab7;
   }

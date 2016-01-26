@@ -2,13 +2,14 @@ alias Grid.Repo
 
 alias Grid.Activity
 alias Grid.Category
-alias Grid.Product
-alias Grid.User
-alias Grid.Vendor
-alias Grid.VendorActivity
 alias Grid.Experience
 alias Grid.ExperienceCategory
 alias Grid.Price
+alias Grid.Product
+alias Grid.StartTime
+alias Grid.User
+alias Grid.Vendor
+alias Grid.VendorActivity
 
 # only insert if the model doesn't exist unchanged from seeds
 insert! = fn model ->
@@ -67,6 +68,7 @@ snowmobiling_vendors = [
 end)
 
 #Products
+start_time = %StartTime{starts_at_time: %Ecto.Time{hour: 8, min: 0, sec: 0}}
 fish_exp = insert!.(%Experience{
   name: "Moose to Wilson",
   description: "Good Views",
@@ -79,6 +81,7 @@ fishing_prod = insert!.(%Product{
   experience_id: fish_exp.id,
   published: true
 })
+insert!.(%{start_time | product_id: fishing_prod.id})
 insert!.(%ExperienceCategory{
   experience_id: fish_exp.id,
   category_id: half.id
@@ -102,6 +105,7 @@ snowmo_prod = insert!.(%Product{
   experience_id: snowmo_exp.id,
   published: true
 })
+insert!.(%{start_time | product_id: snowmo_prod.id})
 insert!.(%ExperienceCategory{
   experience_id: snowmo_exp.id,
   category_id: full.id

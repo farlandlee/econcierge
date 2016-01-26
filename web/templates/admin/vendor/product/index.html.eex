@@ -27,6 +27,9 @@
               <%= link "Edit", to: admin_vendor_product_path(@conn, :edit, vendor_id, product), class: "edit" %>
             </li>
             <li>
+              <%= link "Clone", to: admin_vendor_product_path(@conn, :clone, vendor_id, product), class: "copy" %>
+            </li>
+            <li>
               <%= link "Delete", to: admin_vendor_product_path(@conn, :delete, vendor_id, product), method: :delete, data: [confirm: "Are you sure?"], class: "delete" %>
             </li>
           </ul>
