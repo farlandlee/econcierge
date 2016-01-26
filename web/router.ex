@@ -82,6 +82,8 @@ defmodule Grid.Router do
     resources "/vendors", VendorController, [alias: Vendor] do
       pipe_through :assign_vendor
 
+      resources "/locations", LocationController
+      
       resources "/images", ImageController
       put "/images/:id/default", ImageController, :set_default
 

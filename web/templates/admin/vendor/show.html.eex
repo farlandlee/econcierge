@@ -14,6 +14,21 @@
 
 <div class="panel panel-default">
   <div class="panel-heading">
+    <%= link to: admin_vendor_location_path(@conn, :new, @vendor), class: "btn btn-xs btn-success pull-right" do %>
+      <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Location
+    <% end %>
+    <h3 class="panel-title">Locations</h3>
+  </div>
+  <%= render Grid.Admin.Vendor.LocationView, "index.html",
+    conn: @conn,
+    vendor: @vendor,
+    locations: @vendor.locations
+  %>
+</div>
+
+
+<div class="panel panel-default">
+  <div class="panel-heading">
     <%= link to: admin_vendor_product_path(@conn, :new, @vendor), class: "btn btn-xs btn-success pull-right" do %>
     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Product
     <% end %>

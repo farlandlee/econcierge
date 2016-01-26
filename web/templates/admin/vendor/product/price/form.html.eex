@@ -2,11 +2,6 @@
   <%= if @changeset.action do %>
     <div class="alert alert-danger">
       <p>Oops, something went wrong! Please check the errors below:</p>
-      <ul>
-        <%= for {attr, message} <- format_form_errors(@changeset) do %>
-          <li><%= attr %> <%= message %></li>
-        <% end %>
-      </ul>
     </div>
   <% end %>
 
@@ -15,22 +10,26 @@
     <div class="input-group">
       <span class="input-group-addon">$</span>
       <%= text_input f, :amount, class: "form-control" %>
+      <%= error_tag f, :amount %>
     </div>
   </div>
 
   <div class="form-group">
     <%= label f, :people_count, "Number of People", class: "control-label" %>
     <%= number_input f, :people_count, class: "form-control", min: 0 %>
+    <%= error_tag f, :people_count %>
   </div>
 
   <div class="form-group">
     <%= label f, :name, "Name", class: "control-label" %>
     <%= text_input f, :name, class: "form-control" %>
+    <%= error_tag f, :name %>
   </div>
 
   <div class="form-group">
     <%= label f, :description, "Description", class: "control-label" %>
     <%= text_input f, :description, class: "form-control" %>
+    <%= error_tag f, :description %>
   </div>
 
   <div class="form-group">

@@ -14,6 +14,8 @@ defmodule Grid.Vendor do
     belongs_to :default_image, {"vendor_images", Image}
     has_many :images, {"vendor_images", Image}, foreign_key: :assoc_id
 
+    has_many :locations, Grid.Location
+    
     has_many :vendor_activities, Grid.VendorActivity
     has_many :activities, through: [:vendor_activities, :activity]
     has_many :experiences, through: [:vendor_activities, :activity, :experiences]
