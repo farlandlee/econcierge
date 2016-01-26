@@ -193,11 +193,13 @@ defmodule Grid.Admin.ProductControllerTest do
 
     conn = get conn, admin_vendor_product_path(conn, :clone, v, p)
 
-    twins = where(Product,
-      description: ^p.description,
-      name: ^p.name,
-      vendor_id: ^p.vendor_id,
-      experience_id: ^p.experience_id) |> Repo.all
+    twins = Product
+      |> where(
+        description: ^p.description,
+        vendor_id: ^p.vendor_id,
+        experience_id: ^p.experience_id)
+      |> where([prod], like(prod.name, ^"#{p.name}%"))
+      |> Repo.all
 
     # two products match that get_by
     assert match?([_, _], twins)
@@ -212,7 +214,7 @@ defmodule Grid.Admin.ProductControllerTest do
     assert response
 
     # cloned product correctly
-    assert response =~ "#{p.name}"
+    assert response =~ "#{p.name} Clone"
     assert response =~ "#{p.description}"
     assert response =~ "#{p.experience.name}"
     # cloned default price
@@ -228,5 +230,5 @@ defmodule Grid.Admin.ProductControllerTest do
     # cloned start time
     assert response =~ Ecto.Time.to_string(start_time.starts_at_time)
   end
-  
+
 end
