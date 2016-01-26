@@ -53,13 +53,15 @@ defmodule Grid.Repo.Migrations.DuplicateCategoriesForActivities do
   def up do
     for activity <- Repo.all(Activity) |> Repo.preload([experience_categories: [:experience, :category]]) do
       for exp_cat <- activity.experience_categories, cat = exp_cat.category, exp = exp_cat.experience do
-        new_cat = %Category{
-          name: cat.name,
-          description: cat.description,
-          slug: "#{cat.slug}-#{exp_cat.id}", #unique-ify slugs
-          activity_id: activity.id
-        }
-        new_cat = Repo.insert! new_cat
+        new_cat = case Repo.get_by(Category, name: cat.name, activity_id: activity.id) do
+          nil -> Repo.insert! %Category{
+            name: cat.name,
+            description: cat.description,
+            slug: "#{cat.slug}-#{exp_cat.id}", #unique-ify slugs
+            activity_id: activity.id
+          }
+          cat -> cat
+        end
 
         new_exp_cat = %ExperienceCategory{
           category_id: new_cat.id,
