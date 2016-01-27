@@ -4,8 +4,6 @@ defmodule Grid.Admin.ActivityController do
   alias Grid.Activity
   alias Grid.Plugs
 
-  import Ecto.Query
-
   plug Plugs.PageTitle, title: "Activity"
   plug Plugs.Breadcrumb, index: Activity
   plug :scrub_params, "activity" when action in [:create, :update]

@@ -10,7 +10,7 @@
     </tr>
   </thead>
   <tbody>
-<%= for product <- @products, vendor = product.vendor, vendor_id = product.vendor_id do %>
+<%= for product <- @products, vendor_id = product.vendor_id do %>
     <tr>
       <td><%= link product.name, to: admin_vendor_product_path(@conn, :show, vendor_id, product) %></td>
       <td><%= vendor_or_experience @display_name_of, product %></td>

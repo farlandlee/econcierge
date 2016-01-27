@@ -74,7 +74,7 @@ defmodule Grid.Admin.Vendor.ProductController do
           conn
           |> put_flash(:info, "Product successfully cloned.")
           |> redirect(to: admin_vendor_product_path(conn, :show, conn.assigns.vendor, clone))
-        {:error, changeset} ->
+        {:error, _changeset} ->
           conn
           |> put_flash(:error, "Error cloning product.")
           |> redirect(to: admin_vendor_path(conn, :show, conn.assigns.vendor))

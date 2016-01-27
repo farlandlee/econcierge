@@ -38,7 +38,7 @@ defmodule Grid.Arc do
 
       receive do
         {:DOWN, ^ref, :process, ^pid, :normal} -> :ok
-        {:DOWN, ^ref, :process, ^pid, reason} -> set_errored(image)
+        {:DOWN, ^ref, :process, ^pid, _reason} -> set_errored(image)
       after
         timeout -> set_errored(image)
       end
