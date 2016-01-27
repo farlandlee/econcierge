@@ -2,7 +2,6 @@ defmodule Grid.Admin.Activity.ExperienceController do
   use Grid.Web, :controller
 
   alias Grid.Experience
-  alias Grid.Activity
   alias Grid.Category
 
   import Ecto.Query

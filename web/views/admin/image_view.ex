@@ -8,8 +8,8 @@ defmodule Grid.Admin.ImageView do
   end
 
   def img(image, opts \\ [])
-  def img(nil, opts), do: "No image"
-  def img(%Image{medium: nil, filename: name, error: false}, opts) do
+  def img(nil, _opts), do: "No image"
+  def img(%Image{medium: nil, filename: name, error: false}, _opts) do
     content_tag(:p, "#{name} still uploading...")
   end
   def img(img, opts)do

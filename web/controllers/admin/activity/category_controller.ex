@@ -1,8 +1,6 @@
 defmodule Grid.Admin.Activity.CategoryController do
   use Grid.Web, :controller
 
-  import Ecto.Query
-
   alias Grid.Category
 
   plug Grid.Plugs.PageTitle, title: "Category"

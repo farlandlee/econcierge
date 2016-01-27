@@ -6,7 +6,7 @@ defmodule Grid.ActivityControllerTest do
   setup do
     e = Factory.create(:experience)
     c = Factory.create(:category, activity: e.activity)
-    ec = Factory.create(:experience_category, experience: e, category: c)
+    Factory.create(:experience_category, experience: e, category: c)
 
     p = Factory.create(:product, experience: e)
 
