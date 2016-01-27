@@ -12,12 +12,12 @@ defmodule Grid.Admin.ActivityController do
   plug Plugs.AssignModel, Activity when action in [:update, :show, :edit, :delete]
   plug Plugs.Breadcrumb, [show: Activity] when action in [:show, :edit]
 
-  def index(conn, _params) do
-    activity = Activity |> order_by(:name) |> Repo.all
-    render(conn, "index.html", activity: activity)
+  def index(conn, _) do
+    activities = Activity |> Repo.alphabetical |> Repo.all
+    render(conn, "index.html", activities: activities)
   end
 
-  def new(conn, _params) do
+  def new(conn, _) do
     changeset = Activity.changeset(%Activity{categories: []})
     render(conn, "new.html", changeset: changeset)
   end

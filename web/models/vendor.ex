@@ -22,13 +22,6 @@ defmodule Grid.Vendor do
     timestamps
   end
 
-  @required_fields ~w(name description)
-  @optional_fields ~w()
-
-  def alphabetical(query \\ __MODULE__) do
-    query |> order_by(:name)
-  end
-
   def with_activity(query \\ __MODULE__, activity_id)
   def with_activity(query, nil) do
     query
@@ -39,6 +32,9 @@ defmodule Grid.Vendor do
     |> join(:inner, [v, va], a in assoc(va, :activity))
     |> where([v, va, a], a.id == ^id)
   end
+
+  @required_fields ~w(name description)
+  @optional_fields ~w()
 
   @doc """
   Creates a changeset based on the `model` and `params`.

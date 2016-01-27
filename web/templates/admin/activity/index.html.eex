@@ -12,7 +12,7 @@
     </tr>
   </thead>
   <tbody>
-  <%= for activity <- @activity do %>
+  <%= for activity <- @activities do %>
     <tr>
       <td><%= link activity.name, to: admin_activity_path(@conn, :show, activity) %></td>
       <td><%= activity.description %></td>
