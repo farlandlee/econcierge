@@ -7,6 +7,7 @@ defmodule Grid.Factory do
   alias Grid.Category
   alias Grid.Experience
   alias Grid.ExperienceCategory
+  alias Grid.Location
   alias Grid.Price
   alias Grid.Product
   alias Grid.StartTime
@@ -15,6 +16,18 @@ defmodule Grid.Factory do
 
   def random() do
     :random.uniform()
+  end
+
+  def factory(:location) do
+    %Location{
+      name: sequence(:name, &"location-#{&1}"),
+      address1: sequence(:address, &"#{&1} Main St."),
+      address2: sequence(:address, &"Apt #{&1}"),
+      city: sequence(:address, &"city-#{&1}"),
+      state: Enum.random(Grid.USStates.codes()),
+      zip: sequence(:address, &"zip-#{&1}"),
+      vendor: build(:vendor)
+    }
   end
 
   def factory(:price) do

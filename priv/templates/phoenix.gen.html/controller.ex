@@ -2,16 +2,17 @@ defmodule <%= module %>Controller do
   use <%= base %>.Web, :controller
 
   alias <%= module %>
+  alias Grid.Plugs
 
-  plug Grid.Plugs.PageTitle, title: "<%= human %>"
+  plug Plugs.PageTitle, title: "<%= human %>"
   plug :scrub_params, <%= inspect singular %> when action in [:create, :update]
 
-  def index(conn, _params) do
+  def index(conn, _) do
     <%= plural %> = Repo.all(<%= alias %>)
     render(conn, "index.html", <%= plural %>: <%= plural %>)
   end
 
-  def new(conn, _params) do
+  def new(conn, _) do
     changeset = <%= alias %>.changeset(%<%= alias %>{})
     render(conn, "new.html", changeset: changeset)
   end
@@ -29,19 +30,19 @@ defmodule <%= module %>Controller do
     end
   end
 
-  def show(conn, %{"id" => id}) do
-    <%= singular %> = Repo.get!(<%= alias %>, id)
+  def show(conn, _) do
+    <%= singular %> = conn.assigns.<%= singular %>
     render(conn, "show.html", <%= singular %>: <%= singular %>)
   end
 
-  def edit(conn, %{"id" => id}) do
-    <%= singular %> = Repo.get!(<%= alias %>, id)
+  def edit(conn, _) do
+    <%= singular %> = conn.assigns.<%= singular %>
     changeset = <%= alias %>.changeset(<%= singular %>)
     render(conn, "edit.html", <%= singular %>: <%= singular %>, changeset: changeset)
   end
 
-  def update(conn, %{"id" => id, <%= inspect singular %> => <%= singular %>_params}) do
-    <%= singular %> = Repo.get!(<%= alias %>, id)
+  def update(conn, %{<%= inspect singular %> => <%= singular %>_params}) do
+    <%= singular %> = conn.assigns.<%= singular %>
     changeset = <%= alias %>.changeset(<%= singular %>, <%= singular %>_params)
 
     case Repo.update(changeset) do
@@ -54,12 +55,8 @@ defmodule <%= module %>Controller do
     end
   end
 
-  def delete(conn, %{"id" => id}) do
-    <%= singular %> = Repo.get!(<%= alias %>, id)
-
-    # Here we use delete! (with a bang) because we expect
-    # it to always work (and if it does not, it will raise).
-    Repo.delete!(<%= singular %>)
+  def delete(conn, _) do
+    Repo.delete!(conn.assigns.<%= singular %>)
 
     conn
     |> put_flash(:info, "<%= human %> deleted successfully.")

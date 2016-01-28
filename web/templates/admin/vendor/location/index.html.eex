@@ -1,0 +1,46 @@
+<%= link to: admin_vendor_location_path(@conn, :new, @vendor), class: "btn btn-success header-action" do  %>
+  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add location
+<% end %>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Address 1</th>
+      <th>Address 2</th>
+      <th>City</th>
+      <th>State</th>
+      <th>Zip</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for location <- @locations do %>
+    <tr>
+      <td><%= location.name %></td>
+      <td><%= location.address1 %></td>
+      <td><%= location.address2 %></td>
+      <td><%= location.city %></td>
+      <td><%= location.state %></td>
+      <td><%= location.zip %></td>
+
+      <td class="text-right">
+        <div class="dropdown actions">
+          <button class="btn btn-xs btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+            Actions <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-right">
+            <li>
+              <%= link "Edit", to: admin_vendor_location_path(@conn, :edit, @vendor, location), class: "edit" %>
+            </li>
+            <li>
+              <%= link "Delete", to: admin_vendor_location_path(@conn, :delete, @vendor, location), method: :delete, data: [confirm: "Are you sure?"], class: "delete" %>
+            </li>
+          </ul>
+        </div>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>

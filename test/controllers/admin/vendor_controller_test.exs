@@ -63,6 +63,25 @@ defmodule Grid.Admin.VendorControllerTest do
     assert html_response(conn, 200) =~ "#{vendor.name}"
   end
 
+  test "shows locations", %{conn: conn} do
+    location = Factory.create(:location)
+    conn = get conn, admin_vendor_path(conn, :show, location.vendor)
+    response = html_response(conn, 200)
+    assert response =~ "Locations"
+    assert response =~ "Name"
+    assert response =~ location.name
+    assert response =~ "Address 1"
+    assert response =~ location.address1
+    assert response =~ "Address 2"
+    assert response =~ location.address2
+    assert response =~ "City"
+    assert response =~ location.city
+    assert response =~ "State"
+    assert response =~ location.state
+    assert response =~ "Zip"
+    assert response =~ location.zip
+  end
+
   test "shows images", %{conn: conn, vendor: v} do
     i = Factory.create_vendor_image(assoc_id: v.id)
     no_alt_img = Factory.create_vendor_image(assoc_id: v.id, alt: "")
