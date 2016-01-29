@@ -28,7 +28,8 @@ defmodule Grid.Mixfile do
        :logger,
        :oauth2,
        :phoenix_ecto,
-       :postgrex
+       :postgrex,
+       :rollbax
     ]]
   end
 
@@ -54,6 +55,7 @@ defmodule Grid.Mixfile do
       {:postgrex, ">= 0.0.0"},
       {:phoenix_html, "~> 2.3"},
       {:phoenix_live_reload, "~> 1.0", only: :dev},
+      {:rollbax, "~> 0.5"},
       {:slugger, git: "git://github.com/h4cc/slugger.git"}
     ]
   end

@@ -20,7 +20,6 @@ defmodule Grid.LocationTest do
 
   test "creation_changeset takes vendor_id" do
     changeset = Location.creation_changeset(@valid_attrs, 1)
-    IO.inspect changeset.errors
     assert changeset.valid?
     assert fetch_field(changeset, :vendor_id) == {:changes, 1}
   end
