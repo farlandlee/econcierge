@@ -23,7 +23,7 @@ defmodule Grid.Activity do
   end
 
   @required_fields ~w(name description)
-  @optional_fields ~w()
+  @optional_fields ~w(slug default_image_id)
 
   @doc """
   Creates a changeset based on the `model` and `params`.
@@ -37,6 +37,7 @@ defmodule Grid.Activity do
     |> update_change(:name, &String.strip/1)
     |> validate_length(:name, min: 1, max: 255)
     |> unique_constraint(:name)
-    |> slugify
+    |> foreign_key_constraint(:default_image_id)
+    |> cast_slug
   end
 end

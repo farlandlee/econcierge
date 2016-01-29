@@ -18,15 +18,13 @@ defmodule Grid.Admin.Activity.ImageController do
   end
 
   def new(conn, _) do
-    changeset = new_image_changeset(conn.assigns.activity)
+    changeset = Image.changeset(%Image{})
     render(conn, "new.html", changeset: changeset)
   end
 
   def create(conn, %{"image" => img_params = %{"file" => file}}) do
     activity = conn.assigns.activity
-    img_params = Map.put(img_params, "filename", file.filename)
-
-    changeset = new_image_changeset(activity, img_params)
+    changeset = Image.creation_changeset(activity, img_params)
 
     case Repo.insert(changeset) do
       {:ok, image} ->
@@ -38,7 +36,7 @@ defmodule Grid.Admin.Activity.ImageController do
   end
 
   def create(conn, _invalid_params) do
-    changeset = new_image_changeset(conn.assigns.activity)
+    changeset = Image.changeset(%Image{})
 
     conn
     |> put_flash(:error, "Invalid parameters")
@@ -53,10 +51,9 @@ defmodule Grid.Admin.Activity.ImageController do
     render(conn, "edit.html", changeset: Image.changeset(conn.assigns.image))
   end
 
-  @doc "Only an image's `alt` can be updated by this method"
-  def update(conn, %{"image" => %{"alt" => alt}}) do
+  def update(conn, %{"image" => params}) do
     conn.assigns.image
-    |> Image.changeset(%{"alt" => alt})
+    |> Image.changeset(params)
     |> Repo.update
     |> case do
       {:ok, image} ->
@@ -79,8 +76,7 @@ defmodule Grid.Admin.Activity.ImageController do
     image = conn.assigns.image
 
     activity_changeset = activity
-      |> Activity.changeset(%{})
-      |> Ecto.Changeset.put_change(:default_image_id, image.id)
+      |> Activity.changeset(%{default_image_id: image.id})
 
     case Repo.update(activity_changeset) do
       {:ok, activity} ->
@@ -99,13 +95,5 @@ defmodule Grid.Admin.Activity.ImageController do
     conn
     |> put_flash(:info, "Image deleted successfully.")
     |> redirect(to: admin_activity_path(conn, :show, conn.assigns.activity))
-  end
-
-  ###########
-  # Helpers #
-  ###########
-
-  defp new_image_changeset(activity, params \\ :empty) do
-    build_assoc(activity, :images) |> Image.changeset(params)
   end
 end

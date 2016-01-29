@@ -37,7 +37,7 @@ defmodule Grid.Location do
     |> validate_length(:address1, min: 1, max: 255)
     |> validate_length(:address2, min: 1, max: 255)
     |> validate_length(:city, min: 1, max: 255)
-    |> validate_length(:zip, min: 1, max: 255)
+    |> validate_length(:zip, min: 1, max: 10)
     |> validate_inclusion(:state, @state_codes, message: "is not a recognized two-letter state code")
   end
 

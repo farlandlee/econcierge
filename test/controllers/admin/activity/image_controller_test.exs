@@ -5,7 +5,7 @@ defmodule Grid.Admin.Activity.ImageControllerTest do
   alias Grid.Activity
 
   @valid_attrs %{"alt" => "New caption"}
-  @invalid_attrs %{}
+  @invalid_attrs %{filename: nil}
 
   @table {"activity_images", Image}
 

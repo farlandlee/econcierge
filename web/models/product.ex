@@ -19,8 +19,9 @@ defmodule Grid.Product do
     timestamps
   end
 
-  @required_fields ~w(description name published vendor_id)
-  @optional_fields ~w(experience_id)
+  @creation_fields ~w(vendor_id experience_id)a
+  @required_fields ~w(description name published)a
+  @optional_fields ~w(experience_id)a
 
   @doc """
   Creates a changeset based on the `model` and `params`.
@@ -31,20 +32,31 @@ defmodule Grid.Product do
   def changeset(model, params \\ :empty) do
     model
     |> cast(params, @required_fields, @optional_fields)
-    |> foreign_key_constraint(:vendor_id)
-    |> foreign_key_constraint(:experience_id)
-    |> foreign_key_constraint(:default_price_id)
     |> update_change(:name, &String.strip/1)
-    |> update_change(:description, &String.strip/1)
     |> validate_length(:name, min: 1, max: 255)
+    |> update_change(:description, &String.strip/1)
     |> validate_length(:description, min: 1, max: 255)
+    |> foreign_key_constraint(:experience_id)
   end
 
-  @copyable_fields ~w(description name vendor_id experience_id)a
+  def default_price_changeset(model, default_price_id) do
+    model
+    |> cast(%{default_price_id: default_price_id}, [:default_price_id], [])
+    |> foreign_key_constraint(:default_price_id)
+  end
+
+  def creation_changeset(params, vendor_id) do
+    %__MODULE__{}
+    |> changeset(params)
+    |> cast(%{vendor_id: vendor_id}, @creation_fields, [])
+    |> foreign_key_constraint(:vendor_id)
+  end
+
   def clone(product) do
-    fields = product
-      |> Map.take(@copyable_fields)
-      |> Map.put(:name, "#{product.name} Clone")
-    Map.merge(%__MODULE__{}, fields)
+    product
+    |> Map.take(__schema__(:fields))
+    |> creation_changeset(product.vendor_id)
+    |> put_change(:name, "#{product.name} Clone")
+    |> put_change(:published, false)
   end
 end

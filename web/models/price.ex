@@ -13,7 +13,6 @@ defmodule Grid.Price do
 
   @required_fields ~w(amount name people_count)
   @optional_fields ~w(description)
-
   @doc """
   Creates a changeset based on the `model` and `params`.
 
@@ -23,7 +22,6 @@ defmodule Grid.Price do
   def changeset(model, params \\ :empty) do
     model
     |> cast(params, @required_fields, @optional_fields)
-    |> foreign_key_constraint(:product_id)
     |> update_change(:amount, &(Float.round(&1, 2)))
     |> update_change(:name, &String.strip/1)
     |> update_change(:description, &String.strip/1)
@@ -32,11 +30,16 @@ defmodule Grid.Price do
     |> validate_number(:people_count, greater_than_or_equal_to: 0)
   end
 
-  @copyable_fields ~w(amount name description)a
+  def creation_changeset(params, product_id) do
+    %__MODULE__{}
+    |> changeset(params)
+    |> cast(%{product_id: product_id}, [:product_id], [])
+    |> foreign_key_constraint(:product_id)
+  end
+
   def clone(price, product_id: product_id) do
-    fields = price
-      |> Map.take(@copyable_fields)
-      |> Map.put(:product_id, product_id)
-    Map.merge(%__MODULE__{}, fields)
+    price
+    |> Map.take(__schema__(:fields))
+    |> creation_changeset(product_id)
   end
 end

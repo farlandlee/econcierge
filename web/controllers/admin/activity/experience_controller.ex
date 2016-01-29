@@ -19,8 +19,7 @@ defmodule Grid.Admin.Activity.ExperienceController do
 
   def create(conn, %{"experience" => experience_params}) do
     activity = conn.assigns.activity
-    experience_params = Map.put(experience_params, "activity_id", activity.id)
-    changeset = Experience.changeset(%Experience{}, experience_params)
+    changeset = Experience.creation_changeset(experience_params, activity.id)
 
     {:ok, conn} = Repo.transaction(fn ->
       case Repo.insert(changeset) do

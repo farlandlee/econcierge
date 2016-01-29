@@ -99,7 +99,6 @@ defmodule Grid.Admin.ProductControllerTest do
     assert response =~ "#{e.name}"
   end
 
-  # TODO: Start HERE!!!!!!
   test "filters experiences by vendor activities", %{conn: conn, vendor: v, product: p} do
     some_other_experience = Factory.create(:experience)
 
@@ -116,7 +115,7 @@ defmodule Grid.Admin.ProductControllerTest do
 
   test "creates resource and redirects when data is valid", %{conn: conn, vendor: v} do
     e = Factory.create(:experience)
-    valid_attrs = @valid_attrs |> Map.put(:experience, e.id)
+    valid_attrs = @valid_attrs |> Map.put(:experience_id, e.id)
     conn = post conn, admin_vendor_product_path(conn, :create, v), product: valid_attrs
 
     product = Repo.get_by(Product, @valid_attrs)

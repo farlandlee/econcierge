@@ -26,14 +26,13 @@ defmodule Grid.Admin.Vendor.Product.PriceController do
 
   def create(conn, %{"price" => price_params}) do
     product = conn.assigns.product
-    changeset = Price.changeset(%Price{}, price_params)
-      |> Ecto.Changeset.put_change(:product_id, product.id)
+    changeset = Price.creation_changeset(price_params, product.id)
 
     case Repo.insert(changeset) do
       {:ok, _price} ->
         conn
         |> put_flash(:info, "Price created successfully.")
-        |> redirect(to: admin_vendor_product_path(conn, :show, conn.assigns.vendor, conn.assigns.product))
+        |> redirect(to: admin_vendor_product_path(conn, :show, conn.assigns.vendor, product))
       {:error, changeset} ->
         render(conn, "new.html", changeset: changeset)
     end
@@ -69,8 +68,7 @@ defmodule Grid.Admin.Vendor.Product.PriceController do
 
   def set_default(conn, _) do
     product = conn.assigns.product
-    product_changeset = Product.changeset(product, %{})
-      |> Ecto.Changeset.put_change(:default_price_id, conn.assigns.price.id)
+    product_changeset = Product.default_price_changeset(product, conn.assigns.price.id)
 
     case Repo.update(product_changeset) do
       {:ok, product} ->

@@ -8,10 +8,9 @@ defmodule Grid.Admin.Vendor.Product.StartTimeController do
 
   def create(conn, %{"start_time" => start_time_params}) do
     product = conn.assigns.product
-    redirect_path = admin_vendor_product_path(conn, :show, conn.assigns.vendor, product)
+    changeset = StartTime.creation_changeset(start_time_params, product.id)
 
-    changeset = StartTime.changeset(%StartTime{}, start_time_params)
-      |> Ecto.Changeset.put_change(:product_id, product.id)
+    redirect_path = admin_vendor_product_path(conn, :show, conn.assigns.vendor, product)
 
     case Repo.insert(changeset) do
       {:ok, _start_time} ->

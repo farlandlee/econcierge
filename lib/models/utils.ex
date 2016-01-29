@@ -2,25 +2,38 @@ defmodule Grid.Models.Utils do
 
   import Ecto.Changeset
 
-  def slugify(changeset, opts \\ []) do
-    field = Keyword.get opts, :field, :slug
-    from = Keyword.get opts, :from, :name
-    constraint_name = Keyword.get opts, :constraint_name, nil
+  def cast_slug(changeset, opts \\ []) do
+    slug_field         = Keyword.get opts, :as, :slug
+    source_field       = Keyword.get opts, :from, :name
+    constraint_options = Keyword.get opts, :constraint_options, []
 
-    {_, value} = fetch_field(changeset, from)
+    fetched_slug   = fetch_field(changeset, slug_field)
+    fetched_source = fetch_field(changeset, source_field)
 
-    slug = Slugger.slugify_downcase(value, ?_)
-
-    changeset
-    |> put_change(field, slug)
-    |> constraint(field, constraint_name)
+    case generate_slug(fetched_slug, fetched_source) do
+      :no_change -> changeset
+      slug ->
+        changeset
+        |> put_change(slug_field, slug)
+        |> unique_constraint(slug_field, constraint_options)
+    end
   end
 
-  defp constraint(changeset, field, nil) do
-    unique_constraint(changeset, field)
+  defp generate_slug(fetched_slug, fetched_source)
+
+  defp generate_slug({_, nil}, {_, source_value}) do
+    slugify(source_value)
+  end
+  # User set slug, just need to enforce no spaces etc
+  defp generate_slug({:changes, changed_slug}, _) do
+    slugify(changed_slug)
   end
 
-  defp constraint(changeset, field, constraint_name) do
-    unique_constraint(changeset, field, name: constraint_name)
+  defp generate_slug(_, _) do
+    :no_change
+  end
+
+  defp slugify(value) do
+    Slugger.slugify_downcase(value, ?_)
   end
 end

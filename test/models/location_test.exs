@@ -5,7 +5,7 @@ defmodule Grid.LocationTest do
 
   import Ecto.Changeset, only: [fetch_field: 2]
 
-  @valid_attrs %{name: "name", address1: "some content", city: "some content", state: "WY", zip: "some content"}
+  @valid_attrs %{name: "name", address1: "some content", city: "some content", state: "WY", zip: "83001"}
   @invalid_attrs %{state: "not a real state"}
 
   test "changeset with valid attributes" do
@@ -20,6 +20,7 @@ defmodule Grid.LocationTest do
 
   test "creation_changeset takes vendor_id" do
     changeset = Location.creation_changeset(@valid_attrs, 1)
+    IO.inspect changeset.errors
     assert changeset.valid?
     assert fetch_field(changeset, :vendor_id) == {:changes, 1}
   end

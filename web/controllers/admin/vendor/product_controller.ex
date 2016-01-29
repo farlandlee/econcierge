@@ -26,9 +26,8 @@ defmodule Grid.Admin.Vendor.ProductController do
     )
   end
 
-  def create(conn, %{"product" => params}) do
-    params = params |> Map.put("vendor_id", conn.assigns.vendor.id)
-    changeset = Product.changeset(%Product{}, params)
+  def create(conn, %{"product" => product_params}) do
+    changeset = Product.creation_changeset(product_params, conn.assigns.vendor.id)
 
     case Repo.insert(changeset) do
       {:ok, product} ->
@@ -47,33 +46,33 @@ defmodule Grid.Admin.Vendor.ProductController do
     product = conn.assigns.product |> Repo.preload([
       :prices, :start_times
       ])
-    clone = Product.clone(product)
+    product_clone = Product.clone(product)
 
     {:ok, conn} = Repo.transaction fn ->
-      case Repo.insert(clone) do
-        {:ok, clone} ->
+      case Repo.insert(product_clone) do
+        {:ok, product_clone} ->
           # clone start times
           for start_time <- product.start_times do
             start_time
-            |> StartTime.clone(product_id: clone.id)
+            |> StartTime.clone(product_id: product_clone.id)
             |> Repo.insert!
           end
           # clone prices, set default_price once it's been cloned
           for price <- product.prices do
             price_clone = price
-              |> Price.clone(product_id: clone.id)
+              |> Price.clone(product_id: product_clone.id)
               |> Repo.insert!
             # Set the default price of the clone to the cloned default price
             if price.id == product.default_price_id do
-              clone
-              |> Ecto.Changeset.change(default_price_id: price_clone.id)
+              product_clone
+              |> Product.default_price_changeset(price_clone.id)
               |> Repo.update!
             end
           end
 
           conn
           |> put_flash(:info, "Product successfully cloned.")
-          |> redirect(to: admin_vendor_product_path(conn, :show, conn.assigns.vendor, clone))
+          |> redirect(to: admin_vendor_product_path(conn, :show, conn.assigns.vendor, product_clone))
         {:error, _changeset} ->
           conn
           |> put_flash(:error, "Error cloning product.")
@@ -106,14 +105,13 @@ defmodule Grid.Admin.Vendor.ProductController do
   end
 
   def update(conn, %{"product" => product_params}) do
-    product = conn.assigns.product
-    changeset = Product.changeset(product, product_params)
+    changeset = Product.changeset(conn.assigns.product, product_params)
 
     case Repo.update(changeset) do
       {:ok, product} ->
         conn
         |> put_flash(:info, "Product updated successfully.")
-        |> redirect(to: admin_vendor_product_path(conn, :show, conn.assigns.vendor.id, product))
+        |> redirect(to: admin_vendor_product_path(conn, :show, conn.assigns.vendor, product))
       {:error, changeset} ->
         render(conn, "edit.html",
           changeset: changeset,

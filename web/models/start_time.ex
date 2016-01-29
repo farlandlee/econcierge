@@ -8,6 +8,7 @@ defmodule Grid.StartTime do
     timestamps
   end
 
+  @creation_fields ~w(product_id)
   @required_fields ~w(starts_at_time)
   @optional_fields ~w()
 
@@ -20,14 +21,18 @@ defmodule Grid.StartTime do
   def changeset(model, params \\ :empty) do
     model
     |> cast(params, @required_fields, @optional_fields)
+  end
+
+  def creation_changeset(params, product_id) do
+    %__MODULE__{}
+    |> changeset(params)
+    |> cast(%{product_id: product_id}, @creation_fields, [])
     |> foreign_key_constraint(:product_id)
   end
 
-  @copyable_fields ~w(starts_at_time)a
   def clone(start_time, product_id: product_id) do
-    fields = start_time
-      |> Map.take(@copyable_fields)
-      |> Map.put(:product_id, product_id)
-    Map.merge(%__MODULE__{}, fields)
+    start_time
+    |> Map.take(__schema__(:fields))
+    |> creation_changeset(product_id)
   end
 end

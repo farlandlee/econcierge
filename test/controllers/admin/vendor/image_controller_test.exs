@@ -5,7 +5,7 @@ defmodule Grid.Admin.VendorImageControllerTest do
   alias Grid.Vendor
 
   @valid_attrs %{"alt" => "New caption"}
-  @invalid_attrs %{}
+  @invalid_attrs %{filename: nil}
 
   @table {"vendor_images", Image}
 

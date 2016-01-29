@@ -4,6 +4,8 @@ alias Grid.Activity
 alias Grid.Category
 alias Grid.Experience
 alias Grid.ExperienceCategory
+alias Grid.Image
+alias Grid.Location
 alias Grid.Price
 alias Grid.Product
 alias Grid.StartTime
@@ -11,117 +13,91 @@ alias Grid.User
 alias Grid.Vendor
 alias Grid.VendorActivity
 
-# only insert if the model doesn't exist unchanged from seeds
-insert! = fn model ->
-  module = model.__struct__
-  fields = module.__schema__(:fields)
-  attribs = Map.take(model, fields)
-  |> Enum.filter(fn
-    {_, nil} -> false
-    _ -> true
-  end)
-  case Repo.get_by(module, attribs) do
-    nil -> Repo.insert!(model)
-    model -> model
-  end
-end
-
-insert!.(%User{
+Repo.insert %User{
   name: "Development User",
   email: "dev@outpostjh.com"
-})
+}
 
-# Activities!
-[fishing, snowmobiling | _] = ["Fly Fishing", "Snowmobiling", "Paragliding"]
-|> Enum.map(fn activity ->
-  insert!.(%Activity{
+for activity <- ["Fly Fishing", "Snowmobiling", "Paragliding"] do
+  activity = Activity.changeset(%Activity{}, %{
     name: activity,
     description: "#{activity} is the most fun you can have in JH."
-  })
-end)
+    })
+    |> Repo.insert!
 
-# Categories!
-[full, half | _] = ["Full Day", "Half Day", "Overnight"]
-|> Enum.map(fn category ->
-  insert!.(%Category{
-    name: category,
-    description: category
-  })
-end)
+  # Categories!
+  categories = for cat <- ["Full Day", "Half Day", "Overnight"] do
+    Category.creation_changeset(%{
+      name: activity.name <> " " <> cat,
+      description: cat <> " trip"
+      }, activity.id)
+    |> Repo.insert!
+  end
 
-fishing_vendors = [
-  {"FishCo", "Fishing is wahoo"}
+  # Experiences & Experience Categories
+  for n <- 1..3 do
+    exp = Experience.creation_changeset(%{
+      name: "#{activity.name} Experience #{n}",
+      description: "Sensual #{activity.name}"
+      }, activity.id)
+      |> Repo.insert!
+    # Experience Categories
+    for cat <- categories do
+      Repo.insert! %ExperienceCategory{
+        category_id: cat.id,
+        experience_id: exp.id
+      }
+    end
+  end
+
+  # Image
+  Image.creation_changeset(activity, %{"file" => %{filename: activity.name <> " image"}})
+end
+
+# Vendors
+vendor_tuples = [
+  {"FishCo", "Fishing is wahoo", "Fly Fishing"},
+  {"SnowMoCo", "Do you know what the street value of this mountain is?", "Snowmobiling"}
 ]
-|> Enum.map(fn {name, description} ->
-  v = insert!.(%Vendor{name: name, description: description})
-  insert!.(%VendorActivity{vendor_id: v.id, activity_id: fishing.id})
-  v
-end)
+for {name, desc, act_name} <- vendor_tuples, activity = Repo.get_by!(Activity, name: act_name) |> Repo.preload([:categories, :experiences]) do
+  vendor = %Vendor{}
+  |> Vendor.changeset(%{name: name, description: desc})
+  |> Repo.insert!
 
-snowmobiling_vendors = [
-  {"SnowMoCo", "Do you know what the street value of this mountain is?"}
-]
-|> Enum.map(fn {name, description} ->
-  v = insert!.(%Vendor{name: name, description: description})
-  insert!.(%VendorActivity{vendor_id: v.id, activity_id: snowmobiling.id})
-  v
-end)
+  Repo.insert! %VendorActivity{vendor_id: vendor.id, activity_id: activity.id}
 
-#Products
-start_time = %StartTime{starts_at_time: %Ecto.Time{hour: 8, min: 0, sec: 0}}
-fish_exp = insert!.(%Experience{
-  name: "Moose to Wilson",
-  description: "Good Views",
-  activity_id: fishing.id
-})
-fishing_prod = insert!.(%Product{
-  name: "Two Person Float",
-  description: "Buy it!",
-  vendor_id: hd(fishing_vendors).id,
-  experience_id: fish_exp.id,
-  published: true
-})
-insert!.(%{start_time | product_id: fishing_prod.id})
-insert!.(%ExperienceCategory{
-  experience_id: fish_exp.id,
-  category_id: half.id
-})
-insert!.(%Price{
-  product_id: fishing_prod.id,
-  name: "Adult",
-  description: "Over 18",
-  amount: 180.0
-})
+  # Products with prices and start times
+  for experience <- activity.experiences do
+    product = Product.creation_changeset(%{
+      experience_id: experience.id,
+      name: "#{vendor.name}'s Product for #{experience.name}",
+      description: "Buy #{vendor.name}'s #{experience.description}}",
+      published: true
+      }, vendor.id)
+    |> Repo.insert!
 
-snowmo_exp = insert!.(%Experience{
-  name: "Granite Hotsprings",
-  description: "Sled & Soak",
-  activity_id: snowmobiling.id
-})
-snowmo_prod = insert!.(%Product{
-  name: "Double Sled",
-  description: "Buy it!",
-  vendor_id: hd(snowmobiling_vendors).id,
-  experience_id: snowmo_exp.id,
-  published: true
-})
-insert!.(%{start_time | product_id: snowmo_prod.id})
-insert!.(%ExperienceCategory{
-  experience_id: snowmo_exp.id,
-  category_id: full.id
-})
-insert!.(%Price{
-  product_id: snowmo_prod.id,
-  name: "Adult",
-  description: "Over 18",
-  amount: 250.0
-})
+    Price.creation_changeset(%{
+      name: "Adult",
+      description: "Over 18",
+      amount: 180.0,
+      people_count: 1
+    }, product.id)
+    |> Repo.insert!
 
-for m <- [Activity, Category, Product, Vendor, Experience] do
-  Enum.map(Repo.all(m), fn model ->
-    model
-    |> Ecto.Changeset.change
-    |> Grid.Models.Utils.slugify
-    |> Repo.update!
-  end)
+    StartTime.creation_changeset(%{
+      starts_at_time: %Ecto.Time{hour: 8, min: 0, sec: 0}
+    }, product.id)
+    |> Repo.insert!
+  end
+
+  Repo.insert! Location.creation_changeset(%{
+    name: "#{vendor.name} Locatio",
+    address1: "125 E Broadway",
+    city: "Jackson",
+    state: "WY",
+    zip: "83001"
+  }, vendor.id)
+
+  # Image
+  Image.creation_changeset(vendor, %{"file" => %{filename: vendor.name <> " image"}})
 end
