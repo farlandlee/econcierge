@@ -28,6 +28,13 @@ config :ex_aws,
   access_key_id: [{:system, "AWS_ACCESS_KEY"}, :instance_role],
   secret_access_key: [{:system, "AWS_SECRET_KEY"}, :instance_role]
 
+config :rollbax,
+  access_token: System.get_env("ROLLBAR_TOKEN"),
+  environment: Mix.env
+
+config :logger, Rollbax.Notifier,
+  level: :error
+
 config :arc, bucket: "dev-outpost-grid"
 
 # Import environment specific config. This must remain at the bottom

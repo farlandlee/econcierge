@@ -6,6 +6,7 @@
 
 - [Design Docs](https://www.lucidchart.com/documents/edit/099b9222-c340-48ed-a5fe-b9a2c60176cf/0?shared=true)
 - [Staging Site](http://outpost-grid.herokuapp.com/)
+- [Rollbar](https://rollbar.com/Outpost/Grid/)
 
 ## Installation
 

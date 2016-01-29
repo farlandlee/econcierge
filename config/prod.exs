@@ -19,11 +19,15 @@ config :grid, Grid.Endpoint,
 
 config :grid,
   postmark_server_token: System.get_env("POSTMARK_SERVER_TOKEN")
+
 # Do not print debug messages in production
 config :logger,
   level: :info,
   handle_otp_reports: true,
   handle_sasl_reports: true
+
+config :logger,
+  backends: [:console, Rollbax.Notifier]
 
 config :arc, bucket: "outpost-grid"
 
