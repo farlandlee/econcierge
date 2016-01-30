@@ -10,7 +10,11 @@ defmodule Grid.Admin.Activity.CategoryController do
   plug Grid.Plugs.Breadcrumb, [show: Category] when action == :edit
 
   def index(conn, _) do
-    redirect(conn, to: admin_activity_path(conn, :show, conn.assigns.activity))
+    redirect(conn, to: admin_activity_path(conn, :show, conn.assigns.activity, tab: "categories"))
+  end
+
+  def show(conn, _) do
+    redirect(conn, to: admin_activity_path(conn, :show, conn.assigns.activity, tab: "categories"))
   end
 
   def new(conn, _) do
@@ -26,14 +30,10 @@ defmodule Grid.Admin.Activity.CategoryController do
       {:ok, _category} ->
         conn
         |> put_flash(:info, "Category created successfully.")
-        |> redirect(to: admin_activity_category_path(conn, :index, activity))
+        |> redirect(to: admin_activity_path(conn, :show, activity, tab: "categories"))
       {:error, changeset} ->
         render(conn, "new.html", changeset: changeset)
     end
-  end
-
-  def show(conn, _) do
-    redirect(conn, to: admin_activity_path(conn, :show, conn.assigns.activity))
   end
 
   def edit(conn, _) do
@@ -49,7 +49,7 @@ defmodule Grid.Admin.Activity.CategoryController do
       {:ok, _category} ->
         conn
         |> put_flash(:info, "Category updated successfully.")
-        |> redirect(to: admin_activity_category_path(conn, :index, conn.assigns.activity))
+        |> redirect(to: admin_activity_path(conn, :show, conn.assigns.activity, tab: "categories"))
       {:error, changeset} ->
         render(conn, "edit.html", changeset: changeset)
     end
@@ -60,6 +60,6 @@ defmodule Grid.Admin.Activity.CategoryController do
 
     conn
     |> put_flash(:info, "Category deleted successfully.")
-    |> redirect(to: admin_activity_category_path(conn, :index, conn.assigns.activity))
+    |> redirect(to: admin_activity_path(conn, :show, conn.assigns.activity, tab: "categories"))
   end
 end

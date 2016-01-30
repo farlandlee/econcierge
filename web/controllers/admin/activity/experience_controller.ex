@@ -28,7 +28,7 @@ defmodule Grid.Admin.Activity.ExperienceController do
 
           conn
           |> put_flash(:info, "Experience created successfully.")
-          |> redirect(to: admin_activity_path(conn, :show, activity))
+          |> redirect(to: admin_activity_path(conn, :show, activity, tab: "experiences"))
         {:error, changeset} ->
           conn
           |> assign_form_selection_models
@@ -73,7 +73,7 @@ defmodule Grid.Admin.Activity.ExperienceController do
 
           conn
           |> put_flash(:info, "Experience updated successfully.")
-          |> redirect(to: admin_activity_path(conn, :show, experience.activity))
+          |> redirect(to: admin_activity_path(conn, :show, experience.activity, tab: "experiences"))
         {:error, changeset} ->
           conn
           |> assign_form_selection_models
@@ -93,7 +93,7 @@ defmodule Grid.Admin.Activity.ExperienceController do
 
     conn
     |> put_flash(:info, "Experience deleted successfully.")
-    |> redirect(to: admin_activity_path(conn, :show, experience.activity_id))
+    |> redirect(to: admin_activity_path(conn, :show, experience.activity_id, tab: "experiences"))
   end
 
   #########

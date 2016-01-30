@@ -3,6 +3,7 @@ defmodule Grid.Plugs.AssignModel do
   alias Grid.Repo
 
   import Ecto, only: [assoc: 2]
+  import Ecto.Query, only: [preload: 2]
   import Phoenix.Naming, only: [resource_name: 1]
   import Plug.Conn
 
@@ -10,7 +11,8 @@ defmodule Grid.Plugs.AssignModel do
     %{
       model: model,
       param: "id",
-      as: assignment_name(model)
+      as: assignment_name(model),
+      preload: []
     }
   end
 
@@ -27,10 +29,11 @@ defmodule Grid.Plugs.AssignModel do
     Map.merge(defaults, options)
   end
 
-  def call(conn, %{model: model, param: param, as: as}) do
+  def call(conn, %{model: model, param: param, as: as, preload: preload}) do
     assignment_id = conn.params[param]
     assignment = model
       |> constraint(conn)
+      |> preload(^preload)
       |> Repo.get!(assignment_id)
 
     assign(conn, as, assignment)
@@ -42,6 +45,8 @@ defmodule Grid.Plugs.AssignModel do
     |> String.to_existing_atom
   end
 
+  defp constraint(Grid.VendorActivity, conn), do:
+    assoc(conn.assigns.vendor, :vendor_activities)
 
   defp constraint(Grid.Product, conn), do:
     assoc(conn.assigns.vendor, :products)

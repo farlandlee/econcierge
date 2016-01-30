@@ -36,17 +36,17 @@ defmodule Grid.ModelsTest do
   end
 
   test "changing source field doesn't change slug" do
-    slugset(%Model{slug: "poops"}, %{name: "meow"})
-    |> assert_slug {:model, "poops"}
+    slugset(%Model{slug: "a_slug"}, %{name: "meow"})
+    |> assert_slug {:model, "a_slug"}
   end
 
   test "setting slug to nil regenerates from source on model" do
-    slugset(%Model{name: "my name", slug: "poops"}, %{slug: nil})
+    slugset(%Model{name: "my name", slug: "a_slug"}, %{slug: nil})
     |> assert_slug {:changes, "my_name"}
   end
 
   test "setting slug to nil regenerates from source on changes" do
-    slugset(%Model{name: "my name", slug: "poops"}, %{slug: nil, name: "new name"})
+    slugset(%Model{name: "my name", slug: "a_slug"}, %{slug: nil, name: "new name"})
     |> assert_slug {:changes, "new_name"}
   end
 

@@ -2,14 +2,14 @@ defmodule Grid.Admin.VendorControllerTest do
   use Grid.ConnCase
 
   alias Grid.Vendor
-  alias Grid.VendorActivity
 
-  @valid_attrs %{description: "some content", name: "some content", activities: []}
+  @valid_attrs %{description: "some content", name: "some content"}
   @invalid_attrs %{name: ""}
 
   setup do
-    va = Factory.create(:vendor_activity)
-    {:ok, vendor: va.vendor, activity: va.activity, vendor_activity: va}
+    %{vendor: vendor, activity: activity}
+      = Factory.create(:vendor_activity)
+    {:ok, vendor: vendor, activity: activity}
   end
 
   test "lists all entries on index", %{conn: conn, vendor: vendor, activity: activity} do
@@ -49,8 +49,9 @@ defmodule Grid.Admin.VendorControllerTest do
 
   test "creates resource and redirects when data is valid", %{conn: conn} do
     conn = post conn, admin_vendor_path(conn, :create), vendor: @valid_attrs
-    assert redirected_to(conn) == admin_vendor_path(conn, :index)
-    assert Repo.get_by(Vendor, @valid_attrs |> Map.delete(:activities))
+    vendor = Repo.get_by(Vendor, @valid_attrs |> Map.delete(:activities))
+    assert vendor
+    assert redirected_to(conn) == admin_vendor_path(conn, :show, vendor)
   end
 
   test "does not create resource and renders errors when data is invalid", %{conn: conn} do
@@ -65,7 +66,7 @@ defmodule Grid.Admin.VendorControllerTest do
 
   test "shows locations", %{conn: conn} do
     location = Factory.create(:location)
-    conn = get conn, admin_vendor_path(conn, :show, location.vendor)
+    conn = get conn, admin_vendor_path(conn, :show, location.vendor, tab: "locations")
     response = html_response(conn, 200)
     assert response =~ "Locations"
     assert response =~ "Name"
@@ -86,7 +87,7 @@ defmodule Grid.Admin.VendorControllerTest do
     i = Factory.create_vendor_image(assoc_id: v.id)
     no_alt_img = Factory.create_vendor_image(assoc_id: v.id, alt: "")
 
-    conn = get conn, admin_vendor_path(conn, :show, v)
+    conn = get conn, admin_vendor_path(conn, :show, v, tab: "images")
     response = html_response(conn, 200)
     assert response =~ "Images"
     assert response =~ "Add Image"
@@ -102,7 +103,7 @@ defmodule Grid.Admin.VendorControllerTest do
     product = Factory.create(:product)
     vendor = product.vendor
     experience = product.experience
-    conn = get conn, admin_vendor_path(conn, :show, vendor)
+    conn = get conn, admin_vendor_path(conn, :show, vendor, tab: "products")
     response = html_response(conn, 200)
     assert response =~ "Products"
     assert response =~ "Add Product"
@@ -114,6 +115,27 @@ defmodule Grid.Admin.VendorControllerTest do
     assert response =~ experience.name
     assert response =~ product.name
     assert response =~ product.description
+  end
+
+  test "Shows seasons", %{conn: conn} do
+    import Grid.Admin.Vendor.VendorActivity.SeasonView,
+      only: [start_date: 1, end_date: 1]
+    season
+      = %{vendor_activity: %{vendor: vendor, activity: activity}}
+      = Factory.create(:season)
+    conn = get conn, admin_vendor_path(conn, :show, vendor, tab: "seasons")
+    response = html_response(conn, 200)
+
+    assert response =~ "Seasons"
+    assert response =~ "Add Season"
+    assert response =~ "Name"
+    assert response =~ "Activity"
+    assert response =~ "Start date"
+    assert response =~ "End date"
+
+    assert response =~ activity.name
+    assert response =~ start_date season
+    assert response =~ end_date season
   end
 
   test "only shows products belonging to this vendor", %{conn: conn, vendor: v} do
@@ -142,16 +164,9 @@ defmodule Grid.Admin.VendorControllerTest do
   end
 
   test "does not update chosen resource and renders errors when data is invalid", %{conn: conn, vendor: vendor} do
-    activity = Factory.create :activity
-    Repo.insert!(%VendorActivity{
-      vendor_id: vendor.id,
-      activity_id: activity.id
-    })
-
     conn = put conn, admin_vendor_path(conn, :update, vendor), vendor: @invalid_attrs
 
-    response = html_response(conn, 200)
-    assert response =~ ~s(<option selected="selected" value="#{activity.id}">#{activity.name}</option>)
+    assert html_response(conn, 200) =~ "Edit Vendor"
   end
 
   test "deletes chosen resource", %{conn: conn} do

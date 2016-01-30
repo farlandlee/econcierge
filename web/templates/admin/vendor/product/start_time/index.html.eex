@@ -1,20 +1,32 @@
 <table class="table">
   <thead>
     <tr>
+      <th>Season</th>
       <th>Start Time</th>
 
       <th></th>
     </tr>
   </thead>
   <tbody>
-<%= for start_time <- @start_times do %>
+<%= for start_time <- @start_times |> Enum.sort_by(&(&1.season.name)) do %>
     <tr>
+      <td><%= start_time.season.name %></td>
       <td><%= start_time.starts_at_time %></td>
 
       <td class="text-right">
-        <%= link to: admin_vendor_product_start_time_path(@conn, :delete, @vendor, @product, start_time), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" do %>
-          <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Delete
-        <% end %>
+        <div class="dropdown actions">
+          <button class="btn btn-xs btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+            Actions <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-right">
+            <li>
+              <%= link "Edit", to: admin_vendor_product_start_time_path(@conn, :edit, @vendor, @product, start_time), class: "edit" %>
+            </li>
+            <li>
+              <%= link "Delete", to: admin_vendor_product_start_time_path(@conn, :delete, @vendor, @product, start_time), method: :delete, data: [confirm: "Are you sure?"], class: "delete" %>
+            </li>
+          </ul>
+        </div>
       </td>
     </tr>
 <% end %>

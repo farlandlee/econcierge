@@ -38,4 +38,9 @@ defmodule Grid.AdminView do
     |> Enum.map(&(&1.name))
     |> Enum.join(" | ")
   end
+
+  def tab_link(target) do
+    lowercase = String.downcase(target)
+    link target, to: "#" <> lowercase, class: "grid-tab"
+  end
 end

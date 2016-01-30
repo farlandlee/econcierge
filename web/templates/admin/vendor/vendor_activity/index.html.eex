@@ -1,0 +1,32 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th>Activity</th>
+      <th class="text-center">Seasons</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+  <%= for va = %{activity: activity, seasons: seasons} <- @vendor_activities |> Enum.sort_by(&(&1.activity.name)) do %>
+    <tr>
+      <td><%= activity.name %></td>
+      <td>
+        <%= render Grid.Admin.Vendor.VendorActivity.SeasonView, "index.html",
+          conn: @conn,
+          vendor: @vendor,
+          vendor_activity: va,
+          seasons: seasons
+        %>
+      </td>
+      <td class="text-right">
+        <%= link to: admin_vendor_vendor_activity_path(@conn, :delete, @vendor, va),
+              method: :delete, class: "btn btn-danger btn-xs",
+              data: [confirm: "Are you sure? This will delete all associated seasons as well."] do %>
+          <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Delete Activity
+        <% end %>
+      </td>
+    </tr  >
+<% end %>
+  </tbody>
+</table>

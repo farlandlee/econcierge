@@ -55,7 +55,7 @@ defmodule Grid.Mixfile do
       {:phoenix_ecto, "~> 2.0"},
       {:poison, "~> 1.5"},
       {:postgrex, ">= 0.0.0"},
-      {:phoenix_html, "~> 2.3"},
+      {:phoenix_html, "~> 2.5"},
       {:phoenix_live_reload, "~> 1.0", only: :dev},
       {:rollbax, "~> 0.5"},
       {:slugger, git: "git://github.com/h4cc/slugger.git"}

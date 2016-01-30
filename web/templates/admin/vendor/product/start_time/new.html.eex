@@ -1,0 +1,13 @@
+<%= if @seasons == [] do %>
+<p>
+    <%= link to: admin_vendor_vendor_activity_path(@conn, :index, @vendor) do %>
+    You must add seasons for <%= @vendor.name %> before you can create start times.
+    <% end %>
+</p>
+<% else %>
+    <%= render "form.html",
+        changeset: @changeset,
+        action: admin_vendor_product_start_time_path(@conn, :create, @vendor, @product),
+        back: admin_vendor_product_path(@conn, :show, @vendor, @product),
+        seasons: @seasons %>
+<% end %>

@@ -4,6 +4,8 @@ defmodule Grid.Admin.BreadcrumbsView do
   alias Phoenix.Naming
   alias Grid.Router.Helpers
 
+  alias Grid.VendorActivity, as: VA
+
   alias Grid.Plugs.Breadcrumb, as: Crumb
 
   def crumb(breadcrumb)
@@ -67,6 +69,7 @@ defmodule Grid.Admin.BreadcrumbsView do
 
   defp link_text(%{name: name}), do: name
   defp link_text(%{filename: filename}), do: filename
+  defp link_text(%VA{activity: a}), do: link_text(a)
   defp link_text({_, module}), do: link_text(module)
   defp link_text(module) when is_atom(module), do: module.__schema__(:source) |> Naming.humanize
 

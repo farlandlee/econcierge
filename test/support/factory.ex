@@ -3,6 +3,8 @@ defmodule Grid.Factory do
 
   import Ecto
 
+  alias Grid.Repo
+
   alias Grid.Activity
   alias Grid.Amenity
   alias Grid.AmenityOption
@@ -12,13 +14,13 @@ defmodule Grid.Factory do
   alias Grid.Location
   alias Grid.Price
   alias Grid.Product
+  alias Grid.Season
   alias Grid.StartTime
   alias Grid.Vendor
   alias Grid.VendorActivity
 
-  def random() do
-    :random.uniform()
-  end
+  def random(), do: :random.uniform()
+  def random(n), do: :random.uniform(n)
 
   def factory(:location) do
     %Location{
@@ -43,10 +45,9 @@ defmodule Grid.Factory do
   end
 
   def factory(:start_time) do
-    %StartTime{
-      product: build(:product),
-      starts_at_time: Ecto.Time.utc(:usec)
-    }
+    raise ArgumentError, message: """
+    Cannot create start times from factory. See `create_start_time` instead
+    """
   end
 
   def factory(:amenity) do
@@ -130,6 +131,15 @@ defmodule Grid.Factory do
     }
   end
 
+  def factory(:season) do
+    %Season{
+      vendor_activity: build(:vendor_activity),
+      name: sequence(:name, &"season-#{&1}"),
+      start_date_month: random(12), start_date_day: random(31),
+      end_date_month: random(12), end_date_day: random(31)
+    }
+  end
+
   def factory(:product) do
     %Product{
       name: sequence(:name, &"product-#{&1}"),
@@ -141,10 +151,32 @@ defmodule Grid.Factory do
   end
 
   def create_vendor_image(attrs \\ %{}) do
-    build(:vendor_image, attrs) |> Grid.Repo.insert!
+    build(:vendor_image, attrs) |> Repo.insert!
   end
 
   def create_activity_image(attrs \\ %{}) do
-    build(:activity_image, attrs) |> Grid.Repo.insert!
+    build(:activity_image, attrs) |> Repo.insert!
+  end
+
+  def create_start_time() do
+    create_start_time(product: create(:product))
+  end
+
+  def create_start_time(product: product = %{vendor: v, experience: %{activity: a}}) do
+    vendor_activity = %VendorActivity{
+      vendor_id: v.id, activity_id: a.id
+      } |> Repo.insert!
+
+    # give the season the same activity and vendor as product
+    season = build(:season)
+      |> Map.put(:vendor_activity_id, vendor_activity.id)
+      |> Repo.insert!
+
+    StartTime.creation_changeset(%{
+      starts_at_time: Ecto.Time.utc(:usec)
+    }, product_id: product.id, season_id: season.id)
+    |> Repo.insert!
+    |> Map.put(:product, product)
+    |> Map.put(:season, season)
   end
 end

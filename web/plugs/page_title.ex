@@ -4,8 +4,11 @@ defmodule Grid.Plugs.PageTitle do
 
    def init(default), do: default
 
-   def call(conn, opts) do
-     title = Keyword.get(opts, :title)
+   def call(conn, opts) when is_list opts do
+     call(conn, Keyword.fetch!(opts, :title))
+   end
+
+   def call(conn, title) do
      action = action_name(conn)
      result = page_title(action, title)
      assign(conn, :page_title, result)

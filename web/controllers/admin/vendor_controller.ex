@@ -14,7 +14,6 @@ defmodule Grid.Admin.VendorController do
 
   @assign_model_actions [:show, :edit, :update, :delete]
   plug Plugs.AssignModel, Vendor when action in @assign_model_actions
-  plug :load_assocs when action in @assign_model_actions
   plug Plugs.Breadcrumb, [show: Vendor] when action in [:show, :edit]
 
   def index(conn, params) do
@@ -25,66 +24,76 @@ defmodule Grid.Admin.VendorController do
       |> preload(:activities)
       |> Repo.all
 
+    # Get activity with number of vendors for that activity
+    # To use in vendor filtering
+    activities = from(a in Activity,
+      join: va in VendorActivity,
+        on: va.activity_id == a.id,
+      group_by: a.id,
+      select: %{name: a.name, id: a.id, vendor_count: count(va.vendor_id)})
+      |> Repo.alphabetical
+      |> Repo.all
+
     conn
     |> assign_activity_filter(activity_id)
-    |> render("index.html", vendors: vendors, activities: all_activities())
+    |> render("index.html", vendors: vendors, activities: activities)
   end
 
   def new(conn, _params) do
-    changeset = Vendor.changeset(%Vendor{activities: []})
-    render(conn, "new.html", changeset: changeset, activities: all_activities())
+    changeset = Vendor.changeset(%Vendor{})
+    render(conn, "new.html", changeset: changeset)
   end
 
   def create(conn, %{"vendor" => vendor_params}) do
-    {:ok, conn} = Repo.transaction fn ->
-      changeset = Vendor.changeset(%Vendor{}, vendor_params)
-
-      case Repo.insert(changeset) do
-        {:ok, vendor} ->
-          insert_relationships(vendor, vendor_params["activities"])
-          conn
-          |> put_flash(:info, "Vendor created successfully.")
-          |> redirect(to: admin_vendor_path(conn, :index))
-        {:error, changeset} ->
-          render(conn, "new.html", changeset: changeset, activities: all_activities())
-      end
+    changeset = Vendor.changeset(%Vendor{}, vendor_params)
+    case Repo.insert(changeset) do
+      {:ok, vendor} ->
+        conn
+        |> put_flash(:info, "Vendor created successfully.")
+        |> redirect(to: admin_vendor_path(conn, :show, vendor))
+      {:error, changeset} ->
+        render(conn, "new.html", changeset: changeset)
     end
-    conn
   end
 
   def show(conn, _) do
     vendor = Repo.preload(conn.assigns.vendor, [
+      :activities,
       :images,
       :locations,
-      products: [:experience]
+      seasons: :activity,
+      products: :experience
     ])
-    render(conn, "show.html", vendor: vendor, page_title: vendor.name)
+
+    current_activity_ids = vendor.activities |> Enum.map(&(&1.id))
+    
+    addable_activities = where(Activity, [a], not(a.id in ^current_activity_ids))
+      |> Repo.all
+
+    render(conn, "show.html",
+      page_title: vendor.name,
+      vendor: vendor,
+      addable_activities: addable_activities
+    )
   end
 
   def edit(conn, _) do
     vendor = conn.assigns.vendor
     changeset = Vendor.changeset(vendor)
-    render(conn, "edit.html", vendor: vendor, changeset: changeset, activities: all_activities())
+    render(conn, "edit.html", vendor: vendor, changeset: changeset)
   end
 
   def update(conn, %{"vendor" => vendor_params}) do
     vendor = conn.assigns.vendor
     changeset = Vendor.changeset(vendor, vendor_params)
-    {:ok, conn} = Repo.transaction fn ->
-      case Repo.update(changeset) do
-        {:ok, vendor} ->
-          #clear out old relationships
-          Repo.delete_all(from x in VendorActivity, where: x.vendor_id == ^vendor.id)
-          #and insert the new ones
-          insert_relationships(vendor, vendor_params["activities"])
-          conn
-          |> put_flash(:info, "Vendor updated successfully.")
-          |> redirect(to: admin_vendor_path(conn, :show, vendor))
-        {:error, changeset} ->
-          render(conn, "edit.html", vendor: vendor, changeset: changeset, activities: all_activities())
-      end
+    case Repo.update(changeset) do
+      {:ok, vendor} ->
+        conn
+        |> put_flash(:info, "Vendor updated successfully.")
+        |> redirect(to: admin_vendor_path(conn, :show, vendor))
+      {:error, changeset} ->
+        render(conn, "edit.html", vendor: vendor, changeset: changeset)
     end
-    conn
   end
 
   def delete(conn, _) do
@@ -93,15 +102,6 @@ defmodule Grid.Admin.VendorController do
     conn
     |> put_flash(:info, "Vendor deleted successfully.")
     |> redirect(to: admin_vendor_path(conn, :index))
-  end
-
-  #############
-  ##  Plugs  ##
-  #############
-
-  def load_assocs(conn, _) do
-    vendor = conn.assigns.vendor |> Repo.preload([:activities, :default_image])
-    assign(conn, :vendor, vendor)
   end
 
   #############
@@ -114,17 +114,5 @@ defmodule Grid.Admin.VendorController do
       id -> Repo.get!(Activity, id)
     end
     assign(conn, :activity_filter, assignment)
-  end
-
-  defp all_activities do
-    Activity |> Repo.alphabetical |> Repo.all
-  end
-
-  defp insert_relationships(_, nil), do: :ok
-  defp insert_relationships(vendor, activity_ids) do
-    # create relationships
-    for string_id <- activity_ids, {activity_id, ""} = Integer.parse(string_id) do
-      Repo.insert!(%VendorActivity{vendor_id: vendor.id, activity_id: activity_id})
-    end
   end
 end

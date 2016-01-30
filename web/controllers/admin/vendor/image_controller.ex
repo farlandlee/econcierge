@@ -14,7 +14,7 @@ defmodule Grid.Admin.Vendor.ImageController do
   plug Plugs.Breadcrumb, [show: Image] when action in [:show, :edit]
 
   def index(conn, _) do
-    redirect(conn, to: admin_vendor_path(conn, :show, conn.assigns.vendor))
+    redirect(conn, to: admin_vendor_path(conn, :show, conn.assigns.vendor, tab: "images"))
   end
 
   def new(conn, _) do
@@ -29,7 +29,7 @@ defmodule Grid.Admin.Vendor.ImageController do
     case Repo.insert(changeset) do
       {:ok, image} ->
         _async_upload_task = Arc.upload_image(image, file, vendor)
-        redirect(conn, to: admin_vendor_path(conn, :show, vendor.id))
+        redirect(conn, to: admin_vendor_path(conn, :show, vendor, tab: "images"))
       {:error, changeset} ->
         render(conn, "new.html", changeset: changeset)
     end
@@ -81,11 +81,11 @@ defmodule Grid.Admin.Vendor.ImageController do
     case Repo.update(vendor_changeset) do
       {:ok, vendor} ->
         conn
-        |> redirect(to: admin_vendor_path(conn, :show, vendor))
+        |> redirect(to: admin_vendor_path(conn, :show, vendor, tab: "images"))
       {:error, _changeset} ->
         conn
         |> put_flash(:error, "There was a problem setting the default image")
-        |> redirect(to: admin_vendor_path(conn, :show, vendor))
+        |> redirect(to: admin_vendor_path(conn, :show, vendor, tab: "images"))
     end
   end
 
@@ -94,6 +94,6 @@ defmodule Grid.Admin.Vendor.ImageController do
 
     conn
     |> put_flash(:info, "Image deleted successfully.")
-    |> redirect(to: admin_vendor_path(conn, :show, conn.assigns.vendor))
+    |> redirect(to: admin_vendor_path(conn, :show, conn.assigns.vendor, tab: "images"))
   end
 end

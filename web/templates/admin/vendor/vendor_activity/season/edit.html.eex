@@ -1,0 +1,5 @@
+<%= render "form.html",
+    changeset: @changeset,
+    action: admin_vendor_vendor_activity_season_path(@conn, :update, @vendor, @vendor_activity, @season),
+    back: admin_vendor_vendor_activity_season_path(@conn, :index, @vendor, @vendor_activity)
+%>

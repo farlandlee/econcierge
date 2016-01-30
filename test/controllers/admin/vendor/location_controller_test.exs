@@ -12,12 +12,12 @@ defmodule Grid.LocationControllerTest do
 
   test "redirects index to show vendor", %{conn: conn, vendor: vendor} do
     conn = get conn, admin_vendor_location_path(conn, :index, vendor)
-    assert redirected_to(conn, 302) =~ admin_vendor_path(conn, :show, vendor)
+    assert redirected_to(conn, 302) =~ admin_vendor_path(conn, :show, vendor, tab: "locations")
   end
 
   test "redirects show to show vendor", %{conn: conn, vendor: vendor} do
     conn = get conn, admin_vendor_location_path(conn, :index, vendor)
-    assert redirected_to(conn, 302) =~ admin_vendor_path(conn, :show, vendor)
+    assert redirected_to(conn, 302) =~ admin_vendor_path(conn, :show, vendor, tab: "locations")
   end
 
   test "renders page not found when id is nonexistent", %{conn: conn, vendor: vendor} do
@@ -71,7 +71,7 @@ defmodule Grid.LocationControllerTest do
 
   test "updates chosen resource and redirects when data is valid", %{conn: conn, vendor: vendor, location: location} do
     conn = put conn, admin_vendor_location_path(conn, :update, vendor, location), location: @valid_attrs
-    assert redirected_to(conn) == admin_vendor_path(conn, :show, vendor)
+    assert redirected_to(conn) == admin_vendor_path(conn, :show, vendor, tab: "locations")
     assert Repo.get_by(Location, @valid_attrs)
   end
 
@@ -82,7 +82,7 @@ defmodule Grid.LocationControllerTest do
 
   test "deletes chosen resource", %{conn: conn, vendor: vendor, location: location} do
     conn = delete conn, admin_vendor_location_path(conn, :delete, vendor, location)
-    assert redirected_to(conn) == admin_vendor_path(conn, :show, vendor)
+    assert redirected_to(conn) == admin_vendor_path(conn, :show, vendor, tab: "locations")
     refute Repo.get(Location, location.id)
   end
 end

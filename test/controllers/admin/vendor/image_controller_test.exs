@@ -18,14 +18,14 @@ defmodule Grid.Admin.VendorImageControllerTest do
 
   test "Index redirects to vendor", %{conn: conn, vendor: vendor} do
     conn = get conn, admin_vendor_image_path(conn, :index, vendor)
-    assert redirected_to(conn) == admin_vendor_path(conn, :show, vendor)
+    assert redirected_to(conn) == admin_vendor_path(conn, :show, vendor, tab: "images")
   end
 
   test "set default image", %{conn: conn, vendor: v, image: i} do
     conn = put conn, admin_vendor_image_path(conn, :set_default, v, i)
-    assert redirected_to(conn) =~ admin_vendor_path(conn, :show, v)
+    assert redirected_to(conn) =~ admin_vendor_path(conn, :show, v, tab: "images")
 
-    conn = conn |> recycle_with_auth |> get(admin_vendor_path(conn, :show, v))
+    conn = conn |> recycle_with_auth |> get(admin_vendor_path(conn, :show, v, tab: "images"))
     assert html_response(conn, 200) =~ "Current default"
 
     v = Repo.get!(Vendor, v.id)
@@ -88,7 +88,7 @@ defmodule Grid.Admin.VendorImageControllerTest do
 
   test "deletes chosen image and its intersect entity", %{conn: conn, vendor: v, image: i} do
     conn = delete conn, admin_vendor_image_path(conn, :delete, v, i)
-    assert redirected_to(conn) == admin_vendor_path(conn, :show, v)
+    assert redirected_to(conn) == admin_vendor_path(conn, :show, v, tab: "images")
     refute Repo.get(@table, i.id)
   end
 end

@@ -1,5 +1,5 @@
 <%= link to: admin_vendor_path(@conn, :new), class: "btn btn-success header-action" do %>
-  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Vendor
+  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> New Vendor
 <% end %>
 
 
@@ -12,7 +12,7 @@
   </h4>
   <div class="btn-group" role="group">
     <%= for activity <- @activities do %>
-      <%= link activity.name,
+      <%= link "#{activity.name} (#{activity.vendor_count})",
         to: admin_vendor_path(@conn, :index, activity_id: activity.id),
         class: "btn btn-default #{active_filter_class @activity_filter, activity}",
         type: "button"

@@ -11,8 +11,8 @@ defmodule Grid.Activity do
     belongs_to :default_image, {"activity_images", Image}
     has_many :images, {"activity_images", Image}, foreign_key: :assoc_id
 
-    has_many :vendor_activities, Grid.VendorActivity
-    has_many :vendors, through: [:vendor_activities, :vendor]
+    has_many :seasons, Grid.Season
+    has_many :vendors, through: [:seasons, :vendor]
 
     has_many :amenities, Grid.Amenity
     has_many :categories, Grid.Category

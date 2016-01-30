@@ -12,11 +12,11 @@ defmodule Grid.Admin.Vendor.LocationController do
   plug Plugs.Breadcrumb, [show: Location] when action == :edit
 
   def index(conn, _) do
-    redirect(conn, to: admin_vendor_path(conn, :show, conn.assigns.vendor))
+    redirect(conn, to: admin_vendor_path(conn, :show, conn.assigns.vendor, tab: "locations"))
   end
 
   def show(conn, _) do
-    redirect(conn, to: admin_vendor_path(conn, :show, conn.assigns.vendor))
+    redirect(conn, to: admin_vendor_path(conn, :show, conn.assigns.vendor, tab: "locations"))
   end
 
   def new(conn, _) do
@@ -50,7 +50,7 @@ defmodule Grid.Admin.Vendor.LocationController do
       {:ok, _location} ->
         conn
         |> put_flash(:info, "Location updated successfully.")
-        |> redirect(to: admin_vendor_path(conn, :show, conn.assigns.vendor))
+        |> redirect(to: admin_vendor_path(conn, :show, conn.assigns.vendor, tab: "locations"))
       {:error, changeset} ->
         render(conn, "edit.html", changeset: changeset)
     end
@@ -61,6 +61,6 @@ defmodule Grid.Admin.Vendor.LocationController do
 
     conn
     |> put_flash(:info, "Location deleted successfully.")
-    |> redirect(to: admin_vendor_path(conn, :show, conn.assigns.vendor))
+    |> redirect(to: admin_vendor_path(conn, :show, conn.assigns.vendor, tab: "locations"))
   end
 end

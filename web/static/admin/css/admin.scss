@@ -102,6 +102,10 @@ form.link, form.button {
   display: inline;
 }
 
+.tab-content {
+  padding: 36px 15px;
+}
+
 .header-action {
   position: absolute;
   top: 56px;
@@ -144,13 +148,13 @@ form.link, form.button {
 /* DataTable header mousing */
 table.dataTable th:not(:empty) {
   cursor: pointer;
-  .glyphicon {
+  .table-icon {
     float: right;
     margin-top: 4px;
     margin-right: 5px;
     font-size: 12px;
   }
-  &.sorting .glyphicon {
+  &.sorting .table-icon {
     color: #777;
   }
 }

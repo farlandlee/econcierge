@@ -16,7 +16,7 @@ defmodule Grid.Admin.Vendor.ProductController do
   plug Plugs.Breadcrumb, [show: Product] when action in [:edit, :show]
 
   def index(conn, _) do
-    redirect(conn, to: admin_vendor_path(conn, :show, conn.assigns.vendor))
+    redirect(conn, to: admin_vendor_path(conn, :show, conn.assigns.vendor, tab: "products"))
   end
 
   def new(conn, _params) do
@@ -42,49 +42,9 @@ defmodule Grid.Admin.Vendor.ProductController do
     end
   end
 
-  def clone(conn, _) do
-    product = conn.assigns.product |> Repo.preload([
-      :prices, :start_times
-      ])
-    product_clone = Product.clone(product)
-
-    {:ok, conn} = Repo.transaction fn ->
-      case Repo.insert(product_clone) do
-        {:ok, product_clone} ->
-          # clone start times
-          for start_time <- product.start_times do
-            start_time
-            |> StartTime.clone(product_id: product_clone.id)
-            |> Repo.insert!
-          end
-          # clone prices, set default_price once it's been cloned
-          for price <- product.prices do
-            price_clone = price
-              |> Price.clone(product_id: product_clone.id)
-              |> Repo.insert!
-            # Set the default price of the clone to the cloned default price
-            if price.id == product.default_price_id do
-              product_clone
-              |> Product.default_price_changeset(price_clone.id)
-              |> Repo.update!
-            end
-          end
-
-          conn
-          |> put_flash(:info, "Product successfully cloned.")
-          |> redirect(to: admin_vendor_product_path(conn, :show, conn.assigns.vendor, product_clone))
-        {:error, _changeset} ->
-          conn
-          |> put_flash(:error, "Error cloning product.")
-          |> redirect(to: admin_vendor_path(conn, :show, conn.assigns.vendor))
-      end
-    end
-    conn
-  end
-
   def show(conn, _) do
     product = conn.assigns.product
-      |> Repo.preload([:experience, :start_times, :prices])
+      |> Repo.preload([:experience, [start_times: :season], :prices])
 
     render(conn, "show.html",
       product: product,
@@ -125,7 +85,47 @@ defmodule Grid.Admin.Vendor.ProductController do
 
     conn
     |> put_flash(:info, "Product deleted successfully.")
-    |> redirect(to: admin_vendor_path(conn, :show, conn.assigns.vendor))
+    |> redirect(to: admin_vendor_path(conn, :show, conn.assigns.vendor, tab: "products"))
+  end
+
+  def clone(conn, _) do
+    product = conn.assigns.product |> Repo.preload([
+      :prices, :start_times
+      ])
+    product_clone = Product.clone(product)
+
+    {:ok, conn} = Repo.transaction fn ->
+      case Repo.insert(product_clone) do
+        {:ok, product_clone} ->
+          # clone start times
+          for start_time <- product.start_times do
+            start_time
+            |> StartTime.clone(product_id: product_clone.id)
+            |> Repo.insert!
+          end
+          # clone prices, set default_price once it's been cloned
+          for price <- product.prices do
+            price_clone = price
+              |> Price.clone(product_id: product_clone.id)
+              |> Repo.insert!
+            # Set the default price of the clone to the cloned default price
+            if price.id == product.default_price_id do
+              product_clone
+              |> Product.default_price_changeset(price_clone.id)
+              |> Repo.update!
+            end
+          end
+
+          conn
+          |> put_flash(:info, "Product successfully cloned.")
+          |> redirect(to: admin_vendor_product_path(conn, :show, conn.assigns.vendor, product_clone))
+        {:error, _changeset} ->
+          conn
+          |> put_flash(:error, "Error cloning product.")
+          |> redirect(to: admin_vendor_path(conn, :show, conn.assigns.vendor, tab: "products"))
+      end
+    end
+    conn
   end
 
   #############

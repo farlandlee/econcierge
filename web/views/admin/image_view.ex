@@ -4,7 +4,8 @@ defmodule Grid.Admin.ImageView do
   alias Grid.Image
 
   def image_path(path_fun, args) do
-    apply Grid.Router.Helpers, path_fun, args
+    args = args ++ [[tab: "images"]]
+    apply(Grid.Router.Helpers, path_fun, args)
   end
 
   def img(image, opts \\ [])

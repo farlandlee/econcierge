@@ -14,11 +14,13 @@ defmodule Grid.Vendor do
     has_many :images, {"vendor_images", Image}, foreign_key: :assoc_id
 
     has_many :locations, Grid.Location
-    
+
+    has_many :products, Grid.Product
+
     has_many :vendor_activities, Grid.VendorActivity
     has_many :activities, through: [:vendor_activities, :activity]
     has_many :experiences, through: [:vendor_activities, :activity, :experiences]
-    has_many :products, Grid.Product
+    has_many :seasons, through: [:vendor_activities, :seasons]
 
     timestamps
   end
