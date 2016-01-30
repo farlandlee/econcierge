@@ -11,6 +11,7 @@ defmodule Grid.Mixfile do
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
      aliases: aliases,
+     test_coverage: [tool: Coverex.Task, console_log: false],
      deps: deps]
   end
 
@@ -43,6 +44,7 @@ defmodule Grid.Mixfile do
   defp deps do
     [
       {:arc, "~> 0.2.2"},
+      {:coverex, "~> 1.4.7", only: :test},
       {:cowboy, "~> 1.0"},
       {:ex_aws, "~> 0.4.10"},
       {:ex_machina, "~> 0.5", only: :test},
