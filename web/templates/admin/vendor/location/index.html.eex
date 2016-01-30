@@ -1,7 +1,3 @@
-<%= link to: admin_vendor_location_path(@conn, :new, @vendor), class: "btn btn-success header-action" do  %>
-  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add location
-<% end %>
-
 <table class="table">
   <thead>
     <tr>
