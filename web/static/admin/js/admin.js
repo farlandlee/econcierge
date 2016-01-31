@@ -15,6 +15,7 @@ $('[data-img-for]').each(function() {
 $('table').each(function () {
   $(this).DataTable({
     // STOP ALL THE THINGS
+    order: [],
     searching: false,
     paging: false,
     bInfo: false,

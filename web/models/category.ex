@@ -31,8 +31,8 @@ defmodule Grid.Category do
     |> cast(params, @required_fields, @optional_fields)
     |> update_change(:name, &String.strip/1)
     |> validate_length(:name, min: 1, max: 255)
-    |> unique_constraint(:name, name: :category_name_activity_id_index)
-    |> cast_slug(constraint_options: [name: :category_slug_activity_id_index])
+    |> unique_constraint(:name, name: :categories_name_activity_id_index)
+    |> cast_slug(constraint_options: [name: :categories_slug_activity_id_index])
   end
 
   def creation_changeset(params, activity_id) do

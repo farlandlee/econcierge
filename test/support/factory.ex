@@ -5,6 +5,7 @@ defmodule Grid.Factory do
 
   alias Grid.Repo
 
+  alias Grid.Amount
   alias Grid.Activity
   alias Grid.Amenity
   alias Grid.AmenityOption
@@ -34,13 +35,20 @@ defmodule Grid.Factory do
     }
   end
 
+  def factory(:amount) do
+    %Amount{
+      price: build(:price),
+      amount: (:random.uniform() * 1000) |> Float.floor(2),
+      max_quantity: 0
+    }
+  end
+
   def factory(:price) do
     %Price{
       product: build(:product),
       people_count: 1,
       name: sequence(:name, &"price-#{&1}"),
-      description: sequence(:description, &"Too much moneys by: #{&1}"),
-      amount: (:random.uniform() * 1000) |> Float.floor(2)
+      description: sequence(:description, &"Too much moneys by: #{&1}")
     }
   end
 

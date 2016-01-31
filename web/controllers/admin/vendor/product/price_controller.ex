@@ -8,14 +8,10 @@ defmodule Grid.Admin.Vendor.Product.PriceController do
   plug Plugs.PageTitle, title: "Price"
   plug :scrub_params, "price" when action in [:create, :update]
   plug Plugs.Breadcrumb, index: Price
-  plug Plugs.AssignModel, Price when action in [:edit, :update, :delete, :set_default]
+  plug Plugs.AssignModel, Price when action in [:show, :edit, :update, :delete, :set_default]
   plug Plugs.Breadcrumb, [show: Price] when action in [:edit]
 
   def index(conn, _) do
-    redirect(conn, to: admin_vendor_product_path(conn, :show, conn.assigns.vendor, conn.assigns.product))
-  end
-
-  def show(conn, _) do
     redirect(conn, to: admin_vendor_product_path(conn, :show, conn.assigns.vendor, conn.assigns.product))
   end
 
@@ -36,6 +32,12 @@ defmodule Grid.Admin.Vendor.Product.PriceController do
       {:error, changeset} ->
         render(conn, "new.html", changeset: changeset)
     end
+  end
+
+  def show(conn, _) do
+    price = conn.assigns.price |> Repo.preload(:amounts)
+    page_title = price.name <> " Price"
+    render(conn, "show.html", page_title: page_title, price: price)
   end
 
   def edit(conn, _) do

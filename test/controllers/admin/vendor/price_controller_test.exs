@@ -3,14 +3,15 @@ defmodule Grid.PriceControllerTest do
 
   alias Grid.Price
   import Grid.Factory
-  @valid_attrs %{amount: "120.5", description: "some content", name: "some content", people_count: 1}
+
+  @valid_attrs %{description: "some content", name: "some content", people_count: 1}
   @invalid_attrs %{amount: "bad amount", people_count: -1}
 
   setup do
-    price = create(:price)
+    amount = %{price: price} = create(:amount)
     product = price.product
     vendor = product.vendor
-    {:ok, price: price, product: product, vendor: vendor}
+    {:ok, price: price, product: product, vendor: vendor, amount: amount}
   end
 
   test "Index redirects to product", %{conn: conn, vendor: vendor, product: product} do
@@ -18,9 +19,21 @@ defmodule Grid.PriceControllerTest do
     assert redirected_to(conn) == admin_vendor_product_path(conn, :show, vendor, product)
   end
 
-  test "Show redirects to product", %{conn: conn, vendor: vendor, product: product, price: price} do
+  test "Show renders price", %{conn: conn, vendor: vendor, product: product, price: price} do
     conn = get conn, admin_vendor_product_price_path(conn, :show, vendor, product, price)
-    assert redirected_to(conn) == admin_vendor_product_path(conn, :show, vendor, product)
+    response = html_response(conn, 200)
+    assert response =~ price.name
+    assert response =~ price.description
+    assert response =~ "People Count"
+    assert response =~ "#{price.people_count}"
+  end
+
+  test "show lists amount all pretty and shit", %{conn: conn, vendor: vendor, product: product, price: price, amount: amount} do
+    conn = get conn, admin_vendor_product_price_path(conn, :show, vendor, product, price)
+    response = html_response(conn, 200)
+    assert response =~ "Amount"
+    assert response =~ "#{amount.amount}"
+    assert response =~ "&infin;"
   end
 
   test "renders form for new resources", %{conn: conn, vendor: vendor, product: product} do
@@ -48,12 +61,6 @@ defmodule Grid.PriceControllerTest do
     conn = put conn, admin_vendor_product_price_path(conn, :update, vendor, product, price), price: @valid_attrs
     assert redirected_to(conn) == admin_vendor_product_path(conn, :show, vendor, product)
     assert Repo.get_by(Price, @valid_attrs)
-  end
-
-  test "rounds price to two places", %{conn: conn, vendor: vendor, product: product, price: price} do
-    put conn, admin_vendor_product_price_path(conn, :update, vendor, product, price), price: %{@valid_attrs | amount: "3.999"}
-    price = Repo.get!(Price, price.id)
-    assert price.amount == 4.00
   end
 
   test "does not update chosen resource and renders errors when data is invalid", %{conn: conn, vendor: vendor, product: product, price: price} do

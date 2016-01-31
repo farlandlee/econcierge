@@ -13,8 +13,19 @@
   <tbody>
 <%= for price <- @prices do %>
     <tr>
-      <td><%= price.name %></td>
-      <td>$<%= price.amount %></td>
+      <td><%= link price.name, to: admin_vendor_product_price_path(@conn, :show, @vendor, @product, price) %></td>
+      <td>
+        <%= price.amounts
+        |> Grid.Admin.Vendor.Product.Price.AmountView.sorted
+        |> Enum.map(fn
+        %{amount: amount, max_quantity: 0} ->
+          "$#{amount} (∞)"
+          %{amount: amount, max_quantity: max} ->
+            "$#{amount} (< #{max})"
+        end)
+        |> Enum.join(" | ")
+        %>
+      </td>
       <td><%= price.people_count %></td>
       <td><%= price.description %></td>
 

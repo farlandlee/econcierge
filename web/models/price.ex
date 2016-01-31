@@ -2,16 +2,17 @@ defmodule Grid.Price do
   use Grid.Web, :model
 
   schema "prices" do
-    field :amount, :float
     field :name, :string
     field :description, :string
     field :people_count, :integer, default: 1
     belongs_to :product, Grid.Product
 
+    has_many :amounts, Grid.Amount
+
     timestamps
   end
 
-  @required_fields ~w(amount name people_count)
+  @required_fields ~w(name people_count)
   @optional_fields ~w(description)
   @doc """
   Creates a changeset based on the `model` and `params`.
@@ -22,7 +23,6 @@ defmodule Grid.Price do
   def changeset(model, params \\ :empty) do
     model
     |> cast(params, @required_fields, @optional_fields)
-    |> update_change(:amount, &(Float.round(&1, 2)))
     |> update_change(:name, &String.strip/1)
     |> update_change(:description, &String.strip/1)
     |> validate_length(:name, min: 1, max: 255)
