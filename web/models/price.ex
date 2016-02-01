@@ -5,7 +5,7 @@ defmodule Grid.Price do
     field :amount, :float
     field :name, :string
     field :description, :string
-    field :people_count, :integer
+    field :people_count, :integer, default: 1
     belongs_to :product, Grid.Product
 
     timestamps
