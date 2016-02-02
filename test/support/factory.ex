@@ -4,6 +4,8 @@ defmodule Grid.Factory do
   import Ecto
 
   alias Grid.Activity
+  alias Grid.Amenity
+  alias Grid.AmenityOption
   alias Grid.Category
   alias Grid.Experience
   alias Grid.ExperienceCategory
@@ -44,6 +46,20 @@ defmodule Grid.Factory do
     %StartTime{
       product: build(:product),
       starts_at_time: Ecto.Time.utc(:usec)
+    }
+  end
+
+  def factory(:amenity) do
+    %Amenity{
+      activity: build(:activity),
+      name: sequence(:name, &"amentity-#{&1}")
+    }
+  end
+
+  def factory(:amenity_option) do
+    %AmenityOption{
+      amenity: build(:amenity),
+      name: sequence(:name, &"amentity-option-#{&1}")
     }
   end
 

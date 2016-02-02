@@ -1,0 +1,4 @@
+<%= render "form.html",
+  changeset: @changeset,
+  action: admin_activity_amenity_amenity_option_path(@conn, :update, @activity, @amenity, @amenity_option),
+  back: admin_activity_amenity_path(@conn, :show, @activity, @amenity) %>

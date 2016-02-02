@@ -1,6 +1,8 @@
 alias Grid.Repo
 
 alias Grid.Activity
+alias Grid.Amenity
+alias Grid.AmenityOption
 alias Grid.Category
 alias Grid.Experience
 alias Grid.ExperienceCategory
@@ -33,6 +35,14 @@ for activity <- ["Fly Fishing", "Snowmobiling", "Paragliding"] do
       }, activity.id)
     |> Repo.insert!
   end
+
+  a = %{name: activity.name <> " Amenity"}
+  |> Amenity.creation_changeset(activity.id)
+  |> Repo.insert!
+
+  %{name: a.name <> " Option"}
+  |> AmenityOption.creation_changeset(a.id)
+  |> Repo.insert!
 
   # Experiences & Experience Categories
   for n <- 1..3 do
