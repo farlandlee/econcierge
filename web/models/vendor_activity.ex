@@ -5,21 +5,19 @@ defmodule Grid.VendorActivity do
     belongs_to :vendor, Grid.Vendor
     belongs_to :activity, Grid.Activity
 
+    has_many :seasons, Grid.Season
+
     timestamps
   end
 
-  @required_fields ~w(vendor_id activity_id)
+  @creation_fields ~w(vendor_id)
+  @required_fields ~w(activity_id)
   @optional_fields ~w()
 
-  @doc """
-  Creates a changeset based on the `model` and `params`.
-
-  If no params are provided, an invalid changeset is returned
-  with no validation performed.
-  """
-  def changeset(model, params \\ :empty) do
-    model
+  def creation_changeset(params, vendor_id) do
+    %__MODULE__{}
     |> cast(params, @required_fields, @optional_fields)
+    |> cast(%{vendor_id: vendor_id}, @creation_fields, [])
     |> foreign_key_constraint(:vendor_id)
     |> foreign_key_constraint(:activity_id)
   end

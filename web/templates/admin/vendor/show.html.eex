@@ -7,51 +7,90 @@
 <dl class="dl-horizontal">
   <dt>Slug</dt>
   <dd><code><%= @vendor.slug %></code></dd>
-
-  <dt>Activities</dt>
-  <dd><%= Grid.AdminView.pretty_name_list(@vendor.activities) %></dd>
 </dl>
 
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <%= link to: admin_vendor_location_path(@conn, :new, @vendor), class: "btn btn-xs btn-success pull-right" do %>
-      <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Location
-    <% end %>
-    <h3 class="panel-title">Locations</h3>
-  </div>
-  <%= render Grid.Admin.Vendor.LocationView, "index.html",
-    conn: @conn,
-    vendor: @vendor,
-    locations: @vendor.locations
-  %>
-</div>
+<div>
+  <ul class="nav nav-tabs">
+    <li role="presentation" class="active">
+      <%= tab_link "Products" %>
+      </a>
+    </li>
+    <li role="presentation">
+      <%= tab_link "Locations" %>
+      </a>
+    </li>
+    <li role="presentation">
+      <%= tab_link "Activities" %>
+      </a>
+    </li>
+    <li role="presentation">
+      <%= tab_link "Images" %>
+      </a>
+    </li>
+  </ul>
 
-
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <%= link to: admin_vendor_product_path(@conn, :new, @vendor), class: "btn btn-xs btn-success pull-right" do %>
-    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Product
-    <% end %>
-    <h3 class="panel-title">Products</h3>
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <section role="tabpanel" class="tab-pane active" id="products">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <%= link to: admin_vendor_product_path(@conn, :new, @vendor), class: "btn btn-xs btn-success pull-right" do %>
+          <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Product
+          <% end %>
+          <h3 class="panel-title">Products</h3>
+        </div>
+        <%= render Grid.Admin.Vendor.ProductView, "index.html",
+        conn: @conn,
+        display_name_of: :experience,
+        vendor: @vendor,
+        products: @vendor.products
+        %>
+      </div>
+    </section>
+    <section role="tabpanel" class="tab-pane" id="locations">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <%= link to: admin_vendor_location_path(@conn, :new, @vendor), class: "btn btn-xs btn-success pull-right" do %>
+          <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Location
+          <% end %>
+          <h3 class="panel-title">Locations</h3>
+        </div>
+        <%= render Grid.Admin.Vendor.LocationView, "index.html",
+        conn: @conn,
+        vendor: @vendor,
+        locations: @vendor.locations
+        %>
+      </div>
+    </section>
+    <section role="tabpanel" class="tab-pane" id="activities">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <%= render Grid.Admin.Vendor.VendorActivityView, "form.html",
+            activities: @addable_activities,
+            action: admin_vendor_vendor_activity_path(@conn, :create, @vendor) %>
+          <h3 class="panel-title">Activities</h3>
+        </div>
+        <%= render Grid.Admin.Vendor.VendorActivityView, "index.html",
+        conn: @conn,
+        vendor: @vendor,
+        vendor_activities: @vendor.vendor_activities
+        %>
+      </div>
+    </section>
+    <section role="tabpanel" class="tab-pane" id="images">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <%= link to: admin_vendor_image_path(@conn, :new, @vendor), class: "btn btn-xs btn-success pull-right" do %>
+          <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Image
+          <% end %>
+          <h3 class="panel-title">Images</h3>
+        </div>
+        <%= render Grid.Admin.Vendor.ImageView, "index.html",
+        conn: @conn,
+        vendor: @vendor,
+        images: @vendor.images
+        %>
+      </div>
+    </section>
   </div>
-  <%= render Grid.Admin.Vendor.ProductView, "index.html",
-    conn: @conn,
-    display_name_of: :experience,
-    vendor: @vendor,
-    products: @vendor.products
-  %>
-</div>
-
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <%= link to: admin_vendor_image_path(@conn, :new, @vendor), class: "btn btn-xs btn-success pull-right" do %>
-      <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Image
-    <% end %>
-    <h3 class="panel-title">Images</h3>
-  </div>
-  <%= render Grid.Admin.Vendor.ImageView, "index.html",
-    conn: @conn,
-    vendor: @vendor,
-    images: @vendor.images
-  %>
 </div>

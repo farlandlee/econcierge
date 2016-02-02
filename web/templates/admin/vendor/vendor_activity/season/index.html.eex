@@ -1,0 +1,40 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Start date</th>
+      <th>End date</th>
+
+      <th>
+        <%= link to: admin_vendor_vendor_activity_season_path(@conn, :new, @vendor, @vendor_activity), class: "btn btn-xs btn-success pull-right" do  %>
+          <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Season
+        <% end %>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+  <%= for season <- @seasons |> sort_by_date do %>
+    <tr>
+      <td><%= season.name %></td>
+      <td><%= start_date season %></td>
+      <td><%= end_date   season %></td>
+
+      <td class="text-right">
+        <div class="dropdown actions">
+          <button class="btn btn-xs btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+            Actions <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-right">
+            <li>
+              <%= link "Edit", to: admin_vendor_vendor_activity_season_path(@conn, :edit, @vendor, @vendor_activity, season), class: "edit" %>
+            </li>
+            <li>
+              <%= link "Delete", to: admin_vendor_vendor_activity_season_path(@conn, :delete, @vendor, @vendor_activity, season), method: :delete, data: [confirm: "Are you sure?"], class: "delete" %>
+            </li>
+          </ul>
+        </div>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

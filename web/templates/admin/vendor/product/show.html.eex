@@ -43,8 +43,9 @@
 
 <div class="panel panel-default">
   <div class="panel-heading">
-    <%= render Grid.Admin.Vendor.Product.StartTimeView, "form.html",
-      action: admin_vendor_product_start_time_path(@conn, :create, @vendor, @product) %>
+    <%= link to: admin_vendor_product_start_time_path(@conn, :new, @vendor, @product), class: "btn btn-xs btn-success pull-right" do %>
+      <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Start Time
+    <% end %>
     <h3 class="panel-title">Start Times</h3>
   </div>
   <%= render Grid.Admin.Vendor.Product.StartTimeView, "index.html",

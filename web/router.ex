@@ -12,30 +12,33 @@ defmodule Grid.Router do
     plug Plugs.AssignUser
   end
 
+  pipeline :admin do
+    plug :put_layout, {Grid.LayoutView, "admin.html"}
+    plug Plugs.Authenticate
+  end
+
   pipeline :assign_vendor do
     plug Plugs.AssignModel, model: Grid.Vendor, param: "vendor_id"
     plug Plugs.Breadcrumb, resource: Grid.Vendor
   end
-
+  pipeline :assign_vendor_activity do
+    plug Plugs.AssignModel, model: Grid.VendorActivity, param: "vendor_activity_id",
+      preload: :activity
+    plug Plugs.Breadcrumb, resource: Grid.VendorActivity
+  end
   pipeline :assign_product do
     plug Plugs.AssignModel, model: Grid.Product, param: "product_id"
     plug Plugs.Breadcrumb, resource: Grid.Product
   end
-
   pipeline :assign_activity do
     plug Plugs.AssignModel, model: Grid.Activity, param: "activity_id"
     plug Plugs.Breadcrumb, resource: Grid.Activity
   end
-
   pipeline :assign_amenity do
     plug Plugs.AssignModel, model: Grid.Amenity, param: "amenity_id"
     plug Plugs.Breadcrumb, resource: Grid.Amenity
   end
 
-  pipeline :admin do
-    plug :put_layout, {Grid.LayoutView, "admin.html"}
-    plug Plugs.Authenticate
-  end
 
   scope "/", Grid do
     pipe_through :browser
@@ -93,6 +96,11 @@ defmodule Grid.Router do
     resources "/vendors", VendorController, [alias: Vendor] do
       pipe_through :assign_vendor
 
+      resources "/activities", VendorActivityController, [except: [:edit, :update], alias: VendorActivity] do
+        pipe_through :assign_vendor_activity
+        resources "/seasons", SeasonController
+      end
+
       resources "/locations", LocationController
 
       resources "/images", ImageController
@@ -102,7 +110,7 @@ defmodule Grid.Router do
       resources "/products", ProductController, [alias: Product] do
         pipe_through :assign_product
 
-        resources "/start_times", StartTimeController, only: [:create, :delete]
+        resources "/start_times", StartTimeController
 
         resources "/prices", PriceController
         put "/prices/:id/default", PriceController, :set_default

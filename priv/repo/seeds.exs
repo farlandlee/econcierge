@@ -10,6 +10,7 @@ alias Grid.Image
 alias Grid.Location
 alias Grid.Price
 alias Grid.Product
+alias Grid.Season
 alias Grid.StartTime
 alias Grid.User
 alias Grid.Vendor
@@ -48,7 +49,7 @@ for activity <- ["Fly Fishing", "Snowmobiling", "Paragliding"] do
   for n <- 1..3 do
     exp = Experience.creation_changeset(%{
       name: "#{activity.name} Experience #{n}",
-      description: "Sensual #{activity.name}"
+      description: "A superb #{activity.name} experience."
       }, activity.id)
       |> Repo.insert!
     # Experience Categories
@@ -74,14 +75,23 @@ for {name, desc, act_name} <- vendor_tuples, activity = Repo.get_by!(Activity, n
   |> Vendor.changeset(%{name: name, description: desc})
   |> Repo.insert!
 
-  Repo.insert! %VendorActivity{vendor_id: vendor.id, activity_id: activity.id}
+
+  va = %VendorActivity{
+    vendor_id: vendor.id, activity_id: activity.id
+  } |> Repo.insert!
+  season = Season.creation_changeset(%{
+    name: "Peak Season",
+    start_date_month: 6, start_date_day: 15,
+    end_date_month: 8, end_date_day: 31
+  }, vendor_activity_id: va.id)
+  |> Repo.insert!()
 
   # Products with prices and start times
   for experience <- activity.experiences do
     product = Product.creation_changeset(%{
       experience_id: experience.id,
       name: "#{vendor.name}'s Product for #{experience.name}",
-      description: "Buy #{vendor.name}'s #{experience.description}}",
+      description: "Buy #{vendor.name}'s #{experience.description}",
       published: true
       }, vendor.id)
     |> Repo.insert!
@@ -96,7 +106,7 @@ for {name, desc, act_name} <- vendor_tuples, activity = Repo.get_by!(Activity, n
 
     StartTime.creation_changeset(%{
       starts_at_time: %Ecto.Time{hour: 8, min: 0, sec: 0}
-    }, product.id)
+    }, product_id: product.id, season_id: season.id)
     |> Repo.insert!
   end
 

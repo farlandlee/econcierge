@@ -29,7 +29,7 @@ defmodule Grid.Admin.Activity.ImageController do
     case Repo.insert(changeset) do
       {:ok, image} ->
         _async_upload_task = Arc.upload_image(image, file, activity)
-        redirect(conn, to: admin_activity_path(conn, :show, activity.id))
+        redirect(conn, to: admin_activity_path(conn, :show, activity, tab: "images"))
       {:error, changeset} ->
         render(conn, "new.html", changeset: changeset)
     end
@@ -81,11 +81,11 @@ defmodule Grid.Admin.Activity.ImageController do
     case Repo.update(activity_changeset) do
       {:ok, activity} ->
         conn
-        |> redirect(to: admin_activity_path(conn, :show, activity))
+        |> redirect(to: admin_activity_path(conn, :show, activity, tab: "images"))
       {:error, _changeset} ->
         conn
         |> put_flash(:error, "There was a problem setting the default image")
-        |> redirect(to: admin_activity_path(conn, :show, activity))
+        |> redirect(to: admin_activity_path(conn, :show, activity, tab: "images"))
     end
   end
 

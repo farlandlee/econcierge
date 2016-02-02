@@ -1,0 +1,10 @@
+<%= form_tag @action, [class: "pull-right"] do %>
+    <%= select :vendor_activity, :activity_id,
+        Enum.map(@activities, &({&1.name, &1.id})),
+        prompt: "Add an activity...",
+        class: "chosen-select form-control" %>
+
+    <button class="btn btn-xs btn-success" type="submit">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Activity
+    </button>
+<% end %>

@@ -28,7 +28,7 @@ defmodule Grid.Admin.Activity.ExperienceControllerTest do
 
     conn = post conn, admin_activity_experience_path(conn, :create, a), experience: attrs
 
-    assert redirected_to(conn) == admin_activity_path(conn, :show, a)
+    assert redirected_to(conn) == admin_activity_path(conn, :show, a, tab: "experiences")
     experience = Repo.get_by(Experience, attrs |> Map.drop([:activity_id, :category_id]))
       |> Repo.preload([:activity, :categories])
 
@@ -74,7 +74,7 @@ defmodule Grid.Admin.Activity.ExperienceControllerTest do
     assert length(e.categories) == 1
 
     conn = put conn, admin_activity_experience_path(conn, :update, e.activity, e), experience: @valid_attrs
-    assert redirected_to(conn) == admin_activity_path(conn, :show, e.activity)
+    assert redirected_to(conn) == admin_activity_path(conn, :show, e.activity, tab: "experiences")
     assert Repo.get_by(Experience, @valid_attrs |> Map.drop([:activity_id, :category_id]))
   end
 
@@ -86,7 +86,7 @@ defmodule Grid.Admin.Activity.ExperienceControllerTest do
   test "deletes chosen resource", %{conn: conn, experience: e} do
     a = e.activity
     conn = delete conn, admin_activity_experience_path(conn, :delete, a, e)
-    assert redirected_to(conn) == admin_activity_path(conn, :show, a)
+    assert redirected_to(conn) == admin_activity_path(conn, :show, a, tab: "experiences")
     refute Repo.get(Experience, e.id)
   end
 end

@@ -1,5 +1,5 @@
 <%= link to: admin_activity_path(@conn, :edit, @activity), class: "btn btn-primary header-action" do %>
-  <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Edit
+<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Edit
 <% end %>
 
 <p class="lead"><%= @activity.description %></p>
@@ -9,55 +9,77 @@
   <dd><code><%= @activity.slug %></code></dd>
 </dl>
 
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <%= link to: admin_activity_amenity_path(@conn, :new, @activity), class: "btn btn-xs btn-success pull-right" do %>
-      <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Amenity
-    <% end %>
-    <h3 class="panel-title">Amenities</h3>
+<div>
+  <ul class="nav nav-tabs">
+    <li role="presentation" class="active">
+      <%= tab_link "Experiences" %>
+    </li>
+    <li role="presentation">
+      <%= tab_link "Categories" %>
+    </li>
+    <li role="presentation">
+      <%= tab_link "Amenities" %>
+    </li>
+    <li role="presentation">
+      <%= tab_link "Images" %>
+    </li>
+  </ul>
+  <div class="tab-content">
+    <section role="tabpanel" class="tab-pane active" id="experiences">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <%= link to: admin_activity_experience_path(@conn, :new, @activity), class: "btn btn-xs btn-success pull-right" do %>
+          <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Experience
+          <% end %>
+          <h3 class="panel-title">Experiences</h3>
+        </div>
+        <%= render Grid.Admin.Activity.ExperienceView, "index.html",
+        conn: @conn,
+        activity: @activity,
+        experiences: @activity.experiences %>
+      </div>
+    </section>
+    <section role="tabpanel" class="tab-pane" id="categories">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <%= link to: admin_activity_category_path(@conn, :new, @activity), class: "btn btn-xs btn-success pull-right" do %>
+          <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Category
+          <% end %>
+          <h3 class="panel-title">Categories</h3>
+        </div>
+        <%= render Grid.Admin.Activity.CategoryView, "index.html",
+        conn: @conn,
+        activity: @activity,
+        categories: @activity.categories %>
+      </div>
+    </section>
+    <section role="tabpanel" class="tab-pane" id="amenities">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <%= link to: admin_activity_amenity_path(@conn, :new, @activity), class: "btn btn-xs btn-success pull-right" do %>
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Amenity
+          <% end %>
+          <h3 class="panel-title">Amenities</h3>
+        </div>
+        <%= render Grid.Admin.Activity.AmenityView, "index.html",
+          conn: @conn,
+          activity: @activity,
+          amenities: @activity.amenities %>
+      </div>
+    </section>
+    <section role="tabpanel" class="tab-pane" id="images">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <%= link to: admin_activity_image_path(@conn, :new, @activity), class: "btn btn-xs btn-success pull-right" do %>
+          <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Image
+          <% end %>
+          <h3 class="panel-title">Images</h3>
+        </div>
+        <%= render Grid.Admin.Activity.ImageView, "index.html",
+        conn: @conn,
+        activity: @activity,
+        images: @activity.images %>
+      </div>
+    </section>
   </div>
-  <%= render Grid.Admin.Activity.AmenityView, "index.html",
-    conn: @conn,
-    activity: @activity,
-    amenities: @activity.amenities %>
-</div>
-
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <%= link to: admin_activity_experience_path(@conn, :new, @activity), class: "btn btn-xs btn-success pull-right" do %>
-      <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Experience
-    <% end %>
-    <h3 class="panel-title">Experiences</h3>
-  </div>
-  <%= render Grid.Admin.Activity.ExperienceView, "index.html",
-    conn: @conn,
-    activity: @activity,
-    experiences: @activity.experiences %>
-</div>
-
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <%= link to: admin_activity_category_path(@conn, :new, @activity), class: "btn btn-xs btn-success pull-right" do %>
-      <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Category
-    <% end %>
-    <h3 class="panel-title">Categories</h3>
-  </div>
-  <%= render Grid.Admin.Activity.CategoryView, "index.html",
-    conn: @conn,
-    activity: @activity,
-    categories: @activity.categories %>
-</div>
-
-
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <%= link to: admin_activity_image_path(@conn, :new, @activity), class: "btn btn-xs btn-success pull-right" do %>
-      <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Image
-    <% end %>
-    <h3 class="panel-title">Images</h3>
-  </div>
-  <%= render Grid.Admin.Activity.ImageView, "index.html",
-    conn: @conn,
-    activity: @activity,
-    images: @activity.images %>
 </div>

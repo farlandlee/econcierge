@@ -12,10 +12,9 @@ defmodule Grid.Admin.ProductControllerTest do
   @invalid_attrs %{name: ""}
 
   setup do
+    %{vendor: v, activity: a}
+      = Factory.create(:vendor_activity)
     c = Factory.create(:category)
-    a = Factory.create(:activity)
-    v = Factory.create(:vendor)
-    Factory.create(:vendor_activity, vendor: v, activity: a)
 
     e = Factory.create(:experience, activity: a)
     p = Factory.create(:product, vendor: v, experience: e)
@@ -33,7 +32,7 @@ defmodule Grid.Admin.ProductControllerTest do
 
   test "Index redirects to vendor", %{conn: conn, vendor: vendor} do
     conn = get conn, admin_vendor_product_path(conn, :index, vendor)
-    assert redirected_to(conn) == admin_vendor_path(conn, :show, vendor)
+    assert redirected_to(conn) == admin_vendor_path(conn, :show, vendor, tab: "products")
   end
 
   test "Show lists prices", %{conn: conn} do
@@ -54,7 +53,7 @@ defmodule Grid.Admin.ProductControllerTest do
   end
 
   test "Show lists start times", %{conn: conn} do
-    start_time = create(:start_time)
+    start_time = create_start_time
     product = start_time.product
     vendor = product.vendor
 
@@ -66,18 +65,18 @@ defmodule Grid.Admin.ProductControllerTest do
   end
 
   test "Show page doesn't show other products' start times", %{conn: conn} do
-    start_time = create(:start_time)
+    start_time = create_start_time
     product = start_time.product
     vendor = product.vendor
 
     conn = get conn, admin_vendor_product_path(conn, :show, vendor, product)
-    other_vendors_products_time = create(:start_time)
+    other_vendors_products_time = create_start_time
     response = html_response(conn, 200)
     refute response =~ other_vendors_products_time.starts_at_time |> Ecto.Time.to_string
   end
 
   test "Only shows start times for this product", %{conn: conn, vendor: v} do
-    [s1, s2] = create_pair(:start_time)
+    [s1, s2] = [create_start_time, create_start_time]
     # set products to same vendor
     Grid.Product
     |> where([p], p.id in ^([s1.product.id, s2.product.id]))
@@ -169,23 +168,22 @@ defmodule Grid.Admin.ProductControllerTest do
 
   test "deletes chosen resource", %{conn: conn, vendor: v, product: p} do
     conn = delete conn, admin_vendor_product_path(conn, :delete, v, p)
-    assert redirected_to(conn) == admin_vendor_path(conn, :show, v)
+    assert redirected_to(conn) == admin_vendor_path(conn, :show, v, tab: "products")
     refute Repo.get(Product, p.id)
   end
 
-
   test "deletes product with start time and price", %{conn: conn, vendor: v, product: p} do
-    start_time = Factory.create(:start_time, product: p)
+    start_time = Factory.create_start_time(product: p)
     price = Factory.create(:price, product: p)
     conn = delete conn, admin_vendor_product_path(conn, :delete, v, p)
-    assert redirected_to(conn) == admin_vendor_path(conn, :show, v)
+    assert redirected_to(conn) == admin_vendor_path(conn, :show, v, tab: "products")
     refute Repo.get(Product, p.id)
     refute Repo.get(StartTime, start_time.id)
     refute Repo.get(Price, price.id)
   end
 
   test "clone", %{conn: conn, product: p, vendor: v} do
-    start_time = Factory.build(:start_time, product_id: p.id) |> Repo.insert!
+    start_time = Factory.create_start_time(product: p)
     price = Factory.build(:price, product_id: p.id) |> Repo.insert!
     default_price = Factory.build(:price, product_id: p.id) |> Repo.insert!
     p = p |> Ecto.Changeset.change(default_price_id: default_price.id) |> Repo.update!

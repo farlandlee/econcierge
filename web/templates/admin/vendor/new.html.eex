@@ -1,5 +1,4 @@
 
 <%= render "form.html", changeset: @changeset,
                         action: admin_vendor_path(@conn, :create),
-                        back: admin_vendor_path(@conn, :index),
-                        activities: @activities %>
+                        back: admin_vendor_path(@conn, :index) %>
