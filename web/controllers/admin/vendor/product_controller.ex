@@ -9,22 +9,25 @@ defmodule Grid.Admin.Vendor.ProductController do
   alias Grid.StartTime
 
   plug Plugs.PageTitle, title: "Product"
-  plug Plugs.Breadcrumb, index: Product
+
   plug :scrub_params, "product" when action in [:create, :update]
+  plug :scrub_duration_time     when action in [:create, :update]
 
   @assign_model_actions [:clone, :edit, :show, :update, :delete]
+  plug :assign_form_data when action in [:new, :create, :edit, :update]
   plug Plugs.AssignModel, Product when action in @assign_model_actions
+  plug :set_duration_time when action in @assign_model_actions
+
+  plug Plugs.Breadcrumb, index: Product
   plug Plugs.Breadcrumb, [show: Product] when action in [:edit, :show]
 
   def index(conn, _) do
     redirect(conn, to: admin_vendor_path(conn, :show, conn.assigns.vendor, tab: "products"))
   end
 
-  def new(conn, _params) do
-    render(conn, "new.html",
-      changeset: Product.changeset(%Product{}),
-      experiences: load_experiences(conn.assigns.vendor)
-    )
+  def new(conn, _) do
+    changeset = Product.changeset(%Product{})
+    render(conn, "new.html", changeset: changeset)
   end
 
   def create(conn, %{"product" => product_params}) do
@@ -36,10 +39,7 @@ defmodule Grid.Admin.Vendor.ProductController do
         |> put_flash(:info, "Product created successfully.")
         |> redirect(to: admin_vendor_product_path(conn, :show, conn.assigns.vendor, product))
       {:error, changeset} ->
-        render(conn, "new.html",
-          changeset: changeset,
-          experiences: load_experiences(conn.assigns.vendor)
-        )
+        render(conn, "new.html", changeset: changeset)
     end
   end
 
@@ -47,6 +47,7 @@ defmodule Grid.Admin.Vendor.ProductController do
     product = conn.assigns.product
       |> Repo.preload([
         :experience,
+        :meeting_location,
         start_times: :season,
         prices: :amounts
       ])
@@ -61,27 +62,18 @@ defmodule Grid.Admin.Vendor.ProductController do
     product = conn.assigns.product |> Repo.preload(:experience)
     changeset = Product.changeset(product)
 
-    vendor = conn.assigns.vendor |> Repo.preload(:experiences)
-
-    render(conn, "edit.html",
-      changeset: changeset,
-      experiences: vendor.experiences
-    )
+    render(conn, "edit.html", changeset: changeset)
   end
 
   def update(conn, %{"product" => product_params}) do
     changeset = Product.changeset(conn.assigns.product, product_params)
-
     case Repo.update(changeset) do
       {:ok, product} ->
         conn
         |> put_flash(:info, "Product updated successfully.")
         |> redirect(to: admin_vendor_product_path(conn, :show, conn.assigns.vendor, product))
       {:error, changeset} ->
-        render(conn, "edit.html",
-          changeset: changeset,
-          experiences: load_experiences(conn.assigns.vendor)
-        )
+        render(conn, "edit.html", changeset: changeset)
     end
   end
 
@@ -142,11 +134,62 @@ defmodule Grid.Admin.Vendor.ProductController do
   end
 
   #############
-  ## Helpers ##
+  ##  Plugs  ##
   #############
 
-  def load_experiences(vendor) do
-    vendor = Repo.preload(vendor, :experiences)
-    vendor.experiences
+  defp try_parse_as_int(nil), do: nil
+
+  defp try_parse_as_int(int) when is_integer(int), do: int
+
+  defp try_parse_as_int(number) do
+    case Integer.parse(number) do
+      {int, ""} -> int
+      _ -> nil
+    end
+  end
+
+  @doc """
+  Gets the "duration_time_hours" and "duration_time_minutes" fields
+  from a form submission and combines them to set the "duration" field.
+  """
+  def scrub_duration_time(conn, _) do
+    product_params = conn.params["product"]
+
+    hours_param = product_params["duration_hours"]
+      |> try_parse_as_int
+    minutes_param = product_params["duration_minutes"]
+      |> try_parse_as_int
+
+    duration = cond do
+      minutes_param && hours_param -> hours_param * 60 + minutes_param
+      hours_param -> hours_param * 60
+      minutes_param -> minutes_param
+      :no_duration -> product_params["duration"]
+    end
+
+    if duration do
+      product_params = Map.put(product_params, "duration", duration)
+      params = Map.put(conn.params, "product", product_params)
+      %{conn | params: params}
+    else
+      conn
+    end
+  end
+
+  def set_duration_time(conn, _) do
+    product = conn.assigns.product |> Product.set_duration_time
+    assign(conn, :product, product)
+  end
+
+  def assign_form_data(conn, _) do
+    vendor = conn.assigns.vendor
+      |> Repo.preload([:experiences, :locations])
+
+    add_location = admin_vendor_location_path(conn, :new, vendor)
+
+    conn
+    |> assign(:add_location, add_location)
+    |> assign(:locations, vendor.locations)
+    |> assign(:experiences, vendor.experiences)
   end
 end

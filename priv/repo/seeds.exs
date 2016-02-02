@@ -93,7 +93,8 @@ for {name, desc, act_name} <- vendor_tuples, activity = Repo.get_by!(Activity, n
       experience_id: experience.id,
       name: "#{vendor.name}'s Product for #{experience.name}",
       description: "Buy #{vendor.name}'s #{experience.description}",
-      published: true
+      published: true,
+      duration: 300
       }, vendor.id)
     |> Repo.insert!
 
@@ -117,7 +118,7 @@ for {name, desc, act_name} <- vendor_tuples, activity = Repo.get_by!(Activity, n
   end
 
   Repo.insert! Location.creation_changeset(%{
-    name: "#{vendor.name} Locatio",
+    name: "#{vendor.name} Location",
     address1: "125 E Broadway",
     city: "Jackson",
     state: "WY",

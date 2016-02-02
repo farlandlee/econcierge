@@ -1,4 +1,4 @@
-defmodule Grid.Models.Utils do
+defmodule Grid.Models.Slug do
 
   import Ecto.Changeset
 

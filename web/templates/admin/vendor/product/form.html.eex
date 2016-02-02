@@ -2,34 +2,73 @@
   <%= if @changeset.action do %>
     <div class="alert alert-danger">
       <p>Oops, something went wrong! Please check the errors below:</p>
-      <ul>
-        <%= for {attr, message} <- f.errors do %>
-          <li><%= humanize(attr) %> <%= message %></li>
-        <% end %>
-      </ul>
     </div>
   <% end %>
 
   <div class="form-group">
     <%= label f, :name, "Name", class: "control-label" %>
     <%= text_input f, :name, class: "form-control" %>
+    <%= error_tag f, :name %>
   </div>
 
   <div class="form-group">
     <%= label f, :description, "Description", class: "control-label" %>
     <%= text_input f, :description, class: "form-control" %>
+    <%= error_tag f, :description %>
   </div>
 
   <div class="form-group">
-    <%= label f, :experience, "Experience", class: "control-label" %>
+    <%= label f, :duration_time, "Duration", class: "control-label" %>
+    <div class="row">
+      <div class="col-xs-6">
+        <div class="input-group">
+          <%= duration_input f, :duration_hours, class: "form-control" %>
+          <span class="input-group-addon">(hours)</span>
+        </div>
+      </div>
+      <div class="col-xs-6">
+        <div class="input-group">
+          <%= duration_input f, :duration_minutes, class: "form-control" %>
+          <span class="input-group-addon">(minutes)</span>
+        </div>
+      </div>
+    </div>
+    <%= error_tag f, :duration %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :experience_id, "Experience", class: "control-label" %>
     <%= select f, :experience_id,
         Enum.map(@experiences, &{&1.name, &1.id}),
         class: "chosen-select form-control" %>
+    <%= error_tag f, :experience_id %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :pickup, "Pickup?", class: "control-label" %>
+    <%= checkbox f, :pickup, class: "form-control" %>
+    <div class="checkbox-controlled">
+    <%= if @locations == [] do %>
+    <em>Vendor has no locations.</em>
+      <%= link to: @add_location, class: "btn btn-success btn-block" do %>
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+        Add Location
+      <% end %>
+    <% else %>
+      <%= label f, :meeting_location_id, "Meeting Location", class: "control-label" %>
+      <%= select f, :meeting_location_id,
+        @locations |> Enum.map(&{&1.name, &1.id}),
+        class: "chosen-select form-control" %>
+    <% end %>
+    </div>
+    <%= error_tag f, :meeting_location_id %>
+    <%= error_tag f, :pickup %>
   </div>
 
   <div class="form-group">
     <%= label f, :published, "Published", class: "control-label" %>
     <%= checkbox f, :published, class: "form-control" %>
+    <%= error_tag f, :published %>
   </div>
 
   <div class="form-group">

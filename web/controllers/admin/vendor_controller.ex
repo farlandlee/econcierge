@@ -62,11 +62,11 @@ defmodule Grid.Admin.VendorController do
       :images,
       :locations,
       seasons: :activity,
-      products: :experience
+      products: [:experience, :meeting_location]
     ])
 
     current_activity_ids = vendor.activities |> Enum.map(&(&1.id))
-    
+
     addable_activities = where(Activity, [a], not(a.id in ^current_activity_ids))
       |> Repo.all
 

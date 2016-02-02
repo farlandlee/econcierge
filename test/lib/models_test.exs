@@ -4,7 +4,7 @@ defmodule Grid.ModelsTest do
   import Ecto.Changeset
 
   # Modules we're testing
-  import Grid.Models.Utils, only: [cast_slug: 1, cast_slug: 2]
+  import Grid.Models.Slug, only: [cast_slug: 1, cast_slug: 2]
 
   # Dummy model for testerizing with
   defmodule Model do
