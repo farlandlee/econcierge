@@ -2,18 +2,14 @@
   <thead>
     <tr>
       <th>Name</th>
-      <th>Description</th>
-      <th>Slug</th>
 
       <th></th>
     </tr>
   </thead>
   <tbody>
-<%= for category <- @categories do %>
+<%= for amenity_option <- @amenity_options do %>
     <tr>
-      <td><%= category.name %></td>
-      <td><%= category.description %></td>
-      <td><code><%= category.slug %></code></td>
+      <td><%= amenity_option.name %></td>
 
       <td class="text-right">
         <div class="dropdown actions">
@@ -22,10 +18,10 @@
           </button>
           <ul class="dropdown-menu dropdown-menu-right">
             <li>
-              <%= link "Edit", to: admin_activity_category_path(@conn, :edit, @activity, category), class: "edit" %>
+              <%= link "Edit", to: admin_activity_amenity_amenity_option_path(@conn, :edit, @activity, @amenity, amenity_option), class: "edit" %>
             </li>
             <li>
-              <%= link "Delete", to: admin_activity_category_path(@conn, :delete, @activity, category), method: :delete, data: [confirm: "Are you sure?"], class: "delete" %>
+              <%= link "Delete", to: admin_activity_amenity_amenity_option_path(@conn, :delete, @activity, @amenity, amenity_option), method: :delete, data: [confirm: "Are you sure?"], class: "delete" %>
             </li>
           </ul>
         </div>

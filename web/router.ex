@@ -27,6 +27,11 @@ defmodule Grid.Router do
     plug Plugs.Breadcrumb, resource: Grid.Activity
   end
 
+  pipeline :assign_amenity do
+    plug Plugs.AssignModel, model: Grid.Amenity, param: "amenity_id"
+    plug Plugs.Breadcrumb, resource: Grid.Amenity
+  end
+
   pipeline :admin do
     plug :put_layout, {Grid.LayoutView, "admin.html"}
     plug Plugs.Authenticate
@@ -70,9 +75,15 @@ defmodule Grid.Router do
     resources "/activities", ActivityController, [alias: Activity] do
       pipe_through :assign_activity
 
-      resources "/experiences", ExperienceController
+      resources "/amenities", AmenityController, [alias: Amenity] do
+        pipe_through :assign_amenity
+
+        resources "/amenity_options", AmenityOptionController
+      end
 
       resources "/categories", CategoryController
+
+      resources "/experiences", ExperienceController
 
       resources "/images", ImageController
       put "/images/:id/default", ImageController, :set_default
@@ -83,7 +94,7 @@ defmodule Grid.Router do
       pipe_through :assign_vendor
 
       resources "/locations", LocationController
-      
+
       resources "/images", ImageController
       put "/images/:id/default", ImageController, :set_default
 

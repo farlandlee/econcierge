@@ -14,6 +14,7 @@ defmodule Grid.Activity do
     has_many :vendor_activities, Grid.VendorActivity
     has_many :vendors, through: [:vendor_activities, :vendor]
 
+    has_many :amenities, Grid.Amenity
     has_many :categories, Grid.Category
     has_many :experiences, Grid.Experience
 

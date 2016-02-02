@@ -11,6 +11,19 @@
 
 <div class="panel panel-default">
   <div class="panel-heading">
+    <%= link to: admin_activity_amenity_path(@conn, :new, @activity), class: "btn btn-xs btn-success pull-right" do %>
+      <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Amenity
+    <% end %>
+    <h3 class="panel-title">Amenities</h3>
+  </div>
+  <%= render Grid.Admin.Activity.AmenityView, "index.html",
+    conn: @conn,
+    activity: @activity,
+    amenities: @activity.amenities %>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
     <%= link to: admin_activity_experience_path(@conn, :new, @activity), class: "btn btn-xs btn-success pull-right" do %>
       <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Experience
     <% end %>
