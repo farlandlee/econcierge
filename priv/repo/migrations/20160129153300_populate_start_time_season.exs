@@ -2,7 +2,7 @@ defmodule Season do
   use Grid.Web, :model
 
   schema "seasons" do
-    field :vendor_activity_id,   :integer
+    belongs_to :vendor_activity, VendorActivity
   end
 end
 
@@ -24,6 +24,16 @@ end
 defmodule Vendor do
   use Grid.Web, :model
   schema "vendors" do end
+end
+
+defmodule VendorActivity do
+  use Grid.Web, :model
+
+  schema "vendor_activities" do
+    field :vendor_id, :integer
+    field :activity_id, :integer
+    has_many :seasons, Season
+  end
 end
 
 defmodule StartTime do
