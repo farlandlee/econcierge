@@ -154,7 +154,9 @@ defmodule Grid.Factory do
       description: sequence(:description, &"product-description-#{&1}"),
       vendor: build(:vendor),
       experience: build(:experience),
-      published: true
+      published: true,
+      duration: 100,
+      pickup: true
     }
   end
 

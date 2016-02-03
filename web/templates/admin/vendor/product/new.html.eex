@@ -3,5 +3,7 @@
     changeset: @changeset,
     action: admin_vendor_product_path(@conn, :create, @vendor),
     back: admin_vendor_path(@conn, :show, @vendor),
-    experiences: @experiences
+    experiences: @experiences,
+    locations: @locations,
+    add_location: @add_location
 %>

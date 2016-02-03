@@ -4,7 +4,13 @@ defmodule Grid.Product do
   schema "products" do
     field :description, :string
     field :name, :string
-    field :published, :boolean, default: :false
+    field :published, :boolean, default: false
+    field :pickup, :boolean, default: true
+    field :duration, :integer, default: 0
+
+    field :duration_time, Ecto.Time, virtual: true
+
+    belongs_to :meeting_location, Grid.Location
 
     belongs_to :vendor, Grid.Vendor
     belongs_to :experience, Grid.Experience
@@ -19,9 +25,29 @@ defmodule Grid.Product do
     timestamps
   end
 
+  defp pickup_and_location_constraints(changeset) do
+    pickup   = fetch_field(changeset, :pickup)
+    location = fetch_field(changeset, :meeting_location_id)
+    case {pickup, location} do
+      {{:model, true},   {:changes, nil}}    -> changeset
+      {{:model,    _},   {:changes, change}} -> put_change(changeset, :pickup, !change)
+
+      {{:changes,  true}, _}        -> put_change(changeset, :meeting_location_id, nil)
+      {{:changes, false}, {_, nil}} -> add_error(changeset, :meeting_location_id, "Please supply a meeting location.")
+      _  -> changeset
+    end
+  end
+
+  def set_duration_time(model = %__MODULE__{duration: duration}) do
+    hours   = div(duration, 60)
+    minutes = rem(duration, 60)
+    time = %Ecto.Time{hour: hours, min: minutes}
+    %{model | duration_time: time}
+  end
+
   @creation_fields ~w(vendor_id experience_id)a
-  @required_fields ~w(description name published)a
-  @optional_fields ~w(experience_id)a
+  @required_fields ~w(description name published duration)a
+  @optional_fields ~w(pickup experience_id meeting_location_id)a
 
   @doc """
   Creates a changeset based on the `model` and `params`.
@@ -36,7 +62,10 @@ defmodule Grid.Product do
     |> validate_length(:name, min: 1, max: 255)
     |> update_change(:description, &String.strip/1)
     |> validate_length(:description, min: 1, max: 255)
+    |> validate_number(:duration, greater_than: 0)
     |> foreign_key_constraint(:experience_id)
+    |> pickup_and_location_constraints()
+    |> foreign_key_constraint(:meeting_location_id)
   end
 
   def default_price_changeset(model, default_price_id) do

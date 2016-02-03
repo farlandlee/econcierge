@@ -4,6 +4,8 @@
       <th>Name</th>
       <th><%= vendor_or_experience_header @display_name_of %></th>
       <th>Description</th>
+      <th>Duration</th>
+      <th>Location</th>
       <th>Published?</th>
 
       <th></th>
@@ -15,6 +17,15 @@
       <td><%= link product.name, to: admin_vendor_product_path(@conn, :show, vendor_id, product) %></td>
       <td><%= vendor_or_experience @display_name_of, product %></td>
       <td><%= product.description %></td>
+      <td><%= pretty_duration product.duration %></td>
+      <td>
+      <%= if product.pickup do %>
+        <em>Pickup</em>
+      <% else %>
+        <%= product.meeting_location.name %>
+      <% end %>
+      </td>
+
       <td> <%= check_icon product.published %> </td>
 
       <td class="text-right">

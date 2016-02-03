@@ -8,8 +8,11 @@ defmodule Grid.Admin.ProductControllerTest do
   alias Grid.StartTime
   alias Grid.Price
 
-  @valid_attrs %{description: "some content", name: "some content"}
-  @invalid_attrs %{name: ""}
+  @valid_attrs %{
+    name: "product name", duration: 100, description: "A sweet product", pickup: true
+  }
+
+  @invalid_attrs %{name: "", duration: -1}
 
   setup do
     %{vendor: v, activity: a}
@@ -121,6 +124,23 @@ defmodule Grid.Admin.ProductControllerTest do
 
     assert product
     assert redirected_to(conn) == admin_vendor_product_path(conn, :show, v, product)
+  end
+
+  test "creates parses duration_hours duration_minutes into duration", %{conn: conn, vendor: v} do
+    e = Factory.create(:experience)
+
+    valid_attrs = @valid_attrs
+      |> Map.put(:experience_id, e.id)
+      |> Map.delete(:duration)
+      |> Map.put(:duration_hours, "2")
+      |> Map.put(:duration_minutes, "13")
+
+    post conn, admin_vendor_product_path(conn, :create, v), product: valid_attrs
+
+    product = Repo.get_by(Product, @valid_attrs |> Map.delete(:duration))
+
+    assert product
+    assert product.duration == 2 * 60 + 13
   end
 
   test "shows chosen resource", %{conn: conn, vendor: v, product: p} do
