@@ -12,14 +12,13 @@
 }
 
 .top-bar {
-  font-size: (12rem/16);
+  font-size: (1.2rem);
   border-bottom: 1px solid #F6F6F6;
   height:61px;
   padding-top: 0;
   padding-bottom: 0;
   .menu {
     text-transform: uppercase;
-    font-weight: bold;
     > li {
       height: 60px;
       &:not(.logo):not(.menu-text) {
@@ -74,7 +73,7 @@
   margin-top: 42px;
   // Only affects medium screens and larger
   @include breakpoint(large) {
-    margin-top: 56px;
+    margin-top: 61px;
 
   }
 }

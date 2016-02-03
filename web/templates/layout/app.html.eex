@@ -38,8 +38,9 @@
                   <ul class="menu" >
                     <li class="logo"><a href="/">Outpost</a></li>
 
-                    <li><a href="#">Reservations</a></li>
-                    <li><a href="#">Vacation Rentals</a></li>
+                    <li><a href="#">Lodging</a></li>
+                    <li><a href="#">Activities</a></li>
+                    <li><a href="#">Itineraries</a></li>
                     <li><a href="#">Journal</a></li>
                     <li><a href="#">About Us</a></li>
                   </ul>
