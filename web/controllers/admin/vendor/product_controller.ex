@@ -3,6 +3,7 @@ defmodule Grid.Admin.Vendor.ProductController do
 
   alias Grid.Plugs
 
+  alias Grid.Activity
   alias Grid.Amount
   alias Grid.Product
   alias Grid.Price
@@ -14,42 +15,55 @@ defmodule Grid.Admin.Vendor.ProductController do
   plug :scrub_duration_time     when action in [:create, :update]
 
   @assign_model_actions [:clone, :edit, :show, :update, :delete]
-  plug :assign_form_data when action in [:new, :create, :edit, :update]
   plug Plugs.AssignModel, Product when action in @assign_model_actions
+  plug :assign_form_data when action in [:new, :create, :edit, :update]
   plug :set_duration_time when action in @assign_model_actions
 
   plug Plugs.Breadcrumb, index: Product
   plug Plugs.Breadcrumb, [show: Product] when action in [:edit, :show]
 
-  def index(conn, _) do
+  def index(conn, _), do:
     redirect(conn, to: admin_vendor_path(conn, :show, conn.assigns.vendor, tab: "products"))
+
+  def new(conn, %{"activity_id" => _activity_id}) do
+    changeset = Product.changeset(%Product{product_amenity_options: []})
+    render(conn, "new.html", changeset: changeset, )
   end
 
   def new(conn, _) do
-    changeset = Product.changeset(%Product{})
-    render(conn, "new.html", changeset: changeset)
+    conn
+    |> put_flash(:error, "Must select activity before clicking Add Product")
+    |> redirect(to: admin_vendor_path(conn, :show, conn.assigns.vendor))
   end
 
   def create(conn, %{"product" => product_params}) do
     changeset = Product.creation_changeset(product_params, conn.assigns.vendor.id)
 
-    case Repo.insert(changeset) do
-      {:ok, product} ->
-        conn
-        |> put_flash(:info, "Product created successfully.")
-        |> redirect(to: admin_vendor_product_path(conn, :show, conn.assigns.vendor, product))
-      {:error, changeset} ->
-        render(conn, "new.html", changeset: changeset)
-    end
+    {:ok, conn} = Repo.transaction(fn ->
+      case Repo.insert(changeset) do
+        {:ok, product} ->
+          manage_amenitities(product, product_params["amenity_option_id"])
+
+          conn
+          |> put_flash(:info, "Product created successfully.")
+          |> redirect(to: admin_vendor_product_path(conn, :show, conn.assigns.vendor, product))
+        {:error, changeset} ->
+          render(conn, "new.html", changeset: changeset)
+      end
+    end)
+
+    conn
   end
 
   def show(conn, _) do
     product = conn.assigns.product
       |> Repo.preload([
+        :activity,
         :experience,
         :meeting_location,
         start_times: :season,
-        prices: :amounts
+        prices: :amounts,
+        amenity_options: :amenity
       ])
 
     render(conn, "show.html",
@@ -59,7 +73,7 @@ defmodule Grid.Admin.Vendor.ProductController do
   end
 
   def edit(conn, _) do
-    product = conn.assigns.product |> Repo.preload(:experience)
+    product = conn.assigns.product |> Repo.preload([:experience, :product_amenity_options])
     changeset = Product.changeset(product)
 
     render(conn, "edit.html", changeset: changeset)
@@ -67,14 +81,21 @@ defmodule Grid.Admin.Vendor.ProductController do
 
   def update(conn, %{"product" => product_params}) do
     changeset = Product.changeset(conn.assigns.product, product_params)
-    case Repo.update(changeset) do
-      {:ok, product} ->
-        conn
-        |> put_flash(:info, "Product updated successfully.")
-        |> redirect(to: admin_vendor_product_path(conn, :show, conn.assigns.vendor, product))
-      {:error, changeset} ->
-        render(conn, "edit.html", changeset: changeset)
-    end
+
+    {:ok, conn} = Repo.transaction(fn ->
+      case Repo.update(changeset) do
+        {:ok, product} ->
+          manage_amenitities(product, product_params["amenity_option_id"])
+
+          conn
+          |> put_flash(:info, "Product updated successfully.")
+          |> redirect(to: admin_vendor_product_path(conn, :show, conn.assigns.vendor, product))
+        {:error, changeset} ->
+          render(conn, "edit.html", changeset: changeset)
+      end
+    end)
+
+    conn
   end
 
   def delete(conn, _) do
@@ -84,8 +105,6 @@ defmodule Grid.Admin.Vendor.ProductController do
     |> put_flash(:info, "Product deleted successfully.")
     |> redirect(to: admin_vendor_path(conn, :show, conn.assigns.vendor, tab: "products"))
   end
-
-
 
   def clone(conn, _) do
     product = conn.assigns.product |> Repo.preload([
@@ -183,13 +202,40 @@ defmodule Grid.Admin.Vendor.ProductController do
 
   def assign_form_data(conn, _) do
     vendor = conn.assigns.vendor
-      |> Repo.preload([:experiences, :locations])
+      |> Repo.preload(:locations)
 
     add_location = admin_vendor_location_path(conn, :new, vendor)
+    activity = load_activity(conn)
+      |> Repo.preload([:experiences, amenities: :amenity_options])
 
     conn
     |> assign(:add_location, add_location)
     |> assign(:locations, vendor.locations)
-    |> assign(:experiences, vendor.experiences)
+    |> assign(:activity, activity)
   end
+
+  defp load_activity(%Plug.Conn{params: %{"activity_id" => activity_id}}),
+    do: Repo.get(Activity, activity_id)
+  defp load_activity(%Plug.Conn{assigns: %{product: p}}),
+    do: assoc(p, :activity) |> Repo.one
+
+  ## Manage Amenities
+
+  defp manage_amenitities(product, nil), do:
+    manage_amenitities(product, [])
+
+  defp manage_amenitities(product, ids) do
+    Repo.delete_all(assoc(product, :product_amenity_options))
+
+    ids = Enum.filter(ids, fn
+      "false" -> false
+      _ -> true
+    end)
+
+    for s_id <- ids, {id, ""} = Integer.parse(s_id) do
+      build_assoc(product, :product_amenity_options, %{amenity_option_id: id})
+      |> Repo.insert!
+    end
+  end
+
 end

@@ -44,7 +44,7 @@ defmodule Grid.Admin.Activity.ExperienceController do
     products = experience
       |> assoc(:products)
       |> Repo.alphabetical
-      |> preload([:vendor, :meeting_location])
+      |> preload([:vendor, :activity, :meeting_location])
       |> Repo.all
     render(conn, "show.html",
       products: products,

@@ -34,6 +34,11 @@
   <dt>Experience</dt>
   <dd><%= @product.experience.name %></dd>
 
+  <dt>Amenities</td>
+  <dd>
+    <%= Grid.AdminView.pretty_name_list(@product.amenity_options) %>
+  </dd>
+
   <dt>Published</dt>
   <dd><%= check_icon @product.published %></dd>
 

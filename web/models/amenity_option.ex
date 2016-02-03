@@ -5,6 +5,8 @@ defmodule Grid.AmenityOption do
     field :name, :string
     belongs_to :amenity, Grid.Amenity
 
+    has_many :product_amenity_options, Grid.ProductAmenityOption
+
     has_one :activity, through: [:amenity, :activity]
 
     timestamps

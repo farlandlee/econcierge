@@ -62,7 +62,7 @@ defmodule Grid.Admin.VendorController do
       :images,
       :locations,
       seasons: :activity,
-      products: [:experience, :meeting_location]
+      products: [:activity, :experience, :meeting_location]
     ])
 
     current_activity_ids = vendor.activities |> Enum.map(&(&1.id))

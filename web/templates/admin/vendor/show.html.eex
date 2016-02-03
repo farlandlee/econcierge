@@ -32,11 +32,28 @@
   <!-- Tab panes -->
   <div class="tab-content">
     <section role="tabpanel" class="tab-pane" id="products">
+      <%= if length(@vendor.activities) > 0 do %>
       <div class="panel panel-default">
         <div class="panel-heading">
-          <%= link to: admin_vendor_product_path(@conn, :new, @vendor), class: "btn btn-xs btn-success pull-right" do %>
-          <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Product
+          <%= if length(@vendor.activities) == 1 do %>
+            <%= link(to: admin_vendor_product_path(@conn, :new, @vendor, activity_id: hd(@vendor.activities).id), class: "btn btn-xs btn-success pull-right") do %>
+              <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Product
+            <% end %>
+          <% else %>
+          <div class="btn-group pull-right">
+            <button type="button" class="btn btn-xs btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Product <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+              <%= for activity <- @vendor.activities do %>
+                <li>
+                  <%= link activity.name, to: admin_vendor_product_path(@conn, :new, @vendor, activity_id: activity.id) %>
+                </li>
+              <% end %>
+            </ul>
+          </div>
           <% end %>
+
           <h3 class="panel-title">Products</h3>
         </div>
         <%= render Grid.Admin.Vendor.ProductView, "index.html",
@@ -46,6 +63,9 @@
         products: @vendor.products
         %>
       </div>
+      <% else %>
+        You must <%= link "add activities", to: "?tab=activities" %> for this vendor before you can add products.
+      <% end %>
     </section>
     <section role="tabpanel" class="tab-pane" id="locations">
       <div class="panel panel-default">
