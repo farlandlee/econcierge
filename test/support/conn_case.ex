@@ -49,7 +49,8 @@ defmodule Grid.ConnCase do
       Phoenix.ConnTest.conn()
       |> Plug.Conn.assign(:current_user, user)
     end
-    {:ok, conn: conn, user: user}
+
+    {:ok, conn: conn}
   end
 
   def recycle_with_auth(conn) do
