@@ -3,6 +3,7 @@ alias Grid.Repo
 alias Grid.Activity
 alias Grid.Amenity
 alias Grid.AmenityOption
+alias Grid.Amount
 alias Grid.Category
 alias Grid.Experience
 alias Grid.ExperienceCategory
@@ -96,12 +97,17 @@ for {name, desc, act_name} <- vendor_tuples, activity = Repo.get_by!(Activity, n
       }, vendor.id)
     |> Repo.insert!
 
-    Price.creation_changeset(%{
+    price = Price.creation_changeset(%{
       name: "Adult",
       description: "Over 18",
-      amount: 180.0,
       people_count: 1
     }, product.id)
+    |> Repo.insert!
+
+    Amount.creation_changeset(%{
+      amount: 180.0,
+      max_quantity: 0
+    }, price.id)
     |> Repo.insert!
 
     StartTime.creation_changeset(%{

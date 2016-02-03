@@ -36,7 +36,7 @@ defmodule Grid.Admin.ProductControllerTest do
   end
 
   test "Show lists prices", %{conn: conn} do
-    price = create(:price)
+    amount = %{price: price} = create(:amount)
     product = price.product
     vendor = product.vendor
     conn = get conn, admin_vendor_product_path(conn, :show, vendor, product)
@@ -45,7 +45,7 @@ defmodule Grid.Admin.ProductControllerTest do
     assert response =~ "Add Price"
     assert response =~ "#{product.name}"
     assert response =~ "Amount"
-    assert response =~ "$#{price.amount}"
+    assert response =~ "$#{amount.amount}"
     assert response =~ "Name"
     assert response =~ "#{price.name}"
     assert response =~ "Description"
@@ -185,6 +185,7 @@ defmodule Grid.Admin.ProductControllerTest do
   test "clone", %{conn: conn, product: p, vendor: v} do
     start_time = Factory.create_start_time(product: p)
     price = Factory.build(:price, product_id: p.id) |> Repo.insert!
+    amount = Factory.build(:amount, max_quantity: 10) |> Map.put(:price_id, price.id) |> Repo.insert!
     default_price = Factory.build(:price, product_id: p.id) |> Repo.insert!
     p = p |> Ecto.Changeset.change(default_price_id: default_price.id) |> Repo.update!
 
@@ -212,18 +213,22 @@ defmodule Grid.Admin.ProductControllerTest do
 
     # cloned product correctly
     assert response =~ "#{p.name} Clone"
-    assert response =~ "#{p.description}"
-    assert response =~ "#{p.experience.name}"
+    assert response =~ p.description
+    assert response =~ p.experience.name
+
+    # cloned price amount
+    assert response =~ "#{amount.amount}"
+    assert response =~ "(&lt; #{amount.max_quantity})"
+
     # cloned default price
     assert response =~ "Current default"
-    assert response =~ "#{default_price.amount}"
-    assert response =~ "#{default_price.name}"
-    assert response =~ "#{default_price.description}"
+    assert response =~ default_price.name
+    assert response =~ default_price.description
     # cloned other price
     assert response =~ "Set as default"
-    assert response =~ "#{price.amount}"
-    assert response =~ "#{price.name}"
-    assert response =~ "#{price.description}"
+    assert response =~ price.name
+    assert response =~ price.description
+
     # cloned start time
     assert response =~ Ecto.Time.to_string(start_time.starts_at_time)
   end

@@ -2,10 +2,11 @@ defmodule Grid.Admin.Vendor.ProductController do
   use Grid.Web, :controller
 
   alias Grid.Plugs
+
+  alias Grid.Amount
   alias Grid.Product
   alias Grid.Price
   alias Grid.StartTime
-
 
   plug Plugs.PageTitle, title: "Product"
   plug Plugs.Breadcrumb, index: Product
@@ -44,7 +45,11 @@ defmodule Grid.Admin.Vendor.ProductController do
 
   def show(conn, _) do
     product = conn.assigns.product
-      |> Repo.preload([:experience, [start_times: :season], :prices])
+      |> Repo.preload([
+        :experience,
+        start_times: :season,
+        prices: :amounts
+      ])
 
     render(conn, "show.html",
       product: product,
@@ -88,12 +93,14 @@ defmodule Grid.Admin.Vendor.ProductController do
     |> redirect(to: admin_vendor_path(conn, :show, conn.assigns.vendor, tab: "products"))
   end
 
+
+
   def clone(conn, _) do
     product = conn.assigns.product |> Repo.preload([
-      :prices, :start_times
+      :start_times,
+      prices: :amounts
       ])
     product_clone = Product.clone(product)
-
     {:ok, conn} = Repo.transaction fn ->
       case Repo.insert(product_clone) do
         {:ok, product_clone} ->
@@ -108,6 +115,12 @@ defmodule Grid.Admin.Vendor.ProductController do
             price_clone = price
               |> Price.clone(product_id: product_clone.id)
               |> Repo.insert!
+
+            for amount <- price.amounts do
+              amount
+              |> Amount.clone(price_id: price_clone.id)
+              |> Repo.insert!
+            end
             # Set the default price of the clone to the cloned default price
             if price.id == product.default_price_id do
               product_clone
@@ -122,7 +135,7 @@ defmodule Grid.Admin.Vendor.ProductController do
         {:error, _changeset} ->
           conn
           |> put_flash(:error, "Error cloning product.")
-          |> redirect(to: admin_vendor_path(conn, :show, conn.assigns.vendor, tab: "products"))
+          |> redirect(to: admin_vendor_path(conn, :show, conn.assigns.vendor))
       end
     end
     conn

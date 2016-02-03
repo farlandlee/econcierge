@@ -6,21 +6,6 @@
   <% end %>
 
   <div class="form-group">
-    <%= label f, :amount, "Amount", class: "control-label" %>
-    <div class="input-group">
-      <span class="input-group-addon">$</span>
-      <%= text_input f, :amount, class: "form-control" %>
-      <%= error_tag f, :amount %>
-    </div>
-  </div>
-
-  <div class="form-group">
-    <%= label f, :people_count, "Number of People", class: "control-label" %>
-    <%= number_input f, :people_count, class: "form-control", min: 0 %>
-    <%= error_tag f, :people_count %>
-  </div>
-
-  <div class="form-group">
     <%= label f, :name, "Name", class: "control-label" %>
     <%= text_input f, :name, class: "form-control" %>
     <%= error_tag f, :name %>
@@ -30,6 +15,12 @@
     <%= label f, :description, "Description", class: "control-label" %>
     <%= text_input f, :description, class: "form-control" %>
     <%= error_tag f, :description %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :people_count, "Number of People", class: "control-label" %>
+    <%= number_input f, :people_count, class: "form-control", min: 0 %>
+    <%= error_tag f, :people_count %>
   </div>
 
   <div class="form-group">

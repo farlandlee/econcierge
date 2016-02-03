@@ -30,6 +30,10 @@ defmodule Grid.Router do
     plug Plugs.AssignModel, model: Grid.Product, param: "product_id"
     plug Plugs.Breadcrumb, resource: Grid.Product
   end
+  pipeline :assign_product_price do
+    plug Plugs.AssignModel, model: Grid.Price, param: "price_id"
+    plug Plugs.Breadcrumb, resource: Grid.Price
+  end
   pipeline :assign_activity do
     plug Plugs.AssignModel, model: Grid.Activity, param: "activity_id"
     plug Plugs.Breadcrumb, resource: Grid.Activity
@@ -112,8 +116,11 @@ defmodule Grid.Router do
 
         resources "/start_times", StartTimeController
 
-        resources "/prices", PriceController
         put "/prices/:id/default", PriceController, :set_default
+        resources "/prices", PriceController, [alias: Price] do
+          pipe_through :assign_product_price
+          resources "/amounts", AmountController
+        end
       end
     end
   end

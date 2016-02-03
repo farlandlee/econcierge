@@ -51,6 +51,9 @@ defmodule Grid.Plugs.AssignModel do
   defp constraint(Grid.Product, conn), do:
     assoc(conn.assigns.vendor, :products)
 
+  defp constraint(Grid.Price, conn), do:
+    assoc(conn.assigns.product, :prices)
+
   defp constraint(Grid.StartTime, conn), do:
     assoc(conn.assigns.product, :start_times)
 
