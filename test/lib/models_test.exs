@@ -27,27 +27,27 @@ defmodule Grid.ModelsTest do
 
   test "generates slug from source" do
     slugset(%{name: "my name"})
-    |> assert_slug {:changes, "my_name"}
+    |> assert_slug({:changes, "my_name"})
   end
 
   test "slugifies user generated slugs" do
     slugset(%{slug: "my slug"})
-    |> assert_slug {:changes, "my_slug"}
+    |> assert_slug({:changes, "my_slug"})
   end
 
   test "changing source field doesn't change slug" do
     slugset(%Model{slug: "a_slug"}, %{name: "meow"})
-    |> assert_slug {:model, "a_slug"}
+    |> assert_slug({:model, "a_slug"})
   end
 
   test "setting slug to nil regenerates from source on model" do
     slugset(%Model{name: "my name", slug: "a_slug"}, %{slug: nil})
-    |> assert_slug {:changes, "my_name"}
+    |> assert_slug({:changes, "my_name"})
   end
 
   test "setting slug to nil regenerates from source on changes" do
     slugset(%Model{name: "my name", slug: "a_slug"}, %{slug: nil, name: "new name"})
-    |> assert_slug {:changes, "new_name"}
+    |> assert_slug({:changes, "new_name"})
   end
 
   test "adds unique constraint" do
