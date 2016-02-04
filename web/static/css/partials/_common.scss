@@ -6,6 +6,10 @@
   }
 }
 
+.small {
+  font-size: 80%;
+}
+
 .page-head {
   background-color: $dark-gray;
   height: 110px;
@@ -23,49 +27,17 @@
   }
 }
 
-.search-bar {
-  width: 100%;
-  margin: 0;
-  background-color: $light-gray;
-  padding: 0.25rem;
-
-  .input-group {
-    margin-bottom:0;
-  }
-
-  .chosen-container-single {
-    max-width: 120px;
-    display:inline-block;
-    width: auto;
-    .chosen-single {
-      height: 40px;
-      border-radius: 0;
-      line-height: 40px;
-      background-image: none;
-      box-shadow: none;
-      border: 0;
-      div {
-        width: 20px;
-        b {
-          background: none !important;
-          &:after {
-            content: "\f107";
-            display: inline-block;
-            font: normal normal normal 24px/40px FontAwesome;
-            text-rendering: auto;
-            color: #666;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-          }
-        }
-      }
-    }
-    &.chosen-container-active.chosen-with-drop {
-      .chosen-single div b:after {
-        content: "\f106";
-      }
-    }
-  }
+.section-title {
+  color: darken($medium-gray,40%);
+  font-size: 2.4rem;
+  line-height: 3.6rem;
+  text-align: center;
+}
+.section-subtitle {
+  color: $medium-gray;
+  font-size: 1.2rem;
+  line-height: 2.4em;
+  text-align: center;
 }
 .top-categories {
   padding: 0.9375rem;
@@ -84,33 +56,47 @@
 .overlays {
   .column {
     position:relative;
-    img {
-      width: 100%;
-      height: auto;
-    }
-    > div {
-      padding-bottom: 3rem;
-      border-bottom: 1px solid $light-gray;
-      margin-bottom: 3rem;
-    }
+    margin-bottom: 0.9375rem;
+    margin-top: 0.9375rem;
   }
   p {
     margin-bottom: 0;
   }
+  .single-wide,
+  .double-wide {
+    height: 300px;
+    position: relative;
+  }
+  .single-wide {
+    background: url(http://placehold.it/330x300) no-repeat center center;
+  }
+  .double-wide {
+    background: url(http://placehold.it/690x300) no-repeat center center;
+  }
 }
 .overlay-text {
   position: absolute;
-  width: 100%;
-  text-align: center;
   top: 50%;
-  margin-top: -16px;
-  margin-left: -0.9375rem;
-  font-size: 32px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.2rem;
   color: $white;
   font-weight: bold;
+  text-align:center;
 }
 .lead {
   text-transform: uppercase;
+  line-height: 1.2;
+  font-size:1.2rem;
+  font-color: $dark-gray;
+  font-weight: bold;
+  margin: 2rem 0 1rem;
+}
+.subheader {
+  margin: 0;
+  font-size: 0.9rem;
+  font-color: $medium-gray;
+  line-height: 1.4;
 }
 a.more-info {
   color: $secondary-color;
@@ -120,4 +106,20 @@ a.more-info {
   height: 30px;
   font-size: 12px;
   line-height: 30px;
+}
+
+.big-button {
+  height:150px;
+  background-color: $primary-color;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  text-align: center;
+  position: relative;
+  &.dark-green {
+    background-color: $button-background-hover;
+  }
+  .overlay-text {
+    min-width: 80%;
+  }
 }
