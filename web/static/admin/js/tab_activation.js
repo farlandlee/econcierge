@@ -31,19 +31,21 @@ let setCurrentTabState = function setCurrentTabState() {
     if (currentTab) {
         showTab(currentTab);
     } else {
-        let activeTabHref = $(`.nav.nav-tabs li.active a[href^="#"]`).attr('href');
-        if (activeTabHref) {
-            window.history.pushState({tab: activeTabHref.substr(1)}, '');
+        let firstTab = $(`.nav.nav-tabs li a.grid-tab`).first();
+        let href = firstTab.attr('href');
+        if (href) {
+            firstTab.tab('show');
+            window.history.pushState({tab: href.substr(1)}, '');
         }
     }
-}
+};
 
 let onPopState = function onPopState({state: state}) {
     if (state.tab) {
         uri.setSearch('tab', state.tab);
         showTab(state.tab);
     }
-}
+};
 
 // activate tab panes on page load
 
