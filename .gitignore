@@ -5,14 +5,16 @@
 /*.ez
 /tmp
 /cover
+/client/dist
+/client/tmp
 
 # Generate on crash by the VM
 erl_crash.dump
 npm-debug.log
 
 # Static artifacts
-/node_modules
-/bower_components
+node_modules
+bower_components
 
 # Since we are building assets from web/static,
 # we ignore priv/static. You may want to comment
@@ -27,3 +29,11 @@ npm-debug.log
 # variables.
 /config/prod.secret.exs
 .env
+
+# misc
+/client/.sass-cache
+/client/connect.lock
+/client/coverage/*
+/client/libpeerconnection.log
+npm-debug.log
+testem.log

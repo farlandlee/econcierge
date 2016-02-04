@@ -2,6 +2,8 @@ sudo: false
 language: elixir
 elixir:
   - 1.2.2
+node_js:
+  - "0.12"
 otp_release:
   - 18.2.1
 services:
@@ -11,15 +13,30 @@ cache:
   directories:
     - _build
     - deps
+    - client/node_modules
+    - client/bower_components
 
-before_script:
+before_install:
+  - export PATH=/usr/local/phantomjs-2.0.0/bin:$PATH
+  - "npm config set spin false"
+  - "npm install -g npm@^2"
+
+install:
   - mix local.hex --force
   - mix deps.get --force
+  - npm install -g bower
+
+  - cd client
+  - npm install
+  - bower install
+  - cd ..
+
   - mix ecto.create
   - mix ecto.migrate
 
 script:
   - mix test --trace
+  - cd client && npm test
 
 deploy:
   provider: heroku
