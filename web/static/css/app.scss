@@ -1,10 +1,12 @@
 @import "settings";
 @import 'foundation';
-@include foundation-everything;
+@include foundation-everything(true);
 
+@import "partials/mixins";
 @import "partials/flaticon";
 @import "partials/common";
 @import "partials/header";
 @import "partials/footer";
 @import "partials/home";
 @import "partials/activity";
+@import "partials/categories";

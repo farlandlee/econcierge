@@ -63,11 +63,7 @@ div.home-main {
   }
 }
 .search-bar {
-  @extend .search-bar;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  @include center-content();
   padding-left: 1rem;
   padding-right: 1rem;
   padding-bottom: 0.9375rem * 2;
@@ -88,20 +84,14 @@ div.home-main {
     font-weight: bold;
     letter-spacing: 0.5px;
   }
+}
 
+.home {
   .chosen-container-single {
-    max-width: 120px;
-    display:table-cell;
-    width: auto;
+    @extend .chosen-container-single;
+    max-width: none;
+    min-width: 600px;
     .chosen-single {
-      font-size: 1rem;
-      height: 40px;
-      border-radius: 0;
-      line-height: 40px;
-      background-image: none;
-      box-shadow: none;
-      border: 0;
-      background-color: transparent;
       &.chosen-default {
         color: $white;
         font-style: italic;
