@@ -11,7 +11,7 @@
 
 <div>
   <ul class="nav nav-tabs">
-    <li role="presentation" class="active">
+    <li role="presentation">
       <%= tab_link "Experiences" %>
     </li>
     <li role="presentation">
@@ -25,7 +25,7 @@
     </li>
   </ul>
   <div class="tab-content">
-    <section role="tabpanel" class="tab-pane active" id="experiences">
+    <section role="tabpanel" class="tab-pane" id="experiences">
       <div class="panel panel-default">
         <div class="panel-heading">
           <%= link to: admin_activity_experience_path(@conn, :new, @activity), class: "btn btn-xs btn-success pull-right" do %>
