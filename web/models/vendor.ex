@@ -10,6 +10,8 @@ defmodule Grid.Vendor do
     field :description, :string
     field :slug, :string
 
+    field :tripadvisor_location_id, :string
+
     belongs_to :default_image, {"vendor_images", Image}
     has_many :images, {"vendor_images", Image}, foreign_key: :assoc_id
 
@@ -37,7 +39,7 @@ defmodule Grid.Vendor do
   end
 
   @required_fields ~w(name description)
-  @optional_fields ~w(slug default_image_id)
+  @optional_fields ~w(slug default_image_id tripadvisor_location_id)
 
   @doc """
   Creates a changeset based on the `model` and `params`.

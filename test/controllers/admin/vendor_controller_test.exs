@@ -3,7 +3,7 @@ defmodule Grid.Admin.VendorControllerTest do
 
   alias Grid.Vendor
 
-  @valid_attrs %{description: "some content", name: "some content"}
+  @valid_attrs %{description: "some content", name: "some content", tripadvisor_location_id: "394873528"}
   @invalid_attrs %{name: ""}
 
   setup do

@@ -7,6 +7,15 @@
 <dl class="dl-horizontal">
   <dt>Slug</dt>
   <dd><code><%= @vendor.slug %></code></dd>
+
+  <dt>TripAdvisor Location ID</dt>
+  <dd>
+  <%= if @vendor.tripadvisor_location_id do %>
+    <%= @vendor.tripadvisor_location_id %>
+  <% else %>
+    <em>none</em>
+  <% end %>
+  </dd>
 </dl>
 
 <div>
