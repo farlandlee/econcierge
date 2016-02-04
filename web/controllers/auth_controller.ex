@@ -29,7 +29,7 @@ defmodule Grid.AuthController do
       |> Google.get_user!
 
     if user_params["hd"] == "outpostjh.com" do
-      user = get_or_create_user(user_params)
+      user = insert_or_update_user(user_params)
 
       redirect_to = get_session(conn, :redirected_from) || admin_dashboard_path(conn, :index)
 
@@ -52,10 +52,11 @@ defmodule Grid.AuthController do
     |> redirect(to: auth_path(conn, :index))
   end
 
-  defp get_or_create_user(user_params) do
+  defp insert_or_update_user(user_params) do
     case Repo.get_by(User, email: user_params["email"]) do
-      nil -> User.changeset(%User{}, user_params) |> Repo.insert!
-      user -> user
+      nil  -> User.changeset(%User{}, user_params)
+      user -> User.changeset(user,    user_params)
     end
+    |> Repo.insert_or_update!
   end
 end
