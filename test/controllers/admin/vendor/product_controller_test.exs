@@ -22,6 +22,8 @@ defmodule Grid.Admin.ProductControllerTest do
     e = Factory.create(:experience, activity: a)
     p = Factory.create(:product, vendor: v, experience: e)
 
+    ao = Factory.create(:amenity_option, amentity: Factory.build(:amenity, activity: a))
+
     Factory.create(:experience_category, experience: e, category: c)
 
     {:ok,
@@ -29,7 +31,8 @@ defmodule Grid.Admin.ProductControllerTest do
       vendor: v,
       activity: a,
       category: c,
-      experience: e
+      experience: e,
+      amenity_option: ao
     }
   end
 
@@ -93,18 +96,18 @@ defmodule Grid.Admin.ProductControllerTest do
     refute response =~ s2.starts_at_time |> Ecto.Time.to_string
   end
 
-  test "renders form for new resources", %{conn: conn, vendor: v, experience: e} do
-    conn = get conn, admin_vendor_product_path(conn, :new, v.id)
+  test "renders form for new resources", %{conn: conn, vendor: v, experience: e, activity: a} do
+    conn = get conn, admin_vendor_product_path(conn, :new, v.id, activity_id: a.id)
     response = html_response(conn, 200)
     assert response =~ "New Product"
     assert response =~ "Experience"
     assert response =~ "#{e.name}"
   end
 
-  test "filters experiences by vendor activities", %{conn: conn, vendor: v, product: p} do
+  test "filters experiences by vendor activities", %{conn: conn, vendor: v, product: p, activity: a} do
     some_other_experience = Factory.create(:experience)
 
-    conn = get conn, admin_vendor_product_path(conn, :new, v)
+    conn = get conn, admin_vendor_product_path(conn, :new, v, activity_id: a.id)
     response = html_response(conn, 200)
     refute response =~ some_other_experience.name
     assert response =~ p.experience.name
@@ -115,10 +118,10 @@ defmodule Grid.Admin.ProductControllerTest do
     assert response =~ p.experience.name
   end
 
-  test "creates resource and redirects when data is valid", %{conn: conn, vendor: v} do
-    e = Factory.create(:experience)
+  test "creates resource and redirects when data is valid", %{conn: conn, vendor: v, activity: a} do
+    e = Factory.create(:experience, activity: a)
     valid_attrs = @valid_attrs |> Map.put(:experience_id, e.id)
-    conn = post conn, admin_vendor_product_path(conn, :create, v), product: valid_attrs
+    conn = post conn, admin_vendor_product_path(conn, :create, v, activity_id: a.id), product: valid_attrs
 
     product = Repo.get_by(Product, @valid_attrs)
 
@@ -126,8 +129,8 @@ defmodule Grid.Admin.ProductControllerTest do
     assert redirected_to(conn) == admin_vendor_product_path(conn, :show, v, product)
   end
 
-  test "creates parses duration_hours duration_minutes into duration", %{conn: conn, vendor: v} do
-    e = Factory.create(:experience)
+  test "creates parses duration_hours duration_minutes into duration", %{conn: conn, vendor: v, activity: a} do
+    e = Factory.create(:experience, activity: a)
 
     valid_attrs = @valid_attrs
       |> Map.put(:experience_id, e.id)
@@ -135,12 +138,27 @@ defmodule Grid.Admin.ProductControllerTest do
       |> Map.put(:duration_hours, "2")
       |> Map.put(:duration_minutes, "13")
 
-    post conn, admin_vendor_product_path(conn, :create, v), product: valid_attrs
+    post conn, admin_vendor_product_path(conn, :create, v, activity_id: a.id), product: valid_attrs
 
     product = Repo.get_by(Product, @valid_attrs |> Map.delete(:duration))
 
     assert product
     assert product.duration == 2 * 60 + 13
+  end
+
+  test "creates resource and manages amenity options", %{conn: conn, vendor: v, activity: a, amenity_option: ao} do
+    e = Factory.create(:experience, activity: a)
+    valid_attrs = @valid_attrs
+      |> Map.put(:experience_id, e.id)
+      |> Map.put(:amenity_option_id, ["#{ao.id}"])
+
+    conn = post conn, admin_vendor_product_path(conn, :create, v, activity_id: a.id), product: valid_attrs
+
+    product = Repo.get_by(Product, @valid_attrs) |> Repo.preload(:amenity_options)
+
+    assert product
+    assert Enum.any?(product.amenity_options, (&(&1.id == ao.id)))
+    assert redirected_to(conn) == admin_vendor_product_path(conn, :show, v, product)
   end
 
   test "shows chosen resource", %{conn: conn, vendor: v, product: p} do

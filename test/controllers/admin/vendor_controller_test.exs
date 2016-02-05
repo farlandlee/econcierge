@@ -99,9 +99,8 @@ defmodule Grid.Admin.VendorControllerTest do
     assert response =~ "No caption"
   end
 
-  test "shows products", %{conn: conn} do
-    product = Factory.create(:product)
-    vendor = product.vendor
+  test "shows products", %{conn: conn, vendor: vendor} do
+    product = Factory.create(:product, vendor: vendor)
     experience = product.experience
     conn = get conn, admin_vendor_path(conn, :show, vendor, tab: "products")
     response = html_response(conn, 200)

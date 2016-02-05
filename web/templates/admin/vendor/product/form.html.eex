@@ -65,6 +65,33 @@
     <%= error_tag f, :pickup %>
   </div>
 
+  <label>Amenities</label>
+  <div class="form-group row">
+    <%= for amenity <- @amenities do %>
+      <div class="col-sm-4">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <%= amenity.name %>
+          </div>
+          <div class="panel-body">
+            <%= for option <- amenity.amenity_options do %>
+
+              <%= checkbox f, :amenity_option_id,
+                checked_value: option.id,
+                name: "product[amenity_option_id][]",
+                class: "form-control-inline",
+                id: "option-#{option.id}",
+                checked: Enum.any?(f.model.product_amenity_options, (&(&1.amenity_option_id == option.id)))
+              %>
+              <%= label f, :amenity_option_id, option.name, for: "option-#{option.id}" %>
+              <br/>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
   <div class="form-group">
     <%= label f, :published, "Published", class: "control-label" %>
     <%= checkbox f, :published, class: "form-control" %>
