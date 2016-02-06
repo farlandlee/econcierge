@@ -15,4 +15,10 @@ defmodule Grid.VendorTest do
     changeset = Vendor.changeset(%Vendor{}, @invalid_attrs)
     refute changeset.valid?
   end
+
+  test "Changeset with long description" do
+    changeset = Vendor.changeset(%Vendor{},
+      %{@valid_attrs | description: long_string(300)})
+    assert changeset.valid?
+  end
 end

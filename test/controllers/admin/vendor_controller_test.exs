@@ -20,10 +20,8 @@ defmodule Grid.Admin.VendorControllerTest do
     assert response =~ "Vendor Listing"
     assert response =~ "Filter by Activity"
     assert response =~ vendor.name
-    assert response =~ vendor.description
     assert response =~ activity.name
     assert response =~ other_vendor.name
-    assert response =~ other_vendor.description
   end
 
   test "Filters by activity", %{conn: conn, vendor: vendor, activity: activity} do
@@ -34,12 +32,10 @@ defmodule Grid.Admin.VendorControllerTest do
 
     assert response =~ "Vendor Listing"
     assert response =~ vendor.name
-    assert response =~ vendor.description
     assert response =~ "Clear Filter"
     assert response =~ other_activity.name
 
     refute response =~ other_vendor.name
-    refute response =~ other_vendor.description
   end
 
   test "renders form for new resources", %{conn: conn} do

@@ -21,6 +21,7 @@ defmodule Grid.ModelCase do
       import Ecto.Model
       import Ecto.Query, only: [from: 2]
       import Grid.ModelCase
+      import Grid.TestHelper
     end
   end
 

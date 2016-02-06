@@ -30,7 +30,9 @@
   def changeset(model, params \\ :empty) do
     model
     |> cast(params, @required_fields, @optional_fields)
+    |> validate_length(:name, min: 1, max: 255)
     |> unique_constraint(:name)
+    |> validate_length(:description, min: 1)
     |> foreign_key_constraint(:image_id)
     |> cast_slug
   end
