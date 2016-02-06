@@ -24,7 +24,6 @@
   <thead>
     <tr>
       <th>Name</th>
-      <th>Description</th>
       <th>Activities</th>
 
       <th></th>
@@ -34,7 +33,6 @@
   <%= for vendor <- @vendors do %>
     <tr>
       <td><%= link vendor.name, to: admin_vendor_path(@conn, :show, vendor) %></td>
-      <td><%= vendor.description %></td>
       <td><%= vendor.activities |> Grid.AdminView.pretty_name_list %></td>
 
       <td class="text-right">

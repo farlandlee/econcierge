@@ -38,6 +38,7 @@ defmodule Grid.Activity do
     |> update_change(:name, &String.strip/1)
     |> validate_length(:name, min: 1, max: 255)
     |> unique_constraint(:name)
+    |> validate_length(:description, min: 1)
     |> foreign_key_constraint(:default_image_id)
     |> cast_slug
   end

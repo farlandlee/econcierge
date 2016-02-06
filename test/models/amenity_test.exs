@@ -34,7 +34,7 @@ defmodule Grid.AmenityTest do
     assert [name: {"should be at least %{count} character(s)", [count: 1]}] = changeset.errors
 
     changeset = %Amenity{}
-      |> Amenity.changeset(%{@valid_attrs | name: Grid.TestHelper.long_string(300)})
+      |> Amenity.changeset(%{@valid_attrs | name: long_string(300)})
 
     refute changeset.valid?
     assert [name: {"should be at most %{count} character(s)", [count: 255]}] = changeset.errors

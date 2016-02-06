@@ -53,7 +53,7 @@ defmodule Grid.Vendor do
     |> update_change(:name, &String.strip/1)
     |> update_change(:description, &String.strip/1)
     |> validate_length(:name, min: 1, max: 255)
-    |> validate_length(:description, min: 1, max: 255)
+    |> validate_length(:description, min: 1)
     |> foreign_key_constraint(:default_image_id)
     |> cast_slug
   end
