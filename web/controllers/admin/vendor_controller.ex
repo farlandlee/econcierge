@@ -12,7 +12,7 @@ defmodule Grid.Admin.VendorController do
   plug :scrub_params, "vendor" when action in [:create, :update]
   plug Plugs.Breadcrumb, index: Vendor
 
-  @assign_model_actions [:show, :edit, :update, :delete]
+  @assign_model_actions [:show, :edit, :update, :delete, :refresh]
   plug Plugs.AssignModel, Vendor when action in @assign_model_actions
   plug Plugs.Breadcrumb, [show: Vendor] when action in [:show, :edit]
 
@@ -48,6 +48,7 @@ defmodule Grid.Admin.VendorController do
     changeset = Vendor.changeset(%Vendor{}, vendor_params)
     case Repo.insert(changeset) do
       {:ok, vendor} ->
+        TripAdvisor.update_vendor(vendor)
         conn
         |> put_flash(:info, "Vendor created successfully.")
         |> redirect(to: admin_vendor_path(conn, :show, vendor))
@@ -88,6 +89,7 @@ defmodule Grid.Admin.VendorController do
     changeset = Vendor.changeset(vendor, vendor_params)
     case Repo.update(changeset) do
       {:ok, vendor} ->
+        TripAdvisor.update_vendor(vendor)
         conn
         |> put_flash(:info, "Vendor updated successfully.")
         |> redirect(to: admin_vendor_path(conn, :show, vendor))
@@ -102,6 +104,17 @@ defmodule Grid.Admin.VendorController do
     conn
     |> put_flash(:info, "Vendor deleted successfully.")
     |> redirect(to: admin_vendor_path(conn, :index))
+  end
+
+  def refresh(conn, _) do
+    vendor = conn.assigns.vendor
+
+    %{vendor | tripadvisor_should_update: true}
+    |> TripAdvisor.update_vendor()
+
+    conn
+    |> put_flash(:info, "TripAdvisor information updating. Check back soon.")
+    |> redirect(to: admin_vendor_path(conn, :show, vendor))
   end
 
   #############

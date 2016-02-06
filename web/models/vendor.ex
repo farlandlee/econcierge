@@ -11,6 +11,11 @@ defmodule Grid.Vendor do
     field :slug, :string
 
     field :tripadvisor_location_id, :string
+    field :tripadvisor_rating, :float
+    field :tripadvisor_rating_image_url, :string
+    field :tripadvisor_reviews_count, :integer
+    field :tripadvisor_should_update, :boolean,
+      default: false, virtual: true
 
     belongs_to :default_image, {"vendor_images", Image}
     has_many :images, {"vendor_images", Image}, foreign_key: :assoc_id
@@ -38,6 +43,13 @@ defmodule Grid.Vendor do
     |> where([v, va, a], a.id == ^id)
   end
 
+  defp maybe_mark_for_tripadvisor_update(changeset) do
+    case get_change(changeset, :tripadvisor_location_id) do
+      nil -> changeset
+      _location -> changeset |> put_change(:tripadvisor_should_update, true)
+    end
+  end
+
   @required_fields ~w(name description)
   @optional_fields ~w(slug default_image_id tripadvisor_location_id)
 
@@ -54,7 +66,21 @@ defmodule Grid.Vendor do
     |> update_change(:description, &String.strip/1)
     |> validate_length(:name, min: 1, max: 255)
     |> validate_length(:description, min: 1)
+    |> validate_format(:tripadvisor_location_id, ~r/^[^d]/, message: "Cannot start with the letter d")
     |> foreign_key_constraint(:default_image_id)
+    |> maybe_mark_for_tripadvisor_update
     |> cast_slug
+  end
+
+  @required_tripadvisor_fields ~w(
+    tripadvisor_rating
+    tripadvisor_rating_image_url
+    tripadvisor_reviews_count
+  )
+  def tripadvisor_changeset(model, params) do
+    model
+    |> cast(params, @required_tripadvisor_fields, [])
+    |> validate_number(:tripadvisor_rating, less_than_or_equal_to: 5.0, greater_than_or_equal_to: 0.0)
+    |> validate_number(:tripadvisor_reviews_count, greater_than_or_equal_to: 0.0)
   end
 end

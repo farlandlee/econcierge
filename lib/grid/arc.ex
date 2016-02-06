@@ -34,7 +34,7 @@ defmodule Grid.Arc do
         |> Repo.update!
       end
 
-      timeout = Application.get_env(:arc, :version_timeout, 15_000) + 2_000
+      timeout = Grid.get_env(:arc, :version_timeout, 15_000) + 2_000
 
       receive do
         {:DOWN, ^ref, :process, ^pid, :normal} -> :ok

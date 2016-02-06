@@ -1,22 +1,16 @@
 defmodule Grid do
   use Application
 
-  # See http://elixir-lang.org/docs/stable/elixir/Application.html
-  # for more information on OTP Applications
   def start(_type, _args) do
     import Supervisor.Spec, warn: false
 
     children = [
-      # Start the endpoint when the application starts
       supervisor(Grid.Endpoint, []),
-      # Start the Ecto repository
       worker(Grid.Repo, []),
-      # Here you could define other workers and supervisors as children
-      # worker(Grid.Worker, [arg1, arg2, arg3]),
+      worker(TripAdvisor, [])
     ]
 
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html
-    # for other strategies and supported options
     opts = [strategy: :one_for_one, name: Grid.Supervisor]
     Supervisor.start_link(children, opts)
   end
@@ -27,4 +21,36 @@ defmodule Grid do
     Grid.Endpoint.config_change(changed, removed)
     :ok
   end
+
+  @doc """
+  Loads variable from either config or system variable.
+
+  If the value is configured to a `{:system, some_env_var :: string}` tuple in config.exs,
+  the returned value will be the value of `System.get_env(some_env_var)`.
+  """
+  def get_env(key, default \\ nil) do
+    case Application.get_env(:grid, key, default) do
+      {:system, sys_env} -> System.get_env(sys_env) || default
+      result -> result
+    end
+  end
+
+  @doc "wraps `get_env/2` in {:ok, result} tuple or else :error if not found"
+  def fetch_env(key) do
+    case get_env(key, :error) do
+      :error -> :error
+      value -> {:ok, value}
+    end
+  end
+
+  @doc "see fetch_env/1"
+  def fetch_env!(key) do
+    case fetch_env(key) do
+      :error ->
+        raise ArgumentError, message: "No value found for application variable #{key}"
+      result ->
+        result
+    end
+  end
+
 end

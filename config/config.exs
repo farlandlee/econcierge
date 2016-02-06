@@ -7,7 +7,11 @@ use Mix.Config
 
 config :grid,
   env: Mix.env,
-  postmark_server_token: "POSTMARK_API_TEST"
+  # Secrets, tokens, all the good stuff
+  postmark_server_token: "POSTMARK_API_TEST",
+  tripadvisor_api_key: "disabled",
+  google_client_secret: {:system, "GOOGLE_CLIENT_SECRET"},
+  google_client_id: {:system, "GOOGLE_CLIENT_ID"}
 
 # Configures the endpoint
 config :grid, Grid.Endpoint,
@@ -17,7 +21,6 @@ config :grid, Grid.Endpoint,
   render_errors: [accepts: ~w(html json)],
   pubsub: [name: Grid.PubSub,
            adapter: Phoenix.PubSub.PG2]
-
 
 # Configures Elixir's Logger
 config :logger, :console,
