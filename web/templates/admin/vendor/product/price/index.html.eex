@@ -21,7 +21,7 @@
         %{amount: amount, max_quantity: 0} ->
           "$#{amount} (∞)"
           %{amount: amount, max_quantity: max} ->
-            "$#{amount} (< #{max})"
+            "$#{amount} (<= #{max})"
         end)
         |> Enum.join(" | ")
         %>

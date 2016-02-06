@@ -15,7 +15,7 @@
       <%= if amount.max_quantity == 0 do %>
         &infin;
       <% else %>
-        < <%= amount.max_quantity %>
+        <= <%= amount.max_quantity %>
       <% end %>
       </td>
 
