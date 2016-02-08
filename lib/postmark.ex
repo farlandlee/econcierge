@@ -31,7 +31,7 @@ defmodule Postmark do
     headers
     |> Dict.put(:"Accept", "application/json")
     |> Dict.put(:"Content-Type", "application/json")
-    |> Dict.put(:"X-Postmark-Server-Token", Application.get_env(:grid, :postmark_server_token))
+    |> Dict.put(:"X-Postmark-Server-Token", Grid.fetch_env!(:postmark_server_token))
   end
 
   def process_response_body(body) do

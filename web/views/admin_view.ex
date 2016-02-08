@@ -2,7 +2,7 @@ defmodule Grid.AdminView do
   use Grid.Web, :view
 
   def environment_tag do
-    {class, text} = case Application.get_env(:grid, :env) do
+    {class, text} = case Grid.get_env(:env) do
       :prod -> {"text-success", "Production"}
       :dev -> {"", "Development"}
       :test -> {"text-primary", "Test"}

@@ -92,7 +92,8 @@ defmodule Grid.Router do
     end
 
 
-    resources "/vendors", VendorController, [alias: Vendor] do
+    get "/vendors/:id/refresh", VendorController, :refresh
+    resources "/vendors",   VendorController, [alias: Vendor] do
       pipe_through :assign_vendor
 
       resources "/activities", VendorActivityController, [except: [:edit, :update], alias: VendorActivity] do

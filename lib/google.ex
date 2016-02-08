@@ -7,8 +7,8 @@ defmodule Google do
   def client do
     OAuth2.Client.new([
       strategy: __MODULE__,
-      client_id: System.get_env("GOOGLE_CLIENT_ID"),
-      client_secret: System.get_env("GOOGLE_CLIENT_SECRET"),
+      client_id: Grid.fetch_env!(:google_client_id),
+      client_secret: Grid.fetch_env!(:google_client_secret),
       redirect_uri: Helpers.auth_url(Grid.Endpoint, :callback, "google"),
       site: "https://accounts.google.com",
       authorize_url: "https://accounts.google.com/o/oauth2/auth",

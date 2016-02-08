@@ -18,7 +18,30 @@
   </div>
 
   <div class="form-group">
+    <button class="btn btn-xs btn-info" type="button" data-toggle="collapse" data-target="#tripadvisor-help" aria-expanded="false" aria-controls="collapseExample">
+      <span class="glyphicon glyphicon-question-sign"></span>
+    </button>
     <%= label f, :tripadvisor_location_id, "TripAdvisor Location ID", class: "control-label" %>
+    <div class="collapse" id="tripadvisor-help">
+      <div class="well">
+        <p>
+          The TripAdvisor Location ID can be located by visiting the vendor's TripAdvisor page.
+        </p>
+        <p>
+          In the url for the vendor's page will be a string of numbers after the letter <code>d</code>.
+          The string of numbers is the vendor's Location ID,
+          and is what should be copy and pasted into this field.
+        </p>
+        <p>
+          For example, Jackson Hole Anglers' url is
+          <br>
+          <code>www.tripadvisor.com/Attraction_Review-g60491-<b>d1798607</b>-Reviews-Jackson_Hole_Anglers-...</code>
+          <br>
+          Therefore, their TripAdvisor Location ID is <br><code>1798607</code>
+        </p>
+        <p><em>Note the removal of the <code>d</code>!</em></p>
+      </div>
+    </div>
     <%= text_input f, :tripadvisor_location_id, class: "form-control" %>
     <%= error_tag f, :tripadvisor_location_id %>
   </div>

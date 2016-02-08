@@ -25,6 +25,7 @@
     <tr>
       <th>Name</th>
       <th>Activities</th>
+      <th>TripAdvisor</th>
 
       <th></th>
     </tr>
@@ -34,6 +35,11 @@
     <tr>
       <td><%= link vendor.name, to: admin_vendor_path(@conn, :show, vendor) %></td>
       <td><%= vendor.activities |> Grid.AdminView.pretty_name_list %></td>
+      <td>
+      <%= if src = vendor.tripadvisor_rating_image_url do %>
+        <img src="<%=src%>">
+      <% end %>
+      </td>
 
       <td class="text-right">
         <div class="dropdown actions">

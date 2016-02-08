@@ -21,4 +21,10 @@ defmodule Grid.VendorTest do
       %{@valid_attrs | description: long_string(300)})
     assert changeset.valid?
   end
+
+  test "changeset with invalid TripAdvisor location id" do
+    attrs = @valid_attrs |> Map.put(:tripadvisor_location_id, "d123456789")
+    changeset = Vendor.changeset(%Vendor{}, attrs)
+    assert [tripadvisor_location_id: "Cannot start with the letter d"] = changeset.errors
+  end
 end

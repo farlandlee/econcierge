@@ -18,7 +18,8 @@ config :grid, Grid.Endpoint,
   secret_key_base: System.get_env("SECRET_KEY_BASE")
 
 config :grid,
-  postmark_server_token: System.get_env("POSTMARK_SERVER_TOKEN")
+  postmark_server_token: {:system, "POSTMARK_SERVER_TOKEN"},
+  tripadvisor_api_key: {:system, "TRIPADVISOR_API_KEY"}
 
 # Do not print debug messages in production
 config :logger,
