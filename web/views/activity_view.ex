@@ -20,11 +20,4 @@ defmodule Grid.ActivityView do
   def img_for(%Experience{} = experience, opts) do
     img(experience.image, opts)
   end
-
-  def target_path(target, activity, nil) do
-    activity_path(Grid.Endpoint, String.to_existing_atom("#{target}_by_activity_slug"), activity.slug)
-  end
-  def target_path(target, activity, category) do
-    activity_path(Grid.Endpoint, String.to_existing_atom("#{target}_by_activity_and_category_slugs"), activity.slug, category.slug)
-  end
 end
