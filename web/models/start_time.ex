@@ -3,6 +3,14 @@ defmodule Grid.StartTime do
 
   schema "start_times" do
     field :starts_at_time, Ecto.Time
+    
+    field :monday,    :boolean, default: true
+    field :tuesday,   :boolean, default: true
+    field :wednesday, :boolean, default: true
+    field :thursday,  :boolean, default: true
+    field :friday,    :boolean, default: true
+    field :saturday,  :boolean, default: true
+    field :sunday,    :boolean, default: true
 
     belongs_to :product,   Grid.Product
     belongs_to :season,    Grid.Season
@@ -11,7 +19,7 @@ defmodule Grid.StartTime do
   end
 
   @creation_fields ~w(product_id season_id)
-  @required_fields ~w(starts_at_time)
+  @required_fields ~w(starts_at_time monday tuesday wednesday thursday friday saturday sunday)
   @optional_fields ~w(season_id)
 
   @doc """

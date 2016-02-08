@@ -3,6 +3,7 @@
     <tr>
       <th>Season</th>
       <th>Start Time</th>
+      <th>Days of the Week</th>
 
       <th></th>
     </tr>
@@ -12,6 +13,7 @@
     <tr>
       <td><%= start_time.season.name %></td>
       <td><%= start_time.starts_at_time %></td>
+      <td><%= dotw_shortcodes start_time %></td>
 
       <td class="text-right">
         <div class="dropdown actions">

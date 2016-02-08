@@ -14,4 +14,21 @@ defmodule Grid.Dates do
     {"December", "12"},
   ]
   def months, do: @months
+
+  @days [
+    {"Monday", "M"},
+    {"Tuesday", "Tu"},
+    {"Wednesday", "W"},
+    {"Thursday", "Th"},
+    {"Friday", "F"},
+    {"Saturday", "Sa"},
+    {"Sunday", "Su"}
+  ]
+
+  for {day, short} <- @days,
+  a = day |> String.downcase |> String.to_atom do
+
+    def day_abbr(unquote(a)), do: unquote(short)
+
+  end
 end
