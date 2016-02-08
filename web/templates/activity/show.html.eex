@@ -1,7 +1,6 @@
 <div class="page activity">
   <div class="top-row row column">
     <%= form_for @conn, activity_path(@conn, :show), [as: :activity, id: "search_form"], fn f -> %>
-      <%= hidden_input f, :target, value: @target %>
       <div class="row small-collapse">
         <div class="input-group select-activity">
           <span> Choose your </span>
