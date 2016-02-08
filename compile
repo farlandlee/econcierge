@@ -1,0 +1,5 @@
+# Used by phoenix static buildpack to compile assets
+mix deps.client
+cd client && ./node_modules/ember-cli/bin/ember build -prod
+cd .. && brunch build --production
+mix phoenix.digest

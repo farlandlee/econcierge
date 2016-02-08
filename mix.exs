@@ -70,10 +70,32 @@ defmodule Grid.Mixfile do
   # See the documentation for `Mix` for more info on aliases.
   defp aliases do
     [
+      "deps.client": &client_deps/1,
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
       "ecto.seed": ["run priv/repo/seeds.exs"],
-      "s": ["phoenix.server"]
+      "s": [&ember_build/1, "phoenix.server"]
     ]
+  end
+
+  defp client_deps(_) do
+    Mix.Shell.IO.info [:yellow, "npm install"]
+    Mix.Shell.IO.cmd "npm install"
+    Mix.Shell.IO.info [:yellow, "bower install"]
+    Mix.Shell.IO.cmd "bower install"
+
+    Mix.Shell.IO.info [:yellow, "npm install (client)"]
+    Mix.Shell.IO.cmd "cd client && npm install"
+    Mix.Shell.IO.info [:yellow, "bower install (client)"]
+    Mix.Shell.IO.cmd "cd client && bower install"
+
+    Mix.Shell.IO.info [:green, "Done."]
+  end
+
+  defp ember_build(_) do
+    spawn fn ->
+      # I can't believe how easy and awesome this is. <3 erlang processes
+      Mix.Shell.IO.cmd("cd client && ./node_modules/ember-cli/bin/ember build --watch")
+    end
   end
 end

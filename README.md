@@ -10,10 +10,22 @@
 
 ## Installation
 
-*Installing this application requires `elixir`, `node`, `npm`, `postgres` on your system.*
+### Prerequisites
+
+Installing this application requires the following in your system path
+
+- `elixir` (`brew update && brew install elixir`)
+- `postgres`
+* [Git](http://git-scm.com/)
+* [Node.js](http://nodejs.org/) (with NPM)
+* [Bower](http://bower.io/)
+* [Ember CLI](http://www.ember-cli.com/) (only required if you're running the ember app in development mode)
+* [PhantomJS](http://phantomjs.org/)
+
+### Commands
 
 ```sh
-$ npm install      # Install asset build tools
+$ mix deps.client  # Install asset build tools
 $ mix deps.get     # Install application dependencies
 $ mix ecto.create  # Create database
 $ mix ecto.migrate # Run migrations
@@ -21,21 +33,44 @@ $ mix ecto.migrate # Run migrations
 
 ## Developing
 
-  1. Start Phoenix endpoint with `mix phoenix.server`, or `iex -S mix phoenix.server` for the interactive shell.
+  1. Start Phoenix endpoint with `mix s`, or `iex -S mix s` for the interactive shell.
+  This will run both ember and brunch in "watch" modes.
 
 Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+
+### Generators
+
+```sh
+$ mix help | grep gen # Print useful phoenix and ecto code generators.
+$ mix ecto.gen.migration
+$ mix phoenix.gen.html
+/client$ ember g --help
+/client$ ember g component
+/client$ ember g route
+```
 
 ## Testing
 
   1. `mix test`
 
-## Phoenix Links
+## Useful Links
+
+** Phoenix **
 
   * Official website: http://www.phoenixframework.org/
   * Guides: http://phoenixframework.org/docs/overview
   * Docs: http://hexdocs.pm/phoenix
   * Mailing list: http://groups.google.com/group/phoenix-talk
   * Source: https://github.com/phoenixframework/phoenix
+
+** Ember **
+
+  * [ember.js](http://emberjs.com/)
+  * [ember-cli](http://www.ember-cli.com/)
+  * Development Browser Extensions
+  * [ember inspector for chrome](https://chrome.google.com/webstore/detail/ember-inspector/bmdblncegkenkacieihfhpjfppoconhi)
+  * [ember inspector for firefox](https://addons.mozilla.org/en-US/firefox/addon/ember-inspector/)
+
 
 ## Environment variables
 
