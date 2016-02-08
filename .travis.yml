@@ -2,8 +2,6 @@ sudo: false
 language: elixir
 elixir:
   - 1.2.2
-node_js:
-  - "0.12"
 otp_release:
   - 18.2.1
 services:
@@ -36,14 +34,11 @@ install:
 
 script:
   - mix test --trace
-  - cd client && npm test
+  - cd client && npm test && cd ..
 
 deploy:
   provider: heroku
   app: outpost-grid
-  buildpack:
-    - https://github.com/HashNuke/heroku-buildpack-elixir.git
-    - https://github.com/gjaldon/heroku-buildpack-phoenix-static.git
   api_key:
     secure: "f67tbXsrRwjDcCWpo93fJ161X7B3/ufJOLYQEZd9b3o2o37hENdtbbJlWf92YraoVh+pDhug9312Qsb2XiSfLrO4h6t6tQRDyIh9sn5Vnym0u3SKjLDTuhDrUE1YMyzYqcHbhcGWoju4i4pfs2VSFY/5CPmMcvXGShDiy4sRd/jARMuBMWJa0DyRKuC0vxX4tfTS9AJkOxxpRx4f8CUBxC6oQSPffwICJW98+grYcxBdoDb4FsCaPBQGVY33xhfYdHTfqoEb2X4oa+rj9ArTHWG3+Utx+TftK7soy6eFzsXmOrZC3SAwk0xMLJMWrVxlQrj5DLQEk4+5bN2NQakZnY3Gu7Z8YhtrgaYXg821FBvcoE4VoutFM06GY1gM2pkF3BT7bUdE6DhHflL3HYUfZ/J50GBRXwyvJ7t/vOirvWLVIlJhbXe/DfYvFH27idq8KSzn77pb6TYO9Q2tBYKZmkL/qhfELKmeOfhDyzgpys1TH2yCLq02NyQqQzrDGOmTji3+lFL9d3T7iCxhVHp842UKhIamFhdqmb1bTMkESRMAK58qpz5IutYdxc18cNjhW28Dwc9WYGyXStsPDFN+jYQ4yFFhaCLWzGUoIurt/ArRhn4aBB8X7aJ7nyyxMG5YnUanUcPSWY3TmoZLKH/xzBchVbSw2UuajYUHngOwpWo="
   run: "mix ecto.migrate"
