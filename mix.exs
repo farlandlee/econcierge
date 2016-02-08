@@ -95,7 +95,7 @@ defmodule Grid.Mixfile do
   defp ember_build(_) do
     spawn fn ->
       # I can't believe how easy and awesome this is. <3 erlang processes
-      Mix.Shell.IO.cmd("cd client && ./node_modules/ember-cli/bin/ember build --watch")
+      Mix.Shell.IO.cmd("cd client && ./node_modules/ember-cli/bin/ember build --watch --live-reload=false")
     end
   end
 end
