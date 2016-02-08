@@ -81,7 +81,7 @@
                 name: "product[amenity_option_id][]",
                 class: "form-control-inline",
                 id: "option-#{option.id}",
-                checked: Enum.any?(f.model.product_amenity_options, (&(&1.amenity_option_id == option.id)))
+                checked: amenity_option_selected?(f, option)
               %>
               <%= label f, :amenity_option_id, option.name, for: "option-#{option.id}" %>
               <br/>
