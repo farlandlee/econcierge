@@ -39,4 +39,18 @@ defmodule Grid.Admin.Vendor.ProductView do
       to: admin_activity_experience_path(Grid.Endpoint, :show, experience.activity_id, experience)
     )
   end
+
+  def amenity_option_selected?(form, amenity_option) do
+    f = if ids = form.params["amenity_option_id"] do
+      # The user made selections in a previous incarnation
+      # of this form; keep their changes around
+      fn %{id: id} -> (id |> to_string) in ids end
+    else
+      # the user hasn't made any changes, so the product's
+      # amenity options are the ones that are selected
+      model_id = form.model.id
+      fn %{product_id: prod_id} -> prod_id == model_id end
+    end
+    Enum.any?(amenity_option.product_amenity_options, f)
+  end
 end

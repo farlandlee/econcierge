@@ -26,7 +26,7 @@ defmodule Grid.Admin.Vendor.ProductController do
     redirect(conn, to: admin_vendor_path(conn, :show, conn.assigns.vendor, tab: "products"))
 
   def new(conn, %{"activity_id" => _activity_id}) do
-    changeset = Product.changeset(%Product{product_amenity_options: []})
+    changeset = Product.changeset(%Product{})
     render(conn, "new.html", changeset: changeset, )
   end
 
@@ -73,9 +73,7 @@ defmodule Grid.Admin.Vendor.ProductController do
   end
 
   def edit(conn, _) do
-    product = conn.assigns.product |> Repo.preload([:experience, :product_amenity_options])
-    changeset = Product.changeset(product)
-
+    changeset = Product.changeset(conn.assigns.product)
     render(conn, "edit.html", changeset: changeset)
   end
 
@@ -205,8 +203,10 @@ defmodule Grid.Admin.Vendor.ProductController do
       |> Repo.preload(:locations)
 
     add_location = admin_vendor_location_path(conn, :new, vendor)
-    activity = load_activity(conn)
-      |> Repo.preload([:experiences, amenities: :amenity_options])
+    activity = load_activity(conn) |> Repo.preload([
+      :experiences,
+      amenities: [amenity_options: :product_amenity_options]
+    ])
 
     conn
     |> assign(:add_location, add_location)
