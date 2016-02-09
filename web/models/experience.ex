@@ -29,6 +29,12 @@
       where: ec.category_id == ^category_id
   end
 
+  def for_activity(query \\ __MODULE__, activity_id)
+  def for_activity(query, nil), do: query
+  def for_activity(query, activity_id) do
+    where(query, [e], e.activity_id == ^activity_id)
+  end
+
   def with_products(query \\ __MODULE__, product_ids)
   def with_products(query, nil), do: query
   def with_products(query, product_ids) do

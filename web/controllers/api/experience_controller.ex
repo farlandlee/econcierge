@@ -12,6 +12,7 @@ defmodule Grid.API.ExperienceController do
 
   def index(conn, params) do
     experiences = Experience
+      |> Experience.for_activity(params["activity_id"])
       |> Experience.for_category(params["category_id"])
       |> Experience.with_products(conn.assigns.products)
       |> Repo.all

@@ -4,6 +4,6 @@ defmodule Grid.SearchController do
   def index(conn, _) do
     conn
     |> put_resp_header("content-type", "text/html")
-    |> send_file(200, "priv/static/search/index.html")
+    |> send_file(200, "priv/static/explore/index.html")
   end
 end

@@ -13,8 +13,10 @@ erl_crash.dump
 npm-debug.log
 
 # Static artifacts
-node_modules
-bower_components
+node_modules/
+client/node_modules/
+bower_components/
+client/bower_components/
 
 # Since we are building assets from web/static,
 # we ignore priv/static. You may want to comment

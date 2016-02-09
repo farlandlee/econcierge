@@ -53,7 +53,7 @@ defmodule Grid.Router do
 
     get "/", PageController, :index
 
-    get "/search/*path", SearchController, :index
+    get "/explore/:activity_slug/:category_slug/*path", SearchController, :index
 
     scope "/browse" do
       post "/", ActivityController, :show

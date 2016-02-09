@@ -4,7 +4,7 @@ module.exports = function(environment) {
   var ENV = {
     modulePrefix: 'client',
     environment: environment,
-    baseURL: '/search/',
+    baseURL: '/explore/',
     locationType: 'auto',
     EmberENV: {
       FEATURES: {
