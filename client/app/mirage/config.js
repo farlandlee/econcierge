@@ -24,30 +24,5 @@ export default function() {
       - db.{collection}.update(target, attrs)
       - db.{collection}.remove(target)
   */
-  this.get('/activities', function (db, req) {
-    let slug = req.queryParams.slug;
-    return {activity: db.activities.where({slug: slug})};
-  });
-
-  this.get('/categories', function (db, req) {
-    let slug = req.queryParams.slug;
-    let activity_id = req.queryParams.activity_id;
-    return {
-      category: db.categories.where({
-        slug: slug,
-        activity_id: activity_id
-      })
-    };
-  });
-
-  this.get('/experiences', function (db, req) {
-    //@TODO use the other two params
-    // req.queryParams.category_id,
-    // req.queryParams.date
-    return {
-      experiences: db.experiences.where({
-        activity_id: req.queryParams.activity_id
-      })
-    };
-  });
+  this.passthrough('/activities', '/categories', '/experiences');
 }

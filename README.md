@@ -4,7 +4,7 @@
 
 ## Useful Links
 
-- [Invision Mocks](https://projects.invisionapp.com/share/RS5RX2DY6#/screens)
+- [Invision Mocks](https://projects.invisionapp.com/share/3E5XNSPY2)
 - [Design Docs](https://www.lucidchart.com/documents/edit/099b9222-c340-48ed-a5fe-b9a2c60176cf/0?shared=true)
 - [Staging Site](http://outpost-grid.herokuapp.com/)
 - [Rollbar](https://rollbar.com/Outpost/Grid/)

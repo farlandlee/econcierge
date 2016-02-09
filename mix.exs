@@ -73,6 +73,7 @@ defmodule Grid.Mixfile do
   defp aliases do
     [
       "deps.client": &client_deps/1,
+      "test.all": [&test_all/1],
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
       "ecto.seed": ["run priv/repo/seeds.exs"],
@@ -99,5 +100,10 @@ defmodule Grid.Mixfile do
       # I can't believe how easy and awesome this is. <3 erlang processes
       Mix.Shell.IO.cmd("cd client && ./node_modules/ember-cli/bin/ember build --watch --live-reload=false")
     end
+  end
+
+  defp test_all(_) do
+    Mix.Shell.IO.cmd("mix test")
+    Mix.Shell.IO.cmd("cd client && ./node_modules/ember-cli/bin/ember test")
   end
 end
