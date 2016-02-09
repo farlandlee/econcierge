@@ -1,27 +1,10 @@
-
-.input-group.select-activity {
-  margin: 5rem 0 3rem;
-  line-height: 40px;
-  font-size: 1.6rem;
-  color: $dark-gray;
-  font-weight: bold;
-  .chosen-container-single {
-    .chosen-single {
-      padding-right: 8px;
-      font-size: 1.6rem;
-      line-height: 40px;
-      color: $primary-color;
-    }
-  }
-}
-
 .categories {
   .columns {
     text-align: center;
     position: relative;
-
     height: 300px;
-    margin-bottom: 3rem;
+    margin: 0;
+    margin-bottom: rem-calc(168);
     > div {
       max-width: 450px;
       height: 300px;
@@ -30,26 +13,35 @@
       background-position: center;
       background-size: cover;
       position: relative;
-      p:not(.lower-right) {
-          @include center-content();
-          margin: 0;
-          min-width: 350px;
+      color: $white;
+      a,
+      a:hover {
+        color: $white;
+      }
+      &:hover {
+        .category-name {
+          display: none;
+        }
+        .category-description {
+          display: block;
+          position: relative;
+          z-index: 2;
+          min-width: 100%;
+        }
       }
     }
-    &:hover {
-      .lead {
-        display: none;
-      }
-      .category-description {
-        display: block;
-        min-height: 100%;
-        min-width: 100%;
-      }
+  }
+  .category-name {
+    position: relative;
+    z-index: 2;
+    p {
+      font-size: 1.8rem;
     }
   }
   .category-description {
     display: none;
-    font-weight: 600;
+    font-weight: normal;
+    font-size: 1.2rem;
   }
   .lower-right {
     font-weight: bold;

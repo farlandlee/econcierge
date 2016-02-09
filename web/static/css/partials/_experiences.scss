@@ -1,0 +1,142 @@
+.experiences {
+  .select-activity {
+    margin-bottom: 0;
+  }
+}
+
+.experience-label {
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 1.4rem;
+  line-height: 1;
+  margin-bottom: 0.5rem;
+  margin-top: 1rem;
+}
+.experience-title {
+  font-size: 3.2rem;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.experience-description {
+  line-height: 1.2;
+  margin-bottom: 2rem;
+}
+.experience-difficulty-label {
+  line-height: 1;
+  margin-bottom: 0;
+}
+.experience-difficulty {
+  font-weight: bold;
+}
+.other-experiences {
+  .column {
+    margin-bottom: 0.9375rem;
+  }
+}
+.next-experience {
+  margin-bottom: 0.6rem;
+  a {
+    color: $primary-color;
+    font-size: 1.2rem;
+
+    &:hover {
+      color: $button-background-hover;
+    }
+    &:after {
+      content: "\f178";
+      font: normal normal normal 1.2rem/1.6 FontAwesome;
+      display: inline-block;
+      margin-left: 10px;
+      &:hover {
+        color: $button-background-hover;
+      }
+    }
+  }
+}
+.experience-filter {
+  padding: 0 0 0.5rem 0;
+  p {
+    margin-bottom: 0;
+  }
+  a {
+    text-decoration: underline;
+  }
+  label {
+    display: table-cell;
+    text-align: right;
+  }
+  .input-group {
+    margin: 0;
+  }
+  .chosen-single {
+    height: 1.2rem;
+    line-height: 1.2;
+    > div {
+      b {
+        &:after {
+          line-height: 16px;
+        }
+      }
+    }
+  }
+}
+.experience-count {
+  p {
+    width: 100%;
+    span {
+      color: $primary-color;
+      font-weight: bold;
+    }
+  }
+}
+.experience-middle {
+  background-color: $offwhite;
+  padding-bottom: 6rem;
+  padding-top: 1rem;
+}
+
+.experiences {
+  > .columns {
+    margin-bottom: 2rem;
+  }
+}
+.temp-tripadvisor {
+  display: block;
+  margin:0.4rem 0;
+  width: 91px;
+}
+.experience {
+  background-color: $white;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 340px;
+  margin: auto;
+  .experience-header,
+  .experience-body,
+  .experience-footer {
+    margin: 0;
+  }
+  .experience-header {
+    border-bottom: 2px solid $offwhite;
+    padding: 1rem 0.5rem;
+    .vendor-image {
+      border-radius: 100px;
+    }
+    .vendor-name {
+      color: $dark-gray;
+      font-weight: 100;
+      line-height:1.2;
+      margin-bottom: 0.2rem;
+    }
+    .vendor-address {
+      color: $medium-gray;
+      font-weight: 100;
+      font-size: 0.75rem;
+      margin-bottom: 0;
+    }
+  }
+  .experience-body {
+    padding: 1rem;
+  }
+}
