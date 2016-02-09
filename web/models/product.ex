@@ -27,6 +27,56 @@ defmodule Grid.Product do
     timestamps
   end
 
+  #############
+  ## Queries ##
+  #############
+
+  def for_date(query \\ __MODULE__, date)
+  def for_date(query, nil), do: query
+  def for_date(query, %{year: year, month: month, day: day}) do
+    dotw = Calendar.Date.day_of_week_name({year, month, day})
+      |> String.downcase
+      |> String.to_existing_atom
+
+    from p in query,
+      where: p.published == true,
+      join: time in assoc(p, :start_times),
+        where: field(time, ^dotw) == true,
+      join: s in assoc(time, :season),
+        where: (
+        # a normal range, kept within one year
+        # greater than start and less than end
+        # starts before or on date
+        (s.start_date_month < ^month or (s.start_date_month == ^month and s.start_date_day <= ^day))
+        and
+        # ends after or on date
+        (s.end_date_month > ^month or (s.end_date_month == ^month and s.end_date_day >= ^day))
+      )
+      or (
+        # a year that spans a year, like a winter season (nov '15 - feb '16)
+        (s.start_date_month > s.end_date_month or (s.start_date_month == s.end_date_month and s.start_date_day > s.end_date_day))
+        and (
+          # greater than start or less than end
+          # starts on or before date
+          (s.start_date_month < ^month or (s.start_date_month == ^month and s.start_date_day <= ^day))
+          or
+          # ends after date. so, date is in april, season runs from december to may...
+          (s.end_date_month > ^month or (s.end_date_month == ^month and s.end_date_day >= ^day))
+        )
+      )
+  end
+
+  def set_duration_time(model = %__MODULE__{duration: duration}) do
+    hours   = div(duration, 60)
+    minutes = rem(duration, 60)
+    time = %Ecto.Time{hour: hours, min: minutes}
+    %{model | duration_time: time}
+  end
+
+  ##########################################
+  ## Changesets, Constraints, Validations ##
+  ##########################################
+
   defp pickup_and_location_constraints(changeset) do
     pickup   = fetch_field(changeset, :pickup)
     location = fetch_field(changeset, :meeting_location_id)
@@ -38,13 +88,6 @@ defmodule Grid.Product do
       {{:changes, false}, {_, nil}} -> add_error(changeset, :meeting_location_id, "Please supply a meeting location.")
       _  -> changeset
     end
-  end
-
-  def set_duration_time(model = %__MODULE__{duration: duration}) do
-    hours   = div(duration, 60)
-    minutes = rem(duration, 60)
-    time = %Ecto.Time{hour: hours, min: minutes}
-    %{model | duration_time: time}
   end
 
   @creation_fields ~w(vendor_id experience_id)a

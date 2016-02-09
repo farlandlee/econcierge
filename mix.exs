@@ -22,6 +22,7 @@ defmodule Grid.Mixfile do
     [mod: {Grid, []},
      applications: [
        :ex_aws,
+       :calendar,
        :httpoison,
        :phoenix,
        :phoenix_html,
@@ -44,6 +45,7 @@ defmodule Grid.Mixfile do
   defp deps do
     [
       {:arc, "~> 0.2.2"},
+      {:calendar, "~> 0.12.4"},
       {:coverex, "~> 1.4.8", only: :test},
       {:cowboy, "~> 1.0"},
       {:ex_aws, "~> 0.4.10"},

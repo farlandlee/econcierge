@@ -16,6 +16,12 @@ defmodule Grid.Category do
     timestamps
   end
 
+  def by_activity(query \\ __MODULE__, activity_id)
+  def by_activity(query, nil), do: query
+  def by_activity(query, activity_id) do
+    from c in query, where: c.activity_id == ^activity_id
+  end
+
   @creation_fields ~w(activity_id)
   @required_fields ~w(name description)
   @optional_fields ~w(slug)

@@ -1,6 +1,10 @@
   defmodule Grid.Experience do
   use Grid.Web, :model
 
+  import Ecto.Query
+
+  alias Grid.Product
+
   schema "experiences" do
     field :name, :string
     field :description, :string
@@ -12,9 +16,26 @@
     has_many :experience_categories, Grid.ExperienceCategory
     has_many :categories, through: [:experience_categories, :category]
 
-    has_many :products, Grid.Product
+    has_many :products, Product
 
     timestamps
+  end
+
+  def for_category(query \\ __MODULE__, category_id)
+  def for_category(query, nil), do: query
+  def for_category(query, category_id) do
+    from e in query,
+      join: ec in assoc(e, :experience_categories),
+      where: ec.category_id == ^category_id
+  end
+
+  def with_products(query \\ __MODULE__, product_ids)
+  def with_products(query, nil), do: query
+  def with_products(query, product_ids) do
+    from e in query,
+      join: p in Product, on: p.experience_id == e.id,
+      where: p.id in ^product_ids,
+      distinct: true
   end
 
   @creation_fields ~w(activity_id)
@@ -34,7 +55,7 @@
     |> unique_constraint(:name)
     |> validate_length(:description, min: 1)
     |> foreign_key_constraint(:image_id)
-    |> cast_slug
+    |> cast_slug()
   end
 
   def creation_changeset(params, activity_id) do

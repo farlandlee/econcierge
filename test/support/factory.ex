@@ -172,7 +172,39 @@ defmodule Grid.Factory do
     create_start_time(product: create(:product))
   end
 
-  def create_start_time(product: product = %{vendor: v, experience: %{activity: a}}) do
+  def create_start_time(params) when is_list(params) do
+    Enum.into(params, %{}) |> create_start_time
+  end
+
+  def create_start_time(%{season: season, product: product}) do
+    StartTime.creation_changeset(%{
+      starts_at_time: Ecto.Time.utc(:usec)
+    }, product_id: product.id, season_id: season.id)
+    |> Repo.insert!
+    |> Map.put(:product, product)
+    |> Map.put(:season, season)
+  end
+
+  def create_start_time(%{season: season}) do
+    %{vendor_activity: %{vendor: v, activity: a}}
+      = season
+
+    experience = build(:experience)
+      |> Map.put(:activity_id, a.id)
+      |> Repo.insert!
+      |> Map.put(:activity, a.id)
+    product = build(:product)
+      |> Map.put(:vendor_id, v.id)
+      |> Map.put(:experience_id, experience.id)
+      |> Repo.insert!
+      |> Map.put(:vendor, v)
+      |> Map.put(:experience, experience)
+    create_start_time %{season: season, product: product}
+  end
+
+  def create_start_time(%{product: product}) do
+    %{vendor: v, experience: %{activity: a}} = product
+
     vendor_activity = %VendorActivity{
       vendor_id: v.id, activity_id: a.id
       } |> Repo.insert!
@@ -182,11 +214,6 @@ defmodule Grid.Factory do
       |> Map.put(:vendor_activity_id, vendor_activity.id)
       |> Repo.insert!
 
-    StartTime.creation_changeset(%{
-      starts_at_time: Ecto.Time.utc(:usec)
-    }, product_id: product.id, season_id: season.id)
-    |> Repo.insert!
-    |> Map.put(:product, product)
-    |> Map.put(:season, season)
+    create_start_time %{season: season, product: product}
   end
 end
