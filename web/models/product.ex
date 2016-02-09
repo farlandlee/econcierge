@@ -36,7 +36,7 @@ defmodule Grid.Product do
   def for_date(query, %{year: year, month: month, day: day}) do
     dotw = Calendar.Date.day_of_week_name({year, month, day})
       |> String.downcase
-      |> String.to_existing_atom
+      |> String.to_atom
 
     from p in query,
       where: p.published == true,
