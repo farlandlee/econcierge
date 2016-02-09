@@ -7,19 +7,26 @@ defmodule Grid.Admin.Activity.ExperienceController do
   import Ecto.Query
 
   plug Grid.Plugs.PageTitle, title: "Experience"
-  plug Grid.Plugs.Breadcrumb, index: Experience
   plug :scrub_params, "experience" when action in [:create, :update]
+  plug :assign_form_selection_models when action in [:create, :new, :update, :edit]
+
+  plug Grid.Plugs.AssignModel, Experience when action in [:show, :edit, :update, :delete]
+  plug :preload_assocs when action in [:show, :edit, :update]
+
+  plug Grid.Plugs.Breadcrumb, index: Experience
+  plug Grid.Plugs.Breadcrumb, [show: Experience] when action in [:show, :edit]
+
+
+  def index(conn, _), do: redirect_to_experiences_tab(conn)
 
   def new(conn, _params) do
     changeset = Experience.changeset(%Experience{})
-    conn
-    |> assign_form_selection_models
-    |> render("new.html", changeset: changeset)
+    render(conn, "new.html", changeset: changeset)
   end
 
   def create(conn, %{"experience" => experience_params}) do
-    activity = conn.assigns.activity
-    changeset = Experience.creation_changeset(experience_params, activity.id)
+    changeset = experience_params
+      |> Experience.creation_changeset(conn.assigns.activity.id)
 
     {:ok, conn} = Repo.transaction(fn ->
       case Repo.insert(changeset) do
@@ -28,43 +35,35 @@ defmodule Grid.Admin.Activity.ExperienceController do
 
           conn
           |> put_flash(:info, "Experience created successfully.")
-          |> redirect(to: admin_activity_path(conn, :show, activity, tab: "experiences"))
+          |> redirect_to_experiences_tab
         {:error, changeset} ->
-          conn
-          |> assign_form_selection_models
-          |> render("new.html", changeset: changeset)
+          render(conn, "new.html", changeset: changeset)
       end
     end)
 
     conn
   end
 
-  def show(conn, %{"id" => id}) do
-    experience = get_experience_with_assocs(id)
+  def show(conn, _) do
+    experience = conn.assigns.experience
+
     products = experience
       |> assoc(:products)
       |> Repo.alphabetical
       |> preload([:vendor, :activity, :meeting_location])
       |> Repo.all
-    render(conn, "show.html",
-      products: products,
-      experience: experience,
-      page_title: experience.name
-    )
+
+    render(conn, "show.html", products: products, page_title: experience.name)
   end
 
-  def edit(conn, %{"id" => id}) do
-    experience = get_experience_with_assocs(id)
-    changeset = Experience.changeset(experience)
-
-    conn
-    |> assign_form_selection_models
-    |> render("edit.html", changeset: changeset, experience: experience)
+  def edit(conn, _) do
+    changeset = Experience.changeset(conn.assigns.experience)
+    render(conn, "edit.html", changeset: changeset)
   end
 
-  def update(conn, %{"id" => id, "experience" => experience_params}) do
-    experience = get_experience_with_assocs(id)
-    changeset = Experience.changeset(experience, experience_params)
+  def update(conn, %{"experience" => experience_params}) do
+    changeset = conn.assigns.experience
+      |> Experience.changeset(experience_params)
 
     {_, conn} = Repo.transaction(fn ->
       case Repo.update(changeset) do
@@ -73,32 +72,33 @@ defmodule Grid.Admin.Activity.ExperienceController do
 
           conn
           |> put_flash(:info, "Experience updated successfully.")
-          |> redirect(to: admin_activity_path(conn, :show, experience.activity, tab: "experiences"))
+          |> redirect_to_experiences_tab
         {:error, changeset} ->
-          conn
-          |> assign_form_selection_models
-          |> render("edit.html", changeset: changeset, experience: experience)
+          render(conn, "edit.html", changeset: changeset)
       end
     end)
 
     conn
   end
 
-  def delete(conn, %{"id" => id}) do
-    experience = Repo.get!(Experience, id)
-
-    # Here we use delete! (with a bang) because we expect
-    # it to always work (and if it does not, it will raise).
-    Repo.delete!(experience)
+  def delete(conn, _) do
+    Repo.delete!(conn.assigns.experience)
 
     conn
     |> put_flash(:info, "Experience deleted successfully.")
-    |> redirect(to: admin_activity_path(conn, :show, experience.activity_id, tab: "experiences"))
+    |> redirect_to_experiences_tab
   end
 
   #########
   # Helpers
   #########
+
+  defp redirect_to_experiences_tab(conn) do
+    redirect(conn,
+      to: admin_activity_path(conn, :show, conn.assigns.activity,
+        tab: "experiences"
+    ))
+  end
 
   defp manage_associated(experience, relation, key, nil), do:
     manage_associated(experience, relation, key, [])
@@ -112,13 +112,20 @@ defmodule Grid.Admin.Activity.ExperienceController do
     end
   end
 
-  defp assign_form_selection_models(conn) do
+
+  ###########
+  ## Plugs ##
+  ###########
+
+  def assign_form_selection_models(conn, _) do
     conn
     |> assign(:images, conn.assigns.activity |> assoc(:images) |> Repo.all())
     |> assign(:categories, Category |> order_by(:name) |> Repo.all())
   end
 
-  defp get_experience_with_assocs(id) do
-    Repo.get!(Experience, id) |> Repo.preload([:activity, :categories, :image])
+  def preload_assocs(conn, _) do
+    exp = conn.assigns.experience
+      |> Repo.preload([:activity, :categories, :image])
+    assign(conn, :experience, exp)
   end
 end

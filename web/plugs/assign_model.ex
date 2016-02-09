@@ -60,6 +60,9 @@ defmodule Grid.Plugs.AssignModel do
   defp constraint(Grid.Category, conn), do:
     assoc(conn.assigns.activity, :categories)
 
+  defp constraint(Grid.Experience, conn), do:
+    assoc(conn.assigns.activity, :experiences)
+
   defp constraint({table, Grid.Image}, conn) do
     assign = table |> String.split("_") |> hd |> String.to_existing_atom
     assoc(conn.assigns[assign], :images)
