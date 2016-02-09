@@ -1,4 +1,5 @@
 %{"arc": {:hex, :arc, "0.2.3"},
+  "calendar": {:hex, :calendar, "0.12.4"},
   "certifi": {:hex, :certifi, "0.3.0"},
   "connection": {:hex, :connection, "1.0.2"},
   "coverex": {:hex, :coverex, "1.4.8"},
@@ -28,4 +29,5 @@
   "ranch": {:hex, :ranch, "1.2.1"},
   "rollbax": {:hex, :rollbax, "0.5.2"},
   "slugger": {:git, "git://github.com/h4cc/slugger.git", "73f560482cd843ab34efb1f008c724d7b02f408e", []},
-  "ssl_verify_hostname": {:hex, :ssl_verify_hostname, "1.0.5"}}
+  "ssl_verify_hostname": {:hex, :ssl_verify_hostname, "1.0.5"},
+  "tzdata": {:hex, :tzdata, "0.5.6"}}

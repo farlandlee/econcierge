@@ -12,6 +12,10 @@ defmodule Grid.Router do
     plug Plugs.AssignUser
   end
 
+  pipeline :api do
+    plug :accepts, ["json"]
+  end
+
   pipeline :admin do
     plug :put_layout, {Grid.LayoutView, "admin.html"}
     plug Plugs.Authenticate
@@ -66,9 +70,21 @@ defmodule Grid.Router do
     get "/:provider/callback", AuthController, :callback
   end
 
+  scope "/web_api", Grid.API, as: :api do
+    pipe_through :api
+
+    get "/activities", ActivityController, :index
+    get "/activities/:slug", ActivityController, :show
+
+    get "/categories", CategoryController, :index
+    get "/categories/:slug", CategoryController, :show
+
+    get "/experiences", ExperienceController, :index
+    get "/experiences/:slug", ExperienceController, :show
+  end
+
   scope "/admin", Grid.Admin, as: :admin do
-    pipe_through :browser
-    pipe_through :admin
+    pipe_through [:browser, :admin]
 
     get "/", DashboardController, :index
 
