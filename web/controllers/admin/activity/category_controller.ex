@@ -6,7 +6,7 @@ defmodule Grid.Admin.Activity.CategoryController do
   plug Grid.Plugs.PageTitle, title: "Category"
   plug :scrub_params, "category" when action in [:create, :update]
   plug Grid.Plugs.Breadcrumb, index: Category
-  plug Grid.Plugs.AssignModel, Category when action in [:edit, :update, :delete]
+  plug Grid.Plugs.AssignModel, Category when action in [:show, :edit, :update, :delete]
   plug Grid.Plugs.Breadcrumb, [show: Category] when action == :edit
 
   def index(conn, _) do

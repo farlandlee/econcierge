@@ -17,6 +17,11 @@ defmodule Grid.Admin.Activity.ExperienceControllerTest do
     {:ok, experience: e, activity: a}
   end
 
+  test "index redirects to activities experience tab", %{conn: conn, activity: a} do
+    conn = get conn, admin_activity_experience_path(conn, :index, a)
+    assert redirected_to(conn, 302) == admin_activity_path(conn, :show, a, tab: "experiences")
+  end
+
   test "renders form for new resources", %{conn: conn, activity: a} do
     conn = get conn, admin_activity_experience_path(conn, :new, a)
     assert html_response(conn, 200) =~ "New Experience"
