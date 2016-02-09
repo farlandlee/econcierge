@@ -3,20 +3,28 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Client</title>
+    <title>Explore | Outpost | Jackson Hole eConcierge</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     {{content-for "head"}}
 
+    <link rel="icon" href="<%= static_path(@conn, "/favicon.ico") %>" type="image/gif" sizes="16x16">
+
     <link rel="stylesheet" href="assets/vendor.css">
-    <link rel="stylesheet" href="assets/client.css">
+    <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
 
     {{content-for "head-footer"}}
   </head>
   <body>
     {{content-for "body"}}
 
+    <%= render Grid.LayoutView, "_header.html" %>
+
+    <div id="app-bootstrap"></div>
+
+    <%= render Grid.LayoutView, "_footer.html" %>
+    
     <script src="assets/vendor.js"></script>
     <script src="assets/client.js"></script>
 

@@ -80,7 +80,7 @@
             end
           %>
           </ol>
-          <%= render "_header.html", page_title: assigns[:page_title] %>
+          <%= render "_admin_header.html", page_title: assigns[:page_title] %>
 
           <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
           <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>

@@ -1,0 +1,22 @@
+<footer class="page-footer">
+  <div class="row expanded">
+    <div class="small-12 medium-6 large-3 columns">
+      <div class="logo image">
+        <a href="/"><img src="/images/logo-450.png" alt="Outpost"></a>
+      </div>
+    </div>
+    <div class="small-12 medium-6 large-6 columns">
+      <div class="creds">
+        <a href="http://outpostjh.com">Outpost Jackson Hole</a> &bull; <a href="https://goo.gl/maps/PndaX" target="_blank" >70 s. king street jackson, wyoming 83001</a> &bull;
+        <a href="tel:3075904790"><span class="flaticon-telephone5"></span>(307) 690-4790</a> &bull;
+        <a href="mailto:info@outpostjh.com"><span class="flaticon-envelope54"></span>info@outpostjh.com</a> &bull;
+        <span>Copyright &copy; 2015</span>
+      </div>
+    </div>
+    <div class="small-12 medium-6 large-3 columns">
+      <div class="obs-logo image">
+        <a href="/"><img src="/images/obs-logo.png" alt="Re?max Obsidian Real Estate"></a>
+      </div>
+    </div>
+  </div>
+</footer>
