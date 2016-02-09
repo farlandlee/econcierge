@@ -7,5 +7,5 @@
   */
   "disableAnalytics": false,
   "output-path": "../priv/static/search",
-  "liveReload": false
+  "liveReload": true
 }
