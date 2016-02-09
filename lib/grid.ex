@@ -45,12 +45,11 @@ defmodule Grid do
 
   @doc "see fetch_env/1"
   def fetch_env!(key) do
-    case fetch_env(key) do
+    case get_env(key, :error) do
       :error ->
         raise ArgumentError, message: "No value found for application variable #{key}"
-      result ->
-        result
+      value ->
+        value
     end
   end
-
 end
