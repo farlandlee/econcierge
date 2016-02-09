@@ -25,20 +25,14 @@
         class: "chosen-select form-control" %>
   </div>
 
-  <div class="form-group">
-    <h4>Select Product Image</h4>
-    <%= if @images == [] do %>
-      <%= link "Upload images for #{@activity.name} first",
-        to: admin_activity_image_path(Grid.Endpoint, :new, @activity)
-      %>
-    <% end %>
-    <%= for image <- @images do %>
-      <%= radio_button f, :image_id, image.id, id: "image_id_#{image.id}", class: "form-control hidden" %>
-      <label for="<%= "image_id_#{image.id}" %>" class="control-label">
-        <%= Grid.Admin.ImageView.img image %>
-      </label>
-    <% end %>
-  </div>
+  <%= render Grid.Admin.ImageView, "_selector.html",
+    form: f,
+    field: :image_id,
+    images: @images,
+    add_image_link: link(
+      "Upload #{@activity.name} images",
+      to: admin_activity_image_path(Grid.Endpoint, :new, @activity)
+    ) %>
 
   <div class="form-group">
     <%= submit "Submit", class: "btn btn-primary" %>

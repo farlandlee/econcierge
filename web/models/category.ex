@@ -7,6 +7,7 @@ defmodule Grid.Category do
     field :slug, :string
 
     belongs_to :activity, Grid.Activity
+    belongs_to :image, {"activity_images", Grid.Image}
 
     has_many :experience_categories, Grid.ExperienceCategory
     has_many :experiences, through: [:experience_categories, :experience]
@@ -24,7 +25,7 @@ defmodule Grid.Category do
 
   @creation_fields ~w(activity_id)
   @required_fields ~w(name description)
-  @optional_fields ~w(slug)
+  @optional_fields ~w(image_id slug)
 
   @doc """
   Creates a changeset based on the `model` and `params`.
@@ -39,6 +40,7 @@ defmodule Grid.Category do
     |> validate_length(:name, min: 1, max: 255)
     |> unique_constraint(:name, name: :categories_name_activity_id_index)
     |> validate_length(:description, min: 1)
+    |> foreign_key_constraint(:image_id)
     |> cast_slug(constraint_options: [name: :categories_slug_activity_id_index])
   end
 
