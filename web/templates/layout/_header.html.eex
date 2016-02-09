@@ -1,6 +1,27 @@
-<!-- Content Header (Page header) -->
-<section class="content-header">
-  <h1>
-    <%= @page_title || "Outpost" %>
-  </h1>
-</section>
+<header class="page-header">
+  <div class="full-width small-collapse" >
+    <div class="title-bar" data-responsive-toggle="outpostMenu" data-hide-for="large" >
+      <button type="button" class="menu-icon" data-toggle="offCanvas"></button>
+      <div class="title-bar-title">Menu</div>
+      <div class="logo"><a href="/">Outpost</a></div>
+    </div>
+    <div class="top-bar" id="outpostMenu" >
+      <div class="top-bar-left">
+        <ul class="menu" >
+          <li class="logo"><a href="/">Outpost</a></li>
+
+          <li><a href="#">Lodging</a></li>
+          <li><a href="#">Activities</a></li>
+          <li><a href="#">Itineraries</a></li>
+          <li><a href="#">Journal</a></li>
+          <li><a href="#">About Us</a></li>
+        </ul>
+      </div>
+      <div class="top-bar-right">
+        <ul class="menu">
+          <li><a href="#" class="flaticon-calendar146">&nbsp;</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</header>

@@ -39,5 +39,13 @@
     "ember-load-initializers": "^0.5.0",
     "ember-resolver": "^2.0.3",
     "loader.js": "^4.0.0"
+  },
+  "ember-addon": {
+    "paths": [
+      "lib/index-delivery"
+    ]
+  },
+  "dependencies": {
+    "fs-extra": "^0.26.5"
   }
 }
