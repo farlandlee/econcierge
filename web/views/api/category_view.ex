@@ -14,7 +14,8 @@ defmodule Grid.Api.CategoryView do
       id: category.id,
       name: category.name,
       description: category.description,
-      slug: category.slug
+      slug: category.slug,
+      activity: category.activity_id
     }
   end
 end

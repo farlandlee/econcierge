@@ -26,6 +26,7 @@
     </div>
     <div class="row other-experiences">
       {{#each experiences as |otherExperience|}}
+      {{!-- don't render the currently selected category twice --}}
       {{#unless (eq experience.id otherExperience.id)}}
       <div class="column small-12 medium-6 large-3">
         <img src="http://placehold.it/150x150">

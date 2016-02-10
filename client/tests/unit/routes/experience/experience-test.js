@@ -15,6 +15,7 @@ test('it serializes experiences by slug', function(assert) {
   let fakeExperience = {
     get (field) { return field; }
   };
+
   let result = route.serialize(fakeExperience);
   assert.equal(result.experience_slug, 'slug');
 });

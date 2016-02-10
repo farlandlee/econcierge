@@ -4,12 +4,8 @@
     <div class="input-group-field">
       <div class="full-overlay-select" tabindex="0">
         <span class="current">{{category.name}}</span>
-        <ul>
-          <li><a href="/explore/fly_fishing/fly_fishing_full_day/2016-08-01/fly_fishing_experience_1/products#">{{category.name}}</a></li>
-          {{#each categories as |category|}}
-            <li><a href="/explore/fly_fishing/fly_fishing_full_day/2016-08-01/fly_fishing_experience_1/products">{{category.name}}</a></li>
-          {{/each}}
-        </ul>
+        {{category-dropdown activityBinding="activity" categoryBinding="category" dateBinding="date"}}
+
         <div class="full-overlay-black-overlay"></div>
       </div>
     </div>
