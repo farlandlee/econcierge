@@ -1,38 +1,41 @@
 <div class="page activity">
-  <div class="top-row row column">
-    <%= form_for @conn, activity_path(@conn, :show), [as: :activity, id: "search_form"], fn f -> %>
-      <div class="row small-collapse">
+  <div class="top-row row expanded">
+    <%= form_for @conn, activity_path(@conn, :show), [as: :activity, id: "search_form", class: "activity-search"], fn f -> %>
         <div class="input-group select-activity">
           <span> Choose your </span>
-          <%= select(
-            f, :id,
-            Enum.map(@available_activities, &({&1.name, &1.id})),
-            [ class: "input-group-field chosen-select",
-              "data-placeholder": "Rafting, Hiking, Biking, etc.",
-              prompt: "",
-              value: @activity.id,
-              id: :activity_select
-            ])
-          %>
+          <div class="input-group-field" >
+            <%= select(
+              f, :id,
+              Enum.map(@available_activities, &({&1.name, &1.id})),
+              [ prompt: "All Activities",
+                value: @activity.id,
+                id: :activity_select
+              ])
+            %>
+          </div>
           <span>activity</span>
         </div>
-      </div>
     <% end %>
   </div>
-  <div class="row align-justify categories">
-    <%= for category <- @categories do %>
-    <div class="columns small-12 medium-6 large-5" >
-      <%= #img_for item, class: "img-responsive" %>
-      <div style="background-image: url(http://placehold.it/450x300);">
-        <div class="category-name">
-          <p class="lead"><%= category.name %></p>
+  <div class="row">
+    <div class="columns small-12 large-10">
+      <div class="row align-justify categories">
+        <%= for category <- @categories do %>
+        <div class="columns small-12 medium-6 large-5" >
+          <%= #img_for item, class: "img-responsive" %>
+          <div class="row align-middle" style="background-image: url(http://placehold.it/450x300);">
+            <div class="darken-overlay"></div>
+            <div class="category-name column">
+              <p class="lead"><%= category.name %></p>
+            </div>
+            <div class="category-description column">
+              <p><%= link category.description, to: "/experience", class: "full-overlay" %></p>
+            </div>
+            <p class="lower-right">from $350</p>
+          </div>
         </div>
-        <div class="category-description">
-          <p><%= category.description %></p>
-        </div>
-        <p class="lower-right">from $350</p>
+        <% end %>
       </div>
     </div>
-    <% end %>
   </div>
 </div>

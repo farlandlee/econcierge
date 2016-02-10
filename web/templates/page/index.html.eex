@@ -1,153 +1,86 @@
 <div class="home page">
-  <div class="top-row small-collapse home-main">
-    <div class="small-12 medium-12 large-12 xlarge12 xxlarge-12 columns home-main-inner">
-        <div class="search-bar small-12 small-centered medium-10 large-10 xlarge-10 xxlarge-9 columns" id="search-bar">
-          <%= form_for @conn, activity_path(@conn, :show), [as: :activity, id: "search_form"], fn f -> %>
-            <div class="row small-collapse">
-              <div class="small-12 columns">
-                <div class="search-label">Book Your Jackson Hole Trip</div>
-                <div class="search-sublabel">Discover and reserve the opportunities that await you, all in one place</div>
+  <div class="top-row small-collapse home-main expanded row">
+    <div class="darken-overlay"></div>
+    <div class="row align-center align-middle home-main-inner expanded">
+      <div class="small-12 columns search-bar" >
+        <%= form_for @conn, activity_path(@conn, :show), [as: :activity, id: "search_form"], fn f -> %>
+          <div class="row small-collapse align-center expanded">
+            <div class="small-12 columns">
+              <div class="search-label">Book your Jackson Hole Adventure</div>
+              <div class="search-sublabel">Discover &amp; reserve the opportunities that await you, all in one place</div>
+            </div>
+            <div class="shrink columns">
+              <label for="activity[id]">Explore</label>
+              <div class="input-group-field">
+                <%= select(
+                  f, :id,
+                  Enum.map(@available_activities, &({&1.name, &1.id})),
+                  [ prompt: "All Activities" ]
+                  )
+                %>
               </div>
-              <div class="small-12 medium-10 large-8 small-centered">
-                <div class="input-group">
-                  <%= select(
-                    f, :id,
-                    Enum.map(@available_activities, &({&1.name, &1.id})),
-                    [ class: "input-group-field chosen-select",
-                      "data-placeholder": "Browse the different activities in Jackson Hole...",
-                      prompt: ""
-                    ])
-                  %>
-                  <div class="input-group-button">
-                    <%= submit("Explore", class: "button") %>
-                  </div>
-                </div>
+              <div class="input-group-button">
+                <%= submit("Go", class: "button") %>
               </div>
-            </d
-          <% end %>
-        </div>
+            </div>
+          </div>
+        <% end %>
       </div>
     </div>
   </div>
   <div class="home-middle">
-    <div class="row column small-centered">
-      <div class="section-title">Introducing eConcierge</div>
-      <div class="section-subtitle">Search, discover and book the various activities offered in Jackson Hole.</div>
-    </div>
-    <div class="row small-centered large-9 overlays">
-      <div class="column small-8">
-        <div class="double-wide">
-          <div class="overlay-text">
-            <p>Vacation Rentals</p>
-            <p>Book Your stay in Jackson Hole</p>
-          </div>
-        </div>
-      </div>
-      <div class="column small-4">
-        <div class="single-wide">
-          <div class="overlay-text">
-            <p>Whitewater</p>
-            <p>16 Man raft with lunch</p>
-            <p class="small">By Mad River</p>
-          </div>
-        </div>
-      </div>
-      <div class="column small-4">
-        <div class="small-12 light-green big-button">
-          <div class="overlay-text">
-            <p>Unsure what to do?</p>
-            <p class="small">Browse our Itineraries!</p>
-          </div>
-        </div>
-        <div class="small-12 dark-green big-button">
-          <div class="overlay-text">
-            <p>Our Partners</p>
-            <p class="small">Read about our vendors</p>
-          </div>
-        </div>
-      </div>
-      <div class="column small-8">
-        <div class="double-wide">
-          <div class="overlay-text">
-            <p>Scenic Flights</p>
-            <p>Alpenglow Sunset Tour</p>
-            <p class="small">By Fly Jackson Hole</p>
-          </div>
-        </div>
+    <div class="row align-center">
+      <div class="column small-12 large-10">
+        <div class="section-title small-12 column">Introducing eConcierge</div>
+        <div class="section-subtitle small-12 column">Search, discover and book the various activities offered in Jackson Hole.</div>
       </div>
     </div>
-  </div>
-  <div class="home-bottom">
-    <div class="row small-up-1 medium-up-2" data-equalizer data-equalize-on="medium">
-      <div class="column" >
-        <div data-equalizer-watch>
-          <img src="/images/group-river.jpg" alt="">
-          <p class="lead">36 HOURS IN JACKSON HOLE: HERE’S WHAT WE SUGGEST</p>
-          <p class="subheader">Planning a trip to Jackson Hole can be daunting. Here’s a recent traveler’s itinerary. Book the same stay now.</p>
-        </div>
-      </div>
-      <div class="column" >
-        <div data-equalizer-watch>
-          <img src="/images/fish-the-fly.jpg" alt="Fish the Fly">
-          <p class="lead">LOCAL HIGHLIGHT: FISH THE FLY</p>
-          <p class="subheader">FISH ON! Experience Fly Fishing with the local expert, Jason Balough, on the Snake River.</p>
-        </div>
-      </div>
-      <div class="column" >
-        <div data-equalizer-watch>
-          <img src="/images/group-river.jpg" alt="">
-          <p class="lead">36 HOURS IN JACKSON HOLE: HERE’S WHAT WE SUGGEST</p>
-          <p class="subheader">Planning a trip to Jackson Hole can be daunting. Here’s a recent traveler’s itinerary. Book the same stay now.</p>
-        </div>
-      </div>
-      <div class="column" >
-        <div data-equalizer-watch>
-          <img src="/images/fish-the-fly.jpg" alt="Fish the Fly">
-          <p class="lead">LOCAL HIGHLIGHT: FISH THE FLY</p>
-          <p class="subheader">FISH ON! Experience Fly Fishing with the local expert, Jason Balough, on the Snake River.</p>
-        </div>
-      </div>
-    </div>
-    <div class="row small-up-1 medium-up-2 large-up-3" data-equalizer data-equalize-on="medium" >
-      <div class="column" >
-        <div data-equalizer-watch>
-          <img src="/images/fish-the-fly.jpg" alt="Fish the Fly">
-          <p class="lead">LOCAL HIGHLIGHT: FISH THE FLY</p>
-          <p class="subheader">FISH ON! Experience Fly Fishing with the local expert, Jason Balough, on the Snake River.</p>
-        </div>
-      </div>
-      <div class="column" >
-        <div data-equalizer-watch>
-          <img src="/images/group-river.jpg" alt="">
-          <p class="lead">36 HOURS IN JACKSON HOLE: HERE’S WHAT WE SUGGEST</p>
-          <p class="subheader">Planning a trip to Jackson Hole can be daunting. Here’s a recent traveler’s itinerary. Book the same stay now.</p>
-        </div>
-      </div>
-      <div class="column" >
-        <div data-equalizer-watch>
-          <img src="/images/fish-the-fly.jpg" alt="Fish the Fly">
-          <p class="lead">LOCAL HIGHLIGHT: FISH THE FLY</p>
-          <p class="subheader">FISH ON! Experience Fly Fishing with the local expert, Jason Balough, on the Snake River.</p>
-        </div>
-      </div><div class="column" >
-        <div data-equalizer-watch>
-          <img src="/images/fish-the-fly.jpg" alt="Fish the Fly">
-          <p class="lead">LOCAL HIGHLIGHT: FISH THE FLY</p>
-          <p class="subheader">FISH ON! Experience Fly Fishing with the local expert, Jason Balough, on the Snake River.</p>
-        </div>
-      </div>
-      <div class="column" >
-        <div data-equalizer-watch>
-          <img src="/images/group-river.jpg" alt="">
-          <p class="lead">36 HOURS IN JACKSON HOLE: HERE’S WHAT WE SUGGEST</p>
-          <p class="subheader">Planning a trip to Jackson Hole can be daunting. Here’s a recent traveler’s itinerary. Book the same stay now.</p>
-        </div>
-      </div>
-      <div class="column" >
-        <div data-equalizer-watch>
-          <img src="/images/fish-the-fly.jpg" alt="Fish the Fly">
-          <p class="lead">LOCAL HIGHLIGHT: FISH THE FLY</p>
-          <p class="subheader">FISH ON! Experience Fly Fishing with the local expert, Jason Balough, on the Snake River.</p>
+    <div class="row overlays align-center">
+      <div class="small-12 large-11 columns">
+        <div class="row align-center">
+          <div class="column small-8">
+            <div class="double-wide">
+              <div class="overlay-text">
+                <p>Vacation Rentals</p>
+                <p>Book Your stay in Jackson Hole</p>
+              </div>
+              <p class="booking-button"><a href="#">Book Now</a></p>
+            </div>
+          </div>
+          <div class="column small-4">
+            <div class="single-wide">
+              <div class="overlay-text">
+                <p>Whitewater</p>
+                <p>16 Man raft with lunch</p>
+                <p class="small">By Mad River</p>
+              </div>
+              <p class="booking-button"><a href="#">Request to Book</a></p>
+            </div>
+          </div>
+          <div class="column small-4">
+            <div class="small-12 light-green big-button">
+              <div class="overlay-text">
+                <p>Unsure what to do?</p>
+                <p class="small">Browse our Itineraries!</p>
+              </div>
+            </div>
+            <div class="small-12 dark-green big-button">
+              <div class="overlay-text">
+                <p>Our Partners</p>
+                <p class="small">Read about our vendors</p>
+              </div>
+            </div>
+          </div>
+          <div class="column small-8">
+            <div class="double-wide">
+              <div class="overlay-text">
+                <p>Scenic Flights</p>
+                <p>Alpenglow Sunset Tour</p>
+                <p class="small">By Fly Jackson Hole</p>
+              </div>
+              <p class="booking-button"><a href="#">Request to Book</a></p>
+            </div>
+          </div>
         </div>
       </div>
     </div>

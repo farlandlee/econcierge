@@ -6,6 +6,33 @@
   }
 }
 
+.darken-overlay {
+  background: rgba(0,0,0,.35);
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index:0;
+}
+
+.booking-button {
+  position:absolute;
+  bottom: 1.0rem;
+  left: 0.8rem;
+  a {
+    padding:0.5rem 1.6rem;
+    background-color: $primary-color;
+    color: $white;
+    text-transform: uppercase;
+    font-size: 0.6rem;
+    font-weight: bold;
+    &:hover {
+      background-color: $button-background-hover;
+    }
+  }
+}
+
 .small {
   font-size: 80%;
 }
@@ -32,6 +59,7 @@
   font-size: 2.4rem;
   line-height: 3.6rem;
   text-align: center;
+  display: block;
 }
 .section-subtitle {
   color: $medium-gray;
@@ -53,6 +81,53 @@
     }
   }
 }
+.activity-search {
+  width: 100%;
+}
+.select-activity {
+  border-bottom: 1px solid $medium-gray;
+  padding: 0.4rem 2rem;
+  margin: 0 0 4.8rem;
+  line-height: 40px;
+  font-size: 1.6rem;
+  color: $dark-gray;
+  width: 100%;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.input-group-field {
+  display: inline-block;
+  margin-bottom:0;
+  line-height: 1;
+  background-color: transparent;
+  position: relative;
+  &:after {
+    content: "\f107";
+    font: normal normal normal 2.4rem/1 FontAwesome;
+    display: inline-block;
+    position:absolute;
+    right: 0.5rem;
+    top: 0;
+    z-index: 1;
+  }
+  select {
+    background-color: transparent;
+    border: 0;
+    background-image: none !important;
+    display: inline-block;
+    margin: 0;
+    font-size: 1.6rem;
+    position: relative;
+    z-index: 2;
+    padding: 0;
+    border: 0;
+    padding-left: 0.6rem;
+    padding-right: 2.4rem;
+    text-decoration: underline;
+  }
+}
+
 .overlays {
   .column {
     position:relative;
@@ -62,17 +137,19 @@
   p {
     margin-bottom: 0;
   }
-  .single-wide,
-  .double-wide {
-    height: 300px;
-    position: relative;
-  }
   .single-wide {
     background: url(http://placehold.it/330x300) no-repeat center center;
   }
   .double-wide {
     background: url(http://placehold.it/690x300) no-repeat center center;
   }
+  .single-wide,
+  .double-wide {
+    height: 300px;
+    position: relative;
+    background-size: cover;
+  }
+
 }
 .overlay-text {
   @include center-content();
@@ -80,6 +157,7 @@
   color: $white;
   font-weight: bold;
   text-align:center;
+  min-width: 90%;
 }
 .lead {
   text-transform: uppercase;
@@ -122,7 +200,6 @@ a.more-info {
 }
 
 .chosen-container-single {
-  //max-width: 140px;
   display:table-cell;
   width: auto;
   .chosen-single {
@@ -135,7 +212,7 @@ a.more-info {
     border: 0;
     background-color: transparent;
     span {
-      margin-right: 10px;
+      margin-right: 16px;
     }
     > div {
       b {

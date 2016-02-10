@@ -9,6 +9,10 @@ defmodule Grid.ActivityController do
     :categories_by_activity_slug
   ]
 
+  def index(conn, _params) do
+    render(conn, "index.html")
+  end
+
   def show(conn, %{"activity" => %{"id" => ""}}), do: redirect(conn, to: page_path(conn, :index))
   def show(conn, %{"activity" => %{"id" => id}}) do
     activity_slug = Repo.one!(from a in Activity, where: a.id == ^id, select: a.slug)

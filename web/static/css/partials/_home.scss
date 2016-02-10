@@ -1,18 +1,16 @@
 div.home-main {
   margin-bottom: 0;
   width: 100%;
-  height: 100vh;
+  height: 80vh;
   background: url('/images/canoe-home.jpg') no-repeat top center;
   background-size: cover;
   position: relative;
 }
+
 .home-main-inner {
-  background: rgba(0,0,0,.35);
-  height: 100%;
-  width: 100%;
-  position: absolute;
-  right: 0;
-  top: 0;
+  position: relative;
+  z-index:1;
+  width:100%;
 }
 
 .home-middle {
@@ -35,16 +33,17 @@ div.home-main {
 .search-sublabel {
   text-align: center;
   line-height: 1;
-    font-weight: normal;
+  font-weight: normal;
 }
 
 .search-label {
-  font-size: 4.2rem;
-  padding-bottom: 0.5rem;
+  font-size: 3.7rem;
+  padding-bottom: 0rem;
+  font-weight: bold;
 }
 .search-sublabel {
   font-size: 1.6rem;
-  padding-bottom: 1.6rem;
+  padding-bottom: 1.8rem;
   text-align: center;
 }
 
@@ -62,48 +61,53 @@ div.home-main {
     }
   }
 }
-.search-bar {
-  @include center-content();
-  padding-left: 1rem;
-  padding-right: 1rem;
-  padding-bottom: 0.9375rem * 2;
-  color: $white;
-  margin-bottom: 0;
 
-  .input-group {
-    margin-bottom:0;
-    padding: 1rem;
-    border: 2px solid $white;
-    border-radius: 6px;
-  }
-
-  .button {
-    padding: 0.5rem 2rem;
-    text-transform: uppercase;
-    font-size: 1.2rem;
-    font-weight: bold;
-    letter-spacing: 0.5px;
-  }
-}
 
 .home {
-  .chosen-container-single {
-    @extend .chosen-container-single;
-    max-width: none;
-    min-width: 600px;
-    .chosen-single {
-      &.chosen-default {
-        color: $white;
-        font-style: italic;
-        font-size: 1.2rem;
-        font-weight: 100;
-        > div {
-          display: none;
-        }
-        span {
-          margin-right: 0;
-        }
-      }
+  .search-bar {
+    //@include center-content();
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-bottom: 0.9375rem * 2;
+    color: $white;
+    margin-bottom: 0;
+    font-size: 1.6rem;
+
+    label {
+      color: $white;
+      font-size: 1.6rem;
+      line-height: 2.4rem;
+      padding: 1.6rem 2rem;
+      display:inline-block;
+    }
+    .input-group-button {
+      padding: 1.6rem 2rem;
+      display: inline-block;
+    }
+    .button {
+      padding: 0.8rem 2.4rem;
+      text-transform: uppercase;
+      font-size: 1.6rem;
+      font-weight: bold;
+      letter-spacing: 0.5px;
+      border-radius: 6px;
+    }
+  }
+  .input-group-field {
+    color: $white;
+    border: 2px solid $white;
+    border-radius: 6px;
+    padding: 1rem;
+    height: rem-calc(80);
+    width: 320px;
+    &:after {
+      top: 1rem;
+    }
+    select {
+      color: $white;
+      padding-left: 0;
+      text-decoration: none;
+      width: 300px;
     }
   }
 }
