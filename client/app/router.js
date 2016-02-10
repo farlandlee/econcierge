@@ -6,11 +6,10 @@ const Router = Ember.Router.extend({
 });
 
 Router.map(function() {
-  this.route('activity', {path: ':activity_slug'}, function () {
-    this.route('category', {path: ':category_slug'}, function () {
-      this.route('experience', {path: ':date'}, function() {
-        this.route('product', {path: ':experience_slug'});
-      });
+  this.route('experiences', {path: ':activity_slug/:category_slug/:date'}, function () {
+    this.route('index', {path: '/'});
+    this.route('experience', {path: ':experience_slug'}, function () {
+      this.route('products');
     });
   });
 });

@@ -1,0 +1,17 @@
+<div class="top-row row expanded">
+  <form class="activity-search">
+    <div class="input-group select-activity">
+      <span> Choose your </span>
+      <div class="input-group-field">
+        <select>
+          <option>{{category.name}}</option>
+          {{#each categories as |category|}}
+          <option>{{category.name}}</option>
+          {{/each}}
+        </select>
+      </div>
+      <span>experience</span>
+    </div>
+  </form>
+</div>
+{{outlet}}

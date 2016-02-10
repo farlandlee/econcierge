@@ -11,22 +11,30 @@
 
     <link rel="icon" href="<%= static_path(@conn, "/favicon.ico") %>" type="image/gif" sizes="16x16">
 
-    <link rel="stylesheet" href="assets/vendor.css">
+    <link rel="stylesheet" href="<%= static_path(@conn, "/explore/assets/vendor.css") %>">
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
 
     {{content-for "head-footer"}}
   </head>
   <body>
-    {{content-for "body"}}
+    <div class="off-canvas-wrapper">
+      <div class="off-canvas-wrapper-inner" data-off-canvas-wrapper>
+        <%= render Grid.LayoutView, "_off_canvas_menu.html" %>
+        <div class="off-canvas-content" data-off-canvas-content>
+          {{content-for "body"}}
 
-    <%= render Grid.LayoutView, "_header.html" %>
+          <%= render Grid.LayoutView, "_header.html" %>
 
-    <div id="app-bootstrap"></div>
+          <div id="app-bootstrap"></div>
 
-    <%= render Grid.LayoutView, "_footer.html" %>
-    
-    <script src="assets/vendor.js"></script>
-    <script src="assets/client.js"></script>
+          <%= render Grid.LayoutView, "_footer.html" %>
+        </div>
+      </div>
+    </div>
+
+    <%= render Grid.LayoutView, "_footer_scripts.html", conn: @conn %>
+    <script src="<%= static_path(@conn, "/explore/assets/vendor.js") %>"></script>
+    <script src="<%= static_path(@conn, "/explore/assets/client.js") %>"></script>
 
     {{content-for "body-footer"}}
   </body>

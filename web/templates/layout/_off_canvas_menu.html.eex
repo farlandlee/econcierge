@@ -1,0 +1,10 @@
+<div class="off-canvas position-left" id="offCanvas" data-off-canvas>
+  <ul class="mobile-ofc vertical menu" >
+    <li class="menu-text logo"><a href="/">Home</a></li>
+    <li><a href="#">Reservations</a></li>
+    <li><a href="#">Vacation Rentals</a></li>
+    <li><a href="#">Journal</a></li>
+    <li><a href="#">About Us</a></li>
+    <li><a href="#" class="flaticon-calendar146">&nbsp;</a></li>
+  </ul>
+</div>

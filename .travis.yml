@@ -33,7 +33,7 @@ install:
   - mix ecto.migrate
 
 script:
-  - mix test --trace
+  - mix test
   - cd client && npm test && cd ..
 
 deploy:

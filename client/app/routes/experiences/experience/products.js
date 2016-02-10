@@ -1,7 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
-  serialize (model) {
-    return {experience_slug: model.get('slug')};
+  model: function () {
+    return [1,2,3,4,5,6];
   }
 });
