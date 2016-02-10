@@ -5,6 +5,7 @@ defmodule Grid.Admin.Activity.CategoryController do
 
   plug Grid.Plugs.PageTitle, title: "Category"
   plug :scrub_params, "category" when action in [:create, :update]
+  plug :assign_form_selection_models when action in [:create, :new, :update, :edit]
   plug Grid.Plugs.Breadcrumb, index: Category
   plug Grid.Plugs.AssignModel, Category when action in [:show, :edit, :update, :delete]
   plug Grid.Plugs.Breadcrumb, [show: Category] when action == :edit
@@ -61,5 +62,18 @@ defmodule Grid.Admin.Activity.CategoryController do
     conn
     |> put_flash(:info, "Category deleted successfully.")
     |> redirect(to: admin_activity_path(conn, :show, conn.assigns.activity, tab: "categories"))
+  end
+
+  ###########
+  ## Plugs ##
+  ###########
+
+  def assign_form_selection_models(conn, _) do
+    images = conn.assigns.activity
+      |> assoc(:images)
+      |> Repo.all()
+
+    conn
+    |> assign(:images, images)
   end
 end

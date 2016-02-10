@@ -1,0 +1,14 @@
+<div class="form-group">
+  <h4>Select Image</h4>
+
+  <%= if @images == [] do %>
+    <%= @add_image_link %>
+  <% else %>
+    <%= for image <- @images do %>
+      <%= radio_button @form, @field, image.id, id: "#{@field}_#{image.id}", class: "form-control hidden" %>
+      <label for="<%= "image_id_#{image.id}" %>" class="control-label">
+        <%= Grid.Admin.ImageView.img image %>
+      </label>
+    <% end %>
+  <% end %>
+</div>

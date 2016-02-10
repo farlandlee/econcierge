@@ -17,6 +17,15 @@
     <%= error_tag f, :description %>
   </div>
 
+  <%= render Grid.Admin.ImageView, "_selector.html",
+    form: f,
+    field: :image_id,
+    images: @images,
+    add_image_link: link(
+      "Upload #{@activity.name} images",
+      to: admin_activity_image_path(Grid.Endpoint, :new, @activity)
+    ) %>
+
   <div class="form-group">
     <%= submit "Submit", class: "btn btn-primary" %>
     <%= link "Cancel", to: @back, class: "btn btn-default" %>

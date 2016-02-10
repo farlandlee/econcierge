@@ -23,7 +23,19 @@ defmodule Grid.Admin.Activity.CategoryControllerTest do
 
   test "renders form for new resources", %{conn: conn, activity: activity} do
     conn = get conn, admin_activity_category_path(conn, :new, activity)
-    assert html_response(conn, 200) =~ "New Category"
+
+    response = html_response(conn, 200)
+    assert response =~ "New Category"
+    assert response =~ "Upload #{activity.name} images"
+  end
+
+  test "renders form for new resources with images", %{conn: conn, activity: activity} do
+    image = Factory.create_activity_image(assoc_id: activity.id)
+    conn = get conn, admin_activity_category_path(conn, :new, activity)
+
+    response = html_response(conn, 200)
+    assert response =~ "New Category"
+    assert response =~ image.alt
   end
 
   test "creates resource and redirects when data is valid", %{conn: conn, activity: activity} do

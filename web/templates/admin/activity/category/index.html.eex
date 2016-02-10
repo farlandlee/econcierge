@@ -4,6 +4,7 @@
       <th>Name</th>
       <th>Description</th>
       <th>Slug</th>
+      <th>Image</th>
 
       <th></th>
     </tr>
@@ -14,6 +15,7 @@
       <td><%= category.name %></td>
       <td><%= category.description %></td>
       <td><code><%= category.slug %></code></td>
+      <td><%= Grid.Admin.ImageView.filename category.image %></td>
 
       <td class="text-right">
         <div class="dropdown actions">

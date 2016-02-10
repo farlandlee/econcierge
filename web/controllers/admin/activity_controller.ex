@@ -38,7 +38,7 @@ defmodule Grid.Admin.ActivityController do
       |> Repo.preload([
         :amenities,
         :images,
-        :categories,
+        [categories: :image],
         [experiences: [:categories, :image]]
       ])
 
