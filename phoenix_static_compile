@@ -1,4 +1,0 @@
-# Used by phoenix static buildpack to compile assets
-# mix deps.client already ran in elixir_buildpack.config
-brunch build --production
-mix phoenix.digest

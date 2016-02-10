@@ -1,0 +1,16 @@
+# install ember assets
+mix deps.client
+
+# Build ember assets
+cd client
+./node_modules/ember-cli/bin/ember build -prod
+cd ..
+
+# Compile app
+mix compile || exit 1
+
+# Compile other assets
+brunch build --production
+
+# Digest assets
+mix phoenix.digest
