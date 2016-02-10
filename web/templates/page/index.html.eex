@@ -85,4 +85,79 @@
       </div>
     </div>
   </div>
+  <div class="home-bottom">
+    <div class="row small-up-1 medium-up-2" data-equalizer data-equalize-on="medium">
+      <div class="column" >
+        <div data-equalizer-watch>
+          <img src="/images/group-river.jpg" alt="">
+          <p class="lead">36 HOURS IN JACKSON HOLE: HERE’S WHAT WE SUGGEST</p>
+          <p class="subheader">Planning a trip to Jackson Hole can be daunting. Here’s a recent traveler’s itinerary. Book the same stay now.</p>
+        </div>
+      </div>
+      <div class="column" >
+        <div data-equalizer-watch>
+          <img src="/images/fish-the-fly.jpg" alt="Fish the Fly">
+          <p class="lead">LOCAL HIGHLIGHT: FISH THE FLY</p>
+          <p class="subheader">FISH ON! Experience Fly Fishing with the local expert, Jason Balough, on the Snake River.</p>
+        </div>
+      </div>
+      <div class="column" >
+        <div data-equalizer-watch>
+          <img src="/images/group-river.jpg" alt="">
+          <p class="lead">36 HOURS IN JACKSON HOLE: HERE’S WHAT WE SUGGEST</p>
+          <p class="subheader">Planning a trip to Jackson Hole can be daunting. Here’s a recent traveler’s itinerary. Book the same stay now.</p>
+        </div>
+      </div>
+      <div class="column" >
+        <div data-equalizer-watch>
+          <img src="/images/fish-the-fly.jpg" alt="Fish the Fly">
+          <p class="lead">LOCAL HIGHLIGHT: FISH THE FLY</p>
+          <p class="subheader">FISH ON! Experience Fly Fishing with the local expert, Jason Balough, on the Snake River.</p>
+        </div>
+      </div>
+    </div>
+    <div class="row small-up-1 medium-up-2 large-up-3" data-equalizer data-equalize-on="medium" >
+      <div class="column" >
+        <div data-equalizer-watch>
+          <img src="/images/fish-the-fly.jpg" alt="Fish the Fly">
+          <p class="lead">LOCAL HIGHLIGHT: FISH THE FLY</p>
+          <p class="subheader">FISH ON! Experience Fly Fishing with the local expert, Jason Balough, on the Snake River.</p>
+        </div>
+      </div>
+      <div class="column" >
+        <div data-equalizer-watch>
+          <img src="/images/group-river.jpg" alt="">
+          <p class="lead">36 HOURS IN JACKSON HOLE: HERE’S WHAT WE SUGGEST</p>
+          <p class="subheader">Planning a trip to Jackson Hole can be daunting. Here’s a recent traveler’s itinerary. Book the same stay now.</p>
+        </div>
+      </div>
+      <div class="column" >
+        <div data-equalizer-watch>
+          <img src="/images/fish-the-fly.jpg" alt="Fish the Fly">
+          <p class="lead">LOCAL HIGHLIGHT: FISH THE FLY</p>
+          <p class="subheader">FISH ON! Experience Fly Fishing with the local expert, Jason Balough, on the Snake River.</p>
+        </div>
+      </div><div class="column" >
+        <div data-equalizer-watch>
+          <img src="/images/fish-the-fly.jpg" alt="Fish the Fly">
+          <p class="lead">LOCAL HIGHLIGHT: FISH THE FLY</p>
+          <p class="subheader">FISH ON! Experience Fly Fishing with the local expert, Jason Balough, on the Snake River.</p>
+        </div>
+      </div>
+      <div class="column" >
+        <div data-equalizer-watch>
+          <img src="/images/group-river.jpg" alt="">
+          <p class="lead">36 HOURS IN JACKSON HOLE: HERE’S WHAT WE SUGGEST</p>
+          <p class="subheader">Planning a trip to Jackson Hole can be daunting. Here’s a recent traveler’s itinerary. Book the same stay now.</p>
+        </div>
+      </div>
+      <div class="column" >
+        <div data-equalizer-watch>
+          <img src="/images/fish-the-fly.jpg" alt="Fish the Fly">
+          <p class="lead">LOCAL HIGHLIGHT: FISH THE FLY</p>
+          <p class="subheader">FISH ON! Experience Fly Fishing with the local expert, Jason Balough, on the Snake River.</p>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
