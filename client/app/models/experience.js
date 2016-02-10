@@ -5,5 +5,6 @@ export default DS.Model.extend({
   description: DS.attr(),
   slug: DS.attr(),
   image: DS.attr(),
-  activity: DS.belongsTo('activity')
+  activity: DS.belongsTo('activity'),
+  categories: DS.hasMany('category')
 });

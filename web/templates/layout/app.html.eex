@@ -15,28 +15,16 @@
   <body>
     <div class="off-canvas-wrapper">
       <div class="off-canvas-wrapper-inner" data-off-canvas-wrapper>
-        <div class="off-canvas position-left" id="offCanvas" data-off-canvas>
-          <ul class="mobile-ofc vertical menu" >
-            <li class="menu-text logo"><a href="/">Home</a></li>
-            <li><a href="#">Reservations</a></li>
-            <li><a href="#">Vacation Rentals</a></li>
-            <li><a href="#">Journal</a></li>
-            <li><a href="#">About Us</a></li>
-            <li><a href="#" class="flaticon-calendar146">&nbsp;</a></li>
-          </ul>
-        </div>
+        <%= render "_off_canvas_menu.html" %>
         <div class="off-canvas-content" data-off-canvas-content>
           <%= render "_header.html" %>
 
           <%= render @view_module, @view_template, assigns %>
 
           <%= render "_footer.html" %>
-          <script src="<%= static_path(@conn, "/js/vendor.js") %>"></script>
-          <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
-          <script src="https://use.typekit.net/fal4rbd.js"></script>
-          <script>try{Typekit.load({ async: true });}catch(e){}</script>
         </div>
       </div>
     </div>
+    <%= render "_footer_scripts.html", conn: @conn %>
   </body>
 </html>

@@ -1,0 +1,55 @@
+<div class="row selected-experience">
+  <div class="columns small-12 medium-7">
+    <img src="http://placehold.it/810X630">
+  </div>
+  <div class="columns small-12 medium-5">
+    <p class="experience-label">Experience:</p>
+    <p class="experience-title">{{experience.name}}</p>
+    <p class="experience-description">{{experience.description}}</p>
+    {{!--<div class="row">
+      <div class="columns">
+        <p class="experience-difficulty-label">Difficulty Level</p>
+        <p class="experience-difficulty">{{experience.difficulty}}</p>
+      </div>
+    </div>
+    --}}
+    <div class="row">
+      <div class="columns">
+        <p class="next-experience" ><a href="#">View next experience</a></p>
+      </div>
+    </div>
+
+    <div class="row align-right">
+      <div class="columns shrink">
+        <p class="align-right">Other {{activeCategoryName}} Experiences:</p>
+      </div>
+    </div>
+    <div class="row other-experiences">
+      {{#each experiences as |otherExperience|}}
+      {{#unless (eq experience.id otherExperience.id)}}
+      <div class="column small-12 medium-6 large-3">
+        <img src="http://placehold.it/150x150">
+      </div>
+      {{/unless}}
+      {{/each}}
+    </div>
+  </div>
+</div>
+<div class="row experience-filter align-justify">
+  <div class="column small-12 large-2">
+    <p class="filter-search"><a href="#">Filter Search</a></p>
+  </div>
+  <div class="column small-12 medium-2 large-2">
+    <form>
+      <div class="row small-collapse">
+        <div class="input-group">
+          <label> Sort By: </label>
+          <select class="input-group-field chosen-select" name="" >
+            <option value="1">Vendor</option>
+            <option value="2">Price</option></select>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+{{outlet}}

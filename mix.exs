@@ -73,7 +73,8 @@ defmodule Grid.Mixfile do
   defp aliases do
     [
       "deps.client": &client_deps/1,
-      "test.all": [&test_all/1],
+      "test.all": [&mix_test/1, "test.client"],
+      "test.client": [&test_client/1],
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
       "ecto.seed": ["run priv/repo/seeds.exs"],
@@ -96,14 +97,18 @@ defmodule Grid.Mixfile do
   end
 
   defp ember_build(_) do
-    spawn fn ->
+    spawn_link fn ->
       # I can't believe how easy and awesome this is. <3 erlang processes
-      Mix.Shell.IO.cmd("cd client && ./node_modules/ember-cli/bin/ember build --watch")
+      0 = Mix.Shell.IO.cmd("cd client && ./node_modules/ember-cli/bin/ember build --watch")
     end
   end
 
-  defp test_all(_) do
+  defp mix_test(_) do
+    #use cmd to avoid MIX_ENV errors from running the task directly
     Mix.Shell.IO.cmd("mix test")
+  end
+
+  defp test_client(_) do
     Mix.Shell.IO.cmd("cd client && ./node_modules/ember-cli/bin/ember test")
   end
 end
