@@ -9,6 +9,9 @@ defmodule Grid.Vendor do
     field :name, :string
     field :description, :string
     field :slug, :string
+    field :notification_email, :string
+    field :cancellation_policy_days, :integer
+    field :admin_notes, :string
 
     field :tripadvisor_location_id, :string
     field :tripadvisor_rating, :float
@@ -51,7 +54,7 @@ defmodule Grid.Vendor do
   end
 
   @required_fields ~w(name description)
-  @optional_fields ~w(slug default_image_id tripadvisor_location_id)
+  @optional_fields ~w(slug default_image_id tripadvisor_location_id notification_email cancellation_policy_days admin_notes)
 
   @doc """
   Creates a changeset based on the `model` and `params`.
@@ -66,6 +69,8 @@ defmodule Grid.Vendor do
     |> update_change(:description, &String.strip/1)
     |> validate_length(:name, min: 1, max: 255)
     |> validate_length(:description, min: 1)
+    |> validate_length(:notification_email, min: 1, max: 255)
+    |> validate_format(:notification_email, ~r/(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)/)
     |> validate_format(:tripadvisor_location_id, ~r/^[^d]/, message: "Cannot start with the letter d")
     |> foreign_key_constraint(:default_image_id)
     |> maybe_mark_for_tripadvisor_update
