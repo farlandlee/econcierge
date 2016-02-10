@@ -13,8 +13,32 @@
 
   <div class="form-group">
     <%= label f, :description, "Description", class: "control-label" %>
-    <%= text_input f, :description, class: "form-control" %>
+    <%= textarea f, :description, class: "form-control", rows: 5 %>
     <%= error_tag f, :description %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :notification_email, "Notification Email", class: "control-label" %>
+    <%= text_input f, :notification_email, class: "form-control" %>
+    <%= error_tag f, :notification_email %>
+    <span id="helpBlock" class="help-block">
+      The email for this vendor where we should send booking requests and
+      other vendor notifications.
+    </span>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :cancellation_policy_days, "Cancelation Policy", class: "control-label" %>
+
+    <div class="input-group">
+      <%= number_input f, :cancellation_policy_days, class: "form-control" %>
+      <span class="input-group-addon">days</span>
+    </div>
+
+    <%= error_tag f, :cancellation_policy_days %>
+    <span id="helpBlock" class="help-block">
+      For a refund, orders must be cancelled this many days before activity.
+    </span>
   </div>
 
   <div class="form-group">
@@ -44,6 +68,12 @@
     </div>
     <%= text_input f, :tripadvisor_location_id, class: "form-control" %>
     <%= error_tag f, :tripadvisor_location_id %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :admin_notes, "Internal Notes regarding this Vendor", class: "control-label" %>
+    <%= textarea f, :admin_notes, class: "form-control", rows: 5 %>
+    <%= error_tag f, :admin_notes %>
   </div>
 
   <div class="form-group">

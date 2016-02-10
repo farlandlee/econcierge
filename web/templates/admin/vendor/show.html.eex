@@ -3,16 +3,25 @@
 <% end %>
 
 <div class="row">
-  <div class="col-md-6">
+  <div class="col-md-8">
     <p class="lead"><%= @vendor.description %></p>
     <dl class="dl-horizontal col-md-6">
       <dt>Slug</dt>
       <dd><code><%= @vendor.slug %></code></dd>
+
+      <dt>Cancellation Policy</dt>
+      <dd><%= @vendor.cancellation_policy_days %> days</dd>
+
+      <dt>Notification Email</dt>
+      <dd><%= @vendor.notification_email %></dd>
+
+      <dt>Internal Notes</dt>
+      <dd><%= @vendor.admin_notes %></dd>
     </dl>
   </div>
 
   <%= if @vendor.tripadvisor_location_id do %>
-  <div class="col-md-6">
+  <div class="col-md-4">
     <h4>
       TripAdvisor
     </h4>

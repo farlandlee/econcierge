@@ -21,7 +21,12 @@ defmodule Grid.ChangesetView do
   """
   def error_tag(form, field) do
     if error = form.errors[field] do
-      content_tag :span, translate_error(error), class: "help-block"
+      ~E"""
+      <span class="help-block validation-error">
+        <span class="glyphicon glyphicon-exclamation-sign"></span>
+        <%= translate_error(error)%>
+      </span>
+      """
     end
   end
 end
