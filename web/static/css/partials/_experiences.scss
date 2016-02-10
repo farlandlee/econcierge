@@ -3,6 +3,12 @@
     margin-bottom: 0;
   }
 }
+.row {
+  &.selected-experience,
+  &.experience-filter {
+    max-width: rem-calc(1440);
+  }
+}
 
 .experience-label {
   text-transform: uppercase;
@@ -21,6 +27,8 @@
 .experience-description {
   line-height: 1.2;
   margin-bottom: 2rem;
+  height: 157px;
+  overflow: hidden;
 }
 .experience-difficulty-label {
   line-height: 1;
@@ -117,6 +125,7 @@
   .experience-footer {
     margin: 0;
   }
+
   .experience-header {
     border-bottom: 2px solid $offwhite;
     padding: 1rem 0.5rem;
@@ -138,5 +147,56 @@
   }
   .experience-body {
     padding: 1rem;
+  }
+  .experience-name {
+    font-size: 1.6rem;
+  }
+  .experience-description {
+    height: 100px;
+  }
+  .experience-description,
+  .price-label,
+  .price-unit {
+    font-size: 0.8rem;
+  }
+  .price-label,
+  .price-unit,
+  .price {
+    line-height: 1.8rem;
+  }
+  .price {
+    font-size: 1.6rem;
+    letter-spacing: 1px;
+    text-align: right;
+  }
+  .experience-footer {
+    padding: 2rem 0;
+  }
+  .request-to-book {
+    a {
+      color: #77BAF0;
+      display: inline-block;
+      text-align: left;
+      padding: 0.5rem 0.5rem 0.5rem 1rem;
+      border: 1px solid;
+      border-radius: 6px;
+      font-weight: 600;
+      line-height: 28px;
+      &:after {
+        content: "\f054";
+        color: $white;
+        background-color: #77BAF0;
+        border-radius: 30px;
+        font: normal normal normal 1rem/0 FontAwesome;
+        text-rendering: auto;
+        -webkit-font-smoothing: antialiased;
+        display:inline-block;
+        vertical-align: middle;
+        margin-left: 0.5rem;
+        padding: 17px 20px 15px 12px;
+        width: 0;
+        height:0;
+      }
+    }
   }
 }
