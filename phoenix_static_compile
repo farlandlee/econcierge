@@ -1,8 +1,4 @@
-# Run Phoenix Migrations
-mix ecto.migrate
-
 # Used by phoenix static buildpack to compile assets
-mix deps.client
-cd client && ./node_modules/ember-cli/bin/ember build -prod && cd ..
+# mix deps.client already ran in elixir_buildpack.config
 brunch build --production
 mix phoenix.digest
