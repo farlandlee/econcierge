@@ -106,7 +106,7 @@ defmodule Grid.Product do
     |> update_change(:name, &String.strip/1)
     |> validate_length(:name, min: 1, max: 255)
     |> update_change(:description, &String.strip/1)
-    |> validate_length(:description, min: 1, max: 255)
+    |> validate_length(:description, min: 1)
     |> validate_number(:duration, greater_than: 0)
     |> foreign_key_constraint(:experience_id)
     |> pickup_and_location_constraints()
