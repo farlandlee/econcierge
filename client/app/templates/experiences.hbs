@@ -1,17 +1,19 @@
 <div class="top-row row expanded">
-  <form class="activity-search">
-    <div class="input-group select-activity">
-      <span> Choose your </span>
-      <div class="input-group-field">
-        <select>
-          <option>{{category.name}}</option>
+  <div class="input-group select-activity">
+    <span> Choose your </span>
+    <div class="input-group-field">
+      <div class="full-overlay-select" tabindex="0">
+        <span class="current">{{category.name}}</span>
+        <ul>
+          <li><a href="/explore/fly_fishing/fly_fishing_full_day/2016-08-01/fly_fishing_experience_1/products#">{{category.name}}</a></li>
           {{#each categories as |category|}}
-          <option>{{category.name}}</option>
+            <li><a href="/explore/fly_fishing/fly_fishing_full_day/2016-08-01/fly_fishing_experience_1/products">{{category.name}}</a></li>
           {{/each}}
-        </select>
+        </ul>
+        <div class="full-overlay-black-overlay"></div>
       </div>
-      <span>experience</span>
     </div>
-  </form>
+    <span>experience</span>
+  </div>
 </div>
 {{outlet}}

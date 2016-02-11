@@ -94,20 +94,33 @@ div.home-main {
     }
   }
   .input-group-field {
-    color: $white;
+    line-height: rem-calc(80);
+    height: rem-calc(82);
+  }
+  .full-overlay-select {
+    background-color: transparent;
     border: 2px solid $white;
     border-radius: 6px;
-    padding: 1rem;
-    height: rem-calc(80);
-    width: 320px;
+    color: $white;
+    line-height: rem-calc(80);
+    height: rem-calc(82);
     &:after {
-      top: 1rem;
+      height: rem-calc(82);
+      line-height: rem-calc(80);
     }
-    select {
-      color: $white;
-      padding-left: 0;
-      text-decoration: none;
-      width: 300px;
+    > ul {
+      top: -100%;
+    }
+    li {
+      &:first-of-type {
+        a {
+          border-top: 1px dashed $light-gray;
+          border-bottom: 1px dashed $light-gray;
+          margin-bottom: 1.6rem;
+          padding-left: 2rem;
+          padding-right: 2rem;
+        }
+      }
     }
   }
 }

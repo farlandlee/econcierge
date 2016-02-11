@@ -26,5 +26,8 @@
         "css/font-awesome.min.css"
       ]
     }
+  },
+  "resolutions": {
+    "jquery": "~2.2.0"
   }
 }
