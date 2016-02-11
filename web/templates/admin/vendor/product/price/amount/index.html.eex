@@ -2,7 +2,8 @@
   <thead>
     <tr>
       <th>Amount</th>
-      <th>Max Quantity</th>
+      <th>Minimum Quantity</th>
+      <th>Maximum Quantity</th>
 
       <th></th>
     </tr>
@@ -11,11 +12,12 @@
 <%= for amount <- @amounts |> sorted do %>
     <tr>
       <td><%= amount.amount %></td>
+      <td><%= amount.min_quantity %></td>
       <td>
       <%= if amount.max_quantity == 0 do %>
         &infin;
       <% else %>
-        <= <%= amount.max_quantity %>
+        <%= amount.max_quantity %>
       <% end %>
       </td>
 

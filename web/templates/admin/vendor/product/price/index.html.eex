@@ -18,10 +18,10 @@
         <%= price.amounts
         |> Grid.Admin.Vendor.Product.Price.AmountView.sorted
         |> Enum.map(fn
-        %{amount: amount, max_quantity: 0} ->
-          "$#{amount} (∞)"
-          %{amount: amount, max_quantity: max} ->
-            "$#{amount} (<= #{max})"
+        %{amount: amount, min_quantity: min, max_quantity: 0} ->
+          "$#{amount} (#{min}-∞)"
+          %{amount: amount, min_quantity: min, max_quantity: max} ->
+            "$#{amount} (#{min}-#{max})"
         end)
         |> Enum.join(" | ")
         %>

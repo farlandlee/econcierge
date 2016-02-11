@@ -2,7 +2,7 @@ defmodule Grid.Admin.Vendor.Product.Price.AmountControllerTest do
   use Grid.ConnCase
 
   alias Grid.Amount
-  @valid_attrs %{amount: "120.5", max_quantity: 42}
+  @valid_attrs %{amount: "120.5", min_quantity: 5, max_quantity: 42}
   @invalid_attrs %{amount: "-1"}
 
   setup do
