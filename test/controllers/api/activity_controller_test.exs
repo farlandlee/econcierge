@@ -9,10 +9,16 @@ defmodule Grid.API.ActivityControllerTest do
   end
 
   setup do
-    {:ok, activity: Factory.create(:activity)}
+    experience
+      = %{activity: activity}
+      = Factory.create(:experience)
+
+    {:ok, activity: activity, experience: experience}
   end
 
-  test "lists all entries on index", %{conn: conn, activity: activity} do
+  test "lists all entries with published products in index", %{conn: conn, activity: activity, experience: experience} do
+    Factory.create(:product, experience: experience, published: true)
+
     conn = get conn, api_activity_path(conn, :index)
     response = json_response(conn, 200)
     assert Enum.count(response["activities"]) == 1
@@ -22,6 +28,12 @@ defmodule Grid.API.ActivityControllerTest do
     assert resp_activity["name"] == activity.name
     assert resp_activity["description"] == activity.description
     assert resp_activity["slug"] == activity.slug
+  end
+
+  test "no entries with published products in index", %{conn: conn} do
+    conn = get conn, api_activity_path(conn, :index)
+    response = json_response(conn, 200)
+    assert Enum.count(response["activities"]) == 0
   end
 
   test "shows chosen resource by slug", %{conn: conn, activity: activity} do

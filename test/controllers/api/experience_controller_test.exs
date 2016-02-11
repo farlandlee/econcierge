@@ -9,9 +9,19 @@ defmodule Grid.API.ExperienceControllerTest do
   end
 
   setup do
-    %{experience: exp, category: cat}
-      = Factory.create(:experience_category)
-    {:ok, experience: exp, category: cat}
+    experience
+     = %{activity: activity}
+     = Factory.create(:experience)
+
+    category = Factory.create(:category, activity: activity)
+    Factory.create(:experience_category,
+      experience: experience,
+      category: category
+    )
+
+    Factory.create(:product, experience: experience, published: true)
+
+    {:ok, experience: experience, category: category}
   end
 
   test "index lists all entries", %{conn: conn, experience: experience} do

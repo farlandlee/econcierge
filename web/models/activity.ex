@@ -42,4 +42,11 @@ defmodule Grid.Activity do
     |> foreign_key_constraint(:default_image_id)
     |> cast_slug
   end
+
+  def having_published_products(query \\ __MODULE__) do
+    from a in query,
+      join: p in assoc(a, :products),
+      where: p.published == true,
+      distinct: true
+  end
 end
