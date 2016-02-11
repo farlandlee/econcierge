@@ -1,4 +1,4 @@
-defmodule Grid.API.ActivityView do
+defmodule Grid.Api.ActivityView do
   use Grid.Web, :view
 
   def render("index.json", %{activities: activities}) do

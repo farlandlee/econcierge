@@ -1,4 +1,4 @@
-defmodule Grid.API.ActivityControllerTest do
+defmodule Grid.Api.ActivityControllerTest do
   use Grid.ConnCase
 
   @valid_attrs %{}

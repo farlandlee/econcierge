@@ -84,9 +84,9 @@ defmodule Grid.Arc do
   end
 
   @doc """
-    iex> Grid.Arc.storage_dir(nil, {nil, %Grid.Vendor{id: 1}})
+    iex> storage_dir(nil, {nil, %Grid.Vendor{id: 1}})
     "vendor/1"
-    iex> Grid.Arc.storage_dir(nil, {nil, %Grid.Activity{id: 1}})
+    iex> storage_dir(nil, {nil, %Grid.Activity{id: 1}})
     "activity/1"
   """
   def storage_dir(_version, {_file, %{__struct__: module, id: id}}) do

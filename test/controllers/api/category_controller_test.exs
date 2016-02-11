@@ -1,4 +1,4 @@
-defmodule Grid.API.CategoryControllerTest do
+defmodule Grid.Api.CategoryControllerTest do
   use Grid.ConnCase
 
   @valid_attrs %{}

@@ -1,4 +1,4 @@
-defmodule Grid.API.ExperienceController do
+defmodule Grid.Api.ExperienceController do
   use Grid.Web, :controller
 
   import Ecto.Query
@@ -29,20 +29,17 @@ defmodule Grid.API.ExperienceController do
   ###########
 
   defp assign_products_for_date(conn, _) do
-    alias Calendar.Date
-
-    {_, date} = conn.params
-      |> Map.get("date", "")
-      |> Date.Parse.iso8601
-
-    products = cond do
-      date && date |> Date.after?(:erlang.date()) ->
-        date
-        |> Product.for_date
-        |> select([p], p.id)
-        |> Repo.all
-      date -> []
-      :parse_error -> nil #@TODO raise a parameter error that this was unparseable?
+    products = case Grid.Dates.parse_date(conn.params["date"]) do
+      {:ok, date} ->
+        if date |> Calendar.Date.after?(:erlang.date()) do
+          Product.published
+          |> Product.for_date(date)
+          |> select([p], p.id)
+          |> Repo.all
+        else
+          []
+        end
+      {_, nil} ->  nil
     end
 
     assign(conn, :products, products)
