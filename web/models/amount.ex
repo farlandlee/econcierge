@@ -3,6 +3,7 @@ defmodule Grid.Amount do
 
   schema "amounts" do
     field :amount, :float
+    field :min_quantity, :integer, default: 0
     field :max_quantity, :integer, default: 0
     belongs_to :price, Grid.Price
 
@@ -10,7 +11,7 @@ defmodule Grid.Amount do
   end
 
   @creation_fields ~w(price_id)
-  @required_fields ~w(amount max_quantity)
+  @required_fields ~w(amount min_quantity max_quantity)
   @optional_fields ~w()
 
   @doc """
@@ -25,12 +26,22 @@ defmodule Grid.Amount do
     |> update_change(:amount, &(Float.round(&1, 2)))
     |> validate_number(:amount, greater_than_or_equal_to: 0)
     |> validate_number(:max_quantity,
-      greater_than_or_equal_to: 0,
-      message: "Must be greater than or equal to 0. Set to 0 for no max."
-    ) |> unique_constraint(:max_quantity, [
-      name: :amounts_max_quantity_price_id_index,
-      message: "Another amount already has the same Max Quantity."
-    ])
+          greater_than_or_equal_to: 0,
+          message: "Must be greater than or equal to 0. Set to 0 for no max."
+        )
+    |> unique_constraint(:max_quantity, [
+          name: :amounts_max_quantity_price_id_index,
+          message: "Another amount already has the same Max Quantity."
+        ])
+    |> validate_number(:min_quantity,
+          greater_than_or_equal_to: 0,
+          message: "Must be greater than or equal to 0. Set to 0 for no minimum."
+        )
+    |> unique_constraint(:min_quantity, [
+          name: :amounts_min_quantity_price_id_index,
+          message: "Another amount already has the same Minimum Quantity."
+        ])
+    |> validate_min_max
   end
 
   def creation_changeset(params, price_id) do
@@ -45,4 +56,16 @@ defmodule Grid.Amount do
     |> Map.take(__schema__(:fields))
     |> creation_changeset(price_id)
   end
+
+  defp validate_min_max(changeset) do
+    min = get_field(changeset, :min_quantity)
+    max = get_field(changeset, :max_quantity)
+
+    validate_min_max(changeset, min, max)
+  end
+  defp validate_min_max(changeset, _, 0), do: changeset
+  defp validate_min_max(changeset, min, max) when min > max do
+    add_error(changeset, :max_quantity, "Minimum must be less than, or equal to, Maximum.")
+  end
+  defp validate_min_max(changeset, _, _), do: changeset
 end

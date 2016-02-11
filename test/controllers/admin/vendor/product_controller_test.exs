@@ -256,7 +256,7 @@ defmodule Grid.Admin.ProductControllerTest do
 
     # cloned price amount
     assert response =~ "#{amount.amount}"
-    assert response =~ "(&lt;= #{amount.max_quantity})"
+    assert response =~ "(#{amount.min_quantity}-#{amount.max_quantity})"
 
     # cloned default price
     assert response =~ "Current default"
