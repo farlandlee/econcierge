@@ -31,7 +31,7 @@ defmodule Grid.Admin.Vendor.Product.StartTimeControllerTest do
   test "New links to season creation if the vendor has no seasons", %{conn: conn} do
     product = create(:product)
     conn = get conn, admin_vendor_product_start_time_path(conn, :new, product.vendor, product)
-    assert html_response(conn, 200) =~ admin_vendor_vendor_activity_path(conn, :index, product.vendor)
+    assert html_response(conn, 200) =~ admin_vendor_vendor_activity_season_path(conn, :new, product.vendor, product.experience.activity)
   end
 
   test "renders form for new resources", %{conn: conn, vendor: vendor, product: product} do
