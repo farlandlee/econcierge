@@ -22,8 +22,10 @@ defmodule Grid.Admin.Vendor.Product.StartTimeController do
   end
 
   def new(conn, _params) do
+    %{activity: activity} = conn.assigns.product
+      |> Repo.preload(:activity)
     changeset = StartTime.changeset(%StartTime{})
-    render(conn, "new.html", changeset: changeset)
+    render(conn, "new.html", changeset: changeset, activity: activity)
   end
 
   def create(conn, %{"start_time" => start_time_params}) do

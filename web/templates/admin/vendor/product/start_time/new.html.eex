@@ -1,6 +1,6 @@
 <%= if @seasons == [] do %>
 <p>
-    <%= link to: admin_vendor_vendor_activity_path(@conn, :index, @vendor) do %>
+    <%= link to: admin_vendor_vendor_activity_season_path(@conn, :new, @vendor, @activity) do %>
     You must add seasons for <%= @vendor.name %> before you can create start times.
     <% end %>
 </p>
