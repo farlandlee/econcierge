@@ -54,6 +54,7 @@ defmodule Grid.Router do
     get "/", PageController, :index
 
     get "/explore/:activity_slug/:category_slug/:date/*path", ExploreController, :index
+    get "/explore/:activity_slug/:category_slug", ExploreController, :without_date
 
     scope "/browse" do
       post "/", ActivityController, :show

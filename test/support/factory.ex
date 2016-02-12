@@ -140,11 +140,22 @@ defmodule Grid.Factory do
   end
 
   def factory(:season) do
+    now = Calendar.DateTime.now_utc
+
+    start_date = now
+      |> Calendar.Date.to_erl
+      |> Ecto.Date.cast!
+
+    end_date = now
+      |> Calendar.Date.advance!(60)
+      |> Calendar.Date.to_erl
+      |> Ecto.Date.cast!
+
     %Season{
       vendor_activity: build(:vendor_activity),
       name: sequence(:name, &"season-#{&1}"),
-      start_date_month: random(12), start_date_day: random(31),
-      end_date_month: random(12), end_date_day: random(31)
+      start_date: start_date,
+      end_date: end_date
     }
   end
 

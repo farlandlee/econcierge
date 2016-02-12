@@ -16,8 +16,8 @@
   <%= for season <- @seasons |> sort_by_date do %>
     <tr>
       <td><%= season.name %></td>
-      <td><%= start_date season %></td>
-      <td><%= end_date   season %></td>
+      <td><%= rendered_date(season.start_date) %></td>
+      <td><%= rendered_date(season.end_date) %></td>
 
       <td class="text-right">
         <div class="dropdown actions">

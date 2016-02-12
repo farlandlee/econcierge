@@ -5,12 +5,12 @@ defmodule Grid.ErrorView do
     %{errors: [%{status: 404, message: "Not found"}]}
   end
 
-  def render("500.json", _assigns) do
-    %{errors: [%{status: 500, message: "Server error"}]}
-  end
-
   def render("404.html", assigns) do
     render("not_found.html", assigns)
+  end
+
+  def render("500.json", _assigns) do
+    %{errors: [%{status: 500, message: "Server error"}]}
   end
 
   def render("500.html", assigns) do

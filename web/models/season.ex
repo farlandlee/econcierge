@@ -4,22 +4,21 @@ defmodule Grid.Season do
   schema "seasons" do
     field :name,          :string
 
-    field :end_date_month,    :integer
-    field :end_date_day,      :integer
-
-    field :start_date_month,  :integer
-    field :start_date_day,    :integer
+    field :start_date, Ecto.Date
+    field :end_date, Ecto.Date
 
     belongs_to :vendor_activity, Grid.VendorActivity
+    has_many :start_times, Grid.StartTime
 
     has_one :vendor, through: [:vendor_activity, :vendor]
     has_one :activity, through: [:vendor_activity, :activity]
+    has_many :products, through: [:start_times, :product]
 
     timestamps
   end
 
   @creation_fields ~w(vendor_activity_id)
-  @required_fields ~w(name start_date_month start_date_day end_date_month end_date_day)
+  @required_fields ~w(name start_date end_date)
   @optional_fields ~w()
 
   @doc """
@@ -33,10 +32,7 @@ defmodule Grid.Season do
     |> cast(params, @required_fields, @optional_fields)
     |> update_change(:name, &String.strip/1)
     |> validate_length(:name, min: 1, max: 255)
-    |> validate_number(:start_date_month, greater_than: 0, less_than: 13)
-    |> validate_number(:end_date_month, greater_than: 0, less_than: 13)
-    |> validate_number(:start_date_day, greater_than: 0, less_than: 32)
-    |> validate_number(:end_date_day, greater_than: 0, less_than: 32)
+    |> validate_date_range
   end
 
   def creation_changeset(params, assocs) do
@@ -46,4 +42,33 @@ defmodule Grid.Season do
     |> cast(assocs, @creation_fields, [])
     |> foreign_key_constraint(:vendor_activity_id)
   end
+
+  def first_after_date(query \\ __MODULE__, _)
+  def first_after_date(query, date) do
+    from s in query,
+      where: s.start_date >= ^date,
+      order_by: [s.start_date],
+      limit: 1
+  end
+
+  #################
+  ## Validations ##
+  #################
+
+  defp validate_date_range(changeset) do
+    start_date = get_field(changeset, :start_date)
+    end_date = get_field(changeset, :end_date)
+    compare_dates(changeset, start_date, end_date)
+  end
+
+  defp compare_dates(changeset, start_date, end_date) when not is_nil(start_date) and not is_nil(end_date) do
+    case Ecto.Date.compare(start_date, end_date) do
+      :gt ->
+        changeset
+        |> add_error(:start_date, "Start date must be on or before end date.")
+        |> add_error(:end_date, "End date must be on or after start date.")
+      _ -> changeset
+    end
+  end
+  defp compare_dates(changeset, _, _), do: changeset
 end

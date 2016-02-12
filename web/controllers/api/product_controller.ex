@@ -30,8 +30,12 @@ defmodule Grid.Api.ProductController do
     ])
   end
 
-  defp assign_date(conn, _) do
-    {_, date} = Grid.Dates.parse_date(conn.params["date"])
+  defp assign_date(conn = %{params: %{"date" => date}}, _) do
+    date = case Ecto.Date.cast(date) do
+      {:ok, date} -> date
+      _ -> nil
+    end
     assign(conn, :date, date)
   end
+  defp assign_date(conn, _), do: assign(conn, :date, nil)
 end

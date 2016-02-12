@@ -22,6 +22,7 @@ defmodule Grid.Product do
 
     has_many :amenity_options, through: [:product_amenity_options, :amenity_option]
     has_many :categories, through: [:experience, :experience_categories, :category]
+    has_many :seasons, through: [:start_times, :season]
     has_one :activity, through: [:experience, :activity]
 
     timestamps
@@ -54,8 +55,11 @@ defmodule Grid.Product do
 
   def for_date(query \\ __MODULE__, date)
   def for_date(query, nil), do: query
-  def for_date(query, %{year: year, month: month, day: day}) do
-    dotw = Calendar.Date.day_of_week_name({year, month, day})
+  def for_date(query, %Ecto.Date{} = date) do
+    date = Ecto.Date.to_erl(date)
+      |> Calendar.Date.from_erl!
+
+    dotw = Calendar.Date.day_of_week_name(date)
       |> String.downcase
       |> String.to_atom
 
@@ -63,27 +67,7 @@ defmodule Grid.Product do
       join: time in assoc(p, :start_times),
         where: field(time, ^dotw) == true,
       join: s in assoc(time, :season),
-        where: (
-        # a normal range, kept within one year
-        # greater than start and less than end
-        # starts before or on date
-        (s.start_date_month < ^month or (s.start_date_month == ^month and s.start_date_day <= ^day))
-        and
-        # ends after or on date
-        (s.end_date_month > ^month or (s.end_date_month == ^month and s.end_date_day >= ^day))
-      )
-      or (
-        # a year that spans a year, like a winter season (nov '15 - feb '16)
-        (s.start_date_month > s.end_date_month or (s.start_date_month == s.end_date_month and s.start_date_day > s.end_date_day))
-        and (
-          # greater than start or less than end
-          # starts on or before date
-          (s.start_date_month < ^month or (s.start_date_month == ^month and s.start_date_day <= ^day))
-          or
-          # ends after date. so, date is in april, season runs from december to may...
-          (s.end_date_month > ^month or (s.end_date_month == ^month and s.end_date_day >= ^day))
-        )
-      )
+        where: ^date >= s.start_date and ^date <= s.end_date
   end
 
   ##########################################
