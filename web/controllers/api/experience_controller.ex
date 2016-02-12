@@ -14,8 +14,9 @@ defmodule Grid.API.ExperienceController do
     experiences = Experience
       |> Experience.for_activity(params["activity_id"])
       |> Experience.for_category(params["category_id"])
-      |> Experience.with_products(conn.assigns.products)
+      |> Experience.having_published_products(conn.assigns.products)
       |> Repo.all
+
     render(conn, "index.json", experiences: experiences)
   end
 

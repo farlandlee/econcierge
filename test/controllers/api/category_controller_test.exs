@@ -9,13 +9,19 @@ defmodule Grid.API.CategoryControllerTest do
   end
 
   setup do
-    category
+    experience
       = %{activity: activity}
-      = Factory.create(:category)
-    {:ok, category: category, activity: activity}
+      = Factory.create(:experience)
+
+    category = Factory.create(:category, activity: activity)
+    Factory.create(:experience_category, experience: experience, category: category)
+
+    {:ok, category: category, activity: activity, experience: experience}
   end
 
-  test "lists all entries on index", %{conn: conn, category: category} do
+  test "lists all entries with published products on index", %{conn: conn, category: category, experience: experience} do
+    Factory.create(:product, experience: experience, published: true)
+
     conn = get conn, api_category_path(conn, :index)
     response = json_response(conn, 200)
     assert Enum.count(response["categories"]) == 1
@@ -25,6 +31,12 @@ defmodule Grid.API.CategoryControllerTest do
     assert resp_category["name"] == category.name
     assert resp_category["description"] == category.description
     assert resp_category["slug"] == category.slug
+  end
+
+  test "no entries if no published products on index", %{conn: conn} do
+    conn = get conn, api_category_path(conn, :index)
+    response = json_response(conn, 200)
+    assert Enum.count(response["categories"]) == 0
   end
 
   test "shows chosen resource", %{conn: conn, category: category} do

@@ -4,7 +4,7 @@ defmodule Grid.API.ActivityController do
   alias Grid.Activity
 
   def index(conn, _) do
-    activities = Repo.all(Activity)
+    activities = Activity.having_published_products |> Repo.all
     render(conn, "index.json", activities: activities)
   end
 

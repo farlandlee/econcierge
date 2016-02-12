@@ -35,12 +35,18 @@
     where(query, [e], e.activity_id == ^activity_id)
   end
 
-  def with_products(query \\ __MODULE__, product_ids)
-  def with_products(query, nil), do: query
-  def with_products(query, product_ids) do
+  def having_published_products(query \\ __MODULE__, product_ids)
+  def having_published_products(query, nil) do
     from e in query,
-      join: p in Product, on: p.experience_id == e.id,
+      join: p in assoc(e, :products),
+      where: p.published == true,
+      distinct: true
+  end
+  def having_published_products(query, product_ids) do
+    from e in query,
+      join: p in assoc(e, :products),
       where: p.id in ^product_ids,
+      where: p.published == true,
       distinct: true
   end
 

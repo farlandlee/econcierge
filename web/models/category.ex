@@ -50,4 +50,11 @@ defmodule Grid.Category do
     |> cast(%{activity_id: activity_id}, @creation_fields, [])
     |> foreign_key_constraint(:activity_id)
   end
+
+  def having_published_products(query \\ __MODULE__) do
+    from a in query,
+      join: p in assoc(a, :products),
+      where: p.published == true,
+      distinct: true
+  end
 end
