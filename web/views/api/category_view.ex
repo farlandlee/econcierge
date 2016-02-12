@@ -1,12 +1,12 @@
-defmodule Grid.API.CategoryView do
+defmodule Grid.Api.CategoryView do
   use Grid.Web, :view
 
   def render("index.json", %{categories: categories}) do
-    %{categories: render_many(categories, Grid.API.CategoryView, "category.json")}
+    %{categories: render_many(categories, Grid.Api.CategoryView, "category.json")}
   end
 
   def render("show.json", %{category: category}) do
-    %{category: render_one(category, Grid.API.CategoryView, "category.json")}
+    %{category: render_one(category, Grid.Api.CategoryView, "category.json")}
   end
 
   def render("category.json", %{category: category}) do

@@ -1,4 +1,4 @@
-defmodule Grid.API.CategoryController do
+defmodule Grid.Api.CategoryController do
   use Grid.Web, :controller
 
   alias Grid.Category

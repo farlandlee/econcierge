@@ -1,4 +1,4 @@
-defmodule Grid.API.ExperienceControllerTest do
+defmodule Grid.Api.ExperienceControllerTest do
   use Grid.ConnCase
 
   @valid_attrs %{}

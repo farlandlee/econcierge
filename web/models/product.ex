@@ -27,9 +27,30 @@ defmodule Grid.Product do
     timestamps
   end
 
+  ####################
+  ## Virtual Fields ##
+  ####################
+
+  def set_duration_time(model = %__MODULE__{duration: duration}) do
+    hours   = div(duration, 60)
+    minutes = rem(duration, 60)
+    time = %Ecto.Time{hour: hours, min: minutes}
+    %{model | duration_time: time}
+  end
+
   #############
   ## Queries ##
   #############
+
+  def published(query \\ __MODULE__) do
+    from p in query, where: p.published == true
+  end
+
+  def for_experience(query \\ __MODULE__, id)
+  def for_experience(query, nil), do: query
+  def for_experience(query, id) do
+    from p in query, where: p.experience_id == ^id
+  end
 
   def for_date(query \\ __MODULE__, date)
   def for_date(query, nil), do: query
@@ -39,7 +60,6 @@ defmodule Grid.Product do
       |> String.to_atom
 
     from p in query,
-      where: p.published == true,
       join: time in assoc(p, :start_times),
         where: field(time, ^dotw) == true,
       join: s in assoc(time, :season),
@@ -64,13 +84,6 @@ defmodule Grid.Product do
           (s.end_date_month > ^month or (s.end_date_month == ^month and s.end_date_day >= ^day))
         )
       )
-  end
-
-  def set_duration_time(model = %__MODULE__{duration: duration}) do
-    hours   = div(duration, 60)
-    minutes = rem(duration, 60)
-    time = %Ecto.Time{hour: hours, min: minutes}
-    %{model | duration_time: time}
   end
 
   ##########################################

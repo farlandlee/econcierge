@@ -70,7 +70,7 @@ defmodule Grid.Router do
     get "/:provider/callback", AuthController, :callback
   end
 
-  scope "/web_api", Grid.API, as: :api do
+  scope "/web_api", Grid.Api, as: :api do
     pipe_through :api
 
     get "/activities", ActivityController, :index
@@ -81,6 +81,9 @@ defmodule Grid.Router do
 
     get "/experiences", ExperienceController, :index
     get "/experiences/:slug", ExperienceController, :show
+
+    get "/products", ProductController, :index
+    get "/products/:id", ProductController, :show
   end
 
   scope "/admin", Grid.Admin, as: :admin do

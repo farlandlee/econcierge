@@ -238,11 +238,4 @@ defmodule Grid.ProductTest do
     %{month: m, day: d} = sunday
     assert products_for_date({m, d}) == hit
   end
-  
-  test "Product date filtering only returns published products" do
-    %{product: product} = start_time_with_season({4,  1}, {7,  4})
-    assert products_for_date({5, 1}) == [product.id]
-    Ecto.Changeset.change(product, published: false) |> Repo.update!
-    assert products_for_date({5, 1}) == []
-  end
 end

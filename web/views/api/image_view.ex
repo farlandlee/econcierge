@@ -1,4 +1,4 @@
-defmodule Grid.API.ImageView do
+defmodule Grid.Api.ImageView do
   use Grid.Web, :view
 
   def render("image.json", %{image: %{error: true}}) do

@@ -1,4 +1,4 @@
-defmodule Grid.API.ExperienceView do
+defmodule Grid.Api.ExperienceView do
   use Grid.Web, :view
 
   def render("index.json", %{experiences: experiences}) do
