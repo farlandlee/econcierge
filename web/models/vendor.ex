@@ -49,6 +49,9 @@ defmodule Grid.Vendor do
   defp maybe_mark_for_tripadvisor_update(changeset) do
     case get_change(changeset, :tripadvisor_location_id) do
       nil -> changeset
+        |> put_change(:tripadvisor_rating, nil)
+        |> put_change(:tripadvisor_rating_image_url, nil)
+        |> put_change(:tripadvisor_reviews_count, nil)
       _location -> changeset |> put_change(:tripadvisor_should_update, true)
     end
   end
