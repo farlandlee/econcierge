@@ -5,9 +5,7 @@ defmodule Grid.Api.AmenityOptionView do
     %{
       id: amenity_option.id,
       name: amenity_option.name,
-      #activity: amenity_option.activity.id, #needs preload
-      amenity: amenity_option.amenity_id,
-      product: amenity_option.product_id
+      amenity: amenity_option.amenity_id
     }
   end
 end
