@@ -59,6 +59,9 @@ defmodule Grid.Router do
       post "/", ActivityController, :show
       get "/:activity_slug/categories", ActivityController, :categories_by_activity_slug
     end
+
+    get "/500", ErrorController, :render_500
+    get "/404", ErrorController, :render_404
   end
 
   scope "/auth", Grid do
