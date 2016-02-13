@@ -1,4 +1,4 @@
-defmodule Grid.Api.ActivityViewTest do
+defmodule Grid.Api.ProductViewTest do
   use Grid.ConnCase, async: true
 
   alias Grid.Api.ProductView
