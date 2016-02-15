@@ -35,6 +35,11 @@ defmodule Grid.Vendor do
     timestamps
   end
 
+  def having_published_products(query \\ __MODULE__) do
+    from v in query, join: p in assoc(v, :products),
+      where: p.published == true, distinct: true
+  end
+
   def with_activity(query \\ __MODULE__, activity_id)
   def with_activity(query, nil) do
     query
