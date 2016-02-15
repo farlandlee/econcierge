@@ -4,6 +4,7 @@ defmodule Grid.ExploreController do
   import Ecto.Query
 
   alias Grid.{
+    Activity,
     Category,
     Season
   }
@@ -16,8 +17,10 @@ defmodule Grid.ExploreController do
   end
 
   def without_date(conn, %{"activity_slug" => activity_slug, "category_slug" => category_slug}) do
+    activity = Repo.get_by(Activity, slug: activity_slug)
+
     experience_ids = Category
-      |> Repo.get_by(slug: category_slug)
+      |> Repo.get_by(slug: category_slug, activity_id: activity.id)
       |> assoc(:experiences)
       |> select([e], e.id)
       |> Repo.all
