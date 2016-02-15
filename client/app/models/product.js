@@ -8,7 +8,7 @@ export default DS.Model.extend({
   /* @TODO these need to be impl'd as models */
   meetingLocation: DS.attr(),
   defaultPrice: DS.attr('number'),
-  vendor: DS.attr('number'),
+  vendor: DS.belongsTo('vendor'),
   prices: DS.attr(),
   startTimes: DS.attr()
 });

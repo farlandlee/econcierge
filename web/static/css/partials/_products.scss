@@ -42,7 +42,20 @@
       line-height:1.2;
       margin-bottom: 0.2rem;
     }
-    .vendor-address {
+    .tripadvisor-text {
+      margin-bottom: 0;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #589442; //tripadvisor green
+    }
+    .tripadvisor-reviews-count {
+      font-style: italic;
+      text-decoration: underline;
+      display: block;
+      font-size: 0.75rem;
+      color: $medium-gray;
+    }
+    .meeting-address {
       color: $medium-gray;
       font-weight: 100;
       font-size: 0.75rem;

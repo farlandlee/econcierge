@@ -1,8 +1,8 @@
 import { moduleForModel, test } from 'ember-qunit';
 
-moduleForModel('product', 'Unit | Model | product', {
+moduleForModel('vendor', 'Unit | Model | vendor', {
   // Specify the other units that are required for this test.
-  needs: ['model:vendor']
+  needs: []
 });
 
 test('it exists', function(assert) {
