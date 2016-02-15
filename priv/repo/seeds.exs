@@ -82,8 +82,8 @@ for {name, desc, act_name} <- vendor_tuples, activity = Repo.get_by!(Activity, n
   } |> Repo.insert!
   season = Season.creation_changeset(%{
     name: "Peak Season",
-    start_date_month: 6, start_date_day: 15,
-    end_date_month: 8, end_date_day: 31
+    start_date: "2016-06-15",
+    end_date: "2016-08-01"
   }, vendor_activity_id: va.id)
   |> Repo.insert!()
 

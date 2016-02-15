@@ -2,7 +2,11 @@ defmodule Grid.Admin.Vendor.VendorActivity.SeasonControllerTest do
   use Grid.ConnCase
 
   alias Grid.Season
-  @valid_attrs %{end_date_day: 1, end_date_month: 9, name: "some content", start_date_day: 6, start_date_month: 1}
+  @valid_attrs %{
+    name: "some content",
+    start_date: "2016-06-15",
+    end_date: "2016-08-01"
+  }
   @invalid_attrs %{name: ""}
 
   setup do

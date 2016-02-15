@@ -8,13 +8,13 @@ defmodule Grid.Api.ExperienceController do
     Product
   }
 
-  plug :assign_products_for_date when action in [:index]
-
   def index(conn, params) do
+    product_ids = get_product_ids_for_date(params["date"])
+
     experiences = Experience
       |> Experience.for_activity(params["activity_id"])
       |> Experience.for_category(params["category_id"])
-      |> Experience.having_published_products(conn.assigns.products)
+      |> Experience.having_published_products(product_ids)
       |> Repo.all
 
     render(conn, "index.json", experiences: experiences)
@@ -25,24 +25,17 @@ defmodule Grid.Api.ExperienceController do
     render(conn, "show.json", experience: experience)
   end
 
-  ###########
-  ## Plugs ##
-  ###########
-
-  defp assign_products_for_date(conn, _) do
-    products = case Grid.Dates.parse_date(conn.params["date"]) do
+  defp get_product_ids_for_date(nil), do: nil
+  defp get_product_ids_for_date(date) do
+    case Ecto.Date.cast(date) do
       {:ok, date} ->
-        if date |> Calendar.Date.after?(:erlang.date()) do
-          Product.published
-          |> Product.for_date(date)
-          |> select([p], p.id)
-          |> Repo.all
-        else
-          []
-        end
-      {_, nil} ->  nil
-    end
+        product_ids = Product.published
+        |> Product.for_date(date)
+        |> select([p], p.id)
+        |> Repo.all
 
-    assign(conn, :products, products)
+        product_ids
+      _ -> nil
+    end
   end
 end

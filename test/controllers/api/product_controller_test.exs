@@ -6,16 +6,20 @@ defmodule Grid.Api.ProductControllerTest do
   end
 
   setup do
-    st = %{product: p, season: s} = Factory.create_start_time(season: Factory.create(:season,
-      start_date_month: 4, start_date_day: 1,
-      end_date_month: 6, end_date_day: 31
-    ))
+    st = %{product: p, season: s} = Factory.create_start_time(
+      season: Factory.create(:season,
+        start_date: %Ecto.Date{year: 2016, month: 6, day: 1},
+        end_date: %Ecto.Date{year: 2016, month: 6, day: 30}
+      )
+    )
 
     {:ok, product: p, start_time: st, season: s}
   end
 
-  test "index lists all published products", %{conn: conn, product: product} do
+  test "index lists all published products", %{conn: conn, product: product, season: season} do
     other_product = Factory.create(:product)
+    Factory.create_start_time(product: other_product, season: season)
+
     unpublished_product = Factory.create(:product, published: false)
 
     conn = get conn, api_product_path(conn, :index)
@@ -48,7 +52,7 @@ defmodule Grid.Api.ProductControllerTest do
   end
 
   test "index filters by date", %{conn: conn, product: product} do
-    conn = get conn, api_product_path(conn, :index, date: "2017-05-01")
+    conn = get conn, api_product_path(conn, :index, date: "2016-06-01")
     response = json_response(conn, 200)
     products = response["products"]
     assert products

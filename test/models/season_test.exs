@@ -5,13 +5,14 @@ defmodule Grid.SeasonTest do
 
   @valid_attrs %{
     name: "some content",
-    start_date_day: 17, start_date_month: 4,
-    end_date_day: 4, end_date_month: 12
+    start_date: "2016-04-17",
+    end_date: "2016-06-12"
   }
   @invalid_attrs %{
     name: "Peak Season",
-  start_date_day: 100, start_date_month: 101,
-  end_date_day: -4, end_date_month: 1337}
+    start_date: "2016-04-17",
+    end_date: "2016-02-17"
+  }
 
   test "changeset with valid attributes" do
     changeset = Season.changeset(%Season{}, @valid_attrs)
