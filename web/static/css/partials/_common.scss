@@ -6,6 +6,45 @@
   }
 }
 
+.error-404 {
+  background: url('/images/error-404.jpg') no-repeat center;
+}
+
+.error-500 {
+  background: url('/images/error-500.jpg') no-repeat center;
+}
+.jumbotron {
+  width: 100%;
+  height:100vh;
+  font-size: 1.6rem;
+  color: $white;
+  background-size: cover;
+  > .columns {
+    padding-top: 110px;
+    position: relative;
+    z-index: 1;
+  }
+  p {
+    margin-bottom: 0.5rem;
+    line-height: 1.3;
+  }
+  .large {
+    font-size: 170%;
+    margin-bottom: 2.8rem;
+  }
+  a {
+    color: $white;
+    text-decoration: underline;
+  }
+  .links-out {
+    a {
+      display:inline-block;
+      margin-right: 4rem;
+    }
+  }
+}
+
+
 .darken-overlay {
   background: rgba(0,0,0,.35);
   height: 100%;
