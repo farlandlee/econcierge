@@ -24,5 +24,5 @@ export default function() {
       - db.{collection}.update(target, attrs)
       - db.{collection}.remove(target)
   */
-  this.passthrough('/activities', '/categories', '/experiences');
+  this.passthrough();
 }

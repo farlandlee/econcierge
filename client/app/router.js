@@ -7,9 +7,9 @@ const Router = Ember.Router.extend({
 
 Router.map(function() {
   this.route('experiences', {path: ':activity_slug/:category_slug/:date'}, function () {
-    this.route('index', {path: '/'});
+    this.route('default-experience', {path: '/'});
     this.route('experience', {path: ':experience_slug'}, function () {
-      this.route('products');
+      this.route('products', {path: '/'});
     });
   });
 });
