@@ -32,7 +32,7 @@ for activity <- ["Fly Fishing", "Snowmobiling", "Paragliding"] do
   # Categories!
   categories = for cat <- ["Full Day", "Half Day", "Overnight"] do
     Category.creation_changeset(%{
-      name: activity.name <> " " <> cat,
+      name: cat,
       description: cat <> " trip"
       }, activity.id)
     |> Repo.insert!
