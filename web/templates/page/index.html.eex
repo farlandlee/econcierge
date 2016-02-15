@@ -9,7 +9,7 @@
             <div class="search-label">Book your Jackson Hole Adventure</div>
             <div class="search-sublabel">Discover &amp; reserve the opportunities that await you, all in one place</div>
           </div>
-          <div class="shrink columns">
+          <div class="small-12 medium-10 large-8 columns form-group">
             <label for="activity[id]">Explore</label>
             <div class="input-group-field">
               <div class="full-overlay-select" tabindex="0">

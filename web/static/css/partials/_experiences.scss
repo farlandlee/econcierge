@@ -1,6 +1,24 @@
 .experiences {
+  .top-row {
+    border-bottom: 1px solid #cacaca;
+    padding-top: 0.4rem;
+    padding-bottom: 0.4rem;
+    .selected-date {
+      line-height: 40px;
+      vertical-align: middle;
+      text-decoration: underline;
+      color: darken($medium-gray,30%);
+      font-weight: 500;
+      &:before {
+        margin-right: 0.6rem;
+        text-decoration: none;
+      }
+    }
+  }
   .select-activity {
     margin-bottom: 0;
+    border-bottom: 0;
+    padding: 0;
   }
 }
 .row {

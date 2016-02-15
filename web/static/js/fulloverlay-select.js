@@ -8,7 +8,7 @@ jQuery(function($){
 
     if (!dropdown.hasClass('open') && dropdown.find('.selected').length === 0) {
       dropdown.find('.selected').removeClass('selected');
-      dropdown.find('a').first().addClass('selected');
+      dropdown.find('li').children().first().addClass('selected');
     }
 
     $('.full-overlay-select').not(dropdown).removeClass('open');
@@ -23,8 +23,9 @@ jQuery(function($){
   });
 
   // Close when clicking outside
-  $(document).on('click', function(event) {
+  $('body :not(a)').on('click', function(event) {
     $('.full-overlay-select').removeClass('open');
+    $('.page-header').css('z-index',100);
   });
 
   // Keyboard events
@@ -38,7 +39,7 @@ jQuery(function($){
       if (dropdown.hasClass('open')) {
         var href = $('.selected',dropdown).attr('href');
         // this is basically just for development
-        if(href.slice(-1) === '#') {
+        if( typeof href == 'undefined' || href.slice(-1) === '#') {
           $('.selected',dropdown).click();
         }
         else {

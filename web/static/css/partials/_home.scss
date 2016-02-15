@@ -72,17 +72,20 @@ div.home-main {
     color: $white;
     margin-bottom: 0;
     font-size: 1.6rem;
-
+    .form-group {
+      text-align: center;
+    }
     label {
       color: $white;
       font-size: 1.6rem;
       line-height: 2.4rem;
-      padding: 1.6rem 2rem;
+      padding: 1.6rem 1rem 1.6rem 0;
       display:inline-block;
     }
     .input-group-button {
-      padding: 1.6rem 2rem;
+      padding: 1.6rem 0 1.6rem 1rem;
       display: inline-block;
+      width: auto;
     }
     .button {
       padding: 0.8rem 2.4rem;
@@ -94,19 +97,25 @@ div.home-main {
     }
   }
   .input-group-field {
-    line-height: rem-calc(80);
-    height: rem-calc(82);
+    line-height: rem-calc(70);
+    height: rem-calc(72);
+    width: 100%;
+    max-width:370px;
   }
   .full-overlay-select {
     background-color: transparent;
     border: 2px solid $white;
     border-radius: 6px;
     color: $white;
-    line-height: rem-calc(80);
-    height: rem-calc(82);
+    line-height: rem-calc(70);
+    height: rem-calc(72);
+    width: 100%;
+    padding-left: 1.6rem;
+    padding-right: 2.4rem;
     &:after {
-      height: rem-calc(82);
-      line-height: rem-calc(80);
+      height: rem-calc(72);
+      line-height: rem-calc(70);
+      right: 1.6rem;
     }
     > ul {
       top: -100%;
