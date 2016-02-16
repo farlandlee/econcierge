@@ -2,19 +2,12 @@ import Ember from 'ember';
 
 export default Ember.Route.extend({
   model (params) {
-    return this.store.queryRecord('experience', {
-      slug: params.experience_slug
-    }).then(experience => {
-      //@TODO get products for experience
-      return {
-        experience: experience,
-        experiences: this.modelFor('experiences').experiences
-      };
-    });
-  },
-
-  afterModel () {
-    this.transitionTo('experiences.experience.products');
+    let {experiences} = this.modelFor('experiences');
+    let experience = experiences.findBy('slug', params.experience_slug);
+    if (experience) {
+      return experience;
+    }
+    throw `No experience found for ${params.experience_slug}`;
   },
 
   serialize (model) {
@@ -23,6 +16,11 @@ export default Ember.Route.extend({
 
   setupController (controller, model) {
     this._super(...arguments);
-    controller.setProperties(model);
+    let {experiences, category} = this.modelFor('experiences');
+    controller.setProperties({
+      experience: model,
+      experiences: experiences,
+      activeCategoryName: category.get('name')
+    });
   }
 });

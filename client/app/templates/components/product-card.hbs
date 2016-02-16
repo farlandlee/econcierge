@@ -1,0 +1,66 @@
+<div class="row product-header">
+  <div class="shrink column">
+    <img class="vendor-image" src="http://placehold.it/75x75">
+  </div>
+  <div class="columns expand">
+    <p class="vendor-name">Vendor Name Here</p>
+    <img class="temp-tripadvisor" src="/images/tripadvisor.jpg">
+    <p class="vendor-address">600 Pine Drive, Jackson, WY 83001</p>
+  </div>
+</div>
+<div class="row product-body">
+  <div class="product-name column small-12">
+    <p>{{product.name}}</p>
+  </div>
+  <div class="column small-12 large-4">
+    <p class="duration">{{duration}}</p>
+  </div>
+  {{!-- <div class="column small-12 large-4">
+  <p class="age-restriction">6+ Years</p>
+</div> --}}
+<div class="column small-12 large-4">
+  {{!--@TODO display location if it's not a pickup --}}
+  <p class="location">{{if product.pickup "Pick Up" "Meet"}}</p>
+</div>
+<div class="product-description column small-12">
+  <p>{{product.description}}</p>
+</div>
+{{#each product.prices as |price|}}
+<div class="column large-4">
+  <p class="price-label">{{price.name}}</p>
+</div>
+<div class="column large-4">
+  {{#each price.amounts as |amount|}}
+  <p class="price">${{amount.amount}}</p>
+  {{/each}}
+</div>
+<div class="column expand">
+  <p class="price-unit">each</p>
+</div>
+{{/each}}
+<div class="column large-4">
+  <p class="price-label">ages 12+</p>
+</div>
+<div class="column large-4">
+  <p class="price">$180</p>
+</div>
+<div class="column expand">
+  <p class="price-unit">per person</p>
+</div>
+<div class="column large-4">
+  <p class="price-label">ages 6-12</p>
+</div>
+<div class="column large-4">
+  <p class="price">$80</p>
+</div>
+<div class="column expand">
+  <p class="price-unit">per person</p>
+</div>
+</div>
+<div class="row product-footer align-center">
+  <div class="large-7">
+    <div class="request-to-book">
+      <p><a href="#">Request To Book</a></p>
+    </div>
+  </div>
+</div>
