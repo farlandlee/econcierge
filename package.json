@@ -12,8 +12,5 @@
     "sass-brunch": "^1.9.2",
     "uglify-js-brunch": ">= 1.0 < 1.8",
     "after-brunch": "0.0.5"
-  },
-  "scripts": {
-    "postinstall": "node node_modules/bower/bin/bower install"
   }
 }

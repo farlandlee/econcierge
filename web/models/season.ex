@@ -43,6 +43,12 @@ defmodule Grid.Season do
     |> foreign_key_constraint(:vendor_activity_id)
   end
 
+  def having_published_products(query \\ __MODULE__) do
+    from s in query,
+      join: p in assoc(s, :products),
+      where: p.published == true, distinct: true
+  end
+
   def first_from_date(query \\ __MODULE__, _)
   def first_from_date(query, date) do
     from s in query,
