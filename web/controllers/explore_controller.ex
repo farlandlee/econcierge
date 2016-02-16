@@ -18,10 +18,9 @@ defmodule Grid.ExploreController do
 
   def without_date(conn, %{"activity_slug" => activity_slug, "category_slug" => category_slug}) do
     activity = Repo.get_by!(Activity, slug: activity_slug)
+    category = Repo.get_by!(Category, activity_id: activity.id, slug: category_slug)
 
-    experience_ids = Category
-      |> Repo.get_by(slug: category_slug, activity_id: activity.id)
-      |> assoc(:experiences)
+    experience_ids = assoc(category, :experiences)
       |> select([e], e.id)
       |> Repo.all
 
