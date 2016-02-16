@@ -14,6 +14,7 @@ defmodule Grid.Vendor do
     field :admin_notes, :string
 
     field :tripadvisor_location_id, :string
+    field :tripadvisor_url, :string
     field :tripadvisor_rating, :float
     field :tripadvisor_rating_image_url, :string
     field :tripadvisor_reviews_count, :integer
@@ -54,6 +55,7 @@ defmodule Grid.Vendor do
   defp maybe_mark_for_tripadvisor_update(changeset) do
     case get_change(changeset, :tripadvisor_location_id) do
       nil -> changeset
+        |> put_change(:tripadvisor_url, nil)
         |> put_change(:tripadvisor_rating, nil)
         |> put_change(:tripadvisor_rating_image_url, nil)
         |> put_change(:tripadvisor_reviews_count, nil)
@@ -62,7 +64,14 @@ defmodule Grid.Vendor do
   end
 
   @required_fields ~w(name description)
-  @optional_fields ~w(slug default_image_id tripadvisor_location_id notification_email cancellation_policy_days admin_notes)
+  @optional_fields ~w(
+    admin_notes
+    cancellation_policy_days
+    default_image_id
+    notification_email
+    slug
+    tripadvisor_location_id
+  )
 
   @doc """
   Creates a changeset based on the `model` and `params`.
@@ -86,6 +95,7 @@ defmodule Grid.Vendor do
   end
 
   @required_tripadvisor_fields ~w(
+    tripadvisor_url
     tripadvisor_rating
     tripadvisor_rating_image_url
     tripadvisor_reviews_count

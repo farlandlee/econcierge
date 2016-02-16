@@ -32,10 +32,7 @@
 
           <%= render Grid.LayoutView, "_footer.html" %>
         </div>
-        <script src="<%= static_path(Grid.Endpoint, "/js/vendor.js") %>"></script>
-        <script src="<%= static_path(Grid.Endpoint, "/js/app.js") %>"></script>
-        <script src="https://use.typekit.net/fal4rbd.js"></script>
-        <script>try{Typekit.load({ async: false });}catch(e){}</script>
+        <%= render Grid.LayoutView, "_footer_scripts.html" %>
       </div>
     </div>
   </body>

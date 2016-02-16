@@ -41,6 +41,9 @@
 
       <dt>Reviews Count</dt>
       <dd><%= @vendor.tripadvisor_reviews_count %></dd>
+
+      <dt>TripAdvisor Page</td>
+      <dd><%= if url = @vendor.tripadvisor_url, do: link "Open in new tab", to: url, target: "_blank" %></dd>
     </dl>
   </div>
   <% end %>

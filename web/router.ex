@@ -89,8 +89,8 @@ defmodule Grid.Router do
     get "/products", ProductController, :index
     get "/products/:id", ProductController, :show
 
-    get "/vendor", VendorController, :index
-    get "/vendor/:id", VendorController, :show
+    get "/vendors", VendorController, :index
+    get "/vendors/:id", VendorController, :show
   end
 
   scope "/admin", Grid.Admin, as: :admin do

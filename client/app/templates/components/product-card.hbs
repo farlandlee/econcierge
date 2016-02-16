@@ -3,9 +3,25 @@
     <img class="vendor-image" src="http://placehold.it/75x75">
   </div>
   <div class="columns expand">
-    <p class="vendor-name">Vendor Name Here</p>
-    <img class="temp-tripadvisor" src="/images/tripadvisor.jpg">
-    <p class="vendor-address">600 Pine Drive, Jackson, WY 83001</p>
+    {{#with product.vendor as |vendor|}}
+    <p class="vendor-name">{{product.vendor.name}}</p>
+    {{!--
+    must conform to tripadvisor requirements,
+    see https://developer-tripadvisor.com/content-api/display-requirements/
+    --}}
+    <p class="tripadvisor-text">TripAdvisor Traveler Rating</p>
+    <img class="tripadvisor-rating-image" src="{{vendor.tripadvisorRatingImageUrl}}">
+    <a href="{{vendor.tripadvisorUrl}}" class="tripadvisor-reviews-count" target="_blank">{{vendor.tripadvisorReviewsCount}} Reviews</a>
+    {{/with}}
+    {{#unless product.pickup}}
+    <p class="meeting-address">
+      {{#with product.meetingLocation as |loc|}}
+      {{loc.address1}}, {{loc.address2}}
+      <br>
+      {{loc.city}}, {{loc.state}} {{loc.zip}}
+      {{/with}}
+    </p>
+    {{/unless}}
   </div>
 </div>
 <div class="row product-body">
@@ -16,46 +32,33 @@
     <p class="duration">{{duration}}</p>
   </div>
   {{!-- <div class="column small-12 large-4">
-  <p class="age-restriction">6+ Years</p>
-</div> --}}
-<div class="column small-12 large-4">
-  {{!--@TODO display location if it's not a pickup --}}
-  <p class="location">{{if product.pickup "Pick Up" "Meet"}}</p>
-</div>
-<div class="product-description column small-12">
-  <p>{{product.description}}</p>
-</div>
-{{#each product.prices as |price|}}
-<div class="column large-4">
-  <p class="price-label">{{price.name}}</p>
-</div>
-<div class="column large-4">
-  {{#each price.amounts as |amount|}}
-  <p class="price">${{amount.amount}}</p>
+    <p class="age-restriction">6+ Years</p>
+  </div> --}}
+  <div class="column small-12 large-4">
+    <p class="location">{{if product.pickup "Pick Up" "Meet At Location"}}</p>
+  </div>
+  <div class="product-description column small-12">
+    <p>{{product.description}}</p>
+  </div>
+  {{#each product.prices as |price|}}
+  <div class="column large-4">
+    <p class="price-label">{{price.name}}</p>
+  </div>
+  <div class="column large-4">
+    {{#each price.amounts as |amount|}}
+    <p class="price">${{amount.amount}}</p>
+    {{/each}}
+  </div>
+  <div class="column expand">
+    <p class="price-unit">
+      {{#if (gt price.people_count 1)}}
+        per {{price.people_count}} people
+      {{else}}
+        per person
+      {{/if}}
+    </p>
+  </div>
   {{/each}}
-</div>
-<div class="column expand">
-  <p class="price-unit">each</p>
-</div>
-{{/each}}
-<div class="column large-4">
-  <p class="price-label">ages 12+</p>
-</div>
-<div class="column large-4">
-  <p class="price">$180</p>
-</div>
-<div class="column expand">
-  <p class="price-unit">per person</p>
-</div>
-<div class="column large-4">
-  <p class="price-label">ages 6-12</p>
-</div>
-<div class="column large-4">
-  <p class="price">$80</p>
-</div>
-<div class="column expand">
-  <p class="price-unit">per person</p>
-</div>
 </div>
 <div class="row product-footer align-center">
   <div class="large-7">

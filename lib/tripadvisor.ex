@@ -70,21 +70,18 @@ defmodule TripAdvisor do
   end
 
   defp parse_location_params({:ok, %{body: %{"error" => err}}}) do
-    # There was an error, raise!
-    err_msg = "TripAdvisor API Error: #{err["message"]}"
-    exception_type = case err["type"] do
-      "NotFoundException"     -> NotFoundException
-      "UnauthorizedException" -> KeyError
-      _ -> ArgumentError
+    if err["type"] == "UnauthorizedException" do
+      raise KeyError, message: "TripAdvisor API Error: #{err["message"]}"
     end
-    raise exception_type, message: err_msg
+    # Yes, we're ignoring all other errors for now
   end
 
   defp parse_location_params({:ok, %{body: params}}) do
     %{
       tripadvisor_rating: params["rating"],
       tripadvisor_rating_image_url: params["rating_image_url"],
-      tripadvisor_reviews_count: params["num_reviews"]
+      tripadvisor_reviews_count: params["num_reviews"],
+      tripadvisor_url: params["web_url"]
     }
   end
 end
