@@ -1,6 +1,8 @@
 defmodule Grid.Api.ProductController do
   use Grid.Web, :controller
 
+  import Ecto.Query
+
   alias Grid.Product
 
   plug :assign_date when action in [:index]
@@ -9,6 +11,7 @@ defmodule Grid.Api.ProductController do
     products = Product.published
       |> Product.for_date(conn.assigns.date)
       |> Product.for_experience(params["experience_id"])
+      |> distinct(true)
       |> Repo.all
       |> preload
     render(conn, "index.json", products: products)

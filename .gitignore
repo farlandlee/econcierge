@@ -13,6 +13,8 @@ web/static/assets/flaticon/flaticon.html
 # Generate on crash by the VM
 erl_crash.dump
 npm-debug.log
+# logs can have random strings appended
+npm-debug.log.**
 
 # Static artifacts
 node_modules/
