@@ -25,16 +25,19 @@ defmodule Grid.ExploreController do
       |> select([e], e.id)
       |> Repo.all
 
-    current = :erlang.date()
+    current = Ecto.Date.from_erl(:erlang.date())
 
     season = from(
       s in Season,
         join: p in assoc(s, :products),
         where: p.experience_id in ^experience_ids,
         where: p.published == true
-    ) |> Season.first_after_date(current) |> Repo.one!
+    ) |> Season.first_from_date(current) |> Repo.one!
 
-    date = season.start_date |> Ecto.Date.to_string
+    date = case Ecto.Date.compare(current, season.start_date) do
+      :lt -> season.start_date
+      _ -> current
+    end |> Ecto.Date.to_string
 
     redirect conn, to: explore_path(conn, :index, activity_slug, category_slug, date, [])
   end

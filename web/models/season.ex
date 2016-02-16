@@ -43,10 +43,10 @@ defmodule Grid.Season do
     |> foreign_key_constraint(:vendor_activity_id)
   end
 
-  def first_after_date(query \\ __MODULE__, _)
-  def first_after_date(query, date) do
+  def first_from_date(query \\ __MODULE__, _)
+  def first_from_date(query, date) do
     from s in query,
-      where: s.start_date >= ^date,
+      where: s.end_date >= ^date,
       order_by: [s.start_date],
       limit: 1
   end
