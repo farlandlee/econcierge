@@ -18,7 +18,7 @@
 // Local files can be imported directly using relative
 // paths "./socket" or full ones "web/static/js/socket".
 
-// import socket from "./socket"
+import fulloverlaySelect from "./fulloverlay-select";
 
 jQuery(function($){
   $(document).foundation();
@@ -26,4 +26,5 @@ jQuery(function($){
   $("#activity_select").change(function(){
     $('#search_form').submit();
   });
+  //$('.full-overlay-select').fulloverlaySelect();
 });

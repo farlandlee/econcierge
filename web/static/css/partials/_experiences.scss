@@ -63,12 +63,14 @@
   }
 }
 .experience-filter {
-  padding: 0 0 0.5rem 0;
+  padding: 0.5rem 0;
   p {
     margin-bottom: 0;
   }
-  a {
-    text-decoration: underline;
+  .filter-search {
+    a {
+      text-decoration: underline;
+    }
   }
   label {
     display: table-cell;
@@ -77,15 +79,13 @@
   .input-group {
     margin: 0;
   }
-  .chosen-single {
+  .chosen-single,
+  .full-overlay-select {
     height: 1.2rem;
-    line-height: 1.2;
-    > div {
-      b {
-        &:after {
-          line-height: 16px;
-        }
-      }
+    font-size: 1rem;
+    line-height: 1.8;
+    &:after {
+      font-size: 1.6rem;
     }
   }
 }

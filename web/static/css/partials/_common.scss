@@ -138,33 +138,7 @@
 .input-group-field {
   display: inline-block;
   margin-bottom:0;
-  line-height: 1;
-  background-color: transparent;
-  position: relative;
-  &:after {
-    content: "\f107";
-    font: normal normal normal 2.4rem/1 FontAwesome;
-    display: inline-block;
-    position:absolute;
-    right: 0.5rem;
-    top: 0;
-    z-index: 1;
-  }
-  select {
-    background-color: transparent;
-    border: 0;
-    background-image: none !important;
-    display: inline-block;
-    margin: 0;
-    font-size: 1.6rem;
-    position: relative;
-    z-index: 2;
-    padding: 0;
-    border: 0;
-    padding-left: 0.6rem;
-    padding-right: 2.4rem;
-    text-decoration: underline;
-  }
+
 }
 
 .overlays {

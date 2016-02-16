@@ -1,21 +1,20 @@
 <div class="page activity">
   <div class="top-row row expanded">
-    <%= form_for @conn, activity_path(@conn, :show), [as: :activity, id: "search_form", class: "activity-search"], fn f -> %>
-        <div class="input-group select-activity">
-          <span> Choose your </span>
-          <div class="input-group-field" >
-            <%= select(
-              f, :id,
-              Enum.map(@available_activities, &({&1.name, &1.id})),
-              [ prompt: "All Activities",
-                value: @activity.id,
-                id: :activity_select
-              ])
-            %>
-          </div>
-          <span>activity</span>
+    <div class="input-group select-activity">
+      <span> Choose your </span>
+      <div class="input-group-field" >
+        <div class="full-overlay-select" tabindex="0">
+          <span class="current"><%= @activity.name %></span>
+          <ul>
+            <%= for activity <- @available_activities do %>
+              <li><%= link activity.name, to: activity_path(@conn, :categories_by_activity_slug, activity.slug), class: "#{if @activity.id == activity.id, do: "selected"}" %></li>
+            <% end %>
+          </ul>
+          <div class="full-overlay-black-overlay"></div>
         </div>
-    <% end %>
+      </div>
+      <span>activity</span>
+    </div>
   </div>
   <div class="row">
     <div class="columns small-12 large-10">
