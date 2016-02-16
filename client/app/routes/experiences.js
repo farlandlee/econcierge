@@ -2,14 +2,28 @@ import Ember from 'ember';
 
 export default Ember.Route.extend({
   model (params) {
-    let date = params.date;
-    let activitySlug = params.activity_slug;
-    let categorySlug = params.category_slug;
-    return Ember.RSVP.hash({
-      activity: this._getBySlug('activity', activitySlug),
-      category: this._getBySlug('category', categorySlug)
-    }).then(({activity, category}) => {
-      let experiences = this.store.query('experience', {
+    let {date, activity_slug, category_slug} = params;
+    return this.store.findAll('activity').then(activities => {
+      let activity = activities.findBy('slug', activity_slug);
+      if (!activity) {
+        throw 'Activity not found';
+      }
+
+      let categoriesQuery = this.store.query('category', {
+        activity_id: activity.get('id')
+      });
+
+      return Ember.RSVP.hash({
+        activity: activity,
+        categories: categoriesQuery
+      });
+    }).then(({activity, categories}) => {
+      let category = categories.findBy('slug', category_slug);
+      if (!category) {
+        throw 'Category not found';
+      }
+
+      let experiencesQuery = this.store.query('experience', {
         date: date,
         activity_id: activity.get('id'),
         category_id: category.get('id')
@@ -18,7 +32,8 @@ export default Ember.Route.extend({
       return Ember.RSVP.hash({
         activity: activity,
         category: category,
-        experiences: experiences
+        experiences: experiencesQuery,
+        date: date
       });
     });
   },
@@ -26,11 +41,5 @@ export default Ember.Route.extend({
   setupController(controller, model) {
     this._super(...arguments);
     controller.setProperties(model);
-  },
-
-  _getBySlug(model, slug) {
-    return this.store.findAll(model).then(models => {
-      return models.findBy('slug', slug);
-    });
   }
 });
