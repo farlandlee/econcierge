@@ -65,7 +65,7 @@ defmodule Grid.Admin.Activity.ExperienceController do
     changeset = conn.assigns.experience
       |> Experience.changeset(experience_params)
 
-    {_, conn} = Repo.transaction(fn ->
+    {:ok, conn} = Repo.transaction(fn ->
       case Repo.update(changeset) do
         {:ok, experience} ->
           manage_associated(experience, :experience_categories, :category_id, experience_params["category_id"])
