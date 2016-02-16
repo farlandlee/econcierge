@@ -15,7 +15,7 @@
     <label class="control-label">Start Date
       <%= date_select f, :start_date %>
     </label>
-    <%= date_select f, :start_date %>
+    <%= error_tag f, :start_date %>
   </div>
 
   <div class="form-group">

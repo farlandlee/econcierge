@@ -23,4 +23,26 @@ defmodule Grid.SeasonTest do
     changeset = Season.changeset(%Season{}, @invalid_attrs)
     refute changeset.valid?
   end
+
+  test "first_from_date" do
+    season = Factory.create(:season)
+
+    erl_start = Ecto.Date.to_erl(season.start_date)
+
+    date_before_season = Calendar.Date.advance!(erl_start, -5) |> Calendar.Date.to_erl
+    result = Season.first_from_date(date_before_season) |> Repo.one!
+    assert season.id == result.id
+
+    date_in_season = Calendar.Date.advance!(erl_start, 2) |> Calendar.Date.to_erl
+    result = Season.first_from_date(date_in_season) |> Repo.one!
+    assert season.id == result.id
+
+    erl_end = Ecto.Date.to_erl(season.end_date)
+    date_after_season = Calendar.Date.advance!(erl_end, 5) |> Calendar.Date.to_erl
+
+    assert_raise(Ecto.NoResultsError, fn ->
+      Season.first_from_date(date_after_season) |> Repo.one!
+    end)
+
+  end
 end
