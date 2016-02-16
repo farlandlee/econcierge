@@ -25,6 +25,13 @@
 
           <%= render Grid.LayoutView, "_header.html" %>
 
+          <div id="app-loader">
+            <div class="jumbotron row align-center align-middle expanded">
+              <div class="darken-overlay"></div>
+              <div class="app-loading"></div>
+            </div>
+          </div>
+
           <div id="app-bootstrap"></div>
 
           <%= render Grid.LayoutView, "_footer.html" %>

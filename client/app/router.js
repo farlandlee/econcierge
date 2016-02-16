@@ -12,6 +12,7 @@ Router.map(function() {
       this.route('products', {path: '/'});
     });
   });
+  this.route('error404', {path: '/*path'});
 });
 
 export default Router;

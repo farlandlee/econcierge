@@ -1,24 +1,25 @@
 import Ember from 'ember';
+import NotFoundMixin from 'client/mixins/not-found-mixin';
 
-export default Ember.Route.extend({
+export default Ember.Route.extend(NotFoundMixin, {
   model (params) {
     let {experiences} = this.modelFor('experiences');
     let experience = experiences.findBy('slug', params.experience_slug);
-    if (experience) {
-      return experience;
+    if (!experience) {
+      return this.throwNotFound();
     }
-    throw `No experience found for ${params.experience_slug}`;
+    return experience;
   },
 
-  serialize (model) {
-    return {experience_slug: model ? model.get('slug') : ''};
+  serialize (experience) {
+    return {experience_slug: experience.get('slug')};
   },
 
-  setupController (controller, model) {
+  setupController (controller, experience) {
     this._super(...arguments);
     let {experiences, category} = this.modelFor('experiences');
     controller.setProperties({
-      experience: model,
+      experience: experience,
       experiences: experiences,
       activeCategoryName: category.get('name')
     });
