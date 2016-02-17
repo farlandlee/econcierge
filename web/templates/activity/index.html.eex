@@ -1,0 +1,27 @@
+<div class="page">
+  <div class="top-row row align-center align-middle">
+    <div class="columns small-12 medium-6 medium-offset-3 large-8 large-offset-2" >
+      <h1 class="page-title">Activities</h1>
+      <p class="page-subtitle">Search, Discover &amp; reserve the various activities offered in Jackson Hole.<br>Hover over an activity to learn more.</p>
+    </div>
+    <div class="columns small-12 medium-3 large-2">
+      <div class="fi flaticon-days selected-date">Mon, August 1, 2016</div>
+    </div>
+  </div>
+  <div class="row align-center activities expanded">
+    <%= for activity <- @available_activities do %>
+      <div class="columns small-12 medium-6 large-4" >
+        <%= #img_for item, class: "img-responsive" %>
+        <div class="row align-middle" style="background-image: url('<%= img_src(activity.default_image, :original) %>');">
+          <div class="darken-overlay"></div>
+          <div class="element-name column">
+            <p class="lead"><%= activity.name %></p>
+          </div>
+          <div class="element-description column">
+            <p><a class="full-overlay" href="<%= activity_path(@conn, :categories_by_activity_slug, activity.slug) %>" ><span><%= activity.description %></span></a></p>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

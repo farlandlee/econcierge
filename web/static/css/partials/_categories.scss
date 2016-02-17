@@ -1,4 +1,5 @@
-.categories {
+.categories,
+.activities {
   .columns {
     text-align: center;
     position: relative;
@@ -19,31 +20,73 @@
         color: $white;
       }
       &:hover {
-        .category-name {
+        .element-name {
+          opacity: 0;
+          visibility: hidden;
           display: none;
         }
-        .category-description {
-          display: block;
+        .element-description {
           position: relative;
-          z-index: 2;
-          min-width: 100%;
+          visibility:visible;
+          opacity: 1;
         }
       }
     }
   }
-  .category-name {
+  .element-name {
     position: relative;
     z-index: 2;
+    opacity: 1;
+    transition: opacity 0.5s linear, visibility 0s;
     p {
       font-size: 1.8rem;
     }
   }
-  .category-description {
-    display: none;
+  .element-description {
+    opacity: 0;
+    visibility: hidden;
+    position: absolute;
     font-weight: normal;
     font-size: 1.2rem;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    transition: opacity 0.5s linear, visibility 0s;
+    p {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    a {
+      display: block;
+      position: relative;
+      z-index: 2;
+      min-width: 100%;
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      span {
+        @include center-content();
+        min-width: 90%;
+      }
+    }
   }
   .lower-right {
     font-weight: bold;
+  }
+}
+.activities {
+  padding: 6rem 0;
+  background-color: $light-gray;
+  .columns {
+    height: 266px;
+    margin-bottom: rem-calc(80);
+    > div {
+      max-width: 400px;
+      height: 266px;
+    }
   }
 }
