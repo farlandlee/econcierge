@@ -1,10 +1,10 @@
 <div class="row product-header">
   <div class="shrink column">
-    <img class="vendor-image" src="http://placehold.it/75x75">
+    <img class="vendor-image" style="background-image: url('{{placehold-it product.vendor.defaultImage.medium '75x75'}}');">
   </div>
   <div class="columns expand">
     {{#with product.vendor as |vendor|}}
-    <p class="vendor-name">{{product.vendor.name}}</p>
+    <p class="vendor-name">{{vendor.name}}</p>
     {{!--
     must conform to tripadvisor requirements,
     see https://developer-tripadvisor.com/content-api/display-requirements/
@@ -13,6 +13,7 @@
     <img class="tripadvisor-rating-image" src="{{vendor.tripadvisorRatingImageUrl}}">
     <a href="{{vendor.tripadvisorUrl}}" class="tripadvisor-reviews-count" target="_blank">{{vendor.tripadvisorReviewsCount}} Reviews</a>
     {{/with}}
+
     {{#unless product.pickup}}
     <p class="meeting-address">
       {{#with product.meetingLocation as |loc|}}

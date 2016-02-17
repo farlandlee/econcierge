@@ -8,5 +8,6 @@ export default DS.Model.extend({
   tripadvisorUrl: DS.attr(),
   tripadvisorRating: DS.attr(),
   tripadvisorRatingImageUrl: DS.attr(),
-  tripadvisorReviewsCount: DS.attr()
+  tripadvisorReviewsCount: DS.attr(),
+  defaultImage: DS.attr()
 });

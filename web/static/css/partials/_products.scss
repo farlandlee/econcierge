@@ -35,6 +35,9 @@
     padding: 1rem 0.5rem;
     .vendor-image {
       border-radius: 100px;
+      height: 75px;
+      width: 75px;
+      background-size: cover;
     }
     .vendor-name {
       color: $dark-gray;

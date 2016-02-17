@@ -14,7 +14,8 @@ defmodule Grid.Api.ExperienceView do
       id: experience.id,
       name: experience.name,
       description: experience.description,
-      slug: experience.slug
+      slug: experience.slug,
+      image: render_one(experience.image, Grid.Api.ImageView, "image.json")
     }
   end
 end

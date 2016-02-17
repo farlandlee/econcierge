@@ -1,6 +1,6 @@
 <div class="row selected-experience">
   <div class="columns small-12 medium-7">
-    <img src="http://placehold.it/810X630">
+    <img src="{{placehold-it experience.image.full '810x630'}}">
   </div>
   <div class="columns small-12 medium-5">
     <p class="experience-label">Experience:</p>
@@ -29,7 +29,7 @@
       {{!-- don't render the currently selected category twice --}}
       {{#unless (eq experience.id otherExperience.id)}}
       <div class="column small-4">
-        <img src="http://placehold.it/150x150">
+        <img src="{{placehold-it otherExperience.image.medium '150x150'}}">
       </div>
       {{/unless}}
       {{/each}}

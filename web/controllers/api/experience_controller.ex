@@ -16,12 +16,16 @@ defmodule Grid.Api.ExperienceController do
       |> Experience.for_category(params["category_id"])
       |> Experience.having_published_products(product_ids)
       |> Repo.all
+      |> Repo.preload(:image)
 
     render(conn, "index.json", experiences: experiences)
   end
 
   def show(conn, %{"slug" => slug}) do
-    experience = Experience |> Repo.get_by!(slug: slug)
+    experience = Experience
+      |> Repo.get_by!(slug: slug)
+      |> Repo.preload(:image)
+
     render(conn, "show.json", experience: experience)
   end
 

@@ -9,11 +9,13 @@ defmodule Grid.Api.ExperienceControllerTest do
   end
 
   setup do
-    experience
-     = %{activity: activity}
-     = Factory.create(:experience)
+    a = Factory.create(:activity)
+    i = Factory.create_activity_image(assoc_id: a.id)
 
-    category = Factory.create(:category, activity: activity)
+
+    experience = Factory.create(:experience, activity: a, image: i)
+
+    category = Factory.create(:category, activity: a)
     Factory.create(:experience_category,
       experience: experience,
       category: category
@@ -21,31 +23,19 @@ defmodule Grid.Api.ExperienceControllerTest do
 
     Factory.create(:product, experience: experience, published: true)
 
-    {:ok, experience: experience, category: category}
+    {:ok, experience: experience, category: category, image: i}
   end
 
-  test "index lists all entries", %{conn: conn, experience: experience} do
+  test "index lists all entries", %{conn: conn} do
     conn = get conn, api_experience_path(conn, :index)
     response = json_response(conn, 200)
     assert Enum.count(response["experiences"]) == 1
-    resp_experience = hd(response["experiences"])
-
-    assert resp_experience["id"] == experience.id
-    assert resp_experience["name"] == experience.name
-    assert resp_experience["description"] == experience.description
-    assert resp_experience["slug"] == experience.slug
   end
 
-  test "index filters by category_id", %{conn: conn, experience: experience, category: cat} do
+  test "index filters by category_id", %{conn: conn, category: cat} do
     conn = get conn, api_experience_path(conn, :index, category_id: cat.id)
     response = json_response(conn, 200)
     assert Enum.count(response["experiences"]) == 1
-    resp_experience = hd(response["experiences"])
-
-    assert resp_experience["id"] == experience.id
-    assert resp_experience["name"] == experience.name
-    assert resp_experience["description"] == experience.description
-    assert resp_experience["slug"] == experience.slug
 
     conn = get conn, api_experience_path(conn, :index, category_id: -1)
     assert json_response(conn, 200)["experiences"] == []
@@ -53,14 +43,7 @@ defmodule Grid.Api.ExperienceControllerTest do
 
   test "shows chosen resource by slug", %{conn: conn, experience: experience} do
     conn = get conn, api_experience_path(conn, :show, experience.slug)
-    response = json_response(conn, 200)
-    resp_experience = response["experience"]
-
-    assert resp_experience
-    assert resp_experience["id"] == experience.id
-    assert resp_experience["name"] == experience.name
-    assert resp_experience["description"] == experience.description
-    assert resp_experience["slug"] == experience.slug
+    assert json_response(conn, 200)
   end
 
   test "does not show resource and instead throw error when id is nonexistent", %{conn: conn} do
