@@ -14,5 +14,8 @@ export default Ember.Component.extend({
       this.attrs.onClose();
     });
     this.set('reveal', reveal);
+  },
+  willDestroyElement() {
+    this.get('reveal').close();
   }
 });
