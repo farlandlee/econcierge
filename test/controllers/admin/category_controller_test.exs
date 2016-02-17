@@ -3,7 +3,7 @@ defmodule Grid.Admin.Activity.CategoryControllerTest do
 
   alias Grid.Category
   @valid_attrs %{name: "some content", description: "some description"}
-  @invalid_attrs %{}
+  @invalid_attrs %{name: nil, description: nil}
 
   setup do
     category = Factory.create(:category)

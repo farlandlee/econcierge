@@ -20,4 +20,10 @@ defmodule Grid.ActivityView do
   def img_for(%Experience{} = experience, opts) do
     img(experience.image, opts)
   end
+
+  def img_src(_, size \\ :medium)
+  def img_src(nil, _), do: "http://placehold.it/450x300"
+  def img_src(%Image{} = image, size) do
+    Map.get(image, size)
+  end
 end

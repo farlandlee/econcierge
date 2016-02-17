@@ -76,6 +76,7 @@ defmodule Grid.Factory do
     %Category{
       activity: build(:activity),
       name: sequence(:name, &"category-#{&1}"),
+      description: sequence(:description, &"category-#{&1}"),
       slug: sequence(:slug, &"category-#{&1}")
     }
   end

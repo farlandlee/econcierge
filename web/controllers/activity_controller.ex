@@ -31,6 +31,7 @@ defmodule Grid.ActivityController do
       distinct: true)
     |> Repo.alphabetical
     |> Repo.all
+    |> Repo.preload(:image)
 
     conn
     |> assign(:activity, activity)
