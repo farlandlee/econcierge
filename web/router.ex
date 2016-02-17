@@ -52,6 +52,7 @@ defmodule Grid.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+    get "/activities", ActivityController, :index
 
     get "/explore/:activity_slug/:category_slug/:date/*path", ExploreController, :index
     get "/explore/:activity_slug/:category_slug", ExploreController, :without_date

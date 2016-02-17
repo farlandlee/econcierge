@@ -69,11 +69,3 @@
     }
   }
 }
-.top-row {
-  margin-top: 42px;
-  // Only affects medium screens and larger
-  @include breakpoint(large) {
-    margin-top: 61px;
-
-  }
-}

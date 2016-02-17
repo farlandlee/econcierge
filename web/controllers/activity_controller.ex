@@ -15,6 +15,11 @@ defmodule Grid.ActivityController do
     redirect(conn, to: activity_path(conn, :categories_by_activity_slug, activity_slug))
   end
 
+  def index(conn, _) do
+    activities = conn.assigns.available_activities |> Repo.preload(:default_image)
+    render(conn, "index.html", available_activities: activities)
+  end
+
   def categories_by_activity_slug(conn, _) do
    render(conn, "show.html")
   end

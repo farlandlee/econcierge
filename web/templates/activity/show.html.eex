@@ -24,11 +24,11 @@
           <%= #img_for item, class: "img-responsive" %>
           <div class="row align-middle" style="background-image: url('<%= img_src(category.image, :original) %>');">
             <div class="darken-overlay"></div>
-            <div class="category-name column">
+            <div class="element-name column">
               <p class="lead"><%= category.name %></p>
             </div>
-            <div class="category-description column">
-              <p><%= link category.description, to: explore_path(@conn, :without_date, @activity.slug, category.slug), class: "full-overlay" %></p>
+            <div class="element-description column">
+              <p><a class="full-overlay" href="<%= explore_path(@conn, :without_date, @activity.slug, category.slug) %>" ><span><%= category.description %></span></a></p>
             </div>
             <p class="lower-right">from $350</p>
           </div>
