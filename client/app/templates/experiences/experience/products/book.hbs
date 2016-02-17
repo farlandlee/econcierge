@@ -1,0 +1,36 @@
+{{#foundation-modal onClose=(route-action "goToProducts") as |close|}}
+  <section>
+      <h3>{{product.name}}</h3>
+  </section>
+  <section>
+    <h4 class="subheader">
+      Vendor
+    </h4>
+    <p>{{product.vendor.name}}</p>
+  </section>
+  <section>
+    <h4 class="subheader">
+      Experience
+    </h4>
+    <p>{{product.experience}}</p>
+  </section>
+  <section>
+    <h4 class="subheader">
+      Description
+    </h4>
+    <p>{{product.description}}</p>
+  </section>
+  <section>
+    <h4 class="subheader">
+      Cancellation Policy
+    </h4>
+    <p>100% refund up to 6 days before the trip.</p>
+  </section>
+  <hr>
+  <h4 class="text-center">Enter Your Trip Details</h4>
+  <h5 class="subheader text-center">Time</h5>
+  <section class="row align-justify">
+    <button type="button" class="column shrink button primary hollow" onclick={{action close}}>Back</button>
+    <button type="button" class="column shrink button success">Book</button>
+  </section>
+{{/foundation-modal}}
