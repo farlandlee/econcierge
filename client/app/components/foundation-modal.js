@@ -3,8 +3,8 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
   classNameBindings: ['size'],
-  classNames: ['reveal'],
-  size: 'large',
+  classNames: ['reveal','booking-modal'],
+  //size: 'small',
 
   didInsertElement() {
     let el = this.$();

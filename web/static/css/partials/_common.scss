@@ -274,3 +274,16 @@ a.more-info {
   line-height: 1.2;
   margin: 0;
 }
+
+.duration,
+.age-restriction,
+.location {
+  text-align:center;
+  color: $medium-gray;
+  &:before {
+    margin-bottom: 0.5rem;
+    font-size: 1.2rem;
+    display: block;
+    text-align:center;
+  }
+}

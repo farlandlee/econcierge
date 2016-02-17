@@ -4,3 +4,19 @@
   left: 50%;
   transform: translate(-50%, -50%);
 }
+
+@mixin down-arrow() {
+  content: "\f107";
+  font: normal normal normal 2.4rem/1 FontAwesome;
+  display: inline-block;
+  position:absolute;
+  right: 0.5rem;
+  top: 0;
+  z-index: 1;
+  border: 0;
+  transform: rotate(0);
+  transform-origin: 50% 50%;
+  width: 30px;
+  margin-top: 0;
+  transition-duration: 0.2s;
+}

@@ -67,7 +67,7 @@ $global-padding: 1rem;
 $global-margin: 1rem;
 $global-weight-normal: normal;
 $global-weight-bold: bold;
-$global-radius: 0;
+$global-radius: 6px;
 $global-text-direction: ltr;
 $rem-base: 16px;
 
@@ -429,14 +429,14 @@ $progress-radius: $global-radius;
 // ----------
 
 $reveal-background: $white;
-$reveal-width: 600px;
+$reveal-width: 720px;
 $reveal-max-width: $global-width;
-$reveal-offset: rem-calc(100);
-$reveal-padding: $global-padding;
+$reveal-offset: rem-calc(160);
+$reveal-padding: rem-calc(35) 0 rem-calc(20);
 $reveal-border: 1px solid $medium-gray;
-$reveal-radius: $global-radius;
+$reveal-radius: 10px;
 $reveal-zindex: 1005;
-$reveal-overlay-background: rgba($black, 0.45);
+$reveal-overlay-background: rgba($black, 0.75);
 
 // 28. Slider
 // ----------
