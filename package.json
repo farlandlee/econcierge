@@ -1,6 +1,8 @@
 {
   "repository": {},
   "devDependencies": {
+    "after-brunch": "0.0.5",
+    "autoprefixer": "^6.1.2",
     "babel-brunch": "^5.1.1",
     "bower": "^1.6.8",
     "brunch": "^1.8.5",
@@ -8,9 +10,7 @@
     "css-brunch": ">= 1.0 < 1.8",
     "javascript-brunch": ">= 1.0 < 1.8",
     "postcss-brunch": "^0.5.0",
-    "autoprefixer": "^6.1.2",
     "sass-brunch": "^1.9.2",
-    "uglify-js-brunch": ">= 1.0 < 1.8",
-    "after-brunch": "0.0.5"
+    "uglify-js-brunch": ">= 1.0 < 1.8"
   }
 }

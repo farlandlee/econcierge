@@ -13,6 +13,15 @@ module.exports = function(environment) {
       }
     },
 
+    rollbar: {
+      enabled: environment === 'production',
+      accessToken: process.env['ROLLBAR_POST_CLIENT_ACCESS_TOKEN'],
+      captureUncaught: true,
+      payload: {
+        environment: environment
+      }
+    },
+
     APP: {
       rootElement: '#app-bootstrap'
       // Here you can pass flags/options to your application instance
@@ -23,8 +32,8 @@ module.exports = function(environment) {
   if (environment === 'development') {
     // ENV.APP.LOG_RESOLVER = true;
     // ENV.APP.LOG_ACTIVE_GENERATION = true;
-    // ENV.APP.LOG_TRANSITIONS = true;
-    // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
+    ENV.APP.LOG_TRANSITIONS = true;
+    ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
   }
 

@@ -72,7 +72,8 @@ exports.config = {
     sass: {
       options: {
         includePaths: [
-          'bower_components/foundation-sites/scss'
+          'bower_components/foundation-sites/scss',
+          'bower_components/spinners/stylesheets'
         ]
       }
     }

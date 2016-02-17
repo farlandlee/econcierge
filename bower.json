@@ -3,9 +3,10 @@
   "dependencies": {
     "chosen": "~1.4.2",
     "bootstrap": "~3.3.6",
+    "datatables.net": "~1.10.10",
     "font-awesome": "~4.5.0",
     "foundation-sites": "~6.1.2",
-    "datatables.net": "~1.10.10",
+    "spinners": "~1.2.2",
     "urijs": "~1.17.0"
   },
   "overrides": {

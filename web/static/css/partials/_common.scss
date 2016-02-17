@@ -6,6 +6,10 @@
   }
 }
 
+.app-loading {
+  @include spinner(10em);
+}
+
 .error-404 {
   background: url('/images/error-404.jpg') no-repeat center;
 }
