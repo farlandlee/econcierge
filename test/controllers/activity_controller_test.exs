@@ -5,7 +5,8 @@ defmodule Grid.ActivityControllerTest do
 
   setup do
     e = Factory.create(:experience)
-    c = Factory.create(:category, activity: e.activity)
+    i = Factory.create_activity_image(assoc_id: e.activity_id)
+    c = Factory.create(:category, activity: e.activity, image: i)
     Factory.create(:experience_category, experience: e, category: c)
 
     p = Factory.create(:product, experience: e)
@@ -14,7 +15,8 @@ defmodule Grid.ActivityControllerTest do
       :ok,
       product: p,
       activity: e.activity,
-      category: c
+      category: c,
+      image: i
     }
   end
 
@@ -31,5 +33,10 @@ defmodule Grid.ActivityControllerTest do
   test "POST with empty activity id", %{conn: conn} do
     conn = post(conn, activity_path(conn, :show), activity: %{id: ""})
     assert html_response(conn, 302) =~ "/"
+  end
+
+  test "GET index with image", %{conn: conn, activity: a, image: i} do
+    conn = get(conn, activity_path(conn, :categories_by_activity_slug, a.slug))
+    assert html_response(conn, 200) =~ i.original
   end
 end

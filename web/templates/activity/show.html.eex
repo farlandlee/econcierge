@@ -22,7 +22,7 @@
         <%= for category <- @categories do %>
         <div class="columns small-12 medium-6 large-5" >
           <%= #img_for item, class: "img-responsive" %>
-          <div class="row align-middle" style="background-image: url(http://placehold.it/450x300);">
+          <div class="row align-middle" style="background-image: url('<%= img_src(category.image, :original) %>');">
             <div class="darken-overlay"></div>
             <div class="category-name column">
               <p class="lead"><%= category.name %></p>
