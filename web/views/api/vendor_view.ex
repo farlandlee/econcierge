@@ -22,7 +22,9 @@ defmodule Grid.Api.VendorView do
       tripadvisor_url: vendor.tripadvisor_url,
       tripadvisor_rating: vendor.tripadvisor_rating,
       tripadvisor_rating_image_url: vendor.tripadvisor_rating_image_url,
-      tripadvisor_reviews_count: vendor.tripadvisor_reviews_count
+      tripadvisor_reviews_count: vendor.tripadvisor_reviews_count,
+
+      default_image: render_one(vendor.default_image, Grid.Api.ImageView, "image.json")
     }
   end
 end
