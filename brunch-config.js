@@ -6,7 +6,7 @@ exports.config = {
         "js/admin.js": /^(web\/static\/admin\/js)/,
         "js/app.js": /^(web\/static\/js)/,
         "js/vendor.js": [
-          /^(?!bower_components\/what-input\/)(bower_components)/, // what input is evil.
+          /^(bower_components)/,
           /^(deps)/
         ]
       }
@@ -38,7 +38,12 @@ exports.config = {
     // This option sets where we should place non-css and non-js assets in.
     // By default, we set this to "/web/static/assets". Files in this directory
     // will be copied to `paths.public`, which is "priv/static" by default.
-    assets: /^(web\/static\/assets)/
+    assets: /^(web\/static\/assets)/,
+    ignored: [
+      /[\\/]_/, //any file starting with `_`, like sass partials
+      'bower_components/foundation-sites/scss/foundation.scss',
+      /^(bower_components\/what-input\/)/
+    ]
   },
 
   // Phoenix paths configuration

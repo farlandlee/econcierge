@@ -99,16 +99,24 @@ defmodule Grid.Mixfile do
   defp ember_build(_) do
     spawn_link fn ->
       # I can't believe how easy and awesome this is. <3 erlang processes
-      0 = Mix.Shell.IO.cmd("cd client && ./node_modules/ember-cli/bin/ember build --watch")
+      cmd("cd client && ./node_modules/ember-cli/bin/ember build --watch")
     end
   end
 
   defp mix_test(_) do
     #use cmd to avoid MIX_ENV errors from running the task directly
-    Mix.Shell.IO.cmd("mix test")
+    cmd("mix test")
   end
 
   defp test_client(_) do
-    Mix.Shell.IO.cmd("cd client && ./node_modules/ember-cli/bin/ember test")
+    Mix.Shell.IO.info [:yellow, "ember test"]
+    cmd("cd client && ./node_modules/ember-cli/bin/ember test --silent")
+  end
+
+  defp cmd(cmd) do
+    case Mix.Shell.IO.cmd(cmd) do
+      0 -> :ok
+      _ -> raise Mix.Error, message: "`#{cmd}` exited with nonzero status"
+    end
   end
 end
