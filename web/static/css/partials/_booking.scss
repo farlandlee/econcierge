@@ -1,0 +1,109 @@
+.booking-modal {
+  //max-height: none !important;
+  h3 {
+    font-size: 2rem;
+    &.text-center {
+      font-size: 1.6rem;
+    }
+  }
+  h4.subheader {
+    font-size: rem-calc(14);
+    color: $medium-gray;
+    flex-wrap: nowrap;
+  }
+  .trip-details {
+    margin-top: rem-calc(20);
+    padding-top: rem-calc(20);
+    border-top: 1px solid $medium-gray;
+  }
+  label {
+    font-size: 1rem;
+    color: $medium-gray;
+    text-align: center;
+    margin-bottom: .4rem;
+
+  }
+  .date-selection {
+    margin-bottom: 2rem;
+    label{
+      text-align: left;
+    }
+  }
+  input {
+    border-color: $medium-gray;
+    border-radius: 6px;
+  }
+  .datepicker {
+    width: 140px;
+
+    border: 1px solid $medium-gray;
+    border-radius: 6px;
+    height: 40px;
+    line-height: 38px;
+    position: relative;
+    &:after {
+      @include down-arrow();
+      color: $medium-gray;
+      right: 0;
+      font-size: 2rem;
+      line-height: 38px;
+      height: 38px;
+    }
+  }
+  .body-count {
+    .input-group {
+      max-width: 100px;
+    }
+    .fa {
+      color: $primary-color;
+      &:hover {
+        color: $secondary-color;
+      }
+      &:before {
+        font-size: 46px;
+        margin-top: -3px;
+        display: inline-block;
+        font-weight: 100;
+        cursor: pointer;
+      }
+    }
+    .input-group-field {
+      padding-left: rem-calc(16);
+      width: rem-calc(46);
+      margin: 0 1rem;
+    }
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+  }
+  .book-total,
+  .book-total-label {
+    width: 100%;
+    color: $dark-gray;
+    line-height: 1;
+  }
+  .book-total {
+    font-size: 2.6rem;
+  }
+  .book-total-label {
+    font-size: rem-calc(12);
+  }
+  .button {
+    &.primary {
+      padding-left: 2.6rem;
+      padding-right: 2.6rem;
+      text-transform: uppercase;
+    }
+    &.hollow {
+      color: $medium-gray;
+      border-color: $medium-gray;
+    }
+  }
+  .booking-footer {
+    & > .column {
+      margin-bottom: 1rem;
+    }
+  }
+}
