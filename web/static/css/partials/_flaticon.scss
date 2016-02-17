@@ -1,19 +1,49 @@
+/*
+Flaticon icon font: Flaticon
+Creation date: 15/02/2016 23:28
+*/
+
 @font-face {
-	font-family: "Flaticon";
-	src: url("/flaticon/flaticon.eot");
-	src: url("/flaticon/flaticon.eot#iefix") format("embedded-opentype"),
-	url("/flaticon/flaticon.woff") format("woff"),
-	url("/flaticon/flaticon.ttf") format("truetype"),
-	url("/flaticon/flaticon.svg") format("svg");
-	font-weight: normal;
-	font-style: normal;
+  font-family: "Flaticon";
+  src: url("/flaticon/Flaticon.eot");
+  src: url("/flaticon/Flaticon.eot?#iefix") format("embedded-opentype"),
+       url("/flaticon/Flaticon.woff") format("woff"),
+       url("/flaticon/Flaticon.ttf") format("truetype"),
+       url("/flaticon/Flaticon.svg#Flaticon") format("svg");
+  font-weight: normal;
+  font-style: normal;
 }
-[class^="flaticon-"]:before, [class*=" flaticon-"]:before,
-[class^="flaticon-"]:after, [class*=" flaticon-"]:after {
-	font-family: Flaticon;
-        font-size: 20px;
-font-style: normal;
-margin-left: 20px;
-}.flaticon-calendar146:before {
-	content: "\e000";
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  @font-face {
+    font-family: "Flaticon";
+    src: url("/flaticon/Flaticon.svg#Flaticon") format("svg");
+  }
 }
+
+.fi:before{
+  display: inline-block;
+  font-family: "Flaticon";
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  line-height: 1;
+  text-decoration: inherit;
+  text-rendering: optimizeLegibility;
+  text-transform: none;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+    }
+
+.flaticon-cart:before { content: "\f100"; }
+.flaticon-clock:before { content: "\f101"; }
+.flaticon-days:before { content: "\f102"; }
+.flaticon-location:before { content: "\f103"; }
+.flaticon-people:before { content: "\f104"; }
+
+$font-Flaticon-cart: "\f100";
+$font-Flaticon-clock: "\f101";
+$font-Flaticon-days: "\f102";
+$font-Flaticon-location: "\f103";
+$font-Flaticon-people: "\f104";

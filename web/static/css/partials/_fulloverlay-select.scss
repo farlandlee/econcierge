@@ -117,32 +117,31 @@ $arrow_color: $white;
     li {
       list-style: none;
     }
-  }
-
-  a {
-    display:block;
-    cursor: pointer;
-    font-weight: 400;
-    font-size: 1.6rem;
-    line-height: $input_height - 2;
-    min-height: $input_height - 2;
-    outline: none;
-    text-align: left;
-    transition: all 0.2s;
-    color: $white;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    &:hover, &.focus, &.selected.focus {
-      font-weight: bold;
+    a,span {
+      display:block;
+      cursor: pointer;
+      font-weight: 400;
+      font-size: 1.6rem;
+      line-height: $input_height - 2;
+      min-height: $input_height - 2;
+      outline: none;
+      text-align: left;
+      transition: all 0.2s;
       color: $white;
-    }
-    &.selected {
-      font-weight: bold;
-    }
-    &.disabled {
-      background-color: transparent;
-      color: $gray;
-      cursor: default;
+      padding-left: 1rem;
+      padding-right: 1rem;
+      &:hover, &.selected {
+        font-weight: bold;
+        color: $white;
+      }
+      &.selected {
+        font-weight: bold;
+      }
+      &.disabled {
+        background-color: transparent;
+        color: $gray;
+        cursor: default;
+      }
     }
   }
 }

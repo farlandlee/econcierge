@@ -64,6 +64,18 @@
   }
   .product-body {
     padding: 1rem;
+    .duration,
+    .age-restriction,
+    .location {
+      text-align:center;
+      color: $medium-gray;
+      &:before {
+        margin-bottom: 0.5rem;
+        font-size: 1.2rem;
+        display: block;
+        text-align:center;
+      }
+    }
   }
   .product-name {
     font-size: 1.6rem;
