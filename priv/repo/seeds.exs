@@ -107,7 +107,8 @@ for {name, desc, act_name} <- vendor_tuples, activity = Repo.get_by!(Activity, n
 
     Amount.creation_changeset(%{
       amount: 180.0,
-      max_quantity: 0
+      max_quantity: 0,
+      min_quantity: 1
     }, price.id)
     |> Repo.insert!
 

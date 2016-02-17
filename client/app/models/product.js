@@ -5,10 +5,12 @@ export default DS.Model.extend({
   name: DS.attr(),
   pickup: DS.attr('boolean'),
   duration: DS.attr('number'),
-  /* @TODO these need to be impl'd as models */
-  meetingLocation: DS.attr(),
   defaultPrice: DS.attr('number'),
+
   vendor: DS.belongsTo('vendor'),
+  experience: DS.belongsTo('experience'),
+
+  meetingLocation: DS.attr(),
   prices: DS.attr(),
   startTimes: DS.attr()
 });

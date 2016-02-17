@@ -20,6 +20,9 @@ export default Ember.Route.extend(NotFoundMixin, {
   actions: {
     goToProducts () {
       this.transitionTo('experiences.experience.products');
+    },
+    book () {
+
     }
   }
 });

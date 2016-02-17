@@ -10,7 +10,7 @@ defmodule Grid.Vendor do
     field :description, :string
     field :slug, :string
     field :notification_email, :string
-    field :cancellation_policy_days, :integer
+    field :cancellation_policy_days, :integer, default: 2
     field :admin_notes, :string
 
     field :tripadvisor_location_id, :string
@@ -63,10 +63,9 @@ defmodule Grid.Vendor do
     end
   end
 
-  @required_fields ~w(name description)
+  @required_fields ~w(name description cancellation_policy_days)
   @optional_fields ~w(
     admin_notes
-    cancellation_policy_days
     default_image_id
     notification_email
     slug
@@ -84,6 +83,7 @@ defmodule Grid.Vendor do
     |> cast(params, @required_fields, @optional_fields)
     |> update_change(:name, &String.strip/1)
     |> update_change(:description, &String.strip/1)
+    |> validate_number(:cancellation_policy_days, greater_than_or_equal_to: 0)
     |> validate_length(:name, min: 1, max: 255)
     |> validate_length(:description, min: 1)
     |> validate_length(:notification_email, min: 1, max: 255)
