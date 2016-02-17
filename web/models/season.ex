@@ -4,8 +4,8 @@ defmodule Grid.Season do
   schema "seasons" do
     field :name,          :string
 
-    field :start_date, Ecto.Date
-    field :end_date, Ecto.Date
+    field :start_date, Ecto.Date, default: Ecto.Date.local
+    field :end_date, Ecto.Date, default: Ecto.Date.local
 
     belongs_to :vendor_activity, Grid.VendorActivity
     has_many :start_times, Grid.StartTime

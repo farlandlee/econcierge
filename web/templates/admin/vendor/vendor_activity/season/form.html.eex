@@ -13,14 +13,14 @@
 
   <div class="form-group">
     <label class="control-label">Start Date
-      <%= date_select f, :start_date %>
+      <%= text_input f, :start_date, class: "date_picker", type: "date" %>
     </label>
     <%= error_tag f, :start_date %>
   </div>
 
   <div class="form-group">
     <label class="control-label">End Date
-      <%= date_select f, :end_date %>
+      <%= text_input f, :end_date, class: "date_picker", type: "date"%>
     </label>
     <%= error_tag f, :end_date %>
   </div>
