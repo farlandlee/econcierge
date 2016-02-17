@@ -3,17 +3,19 @@ import Ember from 'ember';
 const {computed} = Ember;
 
 export default Ember.Component.extend({
-  tagName: 'ul',
-
+  tagName: '',
+  
   activity: null,
   category: null,
+
   sortedCategories: computed('category', 'activity.categories.@each.name', {
     get () {
-      let sortedArray = this.get('activity').get('categories').sortBy('name');
+      let sortedCategories = this.get('activity.categories').sortBy('name');
+      // until we fix up jquery, the selected cat has to be the first in the list
       let cat = this.get('category');
-      sortedArray.removeObject(cat);
-      sortedArray.unshiftObject(cat);
-      return sortedArray;
+      sortedCategories.removeObject(cat);
+      sortedCategories.unshiftObject(cat);
+      return sortedCategories;
     }
   })
 });

@@ -1,15 +1,8 @@
 <div class="top-row row expanded">
   <div class="input-group select-activity">
-    <span> Choose your </span>
-    <div class="input-group-field">
-      <div class="full-overlay-select" tabindex="0">
-        <span class="current">{{category.name}}</span>
-        {{category-dropdown activityBinding="activity" categoryBinding="category" dateBinding="date"}}
-
-        <div class="full-overlay-black-overlay"></div>
-      </div>
-    </div>
-    <span>experience</span>
+    <span>Choose your </span>
+    {{category-dropdown activity=activity category=category date=date}}
+    <span> experience</span>
   </div>
 </div>
 {{outlet}}
