@@ -4,9 +4,15 @@ defmodule Grid.ActivityControllerTest do
   alias Grid.Factory
 
   setup do
-    e = Factory.create(:experience)
-    i = Factory.create_activity_image(assoc_id: e.activity_id)
-    c = Factory.create(:category, activity: e.activity, image: i)
+    e = %{activity: activity}
+      = Factory.create(:experience)
+
+    i = Factory.create_activity_image(assoc_id: activity.id)
+
+    Grid.Activity.changeset(activity, %{default_image_id: i.id})
+    |> Repo.update!
+
+    c = Factory.create(:category, activity: activity, image: i)
     Factory.create(:experience_category, experience: e, category: c)
 
     p = Factory.create(:product, experience: e)
@@ -14,7 +20,7 @@ defmodule Grid.ActivityControllerTest do
     {
       :ok,
       product: p,
-      activity: e.activity,
+      activity: activity,
       category: c,
       image: i
     }
@@ -35,8 +41,13 @@ defmodule Grid.ActivityControllerTest do
     assert html_response(conn, 302) =~ "/"
   end
 
-  test "GET index with image", %{conn: conn, activity: a, image: i} do
+  test "GET show with image", %{conn: conn, activity: a, image: i} do
     conn = get(conn, activity_path(conn, :categories_by_activity_slug, a.slug))
+    assert html_response(conn, 200) =~ i.original
+  end
+
+  test "GET index with image", %{conn: conn, image: i} do
+    conn = get(conn, activity_path(conn, :index))
     assert html_response(conn, 200) =~ i.original
   end
 end
