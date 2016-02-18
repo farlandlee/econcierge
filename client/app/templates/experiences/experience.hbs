@@ -15,7 +15,9 @@
     --}}
     <div class="row">
       <div class="columns">
-        <p class="next-experience" ><a href="#">View next experience</a></p>
+        <p class="next-experience">
+          {{#link-to "experiences.experience" nextExperience}}View next experience{{/link-to}}
+        </p>
       </div>
     </div>
 
@@ -29,7 +31,9 @@
       {{!-- don't render the currently selected category twice --}}
       {{#unless (eq experience.id otherExperience.id)}}
       <div class="column small-4">
-        <img src="{{placehold-it otherExperience.image.medium '150x150'}}">
+        {{#link-to 'experiences.experience' otherExperience}}
+          <img src="{{placehold-it otherExperience.image.medium '150x150'}}">
+        {{/link-to}}
       </div>
       {{/unless}}
       {{/each}}

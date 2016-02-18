@@ -23,5 +23,10 @@ export default Ember.Route.extend(NotFoundMixin, {
       experiences: experiences,
       activeCategoryName: category.get('name')
     });
+
+    var nextIndex = experiences.indexOf(experience) + 1;
+    nextIndex = nextIndex > experiences.get('length') - 1 ? 0 : nextIndex;
+
+    controller.set('nextExperience', experiences.objectAt(nextIndex));
   }
 });
