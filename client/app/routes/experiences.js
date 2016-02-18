@@ -26,7 +26,6 @@ export default Ember.Route.extend(NotFoundMixin, {
       }
 
       let experiencesQuery = this.store.query('experience', {
-        date: date,
         activity_id: activity.get('id'),
         category_id: category.get('id')
       });

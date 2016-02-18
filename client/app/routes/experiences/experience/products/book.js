@@ -4,12 +4,11 @@ import NotFoundMixin from 'client/mixins/not-found-mixin';
 export default Ember.Route.extend(NotFoundMixin, {
   model (params) {
     let {product_id} = params;
-    return this.store.find('product', product_id).then(product => {
-      if (!product) {
-        return this.throwNotFound();
-      }
-      return product;
-    });
+    let product = this.store.peekRecord('product', product_id);
+    if (!product) {
+      return this.throwNotFound();
+    }
+    return product;
   },
 
   setupController (controller, product) {
