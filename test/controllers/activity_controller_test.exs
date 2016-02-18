@@ -62,4 +62,10 @@ defmodule Grid.ActivityControllerTest do
     assert redirected_to(conn, 302) =~ explore_path(conn, :without_date, a.slug, c.slug)
   end
 
+  test "Renders message if no categories for activity", %{conn: conn, activity: a} do
+    Repo.delete_all(Grid.Category)
+    conn = get(conn, activity_path(conn, :categories_by_activity_slug, a.slug))
+    assert html_response(conn, 200) =~ "no categories found for #{a.name}"
+  end
+
 end
