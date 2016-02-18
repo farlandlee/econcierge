@@ -22,7 +22,6 @@ defmodule Grid.ActivityController do
 
   def categories_by_activity_slug(conn, _) do
     case length(conn.assigns.categories) do
-      0 -> raise Ecto.NoResultsError
       1 ->
         category = hd(conn.assigns.categories)
         redirect(conn, to: explore_path(conn, :without_date, conn.assigns.activity.slug, category.slug))
