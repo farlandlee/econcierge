@@ -17,11 +17,16 @@ defmodule Grid.ActivityControllerTest do
 
     p = Factory.create(:product, experience: e)
 
+    # Create a second category as to not trip the show redirect when only 1 category
+    c2 = Factory.create(:category, activity: activity)
+    Factory.create(:experience_category, experience: e, category: c2)
+
     {
       :ok,
       product: p,
       activity: activity,
       category: c,
+      extra_cat: c2,
       image: i
     }
   end
@@ -50,4 +55,11 @@ defmodule Grid.ActivityControllerTest do
     conn = get(conn, activity_path(conn, :index))
     assert html_response(conn, 200) =~ i.original
   end
+
+  test "Get show with only one category redirects", %{conn: conn, activity: a, category: c, extra_cat: c2} do
+    Repo.delete!(c2)
+    conn = get(conn, activity_path(conn, :categories_by_activity_slug, a.slug))
+    assert redirected_to(conn, 302) =~ explore_path(conn, :without_date, a.slug, c.slug)
+  end
+
 end
