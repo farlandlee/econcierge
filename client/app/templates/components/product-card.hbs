@@ -29,36 +29,12 @@
   <div class="product-name column small-12">
     <p>{{product.name}}</p>
   </div>
-  <div class="column small-4">
-    <p class="duration fi flaticon-clock">{{duration}}</p>
-  </div>
-  {{!-- <div class="column small-12 large-4">
-    <p class="age-restriction fi flaticon-people">6+ Years</p>
-  </div> --}}
-  <div class="column small-4">
-    <p class="location fi flaticon-location">{{if product.pickup "Pick Up" "Meet At Location"}}</p>
-  </div>
+  {{product-icons product=product}}
   <div class="product-description column small-12">
     <p>{{product.description}}</p>
   </div>
   {{#each product.prices as |price|}}
-  <div class="column large-4">
-    <p class="price-label">{{price.name}}</p>
-  </div>
-  <div class="column large-4">
-    {{#each price.amounts as |amount|}}
-    <p class="price">${{amount.amount}}</p>
-    {{/each}}
-  </div>
-  <div class="column expand">
-    <p class="price-unit">
-      {{#if (gt price.people_count 1)}}
-        per {{price.people_count}} people
-      {{else}}
-        per person
-      {{/if}}
-    </p>
-  </div>
+    {{price-display price=price}}
   {{/each}}
 </div>
 <div class="row product-footer align-center">
