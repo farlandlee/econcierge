@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import NotFoundMixin from 'client/mixins/not-found-mixin';
+import NotFoundMixin from 'client/mixins/not-found';
 
 export default Ember.Route.extend(NotFoundMixin, {
   model (params) {
@@ -44,8 +44,8 @@ export default Ember.Route.extend(NotFoundMixin, {
         quantities: quantities
       });
 
-      return booking.save().then(() => {
-        this.transitionTo('explore.experience.products');
+      return booking.save().then(booking => {
+        this.transitionTo('booked', booking.id);
       });
     }
   }

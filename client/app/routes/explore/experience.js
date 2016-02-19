@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import NotFoundMixin from 'client/mixins/not-found-mixin';
+import NotFoundMixin from 'client/mixins/not-found';
 
 export default Ember.Route.extend(NotFoundMixin, {
   model (params) {

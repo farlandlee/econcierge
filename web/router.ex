@@ -53,18 +53,22 @@ defmodule Grid.Router do
 
     get "/", PageController, :index
 
-    scope "/explore" do
-      get "/activities", ActivityController, :index
-      post "/activities", ActivityController, :show
-      get "/:activity_slug/categories", ActivityController, :categories_by_activity_slug
-
-      get "/checkout", ExploreController, :index
-      get "/:activity_slug/:category_slug/:date/*path", ExploreController, :index
-      get "/:activity_slug/:category_slug", ExploreController, :without_date
-    end
-
     get "/500", ErrorController, :render_500
     get "/404", ErrorController, :render_404
+  end
+
+  scope "/explore", Grid do
+    pipe_through :browser
+
+    get "/checkout", ExploreController, :index
+    get "/booked/*path", ExploreController, :index
+
+    get "/activities", ActivityController, :index
+    post "/activities", ActivityController, :show
+    get "/:activity_slug/categories", ActivityController, :categories_by_activity_slug
+
+    get "/:activity_slug/:category_slug", ExploreController, :without_date
+    get "/:activity_slug/:category_slug/:date/*path", ExploreController, :index
   end
 
   scope "/auth", Grid do

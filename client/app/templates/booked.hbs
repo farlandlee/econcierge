@@ -1,0 +1,35 @@
+<div class="top-row row align-center align-middle expanded">
+   <div class="column medium-10">
+      <p class="lead">Added to Cart: <b>{{booking.product.name}}</b></p>
+      {{#cart-summary bookings=bookings as |itemCount subtotal|}}
+      <p>
+         Cart subtotal ({{itemCount}} {{if (eq itemCount 1) "item" "items"}}): {{format-number subtotal format='$0,0[.]00'}}
+      </p>
+      {{/cart-summary}}
+   </div>
+</div>
+<div class="row align-center">
+   <div class="columns small-12 medium-6 large-8" >
+      <h1 class="page-title">Activities</h1>
+      <p class="page-subtitle">
+         Search, Discover &amp; reserve the various activities offered in Jackson Hole.
+         <br>
+         Hover over an activity to learn more.
+      </p>
+   </div>
+</div>
+<div class="row align-spaced activities expanded">
+  {{#each activities as |activity|}}
+  <div class="columns small-12 medium-6 large-4">
+    <div class="row align-middle" style="background-image: url('{{activity.default_image.full}}');">
+      <div class="darken-overlay"></div>
+      <div class="element-name column">
+        <p class="lead">{{activity.name}}</p>
+      </div>
+      <div class="element-description column">
+        <p><a class="full-overlay" href="/explore/{{activity.slug}}/categories"><span>{{activity.description}}</span></a></p>
+      </div>
+    </div>
+  </div>
+  {{/each}}
+</div>

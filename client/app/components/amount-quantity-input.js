@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import {amountForQuantity} from 'client/models/product';
 
 const {computed, observer} = Ember;
 
@@ -31,11 +32,8 @@ export default Ember.Component.extend({
 
   _onChange: observer('quantity', 'amounts.@each.{min_quantity,max_quantity,amount}', function () {
     let quantity = this.get('quantity');
-    let amount = this.get('amounts')
-      .find(({min_quantity, max_quantity}) => {
-        return quantity >= min_quantity &&
-        (max_quantity === 0 || quantity <= max_quantity);
-      });
+    let amounts = this.get('amounts');
+    let amount = amountForQuantity(amounts, quantity);
 
     return this.attrs.onChange(amount, quantity);
   }),
