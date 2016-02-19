@@ -9,10 +9,8 @@
 
     {{content-for "head"}}
 
-    <link rel="icon" href="<%= static_path(@conn, "/favicon.ico") %>" type="image/gif" sizes="16x16">
-
+    <%= render Grid.LayoutView, "_head_scripts.html" %>
     <link rel="stylesheet" href="<%= static_path(@conn, "/explore/assets/vendor.css") %>">
-    <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
 
     {{content-for "head-footer"}}
   </head>
