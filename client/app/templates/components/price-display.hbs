@@ -1,34 +1,15 @@
 <div class="column large-4">
-  <p class="price-label">
-    {{price.name}}
-  </p>
-  <p class="help-text">
-    {{#if (gt price.people_count 1)}}
-    (per {{price.people_count}} people)
-    {{else}}
-    (per person)
-    {{/if}}
-  </p>
+  <p class="price-label">{{price.name}}</p>
 </div>
-<div class="column expand">
-  {{#each amounts as |amount|}}
-    <div class="row">
-      <div class="column large-6">
-        <p class="price">${{amount.amount}}</p>
-      </div>
-      <div class="column expand">
-        <p class="price-unit">
-          {{#if (and amount.min_quantity amount.max_quantity)}}
-            {{amount.min_quantity}} - {{amount.max_quantity}} people
-          {{else}}
-            {{#if amount.min_quantity}}
-              {{amount.min_quantity}} or more people
-            {{else}}
-              for up to {{amount.max_quantity}} people
-            {{/if}}
-          {{/if}}
-        </p>
-      </div>
-    </div>
-  {{/each}}
+<div class="column large-4">
+  <p class="price">${{startingAmount}}</p>
+</div>
+<div class="column large-4">
+  <p class="price-unit">
+  {{#if (gt price.people_count 1)}}
+    per {{price.people_count}} people
+  {{else}}
+    per person
+  {{/if}}
+  </p>
 </div>
