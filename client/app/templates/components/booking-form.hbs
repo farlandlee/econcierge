@@ -6,12 +6,12 @@
   </div>
   <div class="row align-spaced body-count">
   {{#each product.prices as |price|}}
-    {{amount-selector price=price updateCost=(action "updateCost") classNames="columns shrink"}}
+    {{amount-quantity-input amounts=price.amounts onChange=(action "updateQuantity" price) classNames="columns shrink"}}
   {{/each}}
   </div>
   <div class="row align-spaced date-selection">
     <div class="columns shrink">
-      {{time-selector times=product.startTimes}}
+      {{time-selector times=product.startTimes onChange=(action "updateTime")}}
     </div>
   </div>
 </section>
@@ -21,10 +21,10 @@
     <button type="button" class="button hollow" onclick={{action attrs.cancel}}>Back</button>
   </div>
   <div class="column small-12 medium-4 small-order-1 medium-order-2 text-center medium-text-right">
-    <div class="book-total">${{cost}}</div>
+    <div class="book-total">${{total}}</div>
     <div class="book-total-label">Total</div>
   </div>
   <div class="column small-12 medium-5 small-order-3 text-center medium-text-right">
-    <button onclick={{action attrs.submit}} type="button" class="button primary large">Add to Cart</button>
+    <button onclick={{action "submit"}} type="button" class="button primary large">Add to Cart</button>
   </div>
 </section>

@@ -2,7 +2,7 @@ defmodule Grid.ErrorView do
   use Grid.Web, :view
 
   def render("404.json", _assigns) do
-    %{errors: [%{status: 404, message: "Not found"}]}
+    %{errors: [%{status: 404, errorType: "NotFoundError", message: "Not found"}]}
   end
 
   def render("404.html", assigns) do

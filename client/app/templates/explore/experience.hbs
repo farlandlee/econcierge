@@ -1,0 +1,65 @@
+<div class="row selected-experience">
+  <div class="columns small-12 medium-7">
+    <img src="{{placehold-it experience.image.full '810x630'}}">
+  </div>
+  <div class="columns small-12 medium-5">
+    <p class="experience-label">Experience:</p>
+    <p class="experience-title">{{experience.name}}</p>
+    <p class="experience-description">{{experience.description}}</p>
+    {{!--<div class="row">
+      <div class="columns">
+        <p class="experience-difficulty-label">Difficulty Level</p>
+        <p class="experience-difficulty">{{experience.difficulty}}</p>
+      </div>
+    </div>
+    --}}
+    <div class="row">
+      <div class="columns">
+        <p class="next-experience">
+          {{next-experience-link currentExperience=experience experiences=experiences}}
+        </p>
+      </div>
+    </div>
+
+    <div class="row align-right">
+      <div class="columns shrink">
+        <p class="align-right">Other {{activeCategoryName}} Experiences:</p>
+      </div>
+    </div>
+    <div class="row other-experiences">
+      {{#each experiences as |otherExperience|}}
+      {{!-- don't render the currently selected category twice --}}
+      {{#unless (eq experience.id otherExperience.id)}}
+      <div class="column small-4">
+        {{#link-to 'explore.experience' otherExperience}}
+          <img src="{{placehold-it otherExperience.image.medium '150x150'}}">
+        {{/link-to}}
+      </div>
+      {{/unless}}
+      {{/each}}
+    </div>
+  </div>
+</div>
+<div class="row experience-filter align-justify">
+  <div class="column small-12 large-2">
+    <p class="filter-search"><a href="#">Filter Search</a></p>
+  </div>
+  <div class="column small-12 medium-2 large-2">
+    <form>
+      <div class="row small-collapse">
+        <div class="input-group">
+          <label> Sort By: </label>
+          <div class="full-overlay-select">
+            <span class="current">Vendor</span>
+            <ul>
+              <li><a href="#">Vendor</a></li>
+              <li><a href="#">Price</a></li>
+            </ul>
+            <div class="full-overlay-black-overlay"></div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+{{outlet}}

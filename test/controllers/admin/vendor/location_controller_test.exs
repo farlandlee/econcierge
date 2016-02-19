@@ -12,12 +12,12 @@ defmodule Grid.LocationControllerTest do
 
   test "redirects index to show vendor", %{conn: conn, vendor: vendor} do
     conn = get conn, admin_vendor_location_path(conn, :index, vendor)
-    assert redirected_to(conn, 302) =~ admin_vendor_path(conn, :show, vendor, tab: "locations")
+    assert redirected_to(conn) == admin_vendor_path(conn, :show, vendor, tab: "locations")
   end
 
   test "redirects show to show vendor", %{conn: conn, vendor: vendor} do
     conn = get conn, admin_vendor_location_path(conn, :index, vendor)
-    assert redirected_to(conn, 302) =~ admin_vendor_path(conn, :show, vendor, tab: "locations")
+    assert redirected_to(conn) == admin_vendor_path(conn, :show, vendor, tab: "locations")
   end
 
   test "renders page not found when id is nonexistent", %{conn: conn, vendor: vendor} do

@@ -1,8 +1,8 @@
 <label>Time</label>
 <div class="datepicker">
-  <select style="background-image: none;">
+  <select onchange={{action "change"}} style="background-image: none;">
     {{#each times as |time|}}
-    <option>{{time.starts_at_time}}</option>
+    <option value={{time.id}}>{{time.starts_at_time}}</option>
     {{/each}}
   </select>
 </div>
