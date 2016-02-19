@@ -3,7 +3,7 @@ import NotFoundMixin from 'client/mixins/not-found-mixin';
 
 export default Ember.Route.extend(NotFoundMixin, {
   model (params) {
-    let {experiences} = this.modelFor('experiences');
+    let {experiences} = this.modelFor('explore');
     let experience = experiences.findBy('slug', params.experience_slug);
     if (!experience) {
       return this.throwNotFound();
@@ -17,7 +17,7 @@ export default Ember.Route.extend(NotFoundMixin, {
 
   setupController (controller, experience) {
     this._super(...arguments);
-    let {experiences, category} = this.modelFor('experiences');
+    let {experiences, category} = this.modelFor('explore');
     controller.setProperties({
       experience: experience,
       experiences: experiences,

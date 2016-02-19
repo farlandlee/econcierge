@@ -20,12 +20,12 @@ defmodule Grid.Admin.Vendor.VendorActivity.SeasonControllerTest do
 
   test "index redirects to show vendor activity", %{conn: conn, vendor: vendor, vendor_activity: va} do
     conn = get conn, admin_vendor_vendor_activity_season_path(conn, :index, vendor, va)
-    assert redirected_to(conn, 302) =~ admin_vendor_vendor_activity_path(conn, :show, vendor, va)
+    assert redirected_to(conn) == admin_vendor_vendor_activity_path(conn, :show, vendor, va)
   end
 
   test "shows redirects to show vendor activity", %{conn: conn, vendor: vendor, vendor_activity: va, season: season} do
     conn = get conn, admin_vendor_vendor_activity_season_path(conn, :show, vendor, va, season)
-    assert redirected_to(conn, 302) =~ admin_vendor_vendor_activity_path(conn, :show, vendor, va)
+    assert redirected_to(conn) == admin_vendor_vendor_activity_path(conn, :show, vendor, va)
   end
 
   test "renders form for new resources", %{conn: conn, vendor: vendor, vendor_activity: va} do

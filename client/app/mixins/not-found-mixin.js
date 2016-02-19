@@ -11,7 +11,12 @@ export default Ember.Mixin.create({
         return this.transitionTo('error404', transition.intent.url);
       }
 
-      return this._super(...arguments);
+      let superReturn = this._super(...arguments);
+      if (superReturn === undefined) {
+        //bubble if there was no super
+        return true;
+      }
+      return superReturn;
     }
   }
 });

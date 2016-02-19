@@ -39,5 +39,5 @@
       <p>100% refund up to {{product.vendor.cancellationPolicyDays}} days before the trip.</p>
     </div>
   </section>
-  {{booking-form product=product cancel=(action close) submit=(route-action "book")}}
+  {{booking-form product=product cancel=(action close) submit=(route-action "book" product)}}
 {{/foundation-modal}}

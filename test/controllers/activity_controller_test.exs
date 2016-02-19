@@ -33,17 +33,17 @@ defmodule Grid.ActivityControllerTest do
 
   test "POST with activity id, target vendors", %{conn: conn, activity: a} do
     conn = post(conn, activity_path(conn, :show), activity: %{id: a.id, target: "vendors"})
-    assert html_response(conn, 302) =~ "/browse/#{a.slug}/categories"
+    assert redirected_to(conn) == activity_path(conn, :categories_by_activity_slug, a.slug)
   end
 
   test "POST with activity id, target experiences", %{conn: conn, activity: a} do
     conn = post(conn, activity_path(conn, :show), activity: %{id: a.id, target: "experiences"})
-    assert html_response(conn, 302) =~ "/browse/#{a.slug}/categories"
+    assert redirected_to(conn) == activity_path(conn, :categories_by_activity_slug, a.slug)
   end
 
   test "POST with empty activity id", %{conn: conn} do
     conn = post(conn, activity_path(conn, :show), activity: %{id: ""})
-    assert html_response(conn, 302) =~ "/"
+    assert redirected_to(conn) == page_path(conn, :index)
   end
 
   test "GET show with image", %{conn: conn, activity: a, image: i} do
@@ -59,7 +59,7 @@ defmodule Grid.ActivityControllerTest do
   test "Get show with only one category redirects", %{conn: conn, activity: a, category: c, extra_cat: c2} do
     Repo.delete!(c2)
     conn = get(conn, activity_path(conn, :categories_by_activity_slug, a.slug))
-    assert redirected_to(conn, 302) =~ explore_path(conn, :without_date, a.slug, c.slug)
+    assert redirected_to(conn) == explore_path(conn, :without_date, a.slug, c.slug)
   end
 
   test "Renders message if no categories for activity", %{conn: conn, activity: a} do

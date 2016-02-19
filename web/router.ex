@@ -52,14 +52,15 @@ defmodule Grid.Router do
     pipe_through :browser
 
     get "/", PageController, :index
-    get "/activities", ActivityController, :index
 
-    get "/explore/:activity_slug/:category_slug/:date/*path", ExploreController, :index
-    get "/explore/:activity_slug/:category_slug", ExploreController, :without_date
-
-    scope "/browse" do
-      post "/", ActivityController, :show
+    scope "/explore" do
+      get "/activities", ActivityController, :index
+      post "/activities", ActivityController, :show
       get "/:activity_slug/categories", ActivityController, :categories_by_activity_slug
+
+      get "/checkout", ExploreController, :index
+      get "/:activity_slug/:category_slug/:date/*path", ExploreController, :index
+      get "/:activity_slug/:category_slug", ExploreController, :without_date
     end
 
     get "/500", ErrorController, :render_500

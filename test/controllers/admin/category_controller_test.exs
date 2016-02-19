@@ -13,12 +13,12 @@ defmodule Grid.Admin.Activity.CategoryControllerTest do
 
   test "index redirects to activity show", %{conn: conn, activity: activity} do
     conn = get conn, admin_activity_category_path(conn, :index, activity)
-    assert redirected_to(conn, 302) =~ admin_activity_path(conn, :show, activity, tab: "categories")
+    assert redirected_to(conn) == admin_activity_path(conn, :show, activity, tab: "categories")
   end
 
   test "show redirects to activity show", %{conn: conn, activity: activity, category: category} do
     conn = get conn, admin_activity_category_path(conn, :show, activity, category)
-    assert redirected_to(conn, 302) =~ admin_activity_path(conn, :show, activity, tab: "categories")
+    assert redirected_to(conn) == admin_activity_path(conn, :show, activity, tab: "categories")
   end
 
   test "renders form for new resources", %{conn: conn, activity: activity} do

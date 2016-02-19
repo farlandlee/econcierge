@@ -4,7 +4,7 @@
     <ul>
       {{#each sortedCategories as |category|}}
       <li>
-        {{#link-to 'experiences' activity.slug category.slug date }}{{category.name}}{{/link-to}}
+        {{#link-to 'explore' activity.slug category.slug date }}{{category.name}}{{/link-to}}
       </li>
       {{/each}}
     </ul>

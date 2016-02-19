@@ -19,12 +19,12 @@ defmodule Grid.Admin.Vendor.Product.Price.AmountControllerTest do
 
   test "index redirects to price", %{conn: conn, vendor: v, product: p, price: price, amount: amount} do
     conn = get conn, admin_vendor_product_price_amount_path(conn, :show, v, p, price, amount)
-    assert redirected_to(conn, 302) =~ admin_vendor_product_price_path(conn, :show, v, p, price)
+    assert redirected_to(conn) == admin_vendor_product_price_path(conn, :show, v, p, price)
   end
 
   test "shows redirects to price", %{conn: conn, vendor: v, product: p, price: price, amount: amount} do
     conn = get conn, admin_vendor_product_price_amount_path(conn, :show, v, p, price, amount)
-    assert redirected_to(conn, 302) =~ admin_vendor_product_price_path(conn, :show, v, p, price)
+    assert redirected_to(conn) == admin_vendor_product_price_path(conn, :show, v, p, price)
   end
 
   test "renders form for new resources", %{conn: conn, vendor: v, product: p, price: price} do

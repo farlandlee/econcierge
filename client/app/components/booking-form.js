@@ -1,10 +1,18 @@
 import Ember from 'ember';
 
+const {computed} = Ember;
+
 export default Ember.Component.extend({
   product: null,
 
-  cost: 0,
+  total: 0,
+  // mapping from price to {quantity, cost}
   costs: null,
+  time: computed('product.startTimes.[]', {
+    get() {
+      return this.get('product.startTimes.firstObject');
+    }
+  }),
 
   init () {
     this._super(...arguments);
@@ -12,21 +20,28 @@ export default Ember.Component.extend({
   },
 
   actions: {
-    updateCost (price, amount) {
+    updateQuantity (price, amount, quantity) {
       let costs = this.get('costs');
-      costs[price.id] = amount;
+      let cost = amount.amount * quantity;
+      costs[price.id] = {quantity, cost};
 
-      let cost = 0;
+      let total = 0;
       for (const id in costs) {
-        cost += costs[id];
+        total += costs[id].cost;
       }
 
-      this.set('cost', cost);
+      this.set('total', total);
       this.set('costs', costs);
     },
 
+    updateTime (time) {
+      this.set('time', time);
+    },
+
     submit () {
-      //@TODO #241
+      let costs = this.get('costs');
+      let time = this.get('time');
+      this.attrs.submit(costs, time);
     }
   }
 });

@@ -31,7 +31,7 @@
       {{!-- don't render the currently selected category twice --}}
       {{#unless (eq experience.id otherExperience.id)}}
       <div class="column small-4">
-        {{#link-to 'experiences.experience' otherExperience}}
+        {{#link-to 'explore.experience' otherExperience}}
           <img src="{{placehold-it otherExperience.image.medium '150x150'}}">
         {{/link-to}}
       </div>
