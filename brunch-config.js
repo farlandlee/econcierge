@@ -83,14 +83,18 @@ exports.config = {
       }
     }
   },
-
   modules: {
     autoRequire: {
       "js/app.js": ["web/static/js/app"],
       "js/admin.js": ["web/static/admin/js/admin"]
     }
   },
-
+  postcss: {
+    processors: [
+        require('autoprefixer')(['last 3 versions']),
+        require('csswring')
+    ]
+  },
   npm: {
     enabled: true
   }
