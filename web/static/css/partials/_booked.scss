@@ -1,0 +1,25 @@
+.booked {
+  border: 1px solid $primary-color;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  padding: 30px;
+  font-size: 1.5rem;
+  p {
+    margin-bottom: 0;
+    color: $dark-gray;
+    span {
+      color: $black;
+      &.darker {
+        color: darken($dark-gray,10%);
+        font-weight: 500;
+      }
+    }
+  }
+  .flaticon-checkmark {
+    color: $primary-color;
+    font-size: 3rem;
+  }
+  .button {
+    margin: 0;
+  }
+}
