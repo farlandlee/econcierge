@@ -3,18 +3,20 @@
   .columns {
     text-align: center;
     position: relative;
-    height: 300px;
+    height: 266px;
     margin: 0;
-    margin-bottom: rem-calc(168);
+    margin-bottom: rem-calc(80);
     > div {
-      max-width: 450px;
-      height: 300px;
+      max-width: 400px;
+      height: 266px;
       box-sizing: border-box;
       background-repeat: no-repeat;
       background-position: center;
       background-size: cover;
       position: relative;
       color: $white;
+      margin-left: 0;
+      margin-right: 0;
       a,
       a:hover {
         color: $white;
@@ -81,12 +83,4 @@
 .activities {
   padding: 6rem 0;
   background-color: $light-gray;
-  .columns {
-    height: 266px;
-    margin-bottom: rem-calc(80);
-    > div {
-      max-width: 400px;
-      height: 266px;
-    }
-  }
 }
