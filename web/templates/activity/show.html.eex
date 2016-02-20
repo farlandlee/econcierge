@@ -16,31 +16,27 @@
       <span>activity</span>
     </div>
   </div>
-  <div class="row">
-    <div class="columns small-12 large-10">
-      <div class="row align-justify categories">
-        <%= if Enum.empty?(@categories) do %>
-          <div class="columns small-12 medium-6 large-5" >
-            Sorry, no categories found for <%= @activity.name %>
-          </div>
-        <% else %>
-          <%= for category <- @categories do %>
-          <div class="columns small-12 medium-6 large-5" >
-            <%= #img_for item, class: "img-responsive" %>
-            <div class="row align-middle" style="background-image: url('<%= img_src(category.image, :original) %>');">
-              <div class="darken-overlay"></div>
-              <div class="element-name column">
-                <p class="lead"><%= category.name %></p>
-              </div>
-              <div class="element-description column">
-                <p><a class="full-overlay" href="<%= explore_path(@conn, :without_date, @activity.slug, category.slug) %>" ><span><%= category.description %></span></a></p>
-              </div>
-              <p class="lower-right">from $350</p>
-            </div>
-          </div>
-          <% end %>
-        <% end %>
+  <div class="row align-spaced categories">
+    <%= if Enum.empty?(@categories) do %>
+      <div class="columns small-12" >
+        Sorry, no categories found for <%= @activity.name %>
       </div>
-    </div>
+    <% else %>
+      <%= for category <- @categories do %>
+      <div class="columns small-12 medium-6 large-4" >
+        <%= #img_for item, class: "img-responsive" %>
+        <div class="row align-middle" style="background-image: url('<%= img_src(category.image, :original) %>');">
+          <div class="darken-overlay"></div>
+          <div class="element-name column">
+            <p class="lead"><%= category.name %></p>
+          </div>
+          <div class="element-description column">
+            <p><a class="full-overlay" href="<%= explore_path(@conn, :without_date, @activity.slug, category.slug) %>" ><span><%= category.description %></span></a></p>
+          </div>
+          <p class="lower-right">from $350</p>
+        </div>
+      </div>
+      <% end %>
+    <% end %>
   </div>
 </div>
