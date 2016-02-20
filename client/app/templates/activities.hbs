@@ -5,9 +5,11 @@
       <p class="page-subtitle">Search, Discover &amp; reserve the various activities offered in Jackson Hole.<br>Hover over an activity to learn more.</p>
     </div>
   </div>
-  <div class="row align-justify activities expanded">
-    {{#item-sorter items=activities as |activity|}}
-      {{activity-card activity=activity}}
-    {{/item-sorter}}
+  <div class="activities">
+    <div class="row align-spaced">
+      {{#item-sorter items=activities as |activity|}}
+        {{activity-card activity=activity}}
+      {{/item-sorter}}
+    </div>
   </div>
 </div>

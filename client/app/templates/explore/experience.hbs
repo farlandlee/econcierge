@@ -26,7 +26,7 @@
         <p class="align-right">Other {{activeCategoryName}} Experiences:</p>
       </div>
     </div>
-    <div class="row other-experiences">
+    <div class="row other-experiences align-right">
       {{#item-sorter items=experiences as |otherExperience|}}
       {{!-- don't render the currently selected category twice --}}
       {{#unless (eq experience.id otherExperience.id)}}
@@ -40,7 +40,7 @@
     </div>
   </div>
 </div>
-<div class="row experience-filter align-justify">
+{{!--<div class="row experience-filter align-justify">
   <div class="column small-12 large-2">
     <p class="filter-search"><a href="#">Filter Search</a></p>
   </div>
@@ -61,5 +61,5 @@
       </div>
     </form>
   </div>
-</div>
+</div>--}}
 {{outlet}}
