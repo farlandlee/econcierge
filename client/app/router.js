@@ -6,9 +6,8 @@ const Router = Ember.Router.extend({
 });
 
 Router.map(function () {
-  this.route('checkout');
-
-  this.route('booked', {path:'/booked/:booking_id'});
+  this.route('activities');
+  this.route('categories', {path: ':activity_slug/categories'});
 
   this.route('explore', {path: ':activity_slug/:category_slug/:date'}, function () {
     this.route('default-experience', {path: '/'});
@@ -18,6 +17,9 @@ Router.map(function () {
       });
     });
   });
+
+  this.route('booked', {path: '/booked/:booking_id'});
+  this.route('checkout');
 
   this.route('error404', {path: '/*path'});
 });
