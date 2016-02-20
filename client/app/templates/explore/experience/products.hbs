@@ -4,7 +4,7 @@
       <p>Explore <span>{{products.length}}</span> {{if (gt products.length 1) 'products' 'product'}} under "{{experienceName}}"</p>
     </div>
   </div>
-  <div class="row align-justify products">
+  <div class="row align-justify products align-stretch">
     {{#each products as |product|}}
     <div class="columns small-12 medium-6 large-4">
       {{product-card product=product}}

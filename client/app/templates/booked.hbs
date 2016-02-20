@@ -1,12 +1,20 @@
-<div class="top-row row align-center align-middle expanded">
-   <div class="column medium-10">
-      <p class="lead">Added to Cart: <b>{{booking.product.name}}</b></p>
+<div class="top-row">
+  <div class="booked row align-middle">
+    <div class="column small-1 text-left">
+      <i class="flaticon-checkmark fi"></i>
+    </div>
+    <div class="column small-11 medium-8">
+      <p>Added to Cart: <span class="darker">"{{booking.product.name}}"</span></p>
       {{#cart-summary bookings=bookings as |itemCount subtotal|}}
       <p>
-         Cart subtotal ({{itemCount}} {{if (eq itemCount 1) "item" "items"}}): {{format-number subtotal format='$0,0[.]00'}}
+         Cart subtotal ({{itemCount}} {{if (eq itemCount 1) "item" "items"}}): <span>{{format-number subtotal format='$0,0[.]00'}}</span>
       </p>
       {{/cart-summary}}
-   </div>
+    </div>
+    <div class="column small-12 medium-expand text-right">
+      <button class="button large">Proceed to Checkout</button>
+    </div>
+  </div>
 </div>
 <div class="row align-center">
    <div class="columns small-12 medium-6 large-8" >

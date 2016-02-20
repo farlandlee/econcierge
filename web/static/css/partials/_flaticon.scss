@@ -36,14 +36,16 @@ Creation date: 15/02/2016 23:28
   font-smoothing: antialiased;
 }
 
-.flaticon-cart:before { content: "\f100"; }
-.flaticon-clock:before { content: "\f101"; }
-.flaticon-days:before { content: "\f102"; }
-.flaticon-location:before { content: "\f103"; }
-.flaticon-people:before { content: "\f104"; }
+.flaticon-adult-child:before { content: "\f100"; }
+.flaticon-calendar:before { content: "\f101"; }
+.flaticon-cart:before { content: "\f102"; }
+.flaticon-checkmark:before { content: "\f103"; }
+.flaticon-duration:before { content: "\f104"; }
+.flaticon-location:before { content: "\f105"; }
 
-$font-Flaticon-cart: "\f100";
-$font-Flaticon-clock: "\f101";
-$font-Flaticon-days: "\f102";
-$font-Flaticon-location: "\f103";
-$font-Flaticon-people: "\f104";
+$font-Flaticon-adult-child: "\f100";
+$font-Flaticon-calendar: "\f101";
+$font-Flaticon-cart: "\f102";
+$font-Flaticon-checkmark: "\f103";
+$font-Flaticon-duration: "\f104";
+$font-Flaticon-location: "\f105";
