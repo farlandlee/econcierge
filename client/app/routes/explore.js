@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import NotFoundMixin from 'client/mixins/not-found';
+import moment from 'moment';
 
 export default Ember.Route.extend(NotFoundMixin, {
   model (params) {
@@ -42,5 +43,12 @@ export default Ember.Route.extend(NotFoundMixin, {
   setupController(controller, model) {
     this._super(...arguments);
     controller.setProperties(model);
+  },
+
+  actions: {
+    changeDate: function (date) {
+      let {activity, category} = this.controller.model;
+      this.transitionTo('explore', activity.get('slug'), category.get('slug'), moment(date).format('YYYY-MM-DD'));
+    }
   }
 });
