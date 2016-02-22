@@ -13,7 +13,7 @@ jQuery(function($){
 
     $('.full-overlay-select').not(dropdown).removeClass('open');
 
-    if (event.target !== this) {
+    if (event.target.tagName === 'A') {
       dropdown.removeClass('open');
     } else {
       dropdown.toggleClass('open');
