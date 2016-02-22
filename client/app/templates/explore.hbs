@@ -3,7 +3,19 @@
     <div class="columns small-12 medium-9 large-10">
       <div class="input-group select-activity">
         <span>Choose your </span>
-        {{category-dropdown activity=activity category=category date=date}}
+        <div class="input-group-field">
+          <div class="full-overlay-select" tabindex="0">
+            <span class="current">{{category.name}}</span>
+            <ul>
+              {{#item-sorter items=activity.categories as |category|}}
+              <li>
+                {{link-to category.name 'explore' activity.slug category.slug date activeClass="selected"}}
+              </li>
+              {{/item-sorter}}
+            </ul>
+            <div class="full-overlay-black-overlay"></div>
+          </div>
+        </div>
         <span> experience</span>
       </div>
     </div>

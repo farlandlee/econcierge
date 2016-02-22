@@ -1,8 +1,9 @@
 <label>Time</label>
 <div class="datepicker">
   <select onchange={{action "change"}} style="background-image: none;">
-    {{#each times as |time|}}
-    <option value={{time.id}}>{{time.starts_at_time}}</option>
-    {{/each}}
+    <option>Select a time...</option>
+    {{#item-sorter items=times by=['starts_at_time:asc'] as |time|}}
+    <option value={{time.id}}>{{moment-format time.starts_at_time 'h:mm a' 'hh:mm:ss'}}</option>
+    {{/item-sorter}}
   </select>
 </div>
