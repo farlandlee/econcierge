@@ -14,7 +14,8 @@ defmodule Grid.Api.ActivityView do
       id: activity.id,
       name: activity.name,
       description: activity.description,
-      slug: activity.slug
+      slug: activity.slug,
+      default_image: render_one(activity.default_image, Grid.Api.ImageView, "image.json")
     }
   end
 end
