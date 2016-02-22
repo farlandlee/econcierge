@@ -17,16 +17,18 @@ defmodule Grid.Api.DateController do
       |> select([e], e.id)
       |> Repo.all
 
-    today = Ecto.Date.from_erl(:erlang.date())
+    tomorrow = Calendar.DateTime.now!("MST")
+      |> Calendar.Date.advance!(1)
+      |> Ecto.Date.cast!
 
     season = Season.having_published_products()
       |> where([_s, p], p.experience_id in ^experience_ids)
-      |> Season.first_from_date(today)
+      |> Season.first_from_date(tomorrow)
       |> Repo.one!
 
-    date = case Ecto.Date.compare(today, season.start_date) do
+    date = case Ecto.Date.compare(tomorrow, season.start_date) do
       :lt -> season.start_date
-      _ -> today
+      _ -> tomorrow
     end |> Ecto.Date.to_string
 
     json conn, %{date: date}
