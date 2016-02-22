@@ -57,10 +57,15 @@ defmodule Grid.Admin.Vendor.LocationController do
   end
 
   def delete(conn, _) do
-    Repo.delete!(conn.assigns.location)
+    location = conn.assigns.location
+    conn = case assoc(location, :products) |> Repo.all |> Enum.count do
+      0 ->
+        Repo.delete!(conn.assigns.location)
+        conn |> put_flash(:info, "Location deleted successfully.")
+      _ ->
+        conn |> put_flash(:error, "Cannot delete location because it is set as the meeting point for some product(s).")
+    end
 
-    conn
-    |> put_flash(:info, "Location deleted successfully.")
-    |> redirect(to: admin_vendor_path(conn, :show, conn.assigns.vendor, tab: "locations"))
+    redirect(conn, to: admin_vendor_path(conn, :show, conn.assigns.vendor, tab: "locations"))
   end
 end

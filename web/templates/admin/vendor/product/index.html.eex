@@ -24,7 +24,11 @@
       <%= if product.pickup do %>
         <em>Pickup</em>
       <% else %>
-        <%= product.meeting_location.name %>
+        <%= if product.meeting_location do %>
+          <%= product.meeting_location.name %>
+        <% else %>
+          Uh oh. Something's gone wrong... this product's location seems to have gone missing. Please update it!
+        <% end %>
       <% end %>
       </td>
 

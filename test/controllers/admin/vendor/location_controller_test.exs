@@ -85,4 +85,11 @@ defmodule Grid.LocationControllerTest do
     assert redirected_to(conn) == admin_vendor_path(conn, :show, vendor, tab: "locations")
     refute Repo.get(Location, location.id)
   end
+
+  test "can't delete location that is the meeting location for prodct", %{conn: conn, vendor: vendor, location: location} do
+    Factory.create(:product, meeting_location: location, pickup: false)
+    conn = delete conn, admin_vendor_location_path(conn, :delete, vendor, location)
+    assert redirected_to(conn) == admin_vendor_path(conn, :show, vendor, tab: "locations")
+    assert Repo.get(Location, location.id)
+  end
 end

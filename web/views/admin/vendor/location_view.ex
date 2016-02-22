@@ -7,6 +7,9 @@ defmodule Grid.Admin.Vendor.LocationView do
     Grid.USStates.states_and_codes()
   end
 
+  def pretty_location(nil) do
+    ~E"<b>error</b> Location missing"
+  end
   def pretty_location(%Location{} = location) do
     ~E"""
     <address>

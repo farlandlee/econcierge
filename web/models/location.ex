@@ -10,6 +10,8 @@ defmodule Grid.Location do
     field :zip, :string
     belongs_to :vendor, Grid.Vendor
 
+    has_many :products, Grid.Product, [foreign_key: :meeting_location_id]
+
     timestamps
   end
 
