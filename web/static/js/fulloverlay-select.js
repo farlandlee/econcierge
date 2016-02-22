@@ -12,7 +12,12 @@ jQuery(function($){
     }
 
     $('.full-overlay-select').not(dropdown).removeClass('open');
-    dropdown.toggleClass('open');
+
+    if (event.target !== this) {
+      dropdown.removeClass('open');
+    } else {
+      dropdown.toggleClass('open');
+    }
 
     if (dropdown.hasClass('open')) {
       $('.page-header').css('z-index',1);
