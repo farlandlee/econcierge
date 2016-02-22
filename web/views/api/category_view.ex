@@ -15,7 +15,8 @@ defmodule Grid.Api.CategoryView do
       name: category.name,
       description: category.description,
       slug: category.slug,
-      activity: category.activity_id
+      activity: category.activity_id,
+      image: render_one(category.image, Grid.Api.ImageView, "image.json")
     }
   end
 end
