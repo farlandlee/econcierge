@@ -1,18 +1,12 @@
 import Ember from 'ember';
 
-const {computed} = Ember;
-
 export default Ember.Component.extend({
   product: null,
 
   total: 0,
   // mapping from price to {quantity, cost}
   costs: null,
-  time: computed('product.startTimes.[]', {
-    get() {
-      return this.get('product.startTimes.firstObject');
-    }
-  }),
+  time: null,
 
   init () {
     this._super(...arguments);

@@ -6,9 +6,9 @@
         <div class="full-overlay-select" tabindex="0">
           <span class="current">{{activity.name}}</span>
           <ul>
-            {{#each activities as |otherActivity|}}
-              <li>{{link-to otherActivity.name "categories" otherActivity.slug activeClass="selected"}}</li>
-            {{/each}}
+            {{#item-sorter items=activities as |activity|}}
+              <li>{{link-to activity.name "categories" activity.slug activeClass="selected"}}</li>
+            {{/item-sorter}}
           </ul>
           <div class="full-overlay-black-overlay"></div>
         </div>
@@ -17,7 +17,7 @@
     </div>
   </div>
   <div class="row align-spaced categories">
-      {{#each categories as |category|}}
+      {{#item-sorter items=categories as |category|}}
       <div class="columns small-12 medium-6 large-4" >
         <div class="row align-middle" style="background-image: url('{{category.image.full}}');">
           <div class="darken-overlay"></div>
@@ -34,10 +34,11 @@
           <p class="lower-right">from $350</p>
         </div>
       </div>
-      {{else}}
-        <div class="columns small-12" >
-          Sorry, no categories found for {{activity.name}}
-        </div>
-      {{/each}}
+      {{/item-sorter}}
+      {{#unless categories}}
+      <div class="columns small-12" >
+        Sorry, no categories found for {{activity.name}}
+      </div>
+      {{/unless}}
   </div>
 </div>

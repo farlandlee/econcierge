@@ -27,7 +27,7 @@
       </div>
     </div>
     <div class="row other-experiences">
-      {{#each experiences as |otherExperience|}}
+      {{#item-sorter items=experiences as |otherExperience|}}
       {{!-- don't render the currently selected category twice --}}
       {{#unless (eq experience.id otherExperience.id)}}
       <div class="column small-4">
@@ -36,7 +36,7 @@
         {{/link-to}}
       </div>
       {{/unless}}
-      {{/each}}
+      {{/item-sorter}}
     </div>
   </div>
 </div>

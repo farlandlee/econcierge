@@ -1,7 +1,7 @@
 <div class="top-row row expanded">
   Yay!
 </div>
-{{#each bookings as |booking|}}
+{{#item-sorter items=bookings by=['date:asc'] as |booking|}}
 <section>
   <h3>{{booking.product.name}}</h3>
   <dl>
@@ -15,4 +15,4 @@
     </ul></dd>
   </dl>
 </section>
-{{/each}}
+{{/item-sorter}}
