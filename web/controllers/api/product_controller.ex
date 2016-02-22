@@ -14,6 +14,8 @@ defmodule Grid.Api.ProductController do
       |> distinct(true)
       |> Repo.all
       |> preload
+      |> filter_check
+
     render(conn, "index.json", products: products)
   end
 
@@ -30,6 +32,7 @@ defmodule Grid.Api.ProductController do
       :meeting_location,
       start_times: :season,
       prices: :amounts,
+      default_price: :amounts
     ])
   end
 
@@ -41,4 +44,13 @@ defmodule Grid.Api.ProductController do
     assign(conn, :date, date)
   end
   defp assign_date(conn, _), do: assign(conn, :date, nil)
+
+  defp filter_check(products) do
+    Enum.filter(products, fn(product) ->
+      case Grid.Product.check_bookability(product) do
+        {:ok, _} -> true
+        _ -> false
+      end
+    end)
+  end
 end

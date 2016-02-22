@@ -104,12 +104,10 @@ defmodule Grid.Admin.VendorControllerTest do
     assert response =~ "Add Product"
     assert response =~ "Name"
     assert response =~ "Experience"
-    assert response =~ "Description"
     assert response =~ "Published?"
 
     assert response =~ experience.name
     assert response =~ product.name
-    assert response =~ product.description
   end
 
   test "Shows seasons", %{conn: conn} do

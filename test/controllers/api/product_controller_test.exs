@@ -13,25 +13,28 @@ defmodule Grid.Api.ProductControllerTest do
       )
     )
 
+    price = Factory.create(:price, product: p)
+    Factory.create(:amount, price: price)
+
+    Repo.update!(Grid.Product.default_price_changeset(p, price.id))
+
     {:ok, product: p, start_time: st, season: s}
   end
 
-  test "index lists all published products", %{conn: conn, product: product, season: season} do
-    other_product = Factory.create(:product)
-    Factory.create_start_time(product: other_product, season: season)
-
+  test "index lists all published products", %{conn: conn, product: product} do
+    published_fails_check = Factory.create(:product)
     unpublished_product = Factory.create(:product, published: false)
 
     conn = get conn, api_product_path(conn, :index)
     response = json_response(conn, 200)
     products = response["products"]
     assert products
-    assert Enum.count(products) == 2
+    assert Enum.count(products) == 1
 
     resp_ids = Enum.map(products, &(&1["id"]))
 
     assert product.id in resp_ids
-    assert other_product.id in resp_ids
+    refute published_fails_check.id in resp_ids
     refute unpublished_product.id in resp_ids
   end
 

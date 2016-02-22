@@ -4,7 +4,6 @@
       <th>Name</th>
       <th>Activity</th>
       <th><%= vendor_or_experience_header @display_name_of %></th>
-      <th>Description</th>
       <th>Duration</th>
       <th>Location</th>
       <th>Published?</th>
@@ -18,7 +17,6 @@
       <td><%= link product.name, to: admin_vendor_product_path(@conn, :show, vendor_id, product) %></td>
       <td><%= product.activity.name %></td>
       <td><%= vendor_or_experience @display_name_of, product %></td>
-      <td><%= product.description %></td>
       <td><%= pretty_duration product.duration %></td>
       <td>
       <%= if product.pickup do %>
@@ -32,7 +30,7 @@
       <% end %>
       </td>
 
-      <td class="text-center"> <%= check_icon product.published %> </td>
+      <td class="text-center"> <%= published_icon(product) %> </td>
 
       <td class="text-right">
         <div class="dropdown actions">

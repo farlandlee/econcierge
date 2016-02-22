@@ -130,4 +130,30 @@ defmodule Grid.Product do
     |> put_change(:name, "#{product.name} Clone")
     |> put_change(:published, false)
   end
+
+  @doc """
+  A product is bookable if it is published and has the necessary requirement
+  for booking, i.e. default price w/ amount and a start_time.
+  """
+  def check_bookability(%__MODULE__{published: false} = product), do: {:ok, product}
+  def check_bookability(%__MODULE__{start_times: start_times, default_price: price, published: true} = product) do
+    errors = []
+
+    if Enum.empty?(start_times) do
+      errors = ['Product must have at least one start time' | errors]
+    end
+
+    if price == nil do
+      errors = ['Must have default price' | errors]
+    end
+
+    if price && length(price.amounts) == 0 do
+      errors = ['Default price must have amounts' | errors]
+    end
+
+    case errors do
+      [] -> {:ok, product}
+      errors -> {:error, errors}
+    end
+  end
 end
