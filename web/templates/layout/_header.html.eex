@@ -11,7 +11,7 @@
           <li class="logo"><a href="/">Outpost</a></li>
 
           <li><a href="#">Lodging</a></li>
-          <li><%= link "Activities", to: activity_path(Grid.Endpoint, :index) %></li>
+          <li><%= link "Activities", to: explore_path(Grid.Endpoint, :index, ["activities"]) %></li>
           <li><a href="#">Itineraries</a></li>
           <li><a href="#">Journal</a></li>
           <li><a href="#">About Us</a></li>

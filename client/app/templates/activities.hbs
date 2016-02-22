@@ -1,0 +1,13 @@
+<div class="page">
+  <div class="top-row row align-center align-middle">
+    <div class="columns small-12 medium-6 large-8" >
+      <h1 class="page-title">Activities</h1>
+      <p class="page-subtitle">Search, Discover &amp; reserve the various activities offered in Jackson Hole.<br>Hover over an activity to learn more.</p>
+    </div>
+  </div>
+  <div class="row align-spaced activities expanded">
+    {{#each activities as |activity|}}
+      {{activity-card activity=activity}}
+    {{/each}}
+  </div>
+</div>

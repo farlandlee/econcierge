@@ -1,0 +1,43 @@
+<div class="page activity">
+  <div class="top-row row expanded">
+    <div class="input-group select-activity">
+      <span> Choose your </span>
+      <div class="input-group-field" >
+        <div class="full-overlay-select" tabindex="0">
+          <span class="current">{{activity.name}}</span>
+          <ul>
+            {{#each activities as |otherActivity|}}
+              <li>{{link-to otherActivity.name "categories" otherActivity.slug activeClass="selected"}}</li>
+            {{/each}}
+          </ul>
+          <div class="full-overlay-black-overlay"></div>
+        </div>
+      </div>
+      <span>category</span>
+    </div>
+  </div>
+  <div class="row align-spaced categories">
+      {{#each categories as |category|}}
+      <div class="columns small-12 medium-6 large-4" >
+        <div class="row align-middle" style="background-image: url('{{category.image.full}}');">
+          <div class="darken-overlay"></div>
+          <div class="element-name column">
+            <p class="lead">{{category.name}}</p>
+          </div>
+          <div class="element-description column">
+            <p>
+              <button onclick={{route-action "dateForCategory" category}}>
+                <span>{{category.description}}</span>
+              </button>
+            </p>
+          </div>
+          <p class="lower-right">from $350</p>
+        </div>
+      </div>
+      {{else}}
+        <div class="columns small-12" >
+          Sorry, no categories found for {{activity.name}}
+        </div>
+      {{/each}}
+  </div>
+</div>

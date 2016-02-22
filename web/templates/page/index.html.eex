@@ -15,16 +15,16 @@
               <div class="full-overlay-select" tabindex="0">
                 <span class="current">All Activities</span>
                 <ul>
-                  <li><%= link "All Activities", to: activity_path(@conn, :index) %></li>
+                  <li><%= link "All Activities", to: explore_path(@conn, :index, ["activities"]) %></li>
                   <%= for activity <- @available_activities do %>
-                    <li><%= link activity.name, to: activity_path(@conn, :categories_by_activity_slug, activity.slug) %></li>
+                    <li><%= link activity.name, to: explore_path(@conn, :index, [activity.slug, "categories"]) %></li>
                   <% end %>
                 </ul>
                 <div class="full-overlay-black-overlay"></div>
               </div>
             </div>
             <div class="input-group-button">
-              <%= link "Go", to: activity_path(@conn, :index), class: "button" %>
+              <%= link "Go", to: explore_path(@conn, :index, ["activities"]), class: "button" %>
             </div>
           </div>
         </div>

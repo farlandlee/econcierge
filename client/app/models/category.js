@@ -5,6 +5,5 @@ export default DS.Model.extend({
   description: DS.attr(),
   slug: DS.attr(),
   activity: DS.belongsTo('activity'),
-  experiences: DS.hasMany('experience'),
-  active: false
+  experiences: DS.hasMany('experience')
 });

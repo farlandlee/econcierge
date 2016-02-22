@@ -28,16 +28,6 @@
 </div>
 <div class="row align-spaced activities expanded">
   {{#each activities as |activity|}}
-  <div class="columns small-12 medium-6 large-4">
-    <div class="row align-middle" style="background-image: url('{{activity.default_image.full}}');">
-      <div class="darken-overlay"></div>
-      <div class="element-name column">
-        <p class="lead">{{activity.name}}</p>
-      </div>
-      <div class="element-description column">
-        <p><a class="full-overlay" href="/explore/{{activity.slug}}/categories"><span>{{activity.description}}</span></a></p>
-      </div>
-    </div>
-  </div>
+    {{activity-card activity=activity}}
   {{/each}}
 </div>
