@@ -7,14 +7,21 @@ moduleForComponent('amount-quantity-input', 'Integration | Component | amount qu
 });
 
 test('correctly parses amounts', function(assert) {
-  this.set('amounts', [
-    {id: 1, min_quantity: 1, max_quantity: 2, amount: 100},
-    {id: 2, min_quantity: 3, max_quantity: 4, amount: 75},
-    {id: 3, min_quantity: 5, max_quantity: 10, amount: 50}
+  this.set('price', {
+    name: 'my price',
+    id: 1,
+    amounts: [
+      {id: 1, min_quantity: 1, max_quantity: 2, amount: 100},
+      {id: 2, min_quantity: 3, max_quantity: 4, amount: 75},
+      {id: 3, min_quantity: 5, max_quantity: 10, amount: 50}
+    ]
+  });
+  this.set('quantities', [
+    {id: 1, quantity: 0}
   ]);
 
   // should initialize to the minimum quantity & cost
-  let expectedAmountId = 100;
+  let expectedAmountId = 1;
   let expectedQuantity = 1;
   let runNumber = 0;
   this.set('actions', {
@@ -24,7 +31,9 @@ test('correctly parses amounts', function(assert) {
     }
   });
 
-  this.render(hbs`{{amount-quantity-input amounts=amounts onChange=(action "test")}}`);
+  this.render(hbs`
+    {{amount-quantity-input price=price quantities=quantities onChange=(action "test")}}
+  `);
 
   let buttons = this.$('.input-group-button');
   let decrementor = buttons.first();
@@ -56,5 +65,6 @@ test('correctly parses amounts', function(assert) {
   .then(() => decrementAndExpect( 1, 1))
   .then(() =>   setAndExpect(12, 10, 3))
   .then(() =>   setAndExpect(9,   9, 3))
-  .then(() =>   setAndExpect(-1,  1, 1));
+  .then(() =>   setAndExpect(-1,  1, 1))
+  .then(() => incrementAndExpect( 2, 1));
 });

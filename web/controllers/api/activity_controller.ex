@@ -10,9 +10,8 @@ defmodule Grid.Api.ActivityController do
     render(conn, "index.json", activities: activities)
   end
 
-  def show(conn, %{"slug" => slug}) do
-    activity = Activity 
-      |> Repo.get_by!(slug: slug)
+  def show(conn, %{"id" => id}) do
+    activity = Repo.get!(Activity , id)
       |> Repo.preload(:default_image)
     render(conn, "show.json", activity: activity)
   end

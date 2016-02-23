@@ -20,25 +20,20 @@ export default Ember.Route.extend(NotFoundMixin, {
     goToProducts () {
       this.transitionTo('explore.experience.products');
     },
-    
-    book (product, priceCosts, time) {
-      let {date} = this.modelFor('explore');
+
+    book (product, quantities, time) {
+      let {date, category, activity} = this.modelFor('explore');
+      let experience = this.modelFor('explore.experience');
 
       time = {
         time: time.starts_at_time,
         id: time.id
       };
 
-      let quantities = product.get('prices').map(price => {
-        let cost = priceCosts[price.id];
-        let quantity = cost ? cost.quantity : 0;
-        return {
-          id: price.id,
-          quantity: quantity
-        };
-      });
-
       let booking = this.store.createRecord('booking', {
+        activity: activity,
+        experience: experience,
+        category: category,
         product: product,
         date: date,
         startTime: time,

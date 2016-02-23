@@ -1,0 +1,75 @@
+.checkout {
+  background-color: $light-gray;
+  padding: 6em 0;
+}
+.checkout-data {
+  align-items: baseline;
+
+  .checkout-item-count {
+    font-size: .8em;
+    font-weight: 500;
+    .count {
+      color: $primary-color;
+    }
+  }
+  .checkout-total {
+    .total-amount {
+      font-size: 2em;
+      margin-left: 1rem;
+    }
+  }
+}
+.booking {
+  border-bottom: 2px solid $light-gray;
+  background-color: $white;
+  padding: .9375rem;
+  &:last-child {
+    border-bottom: none;
+  }
+  .dl-horizontal {
+    dd, dt {
+      margin-bottom: .3rem;
+    }
+    dt {
+      font-weight: $global-weight-bold;
+      width: 100px;
+      float: left;
+      clear: left;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+  .quantities {
+    .quantity {
+      align-items: baseline;
+    }
+    .input-group {
+      display: inline;
+      max-width: 100px;
+    }
+    .input-group-field {
+      padding-left: rem-calc(16);
+      width: rem-calc(46);
+      margin: 0 1rem;
+    }
+    input {
+      border-color: $medium-gray;
+      border-radius: 6px;
+    }
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+    .total {
+      font-size: 1.2em;
+    }
+    .booking-total {
+      align-self: flex-end;
+      margin-top: 1rem;
+      border-top: 1px dotted $light-gray;
+      padding-top: .5rem;
+    }
+  }
+}

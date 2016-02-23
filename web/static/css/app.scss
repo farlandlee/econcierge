@@ -4,18 +4,20 @@
 @include foundation-everything(true);
 
 @import "partials/mixins";
-@import "partials/flaticon";
-@import "partials/common";
-@import "partials/header";
-@import "partials/footer";
-@import "partials/home";
+
 @import "partials/activity";
-@import "partials/categories";
-@import "partials/experiences";
-@import "partials/products";
-@import "partials/fulloverlay-select";
 @import "partials/booking";
 @import "partials/booked";
+@import "partials/categories";
+@import "partials/checkout";
+@import "partials/common";
+@import "partials/experiences";
+@import "partials/flaticon";
+@import "partials/footer";
+@import "partials/fulloverlay-select";
+@import "partials/header";
+@import "partials/home";
+@import "partials/products";
 @import "partials/vendors";
 
 // fix foundation row in expanded row bug

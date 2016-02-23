@@ -2,7 +2,7 @@ import { moduleForModel, test } from 'ember-qunit';
 
 moduleForModel('booking', 'Unit | Model | booking', {
   // Specify the other units that are required for this test.
-  needs: ['model:product']
+  needs: ['model:product', 'model:activity', 'model:experience', 'model:category']
 });
 
 test('it exists', function(assert) {
