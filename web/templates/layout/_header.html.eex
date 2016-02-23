@@ -2,7 +2,6 @@
   <div class="full-width small-collapse" >
     <div class="title-bar hide-for-large">
       <button type="button" class="menu-icon" data-toggle="offCanvas"></button>
-      <div class="title-bar-title">Menu</div>
       <div class="logo"><a href="/">Outpost</a></div>
     </div>
     <div class="top-bar show-for-large" id="outpostMenu" >
