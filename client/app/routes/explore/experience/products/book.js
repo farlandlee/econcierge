@@ -20,6 +20,7 @@ export default Ember.Route.extend(NotFoundMixin, {
     goToProducts () {
       this.transitionTo('explore.experience.products');
     },
+    
     book (product, priceCosts, time) {
       let {date} = this.modelFor('explore');
 
@@ -46,6 +47,10 @@ export default Ember.Route.extend(NotFoundMixin, {
 
       return booking.save().then(booking => {
         this.transitionTo('booked', booking.id);
+      }, error => {
+        //@TODO...
+        console.error(error);
+        throw error;
       });
     }
   }

@@ -3,7 +3,10 @@ import NotFoundMixin from 'client/mixins/not-found';
 
 export default LFAdapter.extend(NotFoundMixin, {
   namespace: 'grid',
-  caching: 'all',
+  // must be none or we get some weird indexDB error when we try to save more
+  // than one item in a session.
+  // i can only do so much debugging. i know this fixes it, but not why
+  caching: 'none',
   // LFAdapter naively returns an array,
   // wrap it like a RESTAPI would
   findAll () {
