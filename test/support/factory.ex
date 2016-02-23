@@ -13,6 +13,7 @@ defmodule Grid.Factory do
   alias Grid.Experience
   alias Grid.ExperienceCategory
   alias Grid.Location
+  alias Grid.Order
   alias Grid.Price
   alias Grid.Product
   alias Grid.Season
@@ -227,5 +228,40 @@ defmodule Grid.Factory do
       |> Repo.insert!
 
     create_start_time %{season: season, product: product}
+  end
+
+  def create_user_order_for_product(user, %Product{} = product) do
+    price = create(:price, product: product)
+    amount = create(:amount, price: price)
+    st
+      = %{season: season}
+      = create_start_time(product: product)
+
+    quantity = 3
+    cost = amount.amount * quantity
+
+    order_changeset = Order.creation_changeset(%{
+      total_amount: cost,
+      order_items: [
+        %{
+          activity_at: Ecto.DateTime.from_date_and_time(season.end_date, st.starts_at_time),
+          product_id: product.id,
+          amount: cost,
+          quantities: %{
+            items: [
+              %{
+                  price_id: price.id,
+                  sub_total: cost,
+                  quantity: quantity,
+                  price_name: price.name,
+                  price_people_count: price.people_count
+                }
+            ]
+          }
+        }
+      ]
+    }, user.id)
+
+    Repo.insert! order_changeset
   end
 end

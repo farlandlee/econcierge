@@ -19,6 +19,7 @@ defmodule Grid.Product do
     has_many :prices, Grid.Price
     has_many :start_times, Grid.StartTime
     has_many :product_amenity_options, Grid.ProductAmenityOption
+    has_many :order_items, Grid.OrderItem
 
     has_many :amenity_options, through: [:product_amenity_options, :amenity_option]
     has_many :categories, through: [:experience, :experience_categories, :category]

@@ -98,11 +98,17 @@ defmodule Grid.Admin.Vendor.ProductController do
   end
 
   def delete(conn, _) do
-    Repo.delete!(conn.assigns.product)
+    product = conn.assigns.product
 
-    conn
-    |> put_flash(:info, "Product deleted successfully.")
-    |> redirect(to: admin_vendor_path(conn, :show, conn.assigns.vendor, tab: "products"))
+    case assoc(product, :order_items) |> Repo.all |> Enum.count do
+      0 ->
+        Repo.delete!(product)
+        conn |> put_flash(:info, "Product deleted successfully.")
+      _ ->
+        conn |> put_flash(:error, "Cannot delete product because it has received orders.")
+    end
+
+    redirect(conn, to: admin_vendor_path(conn, :show, conn.assigns.vendor, tab: "products"))
   end
 
   def clone(conn, _) do

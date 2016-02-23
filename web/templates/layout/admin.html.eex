@@ -65,6 +65,9 @@
             <li class="<%= nav_class(@conn, Grid.Admin.UserController) %>">
               <%= link "Users", to: admin_user_path(@conn, :index) %>
             </li>
+            <li class="<%= nav_class(@conn, Grid.Admin.ORderController) %>">
+              <%= link "Orders", to: admin_order_path(@conn, :index) %>
+            </li>
           </ul>
         </div>
         <div class="col-xs-10 col-sm-10 col-xs-offset-2 col-sm-offset-2 col-md-10 col-md-offset-2 main">

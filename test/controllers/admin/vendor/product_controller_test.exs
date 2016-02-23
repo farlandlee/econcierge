@@ -220,6 +220,14 @@ defmodule Grid.Admin.ProductControllerTest do
     refute Repo.get(Price, price.id)
   end
 
+  test "cannot delete product with orders", %{conn: conn, vendor: v, product: p} do
+    Factory.create_user_order_for_product(conn.assigns.current_user, p)
+
+    conn = delete conn, admin_vendor_product_path(conn, :delete, v, p)
+    assert redirected_to(conn) == admin_vendor_path(conn, :show, v, tab: "products")
+    assert Repo.get(Product, p.id)
+  end
+
   test "clone", %{conn: conn, product: p, vendor: v} do
     start_time = Factory.create_start_time(product: p)
     price = Factory.build(:price, product_id: p.id) |> Repo.insert!
