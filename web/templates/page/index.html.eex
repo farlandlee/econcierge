@@ -60,15 +60,13 @@
               <p class="booking-button"><a href="/explore/snowmobiling/scenic_snowmobiling/gros_ventre_snowmobile_ride/granite_hot_springs_snowmobile_trip">Request to Book</a></p>
             </div>
           </div>
-        <div class="column small-4">
-          <div class="dark-green big-button">
+        <div class="column small-4 align-center align-middle">
+          <a class="dark-green big-button text-center align-middle" href="/vendors">
             <div class="overlay-text">
-              <a href="/vendors">
-                <p>Our Partners</p>
-                <p class="small">Read about our vendors</p>
-              </a>
+              <p >Our Partners</p>
+              <p class="small">Read about our vendors</p>
             </div>
-          </div>
+          </a>
         </div>
         <div class="column small-8">
           <div class="double-wide fly-cta">

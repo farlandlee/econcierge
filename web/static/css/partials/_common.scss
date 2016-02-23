@@ -1,12 +1,36 @@
+html,
+body {
+	height:100%;
+  margin:0;
+  padding: 0;
+}
+.page {
+  min-height: 100vh;
+  /* equal to footer height */
+  margin-bottom: -180px;
+  padding-top: 42px;
+  @include breakpoint(large) {
+    padding-top: 61px;
+  }
+  &:after {
+    content: "";
+    display: block;
+  }
+}
+.page-footer,
+.page:after {
+  height: 180px;
+}
+
 .app-loading {
   @include spinner(2em);
 }
 
 .top-row {
-  margin-top: 42px;
+  padding-top: 10px;
   // Only affects medium screens and larger
   @include breakpoint(large) {
-    margin-top: 61px;
+    padding-top: 20px;
   }
 }
 .shopping-cart {
@@ -230,24 +254,24 @@ a.more-info {
 }
 
 .big-button {
-  height:300px;
+
+  display: block;
   background-color: $primary-color;
   margin: 0;
   padding: 0;
+  color: $white;
   width: 100%;
+  height: 300px;
   text-align: center;
-  position: relative;
-  a {
-    color: $white;
+  > div {
+    @include center-content();
   }
   &.dark-green {
     background-color: $button-background-hover;
     &:hover {
       background-color: darken($button-background-hover,20%);
+      color: $white;
     }
-  }
-  .overlay-text {
-    min-width: 80%;
   }
 }
 
