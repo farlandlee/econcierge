@@ -39,8 +39,14 @@
     <%= Grid.AdminView.pretty_name_list(@product.amenity_options) %>
   </dd>
 
+  <% errors = Grid.Product.check_bookability(@product) %>
   <dt>Published</dt>
-  <dd><%= check_icon @product.published %></dd>
+  <dd>
+    <%= published_icon(errors) %>
+    <span class="bg-warning">
+      <%= pretty_errors(errors) %>
+    </span>
+  </dd>
 
 </dl>
 <div class="panel panel-default">

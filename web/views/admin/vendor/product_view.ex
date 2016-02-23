@@ -1,12 +1,15 @@
 defmodule Grid.Admin.Vendor.ProductView do
   use Grid.Web, :view
 
-  alias Grid.Admin.Vendor.LocationView
+  alias Grid.{
+    Admin.Vendor.LocationView,
+    Product
+  }
 
-  def check_icon(true), do: check_icon("check")
-  def check_icon(false), do: check_icon("unchecked")
-  def check_icon(class) do
-    tag :span, class: "glyphicon glyphicon-#{class}"
+  def icon(class) do
+    ~E"""
+    <span class="glyphicon glyphicon-<%= class %>"></span>
+    """
   end
 
   def pretty_duration(minutes) do
@@ -52,5 +55,19 @@ defmodule Grid.Admin.Vendor.ProductView do
       fn %{product_id: prod_id} -> prod_id == model_id end
     end
     Enum.any?(amenity_option.product_amenity_options, f)
+  end
+
+  def published_icon(%Product{published: true} = product) do
+    Product.check_bookability(product)
+    |> published_icon
+  end
+  def published_icon(%Product{published: false}), do: icon("unchecked")
+  def published_icon({:ok, %Product{published: false}}), do: icon("unchecked")
+  def published_icon({:ok, %Product{published: true}}), do: icon("check")
+  def published_icon({:error, errors}) when is_list(errors), do: icon("warning-sign")
+
+  def pretty_errors({:ok, _}), do: ""
+  def pretty_errors({:error, errors}) do
+    Enum.join(errors, " | ")
   end
 end

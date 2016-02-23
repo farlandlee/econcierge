@@ -63,6 +63,7 @@ defmodule Grid.Admin.Vendor.ProductController do
         :meeting_location,
         start_times: :season,
         prices: :amounts,
+        default_price: :amounts,
         amenity_options: :amenity
       ])
 

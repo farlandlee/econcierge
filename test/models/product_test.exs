@@ -169,4 +169,18 @@ defmodule Grid.ProductTest do
     assert products_for_date(saturday) == miss
     assert products_for_date(sunday) == hit
   end
+
+  test "test product is published but not deliverable" do
+    product = Factory.create(:product)
+      |> Repo.preload([
+        default_price: :amounts,
+        start_times: :season
+      ])
+
+    expected = {:error,
+      ['Must have default price', 'Product must have at least one start time']
+    }
+
+    assert expected == Product.check_bookability(product)
+  end
 end
