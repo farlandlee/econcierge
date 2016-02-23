@@ -1,0 +1,23 @@
+<div class="vendors page">
+  <div class="top-row row align-center align-middle">
+    <div class="columns small-12" >
+      <h1 class="page-title">Our Partners</h1>
+      <p class="page-subtitle">Meet the vendors who will make your adventures happen.</p>
+    </div>
+  </div>
+  <div class="vendor-container">
+    <%= for vendor <- @vendors do %>
+      <div class="row align-left vendor-row">
+        <div class="columns shrink vendor-image">
+          <p><img src="<%= img_src(vendor.default_image, :original) %>" alt="<%= vendor.name %>"/></p>
+        </div>
+        <div class="columns small-6 medium-3 large-2">
+          <p><%= vendor.name %></p>
+        </div>
+        <div class="columns small-12 medium-expand">
+          <p><%= vendor.description %></p>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
