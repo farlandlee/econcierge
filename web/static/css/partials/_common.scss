@@ -4,6 +4,15 @@ body {
   margin:0;
   padding: 0;
 }
+
+.off-canvas-wrapper, .off-canvas {
+	min-height: 100%;
+}
+
+.off-canvas-wrapper{
+	height: 100%;
+	overflow-y: auto;
+}
 .page {
   min-height: 100vh;
   /* equal to footer height */

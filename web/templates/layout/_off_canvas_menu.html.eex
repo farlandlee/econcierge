@@ -1,10 +1,10 @@
 <div class="off-canvas position-left" id="offCanvas" data-off-canvas>
   <ul class="mobile-ofc vertical menu" >
-    <li class="menu-text logo"><a href="/">Home</a></li>
-    <li><a href="#">Reservations</a></li>
-    <li><a href="#">Vacation Rentals</a></li>
-    <li><a href="#">Journal</a></li>
-    <li><a href="#">About Us</a></li>
-    <li><a href="#" class="flaticon-cart fi">&nbsp;</a></li>
+    <li class="menu-text"><a href="/">Home</a></li>
+    <li class="menu-text"><a href="http://www.outpostjh.com/rentals/">Lodging</a></li>
+    <li class="menu-text"><%= link "Activities", to: explore_path(Grid.Endpoint, :index, ["activities"]) %></li>
+    <li class="menu-text"><a href="http://www.outpostjh.com/outpostchronicles">Journal</a></li>
+    <li class="menu-text"><a href="http://www.outpostjh.com/about/">About Us</a></li>
+    <li class="menu-text"><a href="#" class="flaticon-cart fi">&nbsp;</a></li>
   </ul>
 </div>
