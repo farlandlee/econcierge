@@ -18,6 +18,7 @@ export default Ember.Route.extend(NotFoundMixin, {
   setupController (controller, experience) {
     this._super(...arguments);
     let {experiences, category} = this.modelFor('explore');
+
     controller.setProperties({
       experience: experience,
       experiences: experiences,

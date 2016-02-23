@@ -1,8 +1,8 @@
 <div class="row selected-experience">
-  <div class="columns small-12 medium-7">
-    <img src="{{placehold-it experience.image.full '810x630'}}">
+  <div class="columns small-12 medium-6">
+    <img src="{{placehold-it experience.image.full '630x450'}}">
   </div>
-  <div class="columns small-12 medium-5">
+  <div class="columns small-12 medium-6">
     <p class="experience-label">Experience:</p>
     <p class="experience-title">{{experience.name}}</p>
     <p class="experience-description">{{experience.description}}</p>
@@ -13,31 +13,25 @@
       </div>
     </div>
     --}}
-    <div class="row">
-      <div class="columns">
-        <p class="next-experience">
-          {{next-experience-link currentExperience=experience experiences=experiences}}
-        </p>
-      </div>
-    </div>
 
-    <div class="row align-right">
-      <div class="columns shrink">
-        <p class="align-right">Other {{activeCategoryName}} Experiences:</p>
+    {{#if (gt experiences.length 1)}}
+      <div class="row">
+        <div class="columns">
+          <p class="next-experience">
+            {{next-experience-link currentExperience=experience experiences=experiences}}
+          </p>
+        </div>
       </div>
-    </div>
-    <div class="row other-experiences align-right">
-      {{#item-sorter items=experiences as |otherExperience|}}
-      {{!-- don't render the currently selected category twice --}}
-      {{#unless (eq experience.id otherExperience.id)}}
-      <div class="column small-4">
-        {{#link-to 'explore.experience' otherExperience}}
-          <img src="{{placehold-it otherExperience.image.medium '150x150'}}">
-        {{/link-to}}
+
+      <div class="row align-right">
+        <div class="columns shrink">
+          <p class="align-right no-margin other-experience-p">Other {{activeCategoryName}} Experiences:</p>
+        </div>
       </div>
-      {{/unless}}
-      {{/item-sorter}}
-    </div>
+
+      {{experience-slider currentExperience=experience experiences=experiences}}
+    {{/if}}
+
   </div>
 </div>
 {{!--<div class="row experience-filter align-justify">

@@ -36,6 +36,7 @@
   &.selected-experience,
   &.experience-filter {
     max-width: rem-calc(1440);
+    border-bottom: 1px solid #eee;
   }
 }
 
@@ -56,8 +57,8 @@
 .experience-description {
   line-height: 1.2;
   margin-bottom: 2rem;
-  height: 157px;
-  overflow: hidden;
+  height: 80px;
+  overflow: scroll;
 }
 .experience-difficulty-label {
   line-height: 1;
@@ -65,11 +66,6 @@
 }
 .experience-difficulty {
   font-weight: bold;
-}
-.other-experiences {
-  .column {
-    margin-bottom: 0.9375rem;
-  }
 }
 .next-experience {
   margin-bottom: 0.6rem;
@@ -129,4 +125,18 @@
   display: block;
   margin:0.4rem 0;
   width: 91px;
+}
+
+.experience-arrow {
+  color: #969696;
+  font-size: 40px;
+  cursor: pointer;
+}
+
+.experience-image {
+  padding: 0px 15px 0px 0px;
+}
+
+.other-experience-p {
+  margin-right: 20px;
 }
