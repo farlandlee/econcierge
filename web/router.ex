@@ -53,6 +53,8 @@ defmodule Grid.Router do
 
     get "/", PageController, :index
 
+    get "/vendors", VendorController, :index
+
     get "/explore/*path", ExploreController, :index
 
     get "/500", ErrorController, :render_500

@@ -61,7 +61,7 @@
             </div>
           </div>
         <div class="column small-4 align-center align-middle">
-          <a class="dark-green big-button text-center align-middle" href="/vendors">
+          <a class="dark-green big-button text-center align-middle" href="<%= vendor_path(@conn, :index) %>">
             <div class="overlay-text">
               <p >Our Partners</p>
               <p class="small">Read about our vendors</p>

@@ -1,0 +1,19 @@
+.vendor-container {
+  margin: 3rem 0 6rem;
+}
+.vendor-row {
+  padding: 1rem;
+  &:nth-of-type(even) {
+    background-color: $light-gray;
+  }
+}
+
+.vendor-image {
+  img {
+    width: 75px;
+    height:75px;
+    border-radius: 75px;
+    border: 1px solid $light-gray;
+    display: block;
+  }
+}
