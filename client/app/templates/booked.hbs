@@ -26,8 +26,10 @@
       </p>
    </div>
 </div>
-<div class="row align-justify activities expanded">
-  {{#item-sorter items=activities as |activity|}}
-    {{activity-card activity=activity}}
-  {{/item-sorter}}
+<div class="activities">
+  <div class="row align-spaced">
+    {{#item-sorter items=activities as |activity|}}
+      {{activity-card activity=activity}}
+    {{/item-sorter}}
+  </div>
 </div>

@@ -21,11 +21,21 @@ div.home-main {
 .home-bottom {
   padding: 60px 0 0;
   .column {
-    > div {
+    > a {
       margin-bottom: 3rem;
       padding-bottom: 3rem;
       border-bottom: 1px solid $light-gray;
+      display: block;
     }
+  }
+}
+.home-article-large {
+  display:block;
+  img {
+    max-width: 100%;
+    max-height: auto;
+    display:block;
+    margin: 0;
   }
 }
 

@@ -174,9 +174,20 @@
   }
   .single-wide {
     background: url(http://placehold.it/330x300) no-repeat center center;
+    background-size: cover;
+    &.snowmobiling-cta {
+      background-image: url('/images/snowmobile.jpg');
+    }
   }
   .double-wide {
     background: url(http://placehold.it/690x300) no-repeat center center;
+    background-size: cover;
+    &.rentals-cta {
+      background-image: url('/images/home-rentals.jpg');
+    }
+    &.fly-cta {
+      background-image: url('/images/scenicflights.jpg');
+    }
   }
   .single-wide,
   .double-wide {
@@ -219,15 +230,21 @@ a.more-info {
 }
 
 .big-button {
-  height:150px;
+  height:300px;
   background-color: $primary-color;
   margin: 0;
   padding: 0;
   width: 100%;
   text-align: center;
   position: relative;
+  a {
+    color: $white;
+  }
   &.dark-green {
     background-color: $button-background-hover;
+    &:hover {
+      background-color: darken($button-background-hover,20%);
+    }
   }
   .overlay-text {
     min-width: 80%;
