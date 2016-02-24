@@ -21,14 +21,20 @@
     text-transform: uppercase;
     > li {
       height: 60px;
-      &:not(.logo):not(.menu-text) {
+      &:not(.logo) {
         > a {
+          font-family: "proxima-nova", sans-serif;
+          font-weight: bold;
           height: 60px;
           line-height: 60px;
           padding-top: 0;
           padding-bottom: 0;
+          text-transform: uppercase;
           &:hover {
             border-bottom: 4px solid $primary-color;
+          }
+          &:not(.shopping-cart) {
+            font-size: 14px;
           }
         }
       }

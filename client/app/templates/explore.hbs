@@ -2,10 +2,10 @@
   <div class="top-row row expanded">
     <div class="columns small-12 medium-8 large-10">
       <div class="input-group select-activity">
-        <span>Choose your </span>
+        <span>Activity:</span>
         <div class="input-group-field">
           <div class="full-overlay-select" tabindex="0">
-            <span class="current">{{category.name}}</span>
+            <span class="current">{{category.activity.name}} - {{category.name}}</span>
             <ul>
               {{#item-sorter items=activity.categories as |category|}}
               <li>
@@ -16,7 +16,6 @@
             <div class="full-overlay-black-overlay"></div>
           </div>
         </div>
-        <span> experience</span>
       </div>
     </div>
     <div class="columns small-12 medium-4 large-2 align-right">

@@ -42,7 +42,10 @@ $arrow_color: $white;
   font-size: $font_size;
   font-weight: normal;
   height: $input_height;
-  line-height: $input_height - 2;
+  line-height: 30px;
+  @include breakpoint ( medium ) {
+    line-height: $input_height - 2;
+  }
   outline: none;
   padding-left: $dropdown_padding;
   padding-right: 55px;
@@ -52,6 +55,12 @@ $arrow_color: $white;
   user-select: none;
   white-space: nowrap;
   width: auto;
+  .current {
+    font-size: 1rem;
+    @include breakpoint ( medium ) {
+  		font-size: 1.6rem;
+  	}
+  }
   &:active, &:focus {
     border-color: $primary_light;
   }

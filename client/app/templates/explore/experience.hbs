@@ -3,9 +3,22 @@
     <img src="{{placehold-it experience.image.full '630x450'}}">
   </div>
   <div class="columns small-12 medium-6">
-    <p class="experience-label">Experience:</p>
-    <p class="experience-title">{{experience.name}}</p>
-    <p class="experience-description">{{experience.description}}</p>
+    {{#if (gt experiences.length 1)}}
+        <div class="row columns show-for-small-only align-right">
+          <p class="next-experience">
+            {{next-experience-link currentExperience=experience experiences=experiences}}
+          </p>
+        </div>
+    {{/if}}
+    <div class="row columns">
+      <p class="experience-label">Experience:</p>
+    </div>
+    <div class="row columns">
+      <p class="experience-title">{{experience.name}}</p>
+    </div>
+    <div class="row columns">
+      <p class="experience-description">{{experience.description}}</p>
+    </div>
     {{!--<div class="row">
       <div class="columns">
         <p class="experience-difficulty-label">Difficulty Level</p>
@@ -15,17 +28,15 @@
     --}}
 
     {{#if (gt experiences.length 1)}}
-      <div class="row">
-        <div class="columns">
-          <p class="next-experience">
+        <div class="row columns">
+          <p class="next-experience show-for-medium">
             {{next-experience-link currentExperience=experience experiences=experiences}}
           </p>
         </div>
-      </div>
 
-      <div class="row align-right">
-        <div class="columns shrink">
-          <p class="align-right no-margin other-experience-p">Other {{activeCategoryName}} Experiences:</p>
+      <div class="row">
+        <div class="columns shrink align-right">
+          <p class="align-right no-margin other-experience-p show-for-medium">Other {{activeCategoryName}} Experiences:</p>
         </div>
       </div>
 

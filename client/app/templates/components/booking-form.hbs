@@ -4,7 +4,7 @@
       <h3 class="text-center">Enter Your Trip Details</h3>
     </div>
   </div>
-  <div class="row align-spaced body-count">
+  <div class="row align-left body-count">
   {{#each product.prices as |price|}}
     {{amount-quantity-input amounts=price.amounts onChange=(action "updateQuantity" price) classNames="columns shrink"}}
   {{/each}}
