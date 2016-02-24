@@ -19,7 +19,10 @@ Router.map(function () {
   });
 
   this.route('booked', {path: '/booked/:booking_id'});
-  this.route('checkout');
+  this.route('cart', function() {
+    this.route('checkout');
+  });
+  this.route('orderComplete');
 
   this.route('error404', {path: '/*path'});
 });

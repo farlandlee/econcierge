@@ -1,0 +1,4 @@
+{{#foundation-modal class="checkout" onClose=(route-action "back")}}
+  <h2 class="page-title">Complete your reservation request(s)</h2>
+  {{checkout-form onSubmit=(route-action "checkout")}}
+{{/foundation-modal}}

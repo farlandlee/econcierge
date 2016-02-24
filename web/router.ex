@@ -52,6 +52,7 @@ defmodule Grid.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+    get "/about/terms", PageController, :tou
 
     get "/vendors", VendorController, :index
 
@@ -78,6 +79,8 @@ defmodule Grid.Router do
 
     get "/categories", CategoryController, :index
     get "/categories/:id", CategoryController, :show
+
+    post "/checkout", CheckoutController, :checkout
 
     get "/date/:activity_slug/:category_slug",
       DateController, :first_experience_date
