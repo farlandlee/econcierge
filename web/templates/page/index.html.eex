@@ -1,12 +1,11 @@
 <div class="home page">
-  <div class="top-row small-collapse home-main expanded row">
+  <section class="top-row small-collapse home-main expanded row">
     <div class="darken-overlay"></div>
     <div class="row align-center align-middle home-main-inner expanded">
       <div class="small-12 columns search-bar" >
         <div class="row small-collapse align-center expanded">
           <div class="small-12 columns">
             <div class="search-label">Book your Jackson Hole Adventure</div>
-            <div class="search-sublabel">Discover &amp; reserve the opportunities that await you, all in one place</div>
           </div>
           <div class="small-12 medium-10 large-8 columns form-group">
             <label for="activity[id]">Explore</label>
@@ -29,18 +28,18 @@
         </div>
       </div>
     </div>
-  </div>
-  <div class="home-middle">
-    <div class="row align-center">
+  </section>
+  <section class="home-middle">
+    <header class="row align-center">
       <div class="column small-12 large-10">
-        <div class="section-title small-12 column">Introducing eConcierge</div>
+        <div class="section-title small-12 column">Introducing: eConcierge</div>
         <div class="section-subtitle small-12 column">Search, discover and book the various activities offered in Jackson Hole.</div>
       </div>
-    </div>
+    </header>
     <div class="row overlays align-center">
       <div class="small-12 large-11 columns">
         <div class="row align-center align-stretch">
-          <div class="column small-8">
+          <div class="column small-12 medium-8">
             <div class="double-wide rentals-cta">
               <div class="darken-overlay"></div>
               <div class="overlay-text">
@@ -50,7 +49,7 @@
               <p class="booking-button"><a href="http://www.outpostjh.com/rentals/">Book Now</a></p>
             </div>
           </div>
-          <div class="column small-4">
+          <div class="column small-12 medium-4">
             <div class="single-wide snowmobiling-cta">
               <div class="darken-overlay"></div>
               <div class="overlay-text">
@@ -60,30 +59,36 @@
               <p class="booking-button"><a href="/explore/snowmobiling/scenic_snowmobiling/gros_ventre_snowmobile_ride/granite_hot_springs_snowmobile_trip">Request to Book</a></p>
             </div>
           </div>
-        <div class="column small-4 align-center align-middle">
-          <a class="dark-green big-button text-center align-middle" href="<%= vendor_path(@conn, :index) %>">
-            <div class="overlay-text">
-              <p >Our Partners</p>
-              <p class="small">Read about our vendors</p>
+          <div class="column small-12 medium-4 align-center align-middle">
+            <a class="dark-green big-button text-center align-middle" href="<%= vendor_path(@conn, :index) %>">
+              <div class="overlay-text">
+                <p >Our Partners</p>
+                <p class="small">Read about our vendors</p>
+              </div>
+            </a>
+          </div>
+          <div class="column small-12 medium-8">
+            <div class="double-wide fly-cta">
+              <div class="darken-overlay"></div>
+              <div class="overlay-text">
+                <p>Scenic Flights</p>
+                <p>Alpenglow Sunset Tour</p>
+                <p class="small">By Fly Jackson Hole</p>
+              </div>
+              <p class="booking-button"><a href="/explore/scenic_flights/scenic_flight/scenic_flight/scenic_flight">Request to Book</a></p>
             </div>
-          </a>
-        </div>
-        <div class="column small-8">
-          <div class="double-wide fly-cta">
-            <div class="darken-overlay"></div>
-            <div class="overlay-text">
-              <p>Scenic Flights</p>
-              <p>Alpenglow Sunset Tour</p>
-              <p class="small">By Fly Jackson Hole</p>
-            </div>
-            <p class="booking-button"><a href="/explore/scenic_flights/scenic_flight/scenic_flight/scenic_flight">Request to Book</a></p>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</div>
-  <div class="home-bottom">
+  </section>
+  <section class="home-bottom">
+    <header class="row align-center">
+      <div class="column small-12 large-10">
+        <div class="section-title small-12 column">Jackson Hole Lifestyle</div>
+        <div class="section-subtitle small-12 column">#ITSWHATWEDOHERE</div>
+      </div>
+    </header>
     <div class="row align-center align-stretch" data-equalizer data-equalize-on="medium" >
       <div class="column small-12 medium-6" >
         <a class="home-article-large" href="http://www.outpostjh.com/scenic-flights-in-jackson-hole/" data-equalizer-watch>
@@ -115,41 +120,41 @@
       </div>
     </div>
     <div class="row align-center" data-equalizer data-equalize-on="medium" >
-      <div class="column small-6 medium-4" >
+      <div class="column small-12 medium-4" >
         <a href="http://www.outpostjh.com/adventure-report-skiing-the-bechler-river-trail/" data-equalizer-watch>
           <img src="http://www.outpostjh.com/wp-content/uploads/2016/02/Bechlerfeature-001-768x563.jpg" alt="ADVENTURE REPORT: SKI TOURING THE BECHLER RIVER TRAIL">
           <p class="lead">ADVENTURE REPORT: SKI TOURING THE BECHLER RIVER TRAIL</p>
           <p class="subheader">6 days of Type II Fun in the Yellowstone Backcountry.</p>
         </a>
       </div>
-      <div class="column small-6 medium-4" >
+      <div class="column small-12 medium-4" >
         <a href="http://www.outpostjh.com/all-about-that-apres/" data-equalizer-watch>
           <img src="http://www.outpostjh.com/wp-content/uploads/2016/01/untitled-001-768x563.jpg" alt="ALL ABOUT THAT APRÈS">
           <p class="lead">ALL ABOUT THAT APRÈS</p>
           <p class="subheader">The perfect end to the perfect day on the slopes.</p>
         </a>
       </div>
-      <div class="column small-6 medium-4" >
+      <div class="column small-12 medium-4" >
         <a href="http://www.outpostjh.com/elk-refuge/" data-equalizer-watch>
           <img src="http://www.outpostjh.com/wp-content/uploads/2015/12/ElkRefuge-002-768x563.jpg" alt="A SLEIGH RIDE AMONG THE ELK">
           <p class="lead">A SLEIGH RIDE AMONG THE ELK</p>
           <p class="subheader">Jackson Hole's most unique and incredible winter wildlife experience.</p>
         </a>
-      </div><div class="column small-6 medium-4" >
+      </div><div class="column small-12 medium-4" >
         <a href="http://www.outpostjh.com/christmas-tree-jackson-hole/" data-equalizer-watch>
           <img src="http://www.outpostjh.com/wp-content/uploads/2015/11/XmasTree-001-768x563.jpg" alt="A HOLIDAY TRADITION THAT HELPS FORESTS THRIVE">
           <p class="lead">A HOLIDAY TRADITION THAT HELPS FORESTS THRIVE</p>
           <p class="subheader">The family adventure of cutting a christmas tree.</p>
         </a>
       </div>
-      <div class="column small-6 medium-4" >
+      <div class="column small-12 medium-4" >
         <a href="http://www.outpostjh.com/flashback-friday/" data-equalizer-watch>
           <img src="http://www.outpostjh.com/wp-content/uploads/2015/11/ff-001-768x563.jpg" alt="FLASHBACK FRIDAY">
           <p class="lead">FLASHBACK FRIDAY</p>
           <p class="subheader">Jackson Hole Mountain Resort kicks off 50th Anniversary Celebrations.</p>
         </a>
       </div>
-      <div class="column small-6 medium-4" >
+      <div class="column small-12 medium-4" >
         <a href="http://www.outpostjh.com/firewood-in-jackson-hole/" data-equalizer-watch>
           <img src="http://www.outpostjh.com/wp-content/uploads/2015/11/firewood2-007-768x563.jpg" alt="STOCKING UP FOR WINTER">
           <p class="lead">STOCKING UP FOR WINTER</p>
@@ -157,5 +162,5 @@
         </a>
       </div>
     </div>
-  </div>
+  </section>
 </div>
