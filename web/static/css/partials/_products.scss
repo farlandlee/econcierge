@@ -16,14 +16,19 @@
 .products {
   > .columns {
     margin-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+    position: relative;
   }
 }
 .product {
   background-color: $white;
   border-radius: 12px;
-  width: 100%;
   max-width: 340px;
-  margin: auto;
+  width: 100%;
+  height:100%;
+  margin: 0 auto;
+  flex: 1;
   .product-header,
   .product-body,
   .product-footer {
@@ -33,12 +38,14 @@
   .product-header {
     border-bottom: 2px solid $offwhite;
     padding: 1rem 0.5rem;
+    height: auto;
     .vendor-image {
       border-radius: 100px;
       height: 75px;
       width: 75px;
       background-size: cover;
       background-position: center center;
+      border: 1px solid $light-gray;
     }
     .vendor-name {
       color: $dark-gray;
@@ -59,19 +66,12 @@
       font-size: 0.75rem;
       color: $medium-gray;
     }
-    .meeting-address {
-      color: $medium-gray;
-      font-weight: 100;
-      font-size: 0.75rem;
-      margin-bottom: 0;
-    }
   }
   .product-body {
     padding: 1rem;
-    
   }
   .product-name {
-    font-size: 1.6rem;
+    text-transform: uppercase;
   }
   .product-description {
     height: 100px;
@@ -93,6 +93,7 @@
   }
   .product-footer {
     padding: 2rem 0;
+    flex-grow: 2;
   }
   .request-to-book {
     a {

@@ -8,6 +8,15 @@
         Vendor
       </h4>
       <p>{{product.vendor.name}}</p>
+      {{#unless product.pickup}}
+      <p class="meeting-address">
+        {{#with product.meetingLocation as |loc|}}
+        {{loc.address1}}{{#if loc.address2}} , {{loc.address2}}{{/if}}
+        <br>
+        {{loc.city}}, {{loc.state}} {{loc.zip}}
+        {{/with}}
+      </p>
+      {{/unless}}
     </div>
     <div class="columns small-12 medium-6">
       <div class="row">
