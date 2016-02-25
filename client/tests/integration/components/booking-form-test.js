@@ -7,6 +7,7 @@ moduleForComponent('booking-form', 'Integration | Component | booking form', {
 
 test('it renders', function(assert) {
   this.set('product', {
+    startTimes: [],
     prices: []
   });
   this.set('actions', {

@@ -13,7 +13,10 @@ export default Ember.Route.extend(NotFoundMixin, {
 
   setupController (controller, product) {
     this._super(...arguments);
+    let {date} = this.modelFor('explore');
     controller.set('product', product);
+    // used in product time selection
+    controller.set('date', date);
   },
 
   actions: {
@@ -21,10 +24,9 @@ export default Ember.Route.extend(NotFoundMixin, {
       this.transitionTo('explore.experience.products');
     },
 
-    book (product, quantities, time) {
-      let {date, category, activity} = this.modelFor('explore');
+    book (product, {quantities, date, time}) {
+      let {category, activity} = this.modelFor('explore');
       let experience = this.modelFor('explore.experience');
-
       time = {
         time: time.starts_at_time,
         id: time.id

@@ -14,7 +14,10 @@ defmodule Grid.Api.StartTimeView do
       saturday: start_time.saturday,
       sunday: start_time.sunday,
 
-      season: start_time.season_id,
+      # Pretend that seasons aren't a thing,
+      # and that the dates are from the times themselves
+      start_date: start_time.season.start_date,
+      end_date: start_time.season.end_date,
       product: start_time.product_id
     }
   end

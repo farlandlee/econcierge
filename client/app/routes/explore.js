@@ -5,10 +5,17 @@ import moment from 'moment';
 export default Ember.Route.extend(NotFoundMixin, {
   model (params) {
     let {date, activity_slug, category_slug} = params;
+
+    if (!moment(date, 'YYYY-MM-DD').isValid()) {
+      console.error("Invalid date");
+      return this.throwNotFound();
+    }
+
     let activities = this.store.peekAll('activity');
     let activity = activities.findBy('slug', activity_slug);
-    
+
     if (!activity) {
+      console.error("Activity not found");
       return this.throwNotFound();
     }
 
@@ -22,6 +29,7 @@ export default Ember.Route.extend(NotFoundMixin, {
     }).then(({activity, categories}) => {
       let category = categories.findBy('slug', category_slug);
       if (!category) {
+        console.error("Category not found");
         return this.throwNotFound();
       }
 
