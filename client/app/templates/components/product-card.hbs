@@ -25,9 +25,7 @@
   <div class="product-description column small-12">
     <p>{{truncate product.description limit=180}}</p>
   </div>
-  {{#each product.prices as |price|}}
-    {{price-display price=price}}
-  {{/each}}
+  {{price-display price=product.defaultPrice}}
 </div>
 <div class="row product-footer text-center">
   <div class="column">

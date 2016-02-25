@@ -3,8 +3,24 @@ defmodule Grid.Api.ProductViewTest do
 
   alias Grid.Api.ProductView
 
-  test "render product" do
-    product = Factory.create(:product) |> Grid.Api.ProductController.preload
+  setup do
+    st = %{product: p, season: s} = Factory.create_start_time(
+      season: Factory.create(:season,
+        start_date: %Ecto.Date{year: 2016, month: 6, day: 1},
+        end_date: %Ecto.Date{year: 2016, month: 6, day: 30}
+      )
+    )
+
+    price = Factory.create(:price, product: p)
+    Factory.create(:amount, price: price)
+
+    p = Repo.update!(Grid.Product.default_price_changeset(p, price.id))
+
+    {:ok, product: p, start_time: st, season: s}
+  end
+
+  test "render product", %{product: product} do
+    product = product |> Grid.Api.ProductController.preload
 
     rendered_product = ProductView.render("product.json", %{product: product})
 
@@ -18,10 +34,10 @@ defmodule Grid.Api.ProductViewTest do
     end
 
     # Belongs to fields, id only
-    for r <- ~w(vendor_id experience_id default_price_id)a do
-      product_relationship_id = Map.get(product, r)
-
+    for r <- ~w(vendor_id experience_id)a do
       refute Map.has_key?(rendered_product, r)
+
+      product_relationship_id = Map.get(product, r)
 
       rendered_key = r |> to_string
         |> String.split("_id")
@@ -36,10 +52,11 @@ defmodule Grid.Api.ProductViewTest do
 
     # Belongs to, preloaded
     assert rendered_product.meeting_location == nil
+    assert rendered_product.default_price.id == product.default_price_id
 
     # Has many fields, preloaded
     for k <- ~w(prices start_times amenity_options)a do
-      assert rendered_product[k] == []
+      assert Enum.count(rendered_product[k]) == Enum.count(Map.get(product, k))
     end
   end
 end

@@ -16,7 +16,7 @@ defmodule Grid.Api.ProductControllerTest do
     price = Factory.create(:price, product: p)
     Factory.create(:amount, price: price)
 
-    Repo.update!(Grid.Product.default_price_changeset(p, price.id))
+    p = Repo.update!(Grid.Product.default_price_changeset(p, price.id))
 
     {:ok, product: p, start_time: st, season: s}
   end

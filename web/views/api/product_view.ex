@@ -20,7 +20,11 @@ defmodule Grid.Api.ProductView do
     raise ArgumentError, message: "Cannot render unpublished product"
   end
 
-  def render("product.json", %{product: product}) do
+  def render("product.json", %{product: product = %{default_price_id: default_price_id}}) do
+    default_price = Enum.find(product.prices, :error, fn
+      %{id: ^default_price_id} -> true
+      _ -> false
+    end)
     %{
       id: product.id,
       description: product.description,
@@ -30,7 +34,7 @@ defmodule Grid.Api.ProductView do
 
       vendor: product.vendor_id,
       experience: product.experience_id,
-      default_price: product.default_price_id,
+      default_price: render_one(default_price, PriceView, "price.json"),
 
       meeting_location: render_one(product.meeting_location, LocationView, "location.json"),
       prices: render_many(product.prices, PriceView, "price.json"),
