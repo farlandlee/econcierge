@@ -11,7 +11,7 @@
 
     <%= render Grid.LayoutView, "_head_scripts.html" %>
     <link rel="stylesheet" href="<%= static_path(@conn, "/explore/assets/vendor.css") %>">
-
+    <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
     {{content-for "head-footer"}}
   </head>
   <body>

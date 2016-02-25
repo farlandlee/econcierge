@@ -5,13 +5,14 @@ export default Ember.Route.extend({
     back () {
       this.transitionTo('cart');
     },
-    checkout (user) {
+    checkout (user, stripeToken) {
       // map bookings so that we have a basic array,
       // rather than a record array (can't stringify record arrays)
       let bookings = this.modelFor('cart').map(b => b);
       let payload = JSON.stringify({
         cart: bookings,
-        user: user
+        user: user,
+        stripe_token: stripeToken
       });
       Ember.$.ajax('/web_api/checkout', {
         method: 'POST',

@@ -13,9 +13,11 @@ module.exports = function(environment) {
       }
     },
 
+    stripePublishableKey: 'pk_test_b43KzmrhHOT2zqdUFk7bZeG0', // test key
+
     rollbar: {
       enabled: environment === 'production',
-      accessToken: process.env['ROLLBAR_POST_CLIENT_ACCESS_TOKEN'],
+      accessToken: process.env.ROLLBAR_POST_CLIENT_ACCESS_TOKEN,
       captureUncaught: true,
       payload: {
         environment: environment
@@ -23,9 +25,9 @@ module.exports = function(environment) {
     },
 
     APP: {
-      rootElement: '#app-bootstrap'
       // Here you can pass flags/options to your application instance
       // when it is created
+      rootElement: '#app-bootstrap'
     }
   };
 
@@ -50,7 +52,7 @@ module.exports = function(environment) {
   }
 
   if (environment === 'production') {
-
+    ENV.stripePublishableKey = process.env.STRIPE_PUBLISHABLE_KEY;
   }
 
   return ENV;
