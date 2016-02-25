@@ -11,7 +11,10 @@
   display: inline-block;
   position:absolute;
   right: 0.5rem;
-  top: 0;
+  top: -0.6rem;
+  @include breakpoint( medium ) {
+    top: -0.2rem;
+  }
   z-index: 1;
   border: 0;
   transform: rotate(0);

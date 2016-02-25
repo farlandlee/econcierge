@@ -13,6 +13,7 @@
               <div class="full-overlay-select" tabindex="0">
                 <span class="current">All Activities</span>
                 <ul>
+                  <li><%= link "Lodging", to: "http://www.outpostjh.com/rentals/" %></li>
                   <li><%= link "All Activities", to: explore_path(@conn, :index, ["activities"]) %></li>
                   <%= for activity <- @available_activities do %>
                     <li><%= link activity.name, to: explore_path(@conn, :index, [activity.slug, "categories"]) %></li>
