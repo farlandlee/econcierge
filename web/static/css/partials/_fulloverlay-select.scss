@@ -135,11 +135,11 @@ $arrow_color: $white;
       padding-left: 1rem;
       padding-right: 1rem;
       &:hover, &.selected {
-        font-weight: bold;
+        font-weight: $global-weight-bold;
         color: $white;
       }
       &.selected {
-        font-weight: bold;
+        font-weight: $global-weight-bold;
       }
       &.disabled {
         background-color: transparent;

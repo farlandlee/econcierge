@@ -1,22 +1,15 @@
-{{#if hasBlock}}
-{{yield
-  quantity
-  cost
-  (hash
-    increment=(action "increment")
-    decrement=(action "decrement"))
-}}
-{{else}}
+{{#unless hasBlock}}
 <label>{{price.name}}</label>
+{{/unless}}
 <div class="input-group">
-  <span onclick={{action "decrement"}} class="input-group-button">
+  <div onclick={{action "decrement"}} class="input-group-button">
     <span class="fa fa-minus-square"></span>
-  </span>
+  </div>
 
   {{input value=quantity type="number" class="input-group-field"}}
 
-  <span onclick={{action "increment"}} class="input-group-button">
+  <div onclick={{action "increment"}} class="input-group-button">
     <span class="fa fa-plus-square"></span>
-  </span>
+  </div>
+  {{yield cost}}
 </div>
-{{/if}}

@@ -5,6 +5,6 @@
     <li class="menu-text"><%= link "Activities", to: explore_path(Grid.Endpoint, :index, ["activities"]) %></li>
     <li class="menu-text"><a href="http://www.outpostjh.com/outpostchronicles">Journal</a></li>
     <li class="menu-text"><a href="http://www.outpostjh.com/about/">About Us</a></li>
-    <li class="menu-text"><a href="#" class="flaticon-cart fi">&nbsp;</a></li>
+    <li class="menu-text"><a href="<%= explore_path(Grid.Endpoint, :index, ["cart"]) %>" class="flaticon-cart fi">&nbsp;</a></li>
   </ul>
 </div>

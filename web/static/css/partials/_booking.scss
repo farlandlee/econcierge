@@ -60,34 +60,6 @@
       height: 38px;
     }
   }
-  .body-count {
-    .input-group {
-      max-width: 100px;
-    }
-    .fa {
-      color: $primary-color;
-      &:hover {
-        color: $secondary-color;
-      }
-      &:before {
-        font-size: 46px;
-        margin-top: -3px;
-        display: inline-block;
-        font-weight: 100;
-        cursor: pointer;
-      }
-    }
-    .input-group-field {
-      padding-left: rem-calc(16);
-      width: rem-calc(46);
-      margin: 0 1rem;
-    }
-    input::-webkit-outer-spin-button,
-    input::-webkit-inner-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
-    }
-  }
   .book-total,
   .book-total-label {
     width: 100%;
@@ -115,5 +87,41 @@
     & > .column {
       margin-bottom: 1rem;
     }
+  }
+}
+
+.body-count {
+  .input-group {
+    max-width: 100px;
+  }
+  .fa {
+    color: $primary-color;
+    &:hover {
+      color: $secondary-color;
+    }
+    &:before {
+      font-size: 46px;
+      margin-top: -3px;
+      display: inline-block;
+      font-weight: 100;
+      cursor: pointer;
+    }
+  }
+  .input-group-button {
+    width: auto;
+  }
+  .input-group-field {
+    padding-left: rem-calc(16);
+    width: rem-calc(46);
+    margin: 0 1rem;
+  }
+  input {
+    border-color: $medium-gray;
+    border-radius: 6px;
+  }
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
   }
 }
