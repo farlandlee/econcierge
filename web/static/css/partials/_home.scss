@@ -112,6 +112,16 @@ section {
     .current {
       text-decoration: none;
       font-size: 1.6rem;
+      display:block;
+      padding-right: 30px;
+      &:after {
+        height: rem-calc(72);
+        line-height: rem-calc(70);
+        right: 1.6rem;
+        width: 25px;
+        right: 0;
+        top: 0;
+      }
     }
     @include breakpoint( large ) {
       max-width:370px;
@@ -126,14 +136,11 @@ section {
     height: rem-calc(72);
     width: 100%;
     padding-left: 1.6rem;
-    padding-right: 2.4rem;
-    &:after {
-      height: rem-calc(72);
-      line-height: rem-calc(70);
-      right: 1.6rem;
-    }
-    > ul {
-      top: -100%;
+    padding-right: 1.6rem;
+    @include breakpoint( large ) {
+      > ul {
+        top: -100%;
+      }
     }
     li {
       &:nth-of-type(2) {

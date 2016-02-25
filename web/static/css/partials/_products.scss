@@ -1,12 +1,4 @@
-.product-description {
-  line-height: 1.2;
-  margin-bottom: 2rem;
-  height: 157px;
-  overflow: hidden;
-  p:last-of-type {
-    margin-bottom: 0;
-  }
-}
+
 .product-count {
   p {
     width: 100%;
@@ -32,10 +24,18 @@
   height:100%;
   margin: 0 auto;
   flex: 1;
+  position: relative;
+  padding-bottom: 88px;
   .product-header,
   .product-body,
   .product-footer {
     margin: 0;
+  }
+
+  .fi {
+    &:before {
+      display:block;
+    }
   }
 
   .product-header {
@@ -75,9 +75,22 @@
   }
   .product-name {
     text-transform: uppercase;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    p {
+      margin-bottom: 0;
+    }
+    @include breakpoint (medium) {
+      height: 1.6rem * 2;
+    }
   }
   .product-description {
-    height: 100px;
+    line-height: 1.2;
+    margin-bottom: 2rem;
+    min-height: 80px;
+    p:last-of-type {
+      margin-bottom: 0;
+    }
   }
   .product-description,
   .price-label,
@@ -96,7 +109,13 @@
   }
   .product-footer {
     padding: 2rem 0;
-    flex-grow: 2;
+    display: block;
+    position:absolute;
+    bottom: 0;
+    width: 100%;
+    p {
+      margin: 0;
+    }
   }
   .request-to-book {
     a {

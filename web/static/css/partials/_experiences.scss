@@ -60,17 +60,20 @@
   margin-top: 1rem;
 }
 .experience-title {
-  font-size: 2.4rem;
+  font-size: 2rem;
   font-weight: 500;
   line-height: 1.2;
+  @include breakpoint (large) {
+    font-size: 2.4rem;
+  }
 }
 
 .experience-description {
   line-height: 1.2;
   margin-bottom: 0.5rem;
   width: 100%;
-  @include breakpoint (medium) {
-    height: 1.2rem * 5;
+  @include breakpoint (large) {
+    height: 7rem;
     overflow-y: scroll;
   }
 }
