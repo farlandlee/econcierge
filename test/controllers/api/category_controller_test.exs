@@ -40,7 +40,7 @@ defmodule Grid.Api.CategoryControllerTest do
   end
 
   test "shows chosen resource", %{conn: conn, category: category} do
-    conn = get conn, api_category_path(conn, :show, category.slug)
+    conn = get conn, api_category_path(conn, :show, category.id)
     response = json_response(conn, 200)
     resp_category = response["category"]
 

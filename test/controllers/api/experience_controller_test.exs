@@ -41,8 +41,8 @@ defmodule Grid.Api.ExperienceControllerTest do
     assert json_response(conn, 200)["experiences"] == []
   end
 
-  test "shows chosen resource by slug", %{conn: conn, experience: experience} do
-    conn = get conn, api_experience_path(conn, :show, experience.slug)
+  test "shows chosen resource by id", %{conn: conn, experience: experience} do
+    conn = get conn, api_experience_path(conn, :show, experience.id)
     assert json_response(conn, 200)
   end
 

@@ -36,8 +36,8 @@ defmodule Grid.Api.ActivityControllerTest do
     assert Enum.count(response["activities"]) == 0
   end
 
-  test "shows chosen resource by slug", %{conn: conn, activity: activity} do
-    conn = get conn, api_activity_path(conn, :show, activity.slug)
+  test "shows chosen resource by id", %{conn: conn, activity: activity} do
+    conn = get conn, api_activity_path(conn, :show, activity.id)
     response = json_response(conn, 200)
     resp_activity = response["activity"]
 
@@ -50,7 +50,7 @@ defmodule Grid.Api.ActivityControllerTest do
 
   test "does not show resource and instead throw error when id is nonexistent", %{conn: conn} do
     assert_error_sent 404, fn ->
-      get conn, api_activity_path(conn, :show, "foo")
+      get conn, api_activity_path(conn, :show, -1)
     end
   end
 end

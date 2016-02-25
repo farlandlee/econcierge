@@ -21,9 +21,8 @@ defmodule Grid.Api.ExperienceController do
     render(conn, "index.json", experiences: experiences)
   end
 
-  def show(conn, %{"slug" => slug}) do
-    experience = Experience
-      |> Repo.get_by!(slug: slug)
+  def show(conn, %{"id" => id}) do
+    experience = Repo.get!(Experience, id)
       |> Repo.preload(:image)
 
     render(conn, "show.json", experience: experience)

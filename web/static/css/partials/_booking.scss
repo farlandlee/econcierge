@@ -51,7 +51,7 @@
     height: 40px;
     line-height: 38px;
     position: relative;
-    &:after {
+    &::after {
       @include down-arrow();
       color: $medium-gray;
       right: 0;

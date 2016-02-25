@@ -6,7 +6,9 @@
   </div>
   <div class="row align-left body-count">
   {{#each product.prices as |price|}}
-    {{amount-quantity-input amounts=price.amounts onChange=(action "updateQuantity" price) classNames="columns shrink"}}
+    <div class="columns shrink">
+      {{amount-quantity-input price=price quantities=quantities onChange=(action "updateQuantity" price)}}
+    </div>
   {{/each}}
   </div>
   <div class="row align-spaced date-selection">
@@ -25,6 +27,8 @@
     <div class="book-total-label">Total</div>
   </div>
   <div class="column small-12 medium-5 small-order-3 text-center medium-text-right">
-    <button onclick={{action "submit"}} type="button" class="button primary large">Add to Cart</button>
+    <button onclick={{action "submit"}} type="button" class="{{unless canSubmit "disabled"}} button primary large">
+      Add to Cart
+    </button>
   </div>
 </section>

@@ -12,9 +12,8 @@ defmodule Grid.Api.CategoryController do
     render(conn, "index.json", categories: categories)
   end
 
-  def show(conn, %{"slug" => slug}) do
-    category = Category
-      |> Repo.get_by!(slug: slug)
+  def show(conn, %{"id" => id}) do
+    category = Repo.get!(Category, id)
       |> Repo.preload(:image)
     render(conn, "show.json", category: category)
   end

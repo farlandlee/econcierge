@@ -1,31 +1,58 @@
 import Ember from 'ember';
+import Quantity, {amountForQuantity} from 'client/models/quantity';
 
-export default Ember.Component.extend({
+const {Component, computed} = Ember;
+
+export default Component.extend({
   product: null,
 
   total: 0,
-  // mapping from price to {quantity, cost}
-  costs: null,
+  quantities: null,
   time: null,
+
+  canSubmit: computed('time', 'quantities.@each.quantity', 'product.prices.[]', {
+    get () {
+      let valid = true;
+      let prices = this.get('product.prices');
+      let quantities = this.get('quantities');
+      prices.forEach(price => {
+        let amounts = price.amounts;
+        let {quantity} = quantities.findBy('id', price.id);
+        if (!amountForQuantity(amounts, quantity)) {
+          valid = false;
+        }
+      });
+      if (valid) {
+        valid = !!this.get('time');
+      }
+      return valid;
+    }
+  }),
 
   init () {
     this._super(...arguments);
-    this.set('costs', {});
+    let quantities = this.get('product.prices').map(p => {
+      return Quantity.create({
+        id: p.id,
+        quantity: 0,
+        cost: 0
+      });
+    });
+    this.set('quantities', quantities);
   },
 
   actions: {
     updateQuantity (price, amount, quantity) {
-      let costs = this.get('costs');
       let cost = amount.amount * quantity;
-      costs[price.id] = {quantity, cost};
+      let quantities = this.get('quantities');
+      let priceQuantity = quantities.findBy('id', price.id);
+      priceQuantity.setProperties({cost, quantity});
 
-      let total = 0;
-      for (const id in costs) {
-        total += costs[id].cost;
-      }
+      let total = quantities.mapBy('cost')
+        .reduce((total, cost) => total + cost, 0);
 
       this.set('total', total);
-      this.set('costs', costs);
+      this.set('quantities', quantities);
     },
 
     updateTime (time) {
@@ -33,9 +60,11 @@ export default Ember.Component.extend({
     },
 
     submit () {
-      let costs = this.get('costs');
-      let time = this.get('time');
-      this.attrs.submit(costs, time);
+      if (this.get('canSubmit')) {
+        let quantities = this.get('quantities');
+        let time = this.get('time');
+        this.attrs.submit(quantities, time);
+      }
     }
   }
 });

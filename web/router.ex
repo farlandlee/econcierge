@@ -74,16 +74,16 @@ defmodule Grid.Router do
     pipe_through :api
 
     get "/activities", ActivityController, :index
-    get "/activities/:slug", ActivityController, :show
+    get "/activities/:id", ActivityController, :show
 
     get "/categories", CategoryController, :index
-    get "/categories/:slug", CategoryController, :show
+    get "/categories/:id", CategoryController, :show
 
     get "/date/:activity_slug/:category_slug",
       DateController, :first_experience_date
 
     get "/experiences", ExperienceController, :index
-    get "/experiences/:slug", ExperienceController, :show
+    get "/experiences/:id", ExperienceController, :show
 
     get "/products", ProductController, :index
     get "/products/:id", ProductController, :show

@@ -1,18 +1,62 @@
-<div class="top-row row expanded">
-  Yay!
+<div class="top-row row expanded align-middle align-center">
+  <div class="columns medium-8 ">
+    <h1 class="page-title">Your Cart</h1>
+    <p class="page-subtitle">Please review the items below and make any necessary changes.</p>
+  </div>
 </div>
-{{#item-sorter items=bookings by=['date:asc'] as |booking|}}
-<section>
-  <h3>{{booking.product.name}}</h3>
-  <dl>
-    <dt>id</dt><dd>{{booking.id}}</dd>
-    <dt>When</dt><dd>{{booking.date}} @ {{booking.startTime.time}}</dd>
-    <dt>Quantities</dt>
-    <dd><ul>
-    {{#each booking.quantities as |quantity|}}
-      <li>{{quantity.id}}:{{quantity.quantity}}</li>
-    {{/each}}
-    </ul></dd>
-  </dl>
-</section>
-{{/item-sorter}}
+<main class="row checkout align-center">
+  <div class="columns medium-10">
+    {{#cart-summary bookings=bookings classNames="checkout-data row align-justify" as |itemCount total|}}
+    <p class="checkout-item-count">
+      Displaying <span class="count">{{itemCount}}</span> Item{{if (not-eq itemCount 1) "s"}}
+    </p>
+    <p class="checkout-total">
+      <span class="total-text">total</span>
+      <span class="total-amount">{{format-number total format='$0,0[.]00'}}</span>
+    </p>
+    {{/cart-summary}}
+  </div>
+
+  {{#item-sorter items=bookings by=['date:asc'] as |booking|}}
+  <section class="booking columns medium-10">
+    <div class="row">
+      <div class="columns shrink booking-image">
+        <img src="{{placehold-it booking.experience.image.medium '300x250'}}" alt="">
+      </div>
+      <div class="columns">
+        <h2>{{booking.product.name}}</h2>
+        <div class="row">
+          <dl class="columns dl-horizontal">
+            <dt>Date</dt><dd>{{moment-format booking.date 'MMMM d, YYYY'}}</dd>
+            <dt>Time</dt><dd>{{moment-format booking.startTime.time 'h:mm a' 'hh:mm:ss'}}</dd>
+            <dt>Activity</dt><dd>{{booking.activity.name}}</dd>
+            <dt>Category</dt><dd>{{booking.category.name}}</dd>
+            <dt>Vendor</dt><dd>{{booking.product.vendor.name}}</dd>
+          </dl>
+          <div class="columns quantities">
+            {{#item-sorter items=booking.product.prices as |price|}}
+              {{#amount-quantity-input price=price quantities=booking.quantities onChange=(route-action "updateBooking" booking price) as |quantity cost controls|}}
+              <div class="quantity row align-justify">
+                {{input value=quantity type="number" class="input-group-field"}}
+                <span class="price-label">x {{price.name}}...</span>
+                <span class="total">
+                  {{format-number cost format='$0,0[.]00'}}
+                </span>
+              </div>
+              {{/amount-quantity-input}}
+            {{/item-sorter}}
+            <div class="booking-total row align-justify">
+              <p class="">Total &hellip;</p>
+              <span class=" total">{{format-number booking.total format='$0,0[.]00'}}</span>
+            </div>
+          </div>
+
+          <div class="columns remove-booking-button align-center align-middle text-right">
+            <button onclick={{route-action "removeBooking" booking}} class="button large alert hollow">Remove</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  {{/item-sorter}}
+</main>
