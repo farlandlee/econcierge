@@ -45,34 +45,39 @@ $arrow_color: $white;
   line-height: 30px;
   @include breakpoint ( medium ) {
     line-height: $input_height - 2;
+    position: relative;
   }
   outline: none;
   padding-left: $dropdown_padding;
-  padding-right: 55px;
-  position: relative;
+
   text-align: left !important;
   transition: all 0.2s ease-in-out;
   user-select: none;
-  white-space: nowrap;
+  //white-space: nowrap;
   width: auto;
   .current {
+    position:relative;
     font-size: 1rem;
+    padding-right: 45px;
     @include breakpoint ( medium ) {
   		font-size: 1.6rem;
   	}
+    // Arrow
+    &:after {
+      @include down-arrow();
+    }
   }
   &:active, &:focus {
     border-color: $primary_light;
   }
-  // Arrow
-  &:after {
-    @include down-arrow();
-  }
+
 
   &.open {
     @extend :active;
-    &:after {
-      transform: rotate(-180deg);
+    .current {
+      &:after {
+        transform: rotate(-180deg);
+      }
     }
     > ul {
       pointer-events: auto;
@@ -103,7 +108,10 @@ $arrow_color: $white;
     color: $white;
     pointer-events: none;
     position: absolute;
-    top: 40%;
+    top: 2%;
+    @include breakpoint(medium) {
+      top: 40%;
+    }
     left: 0;
     transform-origin: 50% 0;
     transform: scale(.75) translateY(- $input_height / 2);
