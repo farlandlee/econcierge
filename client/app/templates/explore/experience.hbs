@@ -19,13 +19,6 @@
     <div class="row columns">
       <p class="experience-description">{{experience.description}}</p>
     </div>
-    {{!--<div class="row">
-      <div class="columns">
-        <p class="experience-difficulty-label">Difficulty Level</p>
-        <p class="experience-difficulty">{{experience.difficulty}}</p>
-      </div>
-    </div>
-    --}}
 
     {{#if (gt experiences.length 1)}}
         <div class="row columns">
@@ -45,26 +38,4 @@
 
   </div>
 </div>
-{{!--<div class="row experience-filter align-justify">
-  <div class="column small-12 large-2">
-    <p class="filter-search"><a href="#">Filter Search</a></p>
-  </div>
-  <div class="column small-12 medium-2 large-2">
-    <form>
-      <div class="row small-collapse">
-        <div class="input-group">
-          <label> Sort By: </label>
-          <div class="full-overlay-select">
-            <span class="current">Vendor</span>
-            <ul>
-              <li><a href="#">Vendor</a></li>
-              <li><a href="#">Price</a></li>
-            </ul>
-            <div class="full-overlay-black-overlay"></div>
-          </div>
-        </div>
-      </div>
-    </form>
-  </div>
-</div>--}}
 {{outlet}}

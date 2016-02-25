@@ -5,6 +5,7 @@ const {Component, computed} = Ember;
 
 export default Component.extend({
   product: null,
+  date: null,
 
   total: 0,
   quantities: null,
@@ -61,9 +62,8 @@ export default Component.extend({
 
     submit () {
       if (this.get('canSubmit')) {
-        let quantities = this.get('quantities');
-        let time = this.get('time');
-        this.attrs.submit(quantities, time);
+        let properties = this.getProperties('quantities', 'time', 'date');
+        return this.attrs.submit(properties);
       }
     }
   }
