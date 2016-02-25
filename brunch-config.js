@@ -41,7 +41,7 @@ exports.config = {
     assets: /^(web\/static\/assets)/,
     ignored: [
       /[\\/]_/, //any file starting with `_`, like sass partials
-      'bower_components/foundation-sites/scss/foundation.scss',
+      'bower_components/foundation-sites/scss/**',
       /^(bower_components\/what-input\/)/
     ]
   },
@@ -81,6 +81,12 @@ exports.config = {
           'bower_components/spinners/stylesheets'
         ]
       }
+    },
+    postcss: {
+      processors: [
+        require('autoprefixer')({browsers: ['last 2 versions'], flex: true}),
+        require('csswring')
+      ]
     }
   },
   modules: {
@@ -88,12 +94,6 @@ exports.config = {
       "js/app.js": ["web/static/js/app"],
       "js/admin.js": ["web/static/admin/js/admin"]
     }
-  },
-  postcss: {
-    processors: [
-        require('autoprefixer')(['last 3 versions']),
-        require('csswring')
-    ]
   },
   npm: {
     enabled: true
