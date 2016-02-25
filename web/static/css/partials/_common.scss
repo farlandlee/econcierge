@@ -361,4 +361,7 @@ a.more-info {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+	&.vendor-name {
+		width: 185px;
+	}
 }

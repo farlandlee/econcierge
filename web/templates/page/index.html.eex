@@ -5,7 +5,7 @@
       <div class="small-12 columns search-bar" >
         <div class="row small-collapse align-center expanded">
           <div class="small-12 columns">
-            <div class="search-label">Book your Jackson Hole Adventure</div>
+            <div class="search-label">Book your Adventure<br>in Jackson Hole</div>
           </div>
           <div class="small-12 medium-10 large-8 columns form-group">
             <label for="activity[id]">Explore</label>

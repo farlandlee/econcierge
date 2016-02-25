@@ -52,13 +52,12 @@ $arrow_color: $white;
 
   text-align: left !important;
   transition: all 0.2s ease-in-out;
-  user-select: none;
-  //white-space: nowrap;
   width: auto;
   .current {
     position:relative;
     font-size: 1rem;
     padding-right: 45px;
+    text-decoration: underline;
     @include breakpoint ( medium ) {
   		font-size: 1.6rem;
   	}
