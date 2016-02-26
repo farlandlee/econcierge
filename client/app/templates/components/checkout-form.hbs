@@ -1,20 +1,51 @@
+<h2 class="page-title">Complete Your Reservation Request(s)</h2>
+<p class="page-subtitle">
+  Your payment information is needed in order to hold each reservation.
+  Your card will only be charged if and when the vendor confirms your booking
+  (within the next 24 hours).
+</p>
+<hr>
 <div class="row align-center">
+  <fieldset class="fieldset columns small-10">
+    <legend>Credit Card</legend>
+    <div class="row">
+      <div class="columns small-7">
+        {{input value=ccName name="ccname" placeholder="Name on Card *"}}
+      </div>
+    </div>
+    <div class="row">
+      <div class="columns small-7">
+        {{input value=ccNumber name="ccnumber" placeholder="Credit Card Number *"}}
+      </div>
+    </div>
+    <div class="row">
+      <div class="columns">
+        {{input value=ccMonth name="ccmonth" placeholder="Exp. Month (mm) *"}}
+      </div>
+      <div class="columns">
+        {{input value=ccYear name="ccyear" placeholder="Exp. Year (mm) *"}}
+      </div>
+      <div class="columns">
+        {{input value=ccCode name="cccode" placeholder="Security Code *"}}
+      </div>
+    </div>
+  </fieldset>
   <fieldset class="fieldset columns small-10">
     <legend>Contact Information</legend>
     <div class="row">
       <div class="columns">
-        {{input value=(mut name) name="name" placeholder="Name *"}}
+        {{input value=name name="name" placeholder="Name *"}}
       </div>
       <div class="columns">
-        {{input value=(mut email) name="email" placeholder="Email *" type="email"}}
+        {{input value=email name="email" placeholder="Email *" type="email"}}
       </div>
       <div class="columns">
-        {{input value=(mut phone) name="phone" placeholder="Phone *"}}
+        {{input value=phone name="phone" placeholder="Phone *"}}
       </div>
     </div>
-    {{#if showError}}
+    {{#if errorMessage}}
     <div class="row">
-      <p class="checkout-error column small-10">Please fill out all fields.</p>
+      <p class="checkout-error column small-10">{{errorMessage}}</p>
     </div>
     {{/if}}
   </fieldset>

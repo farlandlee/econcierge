@@ -8,7 +8,15 @@ moduleForComponent('checkout-form', 'Integration | Component | checkout form', {
 test('it renders', function(assert) {
   this.render(hbs`{{checkout-form}}`);
 
-  assert.equal(this.$('legend').text().trim(), 'Contact Information');
+  assert.equal(this.$('legend').first().text().trim(), 'Credit Card');
+
+  assert.ok(this.$('input[name="ccname"]').length);
+  assert.ok(this.$('input[name="ccnumber"]').length);
+  assert.ok(this.$('input[name="ccmonth"]').length);
+  assert.ok(this.$('input[name="ccyear"]').length);
+  assert.ok(this.$('input[name="cccode"]').length);
+
+  assert.equal(this.$('legend').last().text().trim(), 'Contact Information');
   // renders inputs
   assert.ok(this.$('input[name="name"]').length);
   assert.ok(this.$('input[name="email"]').length);
