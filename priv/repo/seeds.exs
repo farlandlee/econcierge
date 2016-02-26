@@ -9,6 +9,7 @@ alias Grid.Experience
 alias Grid.ExperienceCategory
 alias Grid.Image
 alias Grid.Location
+alias Grid.Order
 alias Grid.Price
 alias Grid.Product
 alias Grid.Season
@@ -17,7 +18,7 @@ alias Grid.User
 alias Grid.Vendor
 alias Grid.VendorActivity
 
-Repo.insert %User{
+user = Repo.insert! %User{
   name: "Development User",
   email: "dev@outpostjh.com"
 }
@@ -100,7 +101,7 @@ for {name, desc, act_name} <- vendor_tuples, activity = Repo.get_by!(Activity, n
 
     price = Price.creation_changeset(%{
       name: "Adult",
-      description: "Over 18",
+      description: "Over 13",
       people_count: 1
     }, product.id)
     |> Repo.insert!
@@ -114,10 +115,56 @@ for {name, desc, act_name} <- vendor_tuples, activity = Repo.get_by!(Activity, n
     }, price.id)
     |> Repo.insert!
 
-    StartTime.creation_changeset(%{
+    child = Price.creation_changeset(%{
+      name: "Child",
+      description: "13 and under",
+      people_count: 1
+    }, product.id)
+    |> Repo.insert!
+
+    Amount.creation_changeset(%{
+      amount: 100.0,
+      max_quantity: 0,
+      min_quantity: 0
+    }, child.id)
+    |> Repo.insert!
+
+    st = StartTime.creation_changeset(%{
       starts_at_time: %Ecto.Time{hour: 8, min: 0, sec: 0}
     }, product_id: product.id, season_id: season.id)
     |> Repo.insert!
+
+    # orders
+    order_changeset = Order.creation_changeset(%{
+      total_amount: 640,
+      order_items: [
+        %{
+          activity_at: Ecto.DateTime.from_date_and_time(season.end_date, st.starts_at_time),
+          product_id: product.id,
+          amount: 640,
+          quantities: %{
+            items: [
+              %{
+                  price_id: price.id,
+                  sub_total: 540,
+                  quantity: 3,
+                  price_name: price.name,
+                  price_people_count: price.people_count
+                },
+              %{
+                  price_id: child.id,
+                  sub_total: 100,
+                  quantity: 1,
+                  price_name: child.name,
+                  price_people_count: child.people_count
+                }
+            ]
+          }
+        }
+      ]
+    }, user.id)
+
+    Repo.insert! order_changeset
   end
 
   Repo.insert! Location.creation_changeset(%{

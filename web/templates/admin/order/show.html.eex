@@ -1,0 +1,47 @@
+<dl class="dl-horizontal">
+  <dt>Reference</dt>
+  <dd><%= @order.customer_token %></dd>
+
+  <dt>Placed On</dt>
+  <dd><%= @order.inserted_at %></dd>
+
+  <dt>User</dt>
+  <dd>
+    <%= @order.user.name %>
+    <br/>
+    <%= @order.user.email %>
+  </dd>
+
+  <dt>Total amount</dt>
+  <dd>$<%= @order.total_amount %></dd>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Product</th>
+        <th>When</th>
+        <th>Quantities</th>
+        <th>Cost</th>
+        <th>Status</th>
+        <th>Vendor Reply At</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= for order_item <- @order.order_items do %>
+        <tr>
+          <td><%= order_item.product.name %></td>
+          <td><%= order_item.activity_at %></td>
+          <td>
+            <%= for quantity <- order_item.quantities["items"] do %>
+              <p><%= quantity_display(quantity) %></p>
+            <% end %>
+          </td>
+          <td>$<%= order_item.amount %></td>
+          <td><%= order_item.status %></td>
+          <td><%= order_item.vendor_reply_at %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</dl>

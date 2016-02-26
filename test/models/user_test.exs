@@ -3,7 +3,7 @@ defmodule Grid.UserTest do
 
   alias Grid.User
 
-  @valid_attrs %{email: "some content", image: "some content", name: "some content"}
+  @valid_attrs %{email: "test@outpostjh.com", image: "some content", name: "some content"}
   @invalid_attrs %{}
 
   test "changeset with valid attributes" do

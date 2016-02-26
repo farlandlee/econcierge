@@ -9,6 +9,10 @@ defmodule Grid.ErrorView do
     render("not_found.html", assigns)
   end
 
+  def render("422.json", %{changeset: changeset}) do
+    %{errors: Grid.ChangesetView.translate_errors(changeset)}
+  end
+
   def render("500.json", _assigns) do
     %{errors: [%{status: 500, message: "Server error"}]}
   end

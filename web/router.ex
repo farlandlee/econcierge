@@ -90,6 +90,8 @@ defmodule Grid.Router do
 
     get "/vendors", VendorController, :index
     get "/vendors/:id", VendorController, :show
+
+    post "/orders", OrderController, :process_cart
   end
 
   scope "/admin", Grid.Admin, as: :admin do
@@ -98,6 +100,8 @@ defmodule Grid.Router do
     get "/", DashboardController, :index
 
     get "/users", UserController, :index
+
+    resources "/orders", OrderController, [only: [:index, :show]]
 
     resources "/activities", ActivityController, [alias: Activity] do
       pipe_through :assign_activity

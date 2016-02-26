@@ -2,7 +2,7 @@ defmodule Grid.Api.PriceView do
   use Grid.Web, :view
 
   alias Grid.Api.AmountView
-  
+
   def render("price.json", %{price: price}) do
     %{
       id: price.id,
