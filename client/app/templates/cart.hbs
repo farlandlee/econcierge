@@ -1,15 +1,15 @@
 <div class="top-row row align-middle align-center">
-  <div class="columns medium-7 medium-offset-2">
+  <div class="columns small-12 medium-7 medium-offset-2">
     <h1 class="page-title">Your Cart</h1>
     <p class="page-subtitle">Please review the items below and make any necessary changes.</p>
   </div>
-  <div class="column medium-expand text-right">
+  <div class="column small-12 medium-3 text-center medium-text-right">
     {{link-to "Proceed to Checkout" 'cart.checkout' class="button large"}}
   </div>
 </div>
-<main class="row cart align-center">
-  <div class="columns medium-10">
-    {{#cart-summary bookings=bookings classNames="cart-data row align-justify" as |itemCount total|}}
+<main class="row cart align-center expanded">
+  <div class="columns small-12 large-11">
+    {{#cart-summary bookings=bookings classNames="checkout-data row align-justify" as |itemCount total|}}
     <p class="cart-item-count">
       Displaying <span class="count">{{itemCount}}</span> Item{{if (not-eq itemCount 1) "s"}}
     </p>
@@ -21,41 +21,40 @@
   </div>
 
   {{#item-sorter items=bookings by=['date:asc'] as |booking|}}
-  <section class="booking columns medium-10">
-    <div class="row">
-      <div class="columns shrink booking-image">
+  <section class="booking columns small-12 large-11">
+    <div class="row expanded">
+      <div class="columns booking-image small-12 text-center xlarge-text-left xlarge-3">
         <img src="{{placehold-it booking.experience.image.medium '300x250'}}" alt="">
       </div>
-      <div class="columns">
+      <div class="columns small-12 xlarge-9 booking-data">
         <h2>{{booking.product.name}}</h2>
         <div class="row">
-          <dl class="columns dl-horizontal">
+          <dl class="columns dl-horizontal small-12 medium-6 large-4">
             <dt>Date</dt><dd>{{moment-format booking.date 'MMMM d, YYYY'}}</dd>
             <dt>Time</dt><dd>{{moment-format booking.startTime.time 'h:mm a' 'hh:mm:ss'}}</dd>
             <dt>Activity</dt><dd>{{booking.activity.name}}</dd>
             <dt>Category</dt><dd>{{booking.category.name}}</dd>
             <dt>Vendor</dt><dd>{{booking.product.vendor.name}}</dd>
           </dl>
-          <div class="columns quantities">
-            {{#item-sorter items=booking.product.prices as |price|}}
-              {{#amount-quantity-input price=price quantities=booking.quantities onChange=(route-action "updateBooking" booking price) as |quantity cost controls|}}
-              <div class="quantity row align-justify">
-                {{input value=quantity type="number" class="input-group-field"}}
-                <span class="price-label">x {{price.name}}...</span>
-                <span class="total">
-                  {{format-number cost format='$0,0[.]00'}}
-                </span>
-              </div>
-              {{/amount-quantity-input}}
-            {{/item-sorter}}
+          <div class="columns quantities body-count small-12 medium-6 large-5">
+            <div class="data-wrapper">
+              {{#item-sorter items=booking.product.prices as |price|}}
+                {{#amount-quantity-input price=price quantities=booking.quantities onChange=(route-action "updateBooking" booking price) as |cost|}}
+                  <div class="price-label">x {{price.name}}...</div>
+                  <div class="total">
+                    {{format-number cost format='$0,0[.]00'}}
+                  </div>
+                {{/amount-quantity-input}}
+              {{/item-sorter}}
+            </div>
             <div class="booking-total row align-justify">
               <p class="">Total &hellip;</p>
-              <span class=" total">{{format-number booking.total format='$0,0[.]00'}}</span>
+              <span class="total">{{format-number booking.total format='$0,0[.]00'}}</span>
             </div>
           </div>
 
-          <div class="columns remove-booking-button align-center align-middle text-right">
-            <button onclick={{route-action "removeBooking" booking}} class="button large alert hollow">Remove</button>
+          <div class="columns remove-booking-button align-center align-middle text-center large-text-right small-12 large-3">
+            <button onclick={{route-action "removeBooking" booking}} class="button large alert hollow extra-wide">Remove</button>
           </div>
         </div>
       </div>
@@ -63,4 +62,9 @@
   </section>
   {{/item-sorter}}
 </main>
+<div class="row cart-below">
+  <div class="column small-12 medium-3 medium-offset-9 text-center medium-text-right">
+    {{link-to "Proceed to Checkout" 'cart.checkout' class="button large"}}
+  </div>
+</div>
 {{outlet}}

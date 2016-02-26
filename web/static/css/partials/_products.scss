@@ -4,7 +4,7 @@ $bookings-blue: #77BAF0;
     width: 100%;
     span {
       color: $primary-color;
-      font-weight: bold;
+      font-weight: $global-weight-bold;
     }
   }
 }

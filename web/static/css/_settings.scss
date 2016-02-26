@@ -48,7 +48,7 @@ $global-width: rem-calc(1320);
 $global-font-size: 100%;
 $global-lineheight: 1.5;
 $primary-color: #7DBD9A; //green
-$secondary-color: #e16e41; //orange
+$secondary-color: darken(#7DBD9A,20%); //orange
 $success-color: #3adb76;
 $warning-color: #ffae00;
 $alert-color: #ec5840;
@@ -517,7 +517,7 @@ $thumbnail-radius: $global-radius;
 $titlebar-background: $white;
 $titlebar-color: $black;
 $titlebar-padding: 0.5rem;
-$titlebar-text-font-weight: bold;
+$titlebar-text-font-weight: $global-weight-bold;
 $titlebar-icon-color: $black;
 $titlebar-icon-color-hover: $dark-gray;
 $titlebar-icon-spacing: 0.25rem;

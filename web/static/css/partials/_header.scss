@@ -24,7 +24,7 @@
       &:not(.logo) {
         > a {
           font-family: "proxima-nova", sans-serif;
-          font-weight: bold;
+          font-weight: $global-weight-bold;
           height: 60px;
           line-height: 60px;
           padding-top: 0;

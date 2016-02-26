@@ -1,0 +1,149 @@
+.cart {
+  background-color: lighten($light-gray,5%);
+  padding: 3em 0 6rem;
+
+  .total-text {
+    font-size: 1.2rem;
+  }
+  h2 {
+    font-size: 1.6rem;
+    margin-top: 1rem;
+    color: $dark-gray;
+    margin-bottom: 1rem;
+    font-weight: 500;
+    @include breakpoint( large ) {
+      font-size: 2rem;
+      margin-top: 0;
+      margin-bottom: 0.5rem;
+    }
+  }
+  &.expanded {
+    .booking-data {
+      > .row {
+        margin-left: -0.9375rem;
+        margin-right: -0.9375rem;
+      }
+    }
+  }
+}
+.cart-data {
+  align-items: baseline;
+
+  .cart-item-count {
+    font-weight: 500;
+    font-size: 1.2rem;
+    .count {
+      color: $primary-color;
+    }
+  }
+  .cart-total {
+    .total-amount {
+      font-size: 2rem;
+      margin-left: 1rem;
+    }
+  }
+}
+.booking {
+  border-bottom: 2px solid $light-gray;
+  background-color: $white;
+  padding: .9375rem;
+  font-size: 1.1rem;
+  > .row {
+    padding-top: 0.9375rem;
+    padding-bottom: 0.9375rem;
+  }
+  &:last-child {
+    border-bottom: none;
+  }
+
+  .dl-horizontal {
+    dd, dt {
+      margin-bottom: 0;
+      color: $dark-gray;
+    }
+
+    dt {
+      font-weight: $global-weight-bold;
+      width: 100px;
+      float: left;
+      clear: left;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+  .data-wrapper {
+    min-height: 110px;
+  }
+  .quantities {
+    .quantity {
+      align-items: baseline;
+    }
+    .input-group {
+      align-items: center;
+      max-width: none;
+      display:flex;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+    }
+    .input-group-button {
+      flex-shrink: 0;
+      flex-grow: 0;
+    }
+    .input-group-field {
+      margin: -6px 0.2rem 0;
+      display: block;
+      flex-shrink: 0;
+      flex-grow: 0;
+    }
+    .price-label {
+      padding: 0 0.5rem;
+    }
+    .total {
+      flex-grow: 2;
+      text-align: right;
+    }
+    .booking-total {
+      align-self: flex-end;
+      margin-top: 2rem;
+      border-top: 1px solid $medium-gray;
+      padding-top: .5rem;
+    }
+  }
+  .remove-booking-button {
+    button {
+      margin: 0;
+    }
+  }
+}
+.cart {
+  background-color: $offwhite;
+  .page-title {
+    font-size: 2em;
+    margin-top: 1rem;
+  }
+  fieldset.fieldset {
+    border: 0;
+    legend {
+      background-color: $offwhite;
+    }
+  }
+  .cart-error {
+    color: $alert-color;
+    font-size: .7em;
+    font-style:italic;
+  }
+  .cart-footer {
+    .tou-disclaimer {
+      font-size: .7em;
+      color: $medium-gray;
+      a.tou {
+        color: $primary-color;
+      }
+    }
+  }
+}
+.cart-below {
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+}
