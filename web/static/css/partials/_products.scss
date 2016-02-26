@@ -1,4 +1,4 @@
-
+$bookings-blue: #77BAF0;
 .product-count {
   p {
     width: 100%;
@@ -107,6 +107,16 @@
     letter-spacing: 1px;
     text-align: right;
   }
+  .more-prices {
+    text-align: center;
+    margin-top: -8px;
+    margin-bottom: 17px;
+    a {
+      color: $bookings-blue;
+      font-size: .9em;
+      text-decoration: underline;
+    }
+  }
   .product-footer {
     padding: 2rem 0;
     display: block;
@@ -119,7 +129,7 @@
   }
   .request-to-book {
     a {
-      color: #77BAF0;
+      color: $bookings-blue;
       display: inline-block;
       text-align: left;
       padding: 0.5rem 0.5rem 0.5rem 1rem;
@@ -130,7 +140,7 @@
       &:after {
         content: "\f054";
         color: $white;
-        background-color: #77BAF0;
+        background-color: $bookings-blue;
         border-radius: 30px;
         font: normal normal normal 1rem/0 FontAwesome;
         text-rendering: auto;
