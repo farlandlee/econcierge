@@ -22,7 +22,7 @@ export default Ember.Route.extend(NotFoundMixin, {
     });
   },
 
-  redirect ({categories, activity}) {
+  afterModel ({categories, activity}) {
     // if there's only one category for the activity,
     // immediately transition to experienes
     if (categories.get('length') === 1) {

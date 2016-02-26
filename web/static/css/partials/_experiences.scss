@@ -26,10 +26,15 @@
         width: 100%;
         &.open {
           width: 100%;
+          .flatpickr-calendar {
+            /* override vendor code and align to the right */
+            left: auto;
+            right: -20px; // move extra far to account for icon
+          }
         }
         input {
           padding: 0 0 0 10px;
-          width: 100%;
+          min-width: 200px;
           border: 0;
           text-decoration: underline;
           text-align:right;
