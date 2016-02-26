@@ -1,7 +1,8 @@
 import Ember from 'ember';
 import NotFoundMixin from 'client/mixins/not-found';
+import ResetScrollMixin from 'client/mixins/reset-scroll';
 
-export default Ember.Route.extend(NotFoundMixin, {
+export default Ember.Route.extend(NotFoundMixin, ResetScrollMixin, {
   model (params) {
     let {booking_id} = params;
     return Ember.RSVP.hash({

@@ -1,6 +1,7 @@
 import Ember from 'ember';
+import ResetScrollMixin from 'client/mixins/reset-scroll';
 
-export default Ember.Route.extend({
+export default Ember.Route.extend(ResetScrollMixin, {
   model () {
     return this.store.peekAll('activity');
   },

@@ -1,7 +1,8 @@
 import Ember from 'ember';
 import NotFoundMixin from 'client/mixins/not-found';
+import ResetScrollMixin from 'client/mixins/reset-scroll';
 
-export default Ember.Route.extend(NotFoundMixin, {
+export default Ember.Route.extend(NotFoundMixin, ResetScrollMixin, {
   model (params) {
     let {experiences} = this.modelFor('explore');
     let experience = experiences.findBy('slug', params.experience_slug);
@@ -24,6 +25,5 @@ export default Ember.Route.extend(NotFoundMixin, {
       experiences: experiences,
       activeCategoryName: category.get('name')
     });
-
   }
 });
