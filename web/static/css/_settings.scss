@@ -428,8 +428,8 @@ $progress-radius: $global-radius;
 
 $reveal-background: $white;
 $reveal-width: 720px;
-$reveal-max-width: $global-width;
-$reveal-offset: rem-calc(160);
+$reveal-max-width: 100%;
+$reveal-offset: 0; //rem-calc(160);
 $reveal-padding: rem-calc(35) 0 rem-calc(20);
 $reveal-border: 1px solid $medium-gray;
 $reveal-radius: 10px;

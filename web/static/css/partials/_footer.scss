@@ -17,6 +17,9 @@
     }
   }
   .logo {
+    img {
+      width: 225px;
+    }
     @include breakpoint(medium) {
       text-align: left;
     }

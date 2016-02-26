@@ -3,11 +3,9 @@
   {{!-- don't render the currently selected category twice --}}
   {{#unless (eq currentExperience.id otherExperience.id)}}
     <div class="column small-2 experience-image">
-      {{#foundation-tooltip tooltipText=otherExperience.name}}
-        {{#link-to 'explore.experience' otherExperience}}
-          <img src="{{placehold-it otherExperience.image.medium '100x100'}}">
-        {{/link-to}}
-      {{/foundation-tooltip}}
+      {{#link-to 'explore.experience' otherExperience title=otherExperience.name}}
+        <img src="{{placehold-it otherExperience.image.medium '100x100'}}">
+      {{/link-to}}
     </div>
   {{/unless}}
   {{/each}}
