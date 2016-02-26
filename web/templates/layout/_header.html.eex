@@ -16,7 +16,7 @@
       </div>
       <div class="top-bar-right">
         <ul class="menu">
-          <li><a href="#" class="flaticon-cart fi shopping-cart">&nbsp;</a></li>
+          <li><a href="<%= explore_path(Grid.Endpoint, :index, ["cart"]) %>" class="flaticon-cart fi shopping-cart">&nbsp;</a></li>
         </ul>
       </div>
     </div>
