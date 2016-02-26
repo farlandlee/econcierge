@@ -26,6 +26,11 @@
     <p>{{truncate product.description limit=180}}</p>
   </div>
   {{price-display price=product.defaultPrice}}
+  {{#if (gt product.prices.length 1)}}
+  <div class="columns small-12 more-prices">
+    {{link-to "Complete Price List" "explore.experience.products.book" product}}
+  </div>
+  {{/if}}
 </div>
 <div class="row product-footer text-center">
   <div class="column">
