@@ -15,7 +15,6 @@ exports.config = {
       joinTo: {
         "css/app.css": [
           /^(web\/static\/css)/,
-          /^(bower_components\/chosen)/,
           /^(bower_components\/font\-awesome)/
         ],
         "css/admin.css": [
@@ -75,6 +74,7 @@ exports.config = {
       ].join(' && ')
     ],
     sass: {
+      mode: 'native',
       options: {
         includePaths: [
           'bower_components/foundation-sites/scss',
