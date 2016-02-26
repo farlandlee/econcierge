@@ -1,18 +1,18 @@
-.checkout {
+.cart {
   background-color: $light-gray;
   padding: 6em 0;
 }
-.checkout-data {
+.cart-data {
   align-items: baseline;
 
-  .checkout-item-count {
+  .cart-item-count {
     font-size: .8em;
     font-weight: 500;
     .count {
       color: $primary-color;
     }
   }
-  .checkout-total {
+  .cart-total {
     .total-amount {
       font-size: 2em;
       margin-left: 1rem;
@@ -70,6 +70,33 @@
       margin-top: 1rem;
       border-top: 1px dotted $light-gray;
       padding-top: .5rem;
+    }
+  }
+}
+.checkout {
+  background-color: $offwhite;
+  .page-title {
+    font-size: 2em;
+    margin-top: 1rem;
+  }
+  fieldset.fieldset {
+    border: 0;
+    legend {
+      background-color: $offwhite;
+    }
+  }
+  .checkout-error {
+    color: $alert-color;
+    font-size: .7em;
+    font-style:italic;
+  }
+  .checkout-footer {
+    .tou-disclaimer {
+      font-size: .7em;
+      color: $medium-gray;
+      a.tou {
+        color: $primary-color;
+      }
     }
   }
 }

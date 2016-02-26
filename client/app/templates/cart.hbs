@@ -1,16 +1,19 @@
-<div class="top-row row expanded align-middle align-center">
-  <div class="columns medium-8 ">
+<div class="top-row row align-middle align-center">
+  <div class="columns medium-7 medium-offset-2">
     <h1 class="page-title">Your Cart</h1>
     <p class="page-subtitle">Please review the items below and make any necessary changes.</p>
   </div>
+  <div class="column medium-expand text-right">
+    {{link-to "Proceed to Checkout" 'cart.checkout' class="button large"}}
+  </div>
 </div>
-<main class="row checkout align-center">
+<main class="row cart align-center">
   <div class="columns medium-10">
-    {{#cart-summary bookings=bookings classNames="checkout-data row align-justify" as |itemCount total|}}
-    <p class="checkout-item-count">
+    {{#cart-summary bookings=bookings classNames="cart-data row align-justify" as |itemCount total|}}
+    <p class="cart-item-count">
       Displaying <span class="count">{{itemCount}}</span> Item{{if (not-eq itemCount 1) "s"}}
     </p>
-    <p class="checkout-total">
+    <p class="cart-total">
       <span class="total-text">total</span>
       <span class="total-amount">{{format-number total format='$0,0[.]00'}}</span>
     </p>
@@ -60,3 +63,4 @@
   </section>
   {{/item-sorter}}
 </main>
+{{outlet}}

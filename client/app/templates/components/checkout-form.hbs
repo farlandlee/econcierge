@@ -1,0 +1,28 @@
+<div class="row align-center">
+  <fieldset class="fieldset columns small-10">
+    <legend>Contact Information</legend>
+    <div class="row">
+      <div class="columns">
+        {{input value=(mut name) name="name" placeholder="Name *"}}
+      </div>
+      <div class="columns">
+        {{input value=(mut email) name="email" placeholder="Email *" type="email"}}
+      </div>
+      <div class="columns">
+        {{input value=(mut phone) name="phone" placeholder="Phone *"}}
+      </div>
+    </div>
+    {{#if showError}}
+    <div class="row">
+      <p class="checkout-error column small-10">Please fill out all fields.</p>
+    </div>
+    {{/if}}
+  </fieldset>
+</div>
+<div class="row checkout-footer align-center">
+  <p class="column small-8 tou-disclaimer">
+    By clicking "Submit Requests" you confirm that you agree to the
+    <a target="_blank" href="/about/terms" class="tou">Outpost Terms of Use</a>
+  </p>
+  <button class="column small-8 large button" type="submit">Submit Request(s)</button>
+</div>
