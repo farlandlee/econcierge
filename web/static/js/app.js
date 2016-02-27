@@ -22,9 +22,4 @@ import fulloverlaySelect from "./fulloverlay-select";
 
 jQuery(function($){
   $(document).foundation();
-  $(".chosen-select").chosen();
-  $("#activity_select").change(function(){
-    $('#search_form').submit();
-  });
-  //$('.full-overlay-select').fulloverlaySelect();
 });

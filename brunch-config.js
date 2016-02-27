@@ -40,7 +40,7 @@ exports.config = {
     assets: /^(web\/static\/assets)/,
     ignored: [
       /[\\/]_/, //any file starting with `_`, like sass partials
-      'bower_components/foundation-sites/scss/foundation.scss',
+      /^(bower_components\/foundation-sites\/scss)/,
       /^(bower_components\/what-input\/)/
     ]
   },
@@ -77,7 +77,7 @@ exports.config = {
       mode: 'native',
       options: {
         includePaths: [
-          'bower_components/foundation-sites/scss',
+          'bower_components/foundation-sites/scss/',
           'bower_components/spinners/stylesheets'
         ]
       }

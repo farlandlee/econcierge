@@ -36,6 +36,9 @@
           &:not(.shopping-cart) {
             font-size: 14px;
           }
+          &.shopping-cart {
+            margin-top: 17px;
+          }
         }
       }
     }
@@ -50,6 +53,7 @@
       display: block;
       transition-duration: 0.2s;
       margin-right: 20px;
+      margin-top: 10px;
       &:hover {
         background-position: center top;
       }
