@@ -31,7 +31,8 @@ defmodule Grid.Mixfile do
        :oauth2,
        :phoenix_ecto,
        :postgrex,
-       :rollbax
+       :rollbax,
+       :stripity_stripe
     ]]
   end
 
@@ -61,6 +62,7 @@ defmodule Grid.Mixfile do
       {:phoenix_live_reload, "~> 1.0", only: :dev},
       {:rollbax, "~> 0.5"},
       {:slugger, git: "git://github.com/h4cc/slugger.git"},
+      {:stripity_stripe, "~> 1.3.0"},
       {:uuid, "~> 1.1"}
     ]
   end

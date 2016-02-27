@@ -14,6 +14,8 @@ const {
 export default Ember.Component.extend({
   tagName: 'form',
 
+  cart: null,
+
   email: null,
   name: null,
   phone: null,
@@ -49,9 +51,20 @@ export default Ember.Component.extend({
   submit (event) {
     event.preventDefault();
 
-    if (!this.get('valid')) {
-      this.set('errorMessage', 'Please fill out all fields.');
+    let msg = 'Please fill out all fields';
+
+    if (!this.get('cardValid')) {
+      this.set('cardErrorMessage', msg);
       return;
+    } else {
+      this.set('cardErrorMessage', null);
+    }
+
+    if (!this.get('userValid')) {
+      this.set('contactErrorMessage', msg);
+      return;
+    } else {
+      this.set('contactErrorMessage', null);
     }
 
     let card = {
@@ -63,6 +76,7 @@ export default Ember.Component.extend({
       cvc: this.get('ccCode'),
       name: this.get('ccName')
     };
+
     return new Ember.RSVP.Promise(function (resolve, reject) {
       Stripe.card.createToken(card, (status, response) => {
         if (response.error) {
@@ -74,9 +88,41 @@ export default Ember.Component.extend({
       });
     }).then(({id}) => {
       let user = this.getProperties('email', 'name', 'phone');
-      return this.attrs.onSubmit(user, id);
+
+      // map bookings so that we have a basic array,
+      // rather than a record array (can't stringify record arrays)
+      let bookings = this.get('cart').map(b => b);
+      let payload = JSON.stringify({
+        cart: bookings,
+        user: user,
+        stripe_token: id
+      });
+
+      return this.placeOrder(payload);
     }, ({error}) => {
-      return this.set('errorMessage', error.message);
+      return this.set('cardErrorMessage', error.message);
+    });
+  },
+
+  placeOrder (payload) {
+    return Ember.$.ajax('/web_api/orders', {
+      method: 'POST',
+      data: payload,
+      contentType: 'application/json',
+    }).then(() => {
+      return this.attrs.onSubmit();
+    }, ({responseJSON}) => {
+      //TODO: Better error handling and display
+      if (responseJSON.errors) {
+        this.set('contactErrorMessage', 'Validation errors on contact information. Please check that your email is correct.');
+      }
+
+      if (responseJSON.cart_errors) {
+        this.get('cart').forEach(i => i.destroyRecord());
+        this.set('cartErrors', responseJSON.cart_errors);
+      }
+
+      return;
     });
   }
 });

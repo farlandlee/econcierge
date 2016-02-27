@@ -9,13 +9,15 @@ defmodule Grid.Cart do
   an `Order` the its nested list of `OrderItem` entries.
   """
   def to_order_params(items = [_|_]) do
-    {order_items, total} = Enum.map_reduce(items, 0, fn(item, acc) ->
-      case extract_order_item(%{"client_id" => c_id} = item) do
-        {:ok, oi_params} ->
-          {oi_params, acc + oi_params.amount}
+    {order_items, total} = Enum.map_reduce(items, 0, fn
+      (%{"product" => p} = item, acc) ->
+        case extract_order_item(item) do
+          {:ok, oi_params} ->
+            {oi_params, acc + oi_params.amount}
 
-        {:error, error} -> throw(%{client_id: c_id, message: error})
-      end
+          {:error, error} -> throw(%{product: p, message: error})
+        end
+      (_, _) -> throw(%{message: "No product id"})
     end)
 
     {:ok, %{total_amount: total, order_items: order_items}}
@@ -24,14 +26,14 @@ defmodule Grid.Cart do
   end
   def to_order_params(_), do: {:error, "No items in cart"}
 
-  def extract_order_item(%{"product_id" => p_id} = items) do
+  def extract_order_item(%{"product" => p_id} = items) do
     product = Repo.get(Product, p_id)
     extract_for_product(items, product)
   end
   def extract_order_item(_), do: {:error, "Invalid cart item"}
 
   def extract_for_product(_, nil), do: {:error, "Could not find product"}
-  def extract_for_product(%{"start_time_id" => st_id} = items, product) do
+  def extract_for_product(%{"startTime" => %{"id" => st_id}} = items, product) do
     product = Repo.preload(product, start_times: :season, prices: :amounts)
 
     start_time = Enum.find(product.start_times, fn(t) ->
@@ -64,6 +66,11 @@ defmodule Grid.Cart do
 
 
   def extract_quantities(quants, prices = [_|_]) do
+    quants = Enum.filter(quants, fn
+      %{"quantity" => 0} -> false
+      _ -> true
+    end)
+
     {params, sub_total} = Enum.map_reduce(quants, 0, fn(q, acc) ->
       case extract_quantity(q, prices) do
         {:ok, params} -> {params, acc + params.sub_total}
@@ -77,7 +84,7 @@ defmodule Grid.Cart do
   end
   def extract_quantities(_, _), do: {:error, "No prices found for product"}
 
-  def extract_quantity(%{"price_id" => pid} = quantity, prices) do
+  def extract_quantity(%{"id" => pid} = quantity, prices) do
     price = Enum.find(prices, &(&1.id == pid))
     extract_with_price(quantity, price)
   end
@@ -96,8 +103,9 @@ defmodule Grid.Cart do
 
   def extract_with_amount(_, _, nil), do: {:error, "Amount not found"}
   def extract_with_amount(%{"cost" => cost, "quantity" => quantity}, price, amount) do
+    total = amount.amount * quantity
     cond do
-      amount.amount == cost ->
+      total == cost ->
         {:ok, %{
           price_id: price.id,
           sub_total: cost,
@@ -105,7 +113,7 @@ defmodule Grid.Cart do
           price_name: price.name,
           price_people_count: price.people_count
         }}
-      amount.amount != cost ->
+      total != cost ->
         {:error, "Quantity cost is invalid for price: #{price.id}"}
     end
   end

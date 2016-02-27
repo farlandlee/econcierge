@@ -26,7 +26,7 @@ export default Ember.Route.extend(ResetScrollMixin, {
   },
 
   actions: {
-    updateBooking (booking, price, _amount, quantity) {
+    updateBooking (booking, price, amount, quantity) {
       let priceId = price.id;
       let shouldSave = true;
       let updatedQuantities = booking.get('quantities').map(q => {
@@ -40,7 +40,8 @@ export default Ember.Route.extend(ResetScrollMixin, {
         } else if (q.id === priceId) {
           return {
             id: priceId,
-            quantity: quantity
+            quantity: quantity,
+            cost: amount.amount * quantity
           };
         }
         return q;

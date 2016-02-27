@@ -6,13 +6,13 @@ defmodule Grid.User do
     field :email, :string
     field :image, :string
     field :phone, :string
-    field :stripe_token, :string
+    field :stripe_id, :string
 
     timestamps
   end
 
   @required_fields ~w(name email)
-  @optional_fields ~w(image phone stripe_token)
+  @optional_fields ~w(image phone stripe_id)
 
   @doc """
   Creates a changeset based on the `model` and `params`.

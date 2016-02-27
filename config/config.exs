@@ -35,6 +35,9 @@ config :rollbax,
   access_token: System.get_env("ROLLBAR_TOKEN"),
   environment: Mix.env
 
+config :stripity_stripe,
+  secret_key: System.get_env("STRIPE_SECRET_TOKEN")
+
 config :logger, Rollbax.Notifier,
   level: :error
 

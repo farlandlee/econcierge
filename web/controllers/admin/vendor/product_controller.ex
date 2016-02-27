@@ -100,7 +100,7 @@ defmodule Grid.Admin.Vendor.ProductController do
   def delete(conn, _) do
     product = conn.assigns.product
 
-    case assoc(product, :order_items) |> Repo.all |> Enum.count do
+    conn = case assoc(product, :order_items) |> Repo.all |> Enum.count do
       0 ->
         Repo.delete!(product)
         conn |> put_flash(:info, "Product deleted successfully.")
