@@ -1,6 +1,13 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
+  beforeModel () {
+    let hasBookings = this.modelFor('cart').get('length');
+    if (!hasBookings) {
+      this.transitionTo('cart');
+    }
+  },
+
   actions: {
     back () {
       this.transitionTo('cart');
