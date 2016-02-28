@@ -4,6 +4,9 @@ import NotFoundMixin from 'client/mixins/not-found';
 import ResetScrollMixin from 'client/mixins/reset-scroll';
 
 export default Ember.Route.extend(NotFoundMixin, ResetScrollMixin, {
+  // used to maintain selected experience on date change
+  currentExperience: null,
+
   model (params) {
     let {date, activity_slug, category_slug} = params;
 
@@ -48,15 +51,28 @@ export default Ember.Route.extend(NotFoundMixin, ResetScrollMixin, {
     });
   },
 
-  setupController(controller, model) {
+  setupController (controller, model) {
     this._super(...arguments);
     controller.setProperties(model);
   },
 
   actions: {
-    changeDate: function (date) {
+    setCurrentExperience (experience) {
+      this.set('currentExperience', experience);
+    },
+
+    changeDate (date) {
       let {activity, category} = this.controller.model;
-      this.transitionTo('explore', activity.get('slug'), category.get('slug'), moment(date).format('YYYY-MM-DD'));
+      let activitySlug = activity.get('slug');
+      let categorySlug = category.get('slug');
+      let currentExperience = this.get('currentExperience');
+      date = moment(date).format('YYYY-MM-DD');
+
+      if (currentExperience) {
+        this.transitionTo('explore.experience', activitySlug, categorySlug, date, currentExperience.get('slug'));
+      } else {
+        this.transitionTo('explore', activitySlug, categorySlug, date);
+      }
     }
   }
 });
