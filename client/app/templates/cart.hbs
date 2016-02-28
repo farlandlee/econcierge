@@ -4,7 +4,11 @@
     <p class="page-subtitle">Please review the items below and make any necessary changes.</p>
   </div>
   <div class="column small-12 medium-3 text-center medium-text-right">
-    {{link-to "Proceed to Checkout" 'cart.checkout' class="button large"}}
+    {{#if (gt bookings.length 0)}}
+      {{link-to "Proceed to Checkout" 'cart.checkout' class="button large"}}
+    {{else}}
+      <button class="button large disabled" disabled>Proceed to Checkout</button>
+    {{/if}}
   </div>
 </div>
 <main class="row cart align-center expanded">
@@ -64,7 +68,11 @@
 </main>
 <div class="row cart-below">
   <div class="column small-12 medium-3 medium-offset-9 text-center medium-text-right">
-    {{link-to "Proceed to Checkout" 'cart.checkout' class="button large"}}
+    {{#if (gt bookings.length 0)}}
+      {{link-to "Proceed to Checkout" 'cart.checkout' class="button large"}}
+    {{else}}
+      <button class="button large disabled" disabled>Proceed to Checkout</button>
+    {{/if}}
   </div>
 </div>
 {{outlet}}
