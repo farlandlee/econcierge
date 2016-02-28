@@ -6,13 +6,21 @@ moduleForComponent('booking-form', 'Integration | Component | booking form', {
 });
 
 test('it renders', function(assert) {
-  this.set('product', {
-    startTimes: [],
-    prices: []
-  });
-  this.set('actions', {
-    cancel () {},
-    submit () {}
+  let defaultPrice = {
+    id: 1,
+    amounts: [{min_quantity: 0, max_quantity: 0, amount: 100}],
+    name: 'The default price'
+  };
+  this.setProperties({
+    product: {
+      startTimes: [],
+      defaultPrice: defaultPrice,
+      prices: [defaultPrice]
+    },
+    actions:  {
+      cancel () {},
+      submit () {}
+    }
   });
   this.render(hbs`{{booking-form product=product cancel=(action "cancel") submit=(action "submit")}}`);
 

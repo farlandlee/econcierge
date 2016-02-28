@@ -5,10 +5,15 @@
     </div>
   </div>
   <div class="row align-left body-count">
+    <div class="columns shrink">
+      {{amount-quantity-input price=product.defaultPrice quantities=quantities onChange=(action "updateQuantity" product.defaultPrice)}}
+    </div>
   {{#each product.prices as |price|}}
+  {{#unless (eq price.id product.defaultPrice.id)}}
     <div class="columns shrink">
       {{amount-quantity-input price=price quantities=quantities onChange=(action "updateQuantity" price)}}
     </div>
+  {{/unless}}
   {{/each}}
   </div>
   <div class="row align-spaced date-selection">
