@@ -33,11 +33,13 @@
           }
         }
         input {
-          padding: 0 0 0 10px;
+          padding: 0;
           min-width: 200px;
           border: 0;
           text-decoration: underline;
-          text-align:right;
+          @include breakpoint (medium) {
+            text-align:right;
+          }
         }
       }
     }
@@ -48,11 +50,28 @@
     padding: 0;
   }
 }
+.activity-date-row {
+  top: 41px;
+  position: fixed;
+  width: 100%;
+  z-index: 100;
+  background-color: $white;
+  @include breakpoint (large) {
+    top: 61px;
+  }
+}
+
 .row {
   &.selected-experience,
   &.experience-filter {
     max-width: rem-calc(1440);
     border-bottom: 1px solid #eee;
+  }
+  &.selected-experience {
+    margin-top: 114px;
+    @include breakpoint( medium ) {
+      margin-top: 54px;
+    }
   }
 }
 

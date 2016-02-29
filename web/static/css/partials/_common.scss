@@ -200,7 +200,7 @@ body {
   margin-left: 0;
   margin-right: 0;
 	@include breakpoint ( medium ) {
-		font-size: 1.6rem;
+		font-size: 1.2rem;
 	}
 }
 
@@ -345,14 +345,16 @@ a.more-info {
 .duration,
 .age-restriction,
 .location {
-  text-align:center;
-  color: $medium-gray;
-	font-size: 0.8rem;
-  &:before {
-    margin-bottom: 0.5rem;
-    font-size: 1.2rem;
-    display: block;
+  &.fi {
     text-align:center;
+    color: $medium-gray;
+  	font-size: 0.8rem;
+    &:before {
+      margin-bottom: 0.5rem;
+      font-size: 1.2rem;
+      display: block;
+      text-align:center;
+    }
   }
 }
 

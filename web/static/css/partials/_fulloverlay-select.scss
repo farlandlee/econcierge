@@ -41,7 +41,6 @@ $arrow_color: $white;
   font-family: inherit;
   font-size: $font_size;
   font-weight: normal;
-  height: $input_height;
   line-height: 30px;
   @include breakpoint ( medium ) {
     line-height: $input_height - 2;
@@ -58,8 +57,9 @@ $arrow_color: $white;
     font-size: 1rem;
     padding-right: 45px;
     text-decoration: underline;
+    display: inline-block;
     @include breakpoint ( medium ) {
-  		font-size: 1.6rem;
+  		font-size: 1.2rem;
   	}
     // Arrow
     &:after {

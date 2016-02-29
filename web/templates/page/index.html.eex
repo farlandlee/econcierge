@@ -5,7 +5,7 @@
       <div class="small-12 columns search-bar" >
         <div class="row small-collapse align-center expanded">
           <div class="small-12 columns">
-            <div class="search-label">Book your Adventure<br>in Jackson Hole</div>
+            <div class="search-label">Book your Adventure <span>in Jackson Hole</span></div>
           </div>
           <div class="small-12 medium-10 large-8 columns form-group">
             <label for="activity[id]">Explore</label>
@@ -14,7 +14,7 @@
                 <span class="current">All Activities</span>
                 <ul>
                   <li><%= link "Lodging", to: "http://www.outpostjh.com/rentals/" %></li>
-                  <li><%= link "All Activities", to: explore_path(@conn, :index, ["activities"]) %></li>
+                  <li><%= link "All Activities", to: explore_path(@conn, :index, ["activities"]), class: "selected" %></li>
                   <%= for activity <- @available_activities do %>
                     <li><%= link activity.name, to: explore_path(@conn, :index, [activity.slug, "categories"]) %></li>
                   <% end %>
@@ -93,7 +93,7 @@
     <div class="row align-center align-stretch" data-equalizer data-equalize-on="medium" >
       <div class="column small-12 medium-6" >
         <a class="home-article-large" href="http://www.outpostjh.com/scenic-flights-in-jackson-hole/" data-equalizer-watch>
-          <img src="https://www.outpostjh.com/wp-content/uploads/2015/11/FlyJH-001-768x563.jpg" alt="Fly Jackson Hole">
+          <img src="http://www.outpostjh.com/wp-content/uploads/2015/11/FlyJH-024-768x563.jpg" alt="Fly Jackson Hole">
           <p class="lead">TO FLY ABOVE THE TETONS</p>
           <p class="subheader">Seeing an entirely new perspective with Fly Jackson Hole.</p>
         </a>
