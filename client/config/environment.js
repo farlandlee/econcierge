@@ -13,11 +13,11 @@ module.exports = function(environment) {
       }
     },
 
-    stripePublishableKey: 'pk_test_b43KzmrhHOT2zqdUFk7bZeG0', // test key
+    stripePublishableKey: 'pk_test_b43KzmrhHOT2zqdUFk7bZeG0', // TODO: Use env, but can't figure it out on heroku
 
     rollbar: {
       enabled: environment === 'production',
-      accessToken: process.env.ROLLBAR_POST_CLIENT_ACCESS_TOKEN,
+      accessToken: "50b70bf6e3d04779995e7a08ffcb35b7", // TODO: Use env, but can't figure it out on heroku
       captureUncaught: true,
       payload: {
         environment: environment
@@ -49,10 +49,6 @@ module.exports = function(environment) {
     ENV.APP.LOG_VIEW_LOOKUPS = false;
 
     ENV.APP.rootElement = '#ember-testing';
-  }
-
-  if (environment === 'production') {
-    ENV.stripePublishableKey = process.env.STRIPE_PUBLISHABLE_KEY;
   }
 
   return ENV;
