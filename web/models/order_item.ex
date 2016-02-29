@@ -8,6 +8,8 @@ defmodule Grid.OrderItem do
     field :vendor_token, :string, nil: false
     field :vendor_reply_at, Ecto.DateTime, default: nil
     field :status, :string
+    field :stripe_charge_id, :string
+    field :charged_at, Ecto.DateTime, default: nil
     belongs_to :order, Grid.Order
     belongs_to :product, Grid.Product
 
@@ -40,6 +42,21 @@ defmodule Grid.OrderItem do
       nil -> put_change(changeset, :vendor_token, UUID.uuid4(:hex))
       _ -> changeset
     end
+  end
+
+  def status_changeset(model, :accept) do
+    params = %{status: "accepted", vendor_reply_at: Calendar.DateTime.now_utc}
+    cast(model, params, [:status, :vendor_reply_at], [])
+  end
+
+  def status_changeset(model, :reject) do
+    params = %{status: "rejected", vendor_reply_at: Calendar.DateTime.now_utc}
+    cast(model, params, [:status, :vendor_reply_at], [])
+  end
+
+  def charge_changeset(model, charge_id) do
+    params = %{stripe_charge_id: charge_id, charged_at: Calendar.DateTime.now_utc}
+    cast(model, params, [:stripe_charge_id, :charged_at], [])
   end
 
   #################

@@ -60,6 +60,12 @@ defmodule Grid.Router do
 
     get "/vendors", VendorController, :index
 
+    get "/vendor/accept/:vendor_token", OrderStatusController, :accept
+    get "/vendor/reject/:vendor_token", OrderStatusController, :reject
+    get "/vendor/status/:vendor_token", OrderStatusController, :vendor_status
+    # put "/orders/:vendor_token/reject", OrderController, :reject
+    # put "/orders/:customer_token/cancel/:id", OrderController, :cancel
+
     get "/explore/*path", ExploreController, :index
 
     get "/500", ErrorController, :render_500
@@ -126,7 +132,6 @@ defmodule Grid.Router do
       resources "/images", ImageController
       put "/images/:id/default", ImageController, :set_default
     end
-
 
     get "/vendors/:id/refresh", VendorController, :refresh
     resources "/vendors",   VendorController, [alias: Vendor] do

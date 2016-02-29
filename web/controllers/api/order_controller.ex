@@ -3,7 +3,9 @@ defmodule Grid.Api.OrderController do
 
   alias Grid.{
     Order,
-    User
+    OrderItem,
+    User,
+    Vendor
   }
 
   plug :load_customer when action in [:process_cart]
@@ -16,6 +18,7 @@ defmodule Grid.Api.OrderController do
     case Repo.insert(changeset) do
       {:ok, order} ->
         Grid.Stripe.link_customer(conn.assigns.customer, stripe_token)
+        send_for_order(order.id)
 
         conn
         |> put_status(:created)
@@ -75,5 +78,42 @@ defmodule Grid.Api.OrderController do
     |> put_status(:unprocessable_entity)
     |> json(%{cart_errors: errors})
     |> halt
+  end
+
+  ############
+  ## Emails ##
+  ############
+
+  def send_for_order(order_id) do
+    order =
+      Repo.get(Order, order_id)
+      |> Repo.preload([:user, [order_items: [product: [:vendor, :experience, :meeting_location]]]])
+
+    send_request_received(order)
+    Enum.each(order.order_items, &(send_vendor_notice(&1)))
+  end
+
+  def send_request_received(%Order{} = order) do
+    html = Phoenix.View.render_to_string(Grid.EmailView, "request_received_customer.html", order: order)
+
+    Postmark.email(
+      order.user.email,
+      html,
+      "Your booking requests have been submitted",
+      "Customer Request",
+      Mix.env
+    )
+  end
+
+  def send_vendor_notice(%OrderItem{} = oi) do
+    html = Phoenix.View.render_to_string(Grid.EmailView, "request_received_vendor.html", order_item: oi)
+
+    Postmark.email(
+      Vendor.email(oi.product.vendor),
+      html,
+      "New Booking Request - #{oi.product.name}",
+      "Vendor Notice",
+      Mix.env
+    )
   end
 end

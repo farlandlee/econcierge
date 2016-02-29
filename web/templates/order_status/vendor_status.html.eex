@@ -1,0 +1,16 @@
+<div class="page">
+  <div class="top-row">
+    <h2 class="page-title">Order Status</h2>
+  </div>
+  <div class="row align-center">
+    <div class="columns small-12 large-6">
+      <%= get_flash(@conn, :info) %>
+      <%= get_flash(@conn, :error) %>
+
+      <dl>
+        <dt>Product:</dt><dd><%= @order_item.product.name %></dd>
+        <dt>Status:</dt><dd><%= @order_item.status %></dd>
+      </dl>
+    </div>
+  </div>
+</div>
