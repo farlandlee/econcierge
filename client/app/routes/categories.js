@@ -25,32 +25,17 @@ export default Ember.Route.extend(NotFoundMixin, ResetScrollMixin, {
 
   afterModel ({categories, activity}) {
     // if there's only one category for the activity,
-    // immediately transition to experienes
+    // immediately select that category
     if (categories.get('length') === 1) {
-      let activitySlug = activity.get('slug');
-      let categorySlug = categories.get('firstObject.slug');
-      return this._dateForCategory(activitySlug, categorySlug);
+      this.transitionTo('dateRedirect', {
+        category: categories.get('firstObject'),
+        activity: activity
+      });
     }
   },
 
   setupController (controller, model) {
     this._super(...arguments);
     controller.setProperties(model);
-  },
-
-  _dateForCategory(activitySlug, categorySlug) {
-    let dateApiUrl = `/web_api/date/${activitySlug}/${categorySlug}`;
-    return Ember.$.getJSON(dateApiUrl).then(response => {
-      let date = response.date;
-      return this.transitionTo('explore', activitySlug, categorySlug, date);
-    });
-  },
-
-  actions: {
-    dateForCategory (category) {
-      let activitySlug = this.controller.get('activity.slug');
-      let categorySlug = category.get('slug');
-      this._dateForCategory(activitySlug, categorySlug);
-    }
   }
 });
