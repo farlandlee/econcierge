@@ -29,10 +29,18 @@ section {
   padding: 60px 0 0;
   .column {
     > a {
-      margin-bottom: 3rem;
-      padding-bottom: 3rem;
-      border-bottom: 1px solid $light-gray;
-      display: block;
+      &:not(.bottom-link) {
+        margin-bottom: 3rem;
+        padding-bottom: 3rem;
+        border-bottom: 1px solid $light-gray;
+        display: block;
+      }
+      &.bottom-link {
+        display: block;
+        margin: 0 auto 3rem;
+        text-transform: uppercase;
+        font-size: 1.2rem;
+      }
     }
   }
 }
