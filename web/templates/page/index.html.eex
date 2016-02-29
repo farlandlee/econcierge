@@ -57,7 +57,12 @@
                 <p>Snowmobiling</p>
                 <p class="small">Take a trip to Granite Hot Springs</p>
               </div>
-              <p class="booking-button"><a href="/explore/snowmobiling/scenic_snowmobiling/gros_ventre_snowmobile_ride/granite_hot_springs_snowmobile_trip">Request to Book</a></p>
+              <p class="booking-button">
+                <!-- TODO: Fix path path -->
+                <a href="<%= explore_path(@conn, :index, ["scenic_snowmobiling", "categories"]) %>">
+                  Request to Book
+                </a>
+              </p>
             </div>
           </div>
           <div class="column small-12 medium-4 align-center align-middle">
@@ -76,7 +81,12 @@
                 <p>Alpenglow Sunset Tour</p>
                 <p class="small">By Fly Jackson Hole</p>
               </div>
-              <p class="booking-button"><a href="/explore/scenic_flights/scenic_flight/scenic_flight/scenic_flight">Request to Book</a></p>
+              <p class="booking-button">
+                <!-- TODO: Fix path paths -->
+                <a href="<%= explore_path(@conn, :index, ["scenic_flight", "categories"]) %>">
+                  Request to Book
+                </a>
+              </p>
             </div>
           </div>
         </div>
@@ -93,7 +103,7 @@
     <div class="row align-center align-stretch" data-equalizer data-equalize-on="medium" >
       <div class="column small-12 medium-6" >
         <a class="home-article-large" href="http://www.outpostjh.com/scenic-flights-in-jackson-hole/" data-equalizer-watch>
-          <img src="http://www.outpostjh.com/wp-content/uploads/2015/11/FlyJH-024-768x563.jpg" alt="Fly Jackson Hole">
+          <img src="https://www.outpostjh.com/wp-content/uploads/2015/11/FlyJH-024-768x563.jpg" alt="Fly Jackson Hole">
           <p class="lead">TO FLY ABOVE THE TETONS</p>
           <p class="subheader">Seeing an entirely new perspective with Fly Jackson Hole.</p>
         </a>
