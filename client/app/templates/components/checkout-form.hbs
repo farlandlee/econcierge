@@ -6,6 +6,11 @@
 </p>
 <hr>
 <div class="row align-center">
+  {{#if cartErrors}}
+  <div class="row small-10">
+    <p class="cart-error column small-10 ">Sorry, we could not complete your order at this time.</p>
+  </div>
+  {{/if}}
   <fieldset class="fieldset columns small-10">
     <legend>Credit Card</legend>
     <div class="row">
@@ -20,15 +25,20 @@
     </div>
     <div class="row">
       <div class="columns">
-        {{input value=ccMonth name="ccmonth" placeholder="Exp. Month (mm) *"}}
+        {{input value=ccMonth name="ccmonth" placeholder="Exp. Month (mm) *" maxlength="2"}}
       </div>
       <div class="columns">
-        {{input value=ccYear name="ccyear" placeholder="Exp. Year (mm) *"}}
+        {{input value=ccYear name="ccyear" placeholder="Exp. Year (mm) *" maxlength="2"}}
       </div>
       <div class="columns">
-        {{input value=ccCode name="cccode" placeholder="Security Code *"}}
+        {{input value=ccCode name="cccode" placeholder="CVC Security Code *" maxlength="4"}}
       </div>
     </div>
+    {{#if cardErrorMessage}}
+    <div class="row small-10">
+      <p class="cart-error column small-10 ">{{cardErrorMessage}}</p>
+    </div>
+    {{/if}}
   </fieldset>
   <fieldset class="fieldset columns small-10">
     <legend>Contact Information</legend>
@@ -43,9 +53,9 @@
         {{input value=phone name="phone" placeholder="Phone *"}}
       </div>
     </div>
-    {{#if errorMessage}}
-    <div class="row">
-      <p class="checkout-error column small-10">{{errorMessage}}</p>
+    {{#if contactErrorMessage}}
+    <div class="row small-10">
+      <p class="cart-error column small-10 ">{{contactErrorMessage}}</p>
     </div>
     {{/if}}
   </fieldset>

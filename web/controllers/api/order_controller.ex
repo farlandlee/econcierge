@@ -10,11 +10,13 @@ defmodule Grid.Api.OrderController do
   plug :load_cart when action in [:process_cart]
   plug :prepare_order_params when action in [:process_cart]
 
-  def process_cart(conn, _) do
+  def process_cart(conn, %{"stripe_token" => stripe_token}) do
     changeset = Order.creation_changeset(conn.assigns.order_params, conn.assigns.customer.id)
 
     case Repo.insert(changeset) do
       {:ok, order} ->
+        Grid.Stripe.link_customer(conn.assigns.customer, stripe_token)
+
         conn
         |> put_status(:created)
         |> render("show.json", order: order)
@@ -38,15 +40,13 @@ defmodule Grid.Api.OrderController do
     case conn.params["cart"] do
       cart = [_|_] -> assign(conn, :cart, cart)
       _ -> halt_422(conn, ["No items in cart"])
-        |> halt
     end
   end
 
   def prepare_order_params(conn, _) do
     case Grid.Cart.to_order_params(conn.assigns.cart) do
       {:ok, params} -> assign(conn, :order_params, params)
-      {:error, error} ->
-        halt_422(conn, [error])
+      {:error, error} -> halt_422(conn, [error])
     end
   end
 
@@ -73,7 +73,7 @@ defmodule Grid.Api.OrderController do
   def halt_422(conn, errors) do
     conn
     |> put_status(:unprocessable_entity)
-    |> json(%{errors: errors})
+    |> json(%{cart_errors: errors})
     |> halt
   end
 end

@@ -7,7 +7,8 @@ defmodule Grid do
     children = [
       supervisor(Grid.Endpoint, []),
       worker(Grid.Repo, []),
-      worker(TripAdvisor, [])
+      worker(TripAdvisor, []),
+      worker(Grid.Stripe, [])
     ]
 
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html

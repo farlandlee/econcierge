@@ -31,16 +31,18 @@ defmodule Grid.Api.OrderControllerTest do
     price = Factory.create(:price, product: p)
     amount = Factory.create(:amount, price: price)
 
+    price2 = Factory.create(:price, product: p)
+
     Repo.update!(Grid.Product.default_price_changeset(p, price.id))
 
-    quantity = %{price_id: price.id, quantity: 3, cost: amount.amount}
+    quantity = %{id: price.id, quantity: 3, cost: amount.amount * 3}
+    quantity2 = %{id: price2.id, quantity: 0, cost: 0}
 
     cart_item = %{
-      client_id: "b33430",
-      product_id: p.id,
+      product: p.id,
       date: two_days_from_now,
-      start_time_id: st.id,
-      quantities: [quantity]
+      startTime: %{ id: st.id },
+      quantities: [quantity, quantity2]
     }
 
     user = %{
@@ -49,11 +51,14 @@ defmodule Grid.Api.OrderControllerTest do
       phone: "307-413-9999"
     }
 
-    {:ok, product: p, price: price, start_time: st, user: user, cart_item: cart_item, quantity: quantity}
+    {:ok,
+      product: p, price: price, startTime: st, user: user,
+      cart_item: cart_item, quantity: quantity
+    }
   end
 
   test "creates and renders resource when data is valid", %{conn: conn, user: user, cart_item: ci} do
-    conn = post conn, api_order_path(conn, :process_cart), %{user: user, cart: [ci]}
+    conn = post conn, api_order_path(conn, :process_cart), %{user: user, cart: [ci], stripe_token: "12345"}
     response = json_response(conn, 201)
     assert response["order"]["customer_token"]
   end
@@ -61,11 +66,11 @@ defmodule Grid.Api.OrderControllerTest do
   test "does not create resource and renders errors on bad user", %{conn: conn} do
     conn = post conn, api_order_path(conn, :process_cart), %{user: %{}}
     response = json_response(conn, 422)
-    assert ["No user in payload"] == response["errors"]
+    assert ["No user in payload"] == response["cart_errors"]
 
     conn = post conn, api_order_path(conn, :process_cart), %{}
     response = json_response(conn, 422)
-    assert ["No user in payload"] == response["errors"]
+    assert ["No user in payload"] == response["cart_errors"]
 
     conn = post conn, api_order_path(conn, :process_cart), %{user: %{email: "jjjj"}}
     response = json_response(conn, 422)
@@ -75,95 +80,95 @@ defmodule Grid.Api.OrderControllerTest do
   test "does not create resource and renders errors with empty cart", %{conn: conn, user: user} do
     conn = post conn, api_order_path(conn, :process_cart), %{user: user, cart: []}
     response = json_response(conn, 422)
-    assert ["No items in cart"] == response["errors"]
+    assert ["No items in cart"] == response["cart_errors"]
 
     conn = post conn, api_order_path(conn, :process_cart), %{user: user}
     response = json_response(conn, 422)
-    assert ["No items in cart"] == response["errors"]
+    assert ["No items in cart"] == response["cart_errors"]
   end
 
   test "does not create resource and renders errors with invalid cart item", %{conn: conn, user: user, cart_item: ci} do
-    ci = Map.delete(ci, :product_id)
+    ci = Map.delete(ci, :product)
 
     conn = post conn, api_order_path(conn, :process_cart), %{user: user, cart: [ci]}
     response = json_response(conn, 422)
-    assert [%{"client_id" => "b33430", "message" => "Invalid cart item"}] == response["errors"]
+    assert [%{"message" => "No product id"}] == response["cart_errors"]
   end
 
   test "does not create resource and renders errors with bad product", %{conn: conn, user: user, cart_item: ci} do
-    ci = put_in(ci.product_id, 9999)
+    ci = put_in(ci.product, 9999)
+
+    conn = post conn, api_order_path(conn, :process_cart), %{user: user, cart: [ci], stripe_token: "12345"}
+    response = json_response(conn, 422)
+    assert [%{"product" => 9999, "message" => "Could not find product"}] == response["cart_errors"]
+  end
+
+  test "does not create resource and renders errors with bad start_time", %{conn: conn, product: p, user: user, cart_item: ci} do
+    ci = put_in(ci.startTime.id, 9999)
 
     conn = post conn, api_order_path(conn, :process_cart), %{user: user, cart: [ci]}
     response = json_response(conn, 422)
-    assert [%{"client_id" => "b33430", "message" => "Could not find product"}] == response["errors"]
+    assert [%{"product" => p.id, "message" => "Could not find start_time"}] == response["cart_errors"]
   end
 
-  test "does not create resource and renders errors with bad start_time", %{conn: conn, user: user, cart_item: ci} do
-    ci = put_in(ci.start_time_id, 9999)
-
-    conn = post conn, api_order_path(conn, :process_cart), %{user: user, cart: [ci]}
-    response = json_response(conn, 422)
-    assert [%{"client_id" => "b33430", "message" => "Could not find start_time"}] == response["errors"]
-  end
-
-  test "does not create resource and renders errors, no prices", %{conn: conn, user: user, cart_item: ci} do
+  test "does not create resource and renders errors, no prices", %{conn: conn, product: p, user: user, cart_item: ci} do
     Repo.delete_all(Grid.Price)
 
     conn = post conn, api_order_path(conn, :process_cart), %{user: user, cart: [ci]}
     response = json_response(conn, 422)
-    assert [%{"client_id" => "b33430", "message" => "No prices found for product"}] == response["errors"]
+    assert [%{"product" => p.id, "message" => "No prices found for product"}] == response["cart_errors"]
   end
 
-  test "does not create resource and renders errors, no price id", %{conn: conn, user: user, cart_item: ci, quantity: q} do
-    q = Map.delete(q, :price_id)
+  test "does not create resource and renders errors, no price id", %{conn: conn, product: p, user: user, cart_item: ci, quantity: q} do
+    q = Map.delete(q, :id)
     ci = put_in(ci.quantities, [q])
 
     conn = post conn, api_order_path(conn, :process_cart), %{user: user, cart: [ci]}
     response = json_response(conn, 422)
-    assert [%{"client_id" => "b33430", "message" => "No price id included in quantity"}] == response["errors"]
+    assert [%{"product" => p.id, "message" => "No price id included in quantity"}] == response["cart_errors"]
   end
 
-  test "does not create resource and renders errors, price not found", %{conn: conn, user: user, cart_item: ci, quantity: q} do
-    q = put_in(q.price_id, 9999)
+  test "does not create resource and renders errors, price not found", %{conn: conn, product: p, user: user, cart_item: ci, quantity: q} do
+    q = put_in(q.id, 9999)
     ci = put_in(ci.quantities, [q])
 
     conn = post conn, api_order_path(conn, :process_cart), %{user: user, cart: [ci]}
     response = json_response(conn, 422)
-    assert [%{"client_id" => "b33430", "message" => "Price not found"}] == response["errors"]
+    assert [%{"product" => p.id, "message" => "Price not found"}] == response["cart_errors"]
   end
 
-  test "does not create resource and renders errors, quantity not included", %{conn: conn, user: user, cart_item: ci, quantity: q} do
+  test "does not create resource and renders errors, quantity not included", %{conn: conn, product: p, user: user, cart_item: ci, quantity: q} do
     q = Map.delete(q, :quantity)
     ci = put_in(ci.quantities, [q])
 
     conn = post conn, api_order_path(conn, :process_cart), %{user: user, cart: [ci]}
     response = json_response(conn, 422)
-    assert [%{"client_id" => "b33430", "message" => "Quantity not included"}] == response["errors"]
+    assert [%{"product" => p.id, "message" => "Quantity not included"}] == response["cart_errors"]
   end
 
-  test "does not create resource and renders errors, amount not found", %{conn: conn, user: user, cart_item: ci} do
+  test "does not create resource and renders errors, amount not found", %{conn: conn, product: p, user: user, cart_item: ci} do
     Repo.delete_all(Grid.Amount)
 
     conn = post conn, api_order_path(conn, :process_cart), %{user: user, cart: [ci]}
     response = json_response(conn, 422)
-    assert [%{"client_id" => "b33430", "message" => "Amount not found"}] == response["errors"]
+    assert [%{"product" => p.id, "message" => "Amount not found"}] == response["cart_errors"]
   end
 
-  test "does not create resource and renders errors, cost not included", %{conn: conn, user: user, cart_item: ci, quantity: q} do
+  test "does not create resource and renders errors, cost not included", %{conn: conn, product: p, user: user, cart_item: ci, quantity: q} do
     q = Map.delete(q, :cost)
     ci = put_in(ci.quantities, [q])
 
     conn = post conn, api_order_path(conn, :process_cart), %{user: user, cart: [ci]}
     response = json_response(conn, 422)
-    assert [%{"client_id" => "b33430", "message" => "Cost not included"}] == response["errors"]
+    assert [%{"product" => p.id, "message" => "Cost not included"}] == response["cart_errors"]
   end
 
-  test "does not create resource and renders errors with invalid cost", %{conn: conn, user: user, cart_item: ci, quantity: q} do
+  test "does not create resource and renders errors with invalid cost", %{conn: conn, product: p, user: user, cart_item: ci, quantity: q} do
     q = put_in(q.cost, 10)
     ci = put_in(ci.quantities, [q])
 
     conn = post conn, api_order_path(conn, :process_cart), %{user: user, cart: [ci]}
     response = json_response(conn, 422)
-    assert [%{"client_id" => "b33430", "message" => "Quantity cost is invalid for price: #{q.price_id}"}] == response["errors"]
+    assert [%{"product" => p.id, "message" => "Quantity cost is invalid for price: #{q.id}"}] == response["cart_errors"]
   end
 end
