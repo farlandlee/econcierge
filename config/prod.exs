@@ -13,9 +13,10 @@ use Mix.Config
 # which you typically run after static files are built.
 config :grid, Grid.Endpoint,
   http: [port: {:system, "PORT"}],
-  url: [host: "outpost-grid.herokuapp.com", port: 80],
+  url: [host: "book.outpostjh.com", port: 80],
   cache_static_manifest: "priv/static/manifest.json",
-  secret_key_base: System.get_env("SECRET_KEY_BASE")
+  secret_key_base: System.get_env("SECRET_KEY_BASE"),
+  force_ssl: [hsts: true]
 
 config :grid,
   postmark_server_token: {:system, "POSTMARK_SERVER_TOKEN"},
@@ -56,8 +57,8 @@ config :grid, Grid.Repo,
 # We also recommend setting `force_ssl`, ensuring no data is
 # ever sent via http, always redirecting to https:
 #
-#     config :grid, Grid.Endpoint,
-#       force_ssl: [hsts: true]
+    config :grid, Grid.Endpoint,
+      force_ssl: [hsts: true]
 #
 # Check `Plug.SSL` for all available options in `force_ssl`.
 
