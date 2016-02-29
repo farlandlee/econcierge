@@ -37,7 +37,7 @@
           min-width: 200px;
           border: 0;
           text-decoration: underline;
-          @include breakpoint (medium) {
+          @include breakpoint (large) {
             text-align:right;
           }
         }
@@ -56,7 +56,7 @@
   width: 100%;
   z-index: 100;
   background-color: $white;
-  @include breakpoint (large) {
+  @include breakpoint ( large ) {
     top: 61px;
   }
 }
@@ -70,6 +70,9 @@
   &.selected-experience {
     margin-top: 114px;
     @include breakpoint( medium ) {
+      margin-top: 95px;
+    }
+    @include breakpoint( large ) {
       margin-top: 54px;
     }
   }
