@@ -9,7 +9,7 @@ defmodule Grid.Endpoint do
   # when deploying your static files in production.
   plug Plug.Static,
     at: "/", from: :grid, gzip: false,
-    only: ~w(explore css fonts flaticon images js favicon.ico robots.txt)
+    only: ~w(explore css fonts flaticon images js robots.txt)
 
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.
