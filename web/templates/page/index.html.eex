@@ -55,11 +55,11 @@
               <div class="darken-overlay"></div>
               <div class="overlay-text">
                 <p>Snowmobiling</p>
-                <p class="small">Take a trip to Granite Hot Springs</p>
+                <p class="small">Take a trip into the Wyoming Wilderness</p>
               </div>
               <p class="booking-button">
                 <!-- TODO: Fix path path -->
-                <a href="<%= explore_path(@conn, :index, ["scenic_snowmobiling", "categories"]) %>">
+                <a href="<%= explore_path(@conn, :index, ["snowmobiling", "categories"]) %>">
                   Request to Book
                 </a>
               </p>
@@ -83,7 +83,7 @@
               </div>
               <p class="booking-button">
                 <!-- TODO: Fix path paths -->
-                <a href="<%= explore_path(@conn, :index, ["scenic_flight", "categories"]) %>">
+                <a href="<%= explore_path(@conn, :index, ["scenic_flights", "categories"]) %>">
                   Request to Book
                 </a>
               </p>
