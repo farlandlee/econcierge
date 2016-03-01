@@ -53,6 +53,13 @@ $ mix phoenix.gen.html
 ## Testing
 
   1. `mix test`
+  2. cd to client then `ember test -s`
+
+## Get Live Data for localhost
+
+  1. create backup of database `heroku pg:backups capture --app outpost-grid`
+  2. download backup ``curl -o latest.dump `heroku pg:backups public-url --app outpost-grid` ``
+  3. restore database locally `pg_restore --verbose --clean --no-acl --no-owner -h localhost -U postgres -d grid_dev latest.dump`
 
 ## Useful Links
 
