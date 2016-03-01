@@ -1,6 +1,15 @@
 defmodule Grid.Stripe do
   use GenServer
-  require Logger
+
+  #########
+  ## API ##
+  #########
+
+  def link_customer(customer, stripe_token), do:
+    GenServer.cast(__MODULE__, {:link_customer, %{customer: customer, source: stripe_token}})
+
+  def charge_customer(order_item), do:
+    GenServer.cast(__MODULE__, {:charge_customer, order_item})
 
   #########################
   ## GenServer Callbacks ##
@@ -10,15 +19,16 @@ defmodule Grid.Stripe do
     GenServer.start_link(__MODULE__, [], name: __MODULE__)
   end
 
-  def link_customer(customer, stripe_token), do:
-    GenServer.cast(__MODULE__, {:link_customer, %{customer: customer, source: stripe_token}})
-
   def init([]) do
     {:ok, %{}}
   end
 
   if Mix.env() == :test do
     def handle_cast({:link_customer, _}, state) do
+      {:noreply, state}
+    end
+
+    def handle_cast({:charge_customer, _}, state) do
       {:noreply, state}
     end
   end
@@ -43,6 +53,29 @@ defmodule Grid.Stripe do
     end
     def handle_cast({:link_customer, %{customer: %{stripe_id: id}, source: stripe_token}}, state) do
       {:ok, _} = Stripe.Customers.update(id, [source: stripe_token])
+
+      {:noreply, state}
+    end
+
+    @doc """
+    Charte customer for the order item amount.
+    """
+    def handle_cast({:charge_customer, %Grid.OrderItem{} = order_item}, state) do
+      order_item
+      = %{order: %{user: user}, product: product}
+      = Grid.Repo.preload(order_item, [order: :user, product: :vendor])
+
+      params = [
+        customer: user.stripe_id,
+        description: "#{product.name} - #{product.vendor.name}"
+      ]
+
+      cents = round(order_item.amount * 100)
+
+      {:ok, %{id: id}} = Stripe.Charges.create(cents, params)
+
+      Grid.OrderItem.charge_changeset(order_item, id)
+      |> Grid.Repo.update!
 
       {:noreply, state}
     end

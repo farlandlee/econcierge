@@ -1,23 +1,29 @@
 defmodule Postmark do
   use HTTPoison.Base
 
-
   ###############
   ##    API    ##
   ###############
+  def email(_, _, _, _, :test), do: nil
+  def email(to, body, subject, tag, :production), do: email(to, body, subject, tag)
+  def email(to, body, subject, tag, env),
+    do: email(to, body, "[#{env}] #{subject}", "[#{env}] #{tag}")
 
-  def email(to, body, subject \\ "Test") do
+
+  def email(to, body, subject, tag) do
     content = Poison.encode! %{
-      "From" => "matt.enlow@outpostjh.com",
+      "From" => "book@outpostjh.com",
       "To" => to,
+      "Bcc" => "book@outpostjh.com, jhopple@gmail.com",
       "Subject" => subject,
-      "Tag" => "Test Emails",
+      "Tag" => tag,
       "HtmlBody" => body
     }
+
     {:ok, %{status_code: 200, body: body}} = post("/email", content)
+
     body
   end
-
 
   ###############
   ## Callbacks ##

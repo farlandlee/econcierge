@@ -18,11 +18,20 @@ defmodule Grid.Factory do
   alias Grid.Product
   alias Grid.Season
   alias Grid.StartTime
+  alias Grid.User
   alias Grid.Vendor
   alias Grid.VendorActivity
 
   def random(), do: :random.uniform()
   def random(n), do: :random.uniform(n)
+
+  def factory(:user) do
+    %User{
+      name: sequence(:name, &"user-#{&1}"),
+      email: sequence(:email, &"email.#{&1}@outpostjh.com"),
+      phone: sequence(:phone, &"phone-#{&1}")
+    }
+  end
 
   def factory(:location) do
     %Location{
@@ -233,9 +242,8 @@ defmodule Grid.Factory do
   def create_user_order_for_product(user, %Product{} = product) do
     price = create(:price, product: product)
     amount = create(:amount, price: price)
-    st
-      = %{season: season}
-      = create_start_time(product: product)
+    st = %{season: season}
+       = create_start_time(product: product)
 
     quantity = 3
     cost = amount.amount * quantity
