@@ -9,6 +9,7 @@
 /client/tmp
 /rel
 web/static/assets/flaticon/flaticon.html
+latest.dump
 
 # Generate on crash by the VM
 erl_crash.dump
