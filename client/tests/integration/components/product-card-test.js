@@ -6,7 +6,7 @@ moduleForComponent('product-card', 'Integration | Component | product card', {
   integration: true
 });
 
-test('it renders duration', function(assert) {
+test('it renders the product card', function(assert) {
   this.set('product', Ember.Object.create());
   this.render(hbs`{{product-card product=product}}`);
 

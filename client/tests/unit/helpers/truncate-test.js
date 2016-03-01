@@ -8,7 +8,7 @@ const shortString = ["Buy FishCo's A superb Fly Fishing experience. Donec sodale
 // Replace this with your real tests.
 test('it works', function(assert) {
   let result = truncate(longString,{ limit: 180 });
-  assert.equal(result, "Buy FishCo's A superb Fly Fishing experience. Donec sodales sagittis magna. Nulla sit amet est. Cras non dolor. Pellentesque libero tortor, tincidunt et, tincidunt eget, semper ...");
+  assert.equal(result, "Buy FishCo's A superb Fly Fishing experience. Donec sodales sagittis magna. Nulla sit amet est. Cras non dolor. Pellentesque libero tortor, tincidunt et, tincidunt eget, semper...");
 });
 
 test('it works with null text', function(assert){

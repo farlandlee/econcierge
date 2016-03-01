@@ -22,9 +22,7 @@
     <p>{{link-to product.name "explore.experience.products.book" product}}</p>
   </div>
   {{product-icons product=product}}
-  <div class="product-description column small-12">
-    <p>{{truncate product.description limit=180}}</p>
-  </div>
+  {{product-description product=product}}
   {{price-display price=product.defaultPrice}}
   {{#if (gt product.prices.length 1)}}
   <div class="columns small-12 more-prices">
