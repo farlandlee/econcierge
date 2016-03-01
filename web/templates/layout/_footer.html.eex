@@ -1,11 +1,11 @@
 <footer class="page-footer">
   <div class="row expanded">
-    <div class="small-12 medium-3 columns">
+    <div class="small-12 medium-3 columns text-center">
       <div class="logo image">
         <a href="/"><img src="/images/full-logo-450.png" alt="Outpost"></a>
       </div>
     </div>
-    <div class="small-12 medium-6 columns">
+    <div class="small-12 medium-6 columns text-center">
       <div class="creds">
         <a href="http://outpostjh.com">Outpost Jackson Hole</a> &bull; <a href="https://goo.gl/maps/PndaX" target="_blank" >70 s. king street jackson, wyoming 83001</a> &bull;
         <a href="tel:3075904790"><span class="flaticon-telephone5"></span>(307) 690-4790</a> &bull;
@@ -14,6 +14,14 @@
       </div>
     </div>
     <div class="small-12 medium-3 columns">
+      <%= if assigns[:is_home] do %>
+      <% # @TODO make this only appear on home and experience pages, not other explore pages %>
+      <div class="row align-stretch align-center tripadvisor-logo text-center small-collapse">
+        <div class="columns small-7 medium-10 large-7">Ratings and Reviews powered by</div>
+        <div class="columns small-7 medium-10 large-7"><img src="<%= static_path(Grid.Endpoint, "/images/tripadvisor.png") %>"/></div>
+        <div class="columns small-7 medium-10 large-7"><a href="http://tripadvisor.com/pages/terms.html">&copy; TripAdvisor 2015</a></div>
+      </div>
+      <% end %>
     </div>
   </div>
 </footer>
