@@ -20,7 +20,7 @@
 
           <%= render @view_module, @view_template, assigns %>
 
-          <%= render "_footer.html" %>
+          <%= render "_footer.html", assigns %>
         </div>
       </div>
     </div>

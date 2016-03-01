@@ -3,6 +3,6 @@ defmodule Grid.PageController do
 
   plug Grid.Plugs.AssignAvailableActivities
 
-  def index(conn, _), do: render(conn, "index.html")
+  def index(conn, _), do: render(conn, "index.html", is_home: true)
   def tou(conn, _), do: render(conn)
 end

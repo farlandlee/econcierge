@@ -30,9 +30,6 @@
       color: $light-gray;
     }
   }
-  .columns {
-    text-align: center;
-  }
   .creds {
     margin: 2rem auto;
     @include breakpoint( medium ) {

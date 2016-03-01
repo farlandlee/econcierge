@@ -374,3 +374,23 @@ a.more-info {
     padding-right: 4rem;
   }
 }
+
+.tripadvisor-logo {
+  font-size: 0.6rem;
+  line-height: 12px;
+  .columns {
+    color: $black;
+    background-color: $white;
+    &:first-of-type {
+      padding-top: 6px;
+    }
+    &:last-of-type {
+      font-size: 0.8rem;
+      padding-top: 6px;
+      background-color: transparent;
+    }
+  }
+  img {
+    width: 150px;
+  }
+}
