@@ -98,6 +98,8 @@ export default Ember.Component.extend({
         stripe_token: id
       });
 
+      document.getElementById('submit-request').setAttribute("disabled", "disabled");
+
       return this.placeOrder(payload);
     }, ({error}) => {
       return this.set('cardErrorMessage', error.message);
