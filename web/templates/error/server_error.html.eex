@@ -9,7 +9,7 @@
 
     <title>Outpost | Jackson Hole eConcierge</title>
     <link rel="stylesheet" href="<%= static_path(Grid.Endpoint, "/css/app.css") %>">
-    <link rel="icon" href="<%= static_path(Grid.Endpoint,"/favicon.ico") %>" type="image/gif" sizes="16x16">
+    <link rel="icon" href="<%= static_path(Grid.Endpoint,"/images/favicon.ico") %>" type="image/gif" sizes="16x16">
   </head>
 
   <body>
