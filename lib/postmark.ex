@@ -5,7 +5,7 @@ defmodule Postmark do
   ##    API    ##
   ###############
   def email(_, _, _, _, :test), do: nil
-  def email(to, body, subject, tag, :production), do: email(to, body, subject, tag)
+  def email(to, body, subject, tag, :prod), do: email(to, body, subject, tag)
   def email(to, body, subject, tag, env),
     do: email(to, body, "[#{env}] #{subject}", "[#{env}] #{tag}")
 
