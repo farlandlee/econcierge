@@ -12,7 +12,7 @@ config :grid,
   tripadvisor_api_key: "disabled",
   google_client_secret: {:system, "GOOGLE_CLIENT_SECRET"},
   google_client_id: {:system, "GOOGLE_CLIENT_ID"},
-  notify_vendors: false
+  notify_vendors: true
 
 # Configures the endpoint
 config :grid, Grid.Endpoint,
