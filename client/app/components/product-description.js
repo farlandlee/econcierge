@@ -1,6 +1,7 @@
 import Ember from 'ember';
+import {truncate} from 'client/helpers/truncate';
 
-const {computed} = Ember;
+const {computed} = Ember;  //this acts as an alias to the compute method in ember
 
 export default Ember.Component.extend({
   tagName: '',
@@ -12,7 +13,7 @@ export default Ember.Component.extend({
       let limit = 160;
       let output = description;
       if (output !== undefined && output !== null && output.length > limit){
-        output = output.substr(0, limit - 3).trimRight() + "...";
+        output = truncate([output], {limit: limit});
       }
       return output;
     }
