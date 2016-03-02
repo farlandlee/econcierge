@@ -38,6 +38,18 @@
           &.shopping-cart {
             padding-top: 17px;
           }
+          &.button {
+            margin-top: 10px;
+            line-height: 1.2px;
+				    height: auto;
+				    padding: 20px 10px;
+				    color: $primary-color;
+						border: 1px solid $primary-color;
+				    &:hover {
+  					  color: $secondary-color;
+  					  border: 1px solid $secondary-color;
+				    }
+          }
         }
       }
     }
