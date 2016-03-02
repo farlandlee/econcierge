@@ -13,7 +13,7 @@ module.exports = function(environment) {
       }
     },
 
-    stripePublishableKey: 'pk_live_xH0VpyWMmobdSGOdZGbeEvjE', // TODO: Use env, but can't figure it out on heroku
+    stripePublishableKey: 'pk_test_b43KzmrhHOT2zqdUFk7bZeG0', // TODO: Use env, but can't figure it out on heroku
 
     rollbar: {
       enabled: environment === 'production',
@@ -49,6 +49,10 @@ module.exports = function(environment) {
     ENV.APP.LOG_VIEW_LOOKUPS = false;
 
     ENV.APP.rootElement = '#ember-testing';
+  }
+
+  if (environment === 'production') {
+    ENV.stripePublishableKey = 'pk_live_xH0VpyWMmobdSGOdZGbeEvjE';
   }
 
   return ENV;
