@@ -15,7 +15,8 @@ config :grid, Grid.Endpoint,
   http: [port: {:system, "PORT"}],
   url: [host: "outpost-grid.herokuapp.com", port: 80],
   cache_static_manifest: "priv/static/manifest.json",
-  secret_key_base: System.get_env("SECRET_KEY_BASE")
+  secret_key_base: System.get_env("SECRET_KEY_BASE"),
+  notify_vendors: true
 
 config :grid,
   tripadvisor_api_key: {:system, "TRIPADVISOR_API_KEY"}

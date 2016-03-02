@@ -12,6 +12,7 @@ config :grid, Grid.Endpoint,
   code_reloader: true,
   cache_static_lookup: false,
   check_origin: false,
+  notify_vendors: false,
   watchers: [
     node: ["node_modules/brunch/bin/brunch", "watch", "--stdin"]
   ]
