@@ -115,6 +115,15 @@ form.link, form.button {
     float: right;
   }
 }
+.header-action-2 {
+  position: absolute;
+  top: 56px;
+  right: 170px;
+  @media screen and (max-width: 599px) {
+    position: static;
+    float: right;
+  }
+}
 
 .dropdown.actions .dropdown-menu>li>a:hover,
 /* fix for delete button in bootstrap dropdown */

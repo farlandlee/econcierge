@@ -123,6 +123,19 @@ defmodule Grid.Admin.VendorController do
     |> redirect(to: admin_vendor_path(conn, :show, vendor))
   end
 
+  def refresh_all(conn, _) do
+    vendors = Repo.all(Vendor)
+
+    Enum.each(vendors, fn(v) ->
+      %{v | tripadvisor_should_update: true}
+      |> TripAdvisor.update_vendor()
+    end)
+
+    conn
+    |> put_flash(:info, "TripAdvisor information updating. Check back soon.")
+    |> redirect(to: admin_vendor_path(conn, :index))
+  end
+
   #############
   ## Helpers ##
   #############

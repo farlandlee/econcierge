@@ -9,10 +9,13 @@
     must conform to tripadvisor requirements,
     see https://developer-tripadvisor.com/content-api/display-requirements/
     --}}
-      {{#if vendor.tripadvisorUrl}}
+      {{#if vendor.hasTripadvisor}}
       <p class="tripadvisor-text">TripAdvisor Traveler Rating</p>
       <img class="tripadvisor-rating-image" src="{{vendor.tripadvisorRatingImageUrl}}">
-      <a href="{{vendor.tripadvisorUrl}}" class="tripadvisor-reviews-count" target="_blank">{{vendor.tripadvisorReviewsCount}} Reviews</a>
+      <div class="row">
+        <a href="{{vendor.tripadvisorUrl}}" class="tripadvisor-reviews-count columns small-12 large-6" target="_blank">{{vendor.tripadvisorReviewsCount}} Reviews</a>
+        <a href="{{vendor.tripadvisorReviewUrl}}" class="tripadvisor-reviews-count columns small-12 large-6" target="_blank">Write a Review</a>
+      </div>
       {{/if}}
     {{/with}}
   </div>

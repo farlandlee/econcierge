@@ -23,7 +23,7 @@
   <%= if @vendor.tripadvisor_location_id do %>
   <div class="col-md-4">
     <h4>
-      TripAdvisor
+      TripAdvisor  <%= link "Refresh", to: admin_vendor_path(@conn, :refresh, @vendor), class: "btn btn-default btn-xs" %>
     </h4>
   <%= unless @vendor.tripadvisor_rating do %>
     <p class="bg-warning">
@@ -44,6 +44,9 @@
 
       <dt>TripAdvisor Page</td>
       <dd><%= if url = @vendor.tripadvisor_url, do: link "Open in new tab", to: url, target: "_blank" %></dd>
+
+      <dt>TA Review Page</td>
+      <dd><%= if url = @vendor.tripadvisor_review_url, do: link "Open in new tab", to: url, target: "_blank" %></dd>
     </dl>
   </div>
   <% end %>

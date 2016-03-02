@@ -133,6 +133,7 @@ defmodule Grid.Router do
       put "/images/:id/default", ImageController, :set_default
     end
 
+    get "/vendors/refresh_all", VendorController, :refresh_all
     get "/vendors/:id/refresh", VendorController, :refresh
     resources "/vendors",   VendorController, [alias: Vendor] do
       pipe_through :assign_vendor

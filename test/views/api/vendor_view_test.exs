@@ -6,6 +6,7 @@ defmodule Grid.Api.VendorViewTest do
   @rendered_keys ~w(
   id name description slug cancellation_policy_days
   tripadvisor_url
+  tripadvisor_review_url
   tripadvisor_rating
   tripadvisor_reviews_count
   tripadvisor_rating_image_url
