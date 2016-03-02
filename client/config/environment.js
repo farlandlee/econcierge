@@ -13,7 +13,7 @@ module.exports = function(environment) {
       }
     },
 
-    stripePublishableKey: 'pk_test_b43KzmrhHOT2zqdUFk7bZeG0', // TODO: Use env, but can't figure it out on heroku
+    stripePublishableKey: 'pk_live_xH0VpyWMmobdSGOdZGbeEvjE', // TODO: Use env, but can't figure it out on heroku
 
     rollbar: {
       enabled: environment === 'production',
