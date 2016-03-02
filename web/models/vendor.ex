@@ -15,6 +15,7 @@ defmodule Grid.Vendor do
 
     field :tripadvisor_location_id, :string
     field :tripadvisor_url, :string
+    field :tripadvisor_review_url, :string
     field :tripadvisor_rating, :float
     field :tripadvisor_rating_image_url, :string
     field :tripadvisor_reviews_count, :integer
@@ -56,6 +57,7 @@ defmodule Grid.Vendor do
     case fetch_change(changeset, :tripadvisor_location_id) do
       {:ok, nil} -> changeset
         |> put_change(:tripadvisor_url, nil)
+        |> put_change(:tripadvisor_review_url, nil)
         |> put_change(:tripadvisor_rating, nil)
         |> put_change(:tripadvisor_rating_image_url, nil)
         |> put_change(:tripadvisor_reviews_count, nil)
@@ -97,6 +99,7 @@ defmodule Grid.Vendor do
 
   @required_tripadvisor_fields ~w(
     tripadvisor_url
+    tripadvisor_review_url
     tripadvisor_rating
     tripadvisor_rating_image_url
     tripadvisor_reviews_count

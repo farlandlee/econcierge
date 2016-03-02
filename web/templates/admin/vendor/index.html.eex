@@ -1,6 +1,9 @@
 <%= link to: admin_vendor_path(@conn, :new), class: "btn btn-success header-action" do %>
   <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> New Vendor
 <% end %>
+<%= link to: admin_vendor_path(@conn, :refresh_all), class: "btn btn-default header-action-2" do %>
+  Refresh TripAdvisor
+<% end %>
 
 
 <div class="well center-block">
@@ -49,6 +52,9 @@
           <ul class="dropdown-menu dropdown-menu-right">
             <li>
               <%= link "Edit", to: admin_vendor_path(@conn, :edit, vendor), class: "edit" %>
+            </li>
+            <li>
+              <%= link "Refresh", to: admin_vendor_path(@conn, :refresh, vendor), class: "refresh" %>
             </li>
             <li>
               <%= link "Delete", to: admin_vendor_path(@conn, :delete, vendor), method: :delete, data: [confirm: "Are you sure?"], class: "delete" %>

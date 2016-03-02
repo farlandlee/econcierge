@@ -81,7 +81,8 @@ defmodule TripAdvisor do
       tripadvisor_rating: params["rating"],
       tripadvisor_rating_image_url: params["rating_image_url"],
       tripadvisor_reviews_count: params["num_reviews"],
-      tripadvisor_url: params["web_url"]
+      tripadvisor_url: params["web_url"],
+      tripadvisor_review_url: params["write_review"]
     }
   end
 end
