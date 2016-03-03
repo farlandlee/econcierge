@@ -464,6 +464,8 @@
                                   <p class="template-label" style="color: #000; font-family: Helvetica, Arial, sans-serif; font-weight: normal; text-align: left; line-height: 19px; font-size: 18px; margin: 0 0 6px; padding: 0;" align="left">Vendor</p>
                                   <p style="color: #999; font-family: Helvetica, Arial, sans-serif; font-weight: normal; text-align: left; line-height: 19px; font-size: 14px; margin: 0 0 10px; padding: 0;" align="left">
                                     <%= @order_item.product.vendor.name %><br/>
+                                    <a href="tel:<%= @order_item.product.vendor.telephone %>"><%= @order_item.product.vendor.telephone %></a><br/>
+                                    <a href="<%= @order_item.product.vendor.website %>"><%= @order_item.product.vendor.website %></a><br/>
                                   </td>
                                 </tr>
                               </table>

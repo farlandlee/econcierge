@@ -28,6 +28,24 @@
   </div>
 
   <div class="form-group">
+    <%= label f, :website, "Website", class: "control-label" %>
+    <div class="input-group">
+      <span class="input-group-addon" >http://</span>
+      <%= text_input f, :website, class: "form-control" %>
+    </div>
+    <%= error_tag f, :website %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :telephone, "Telephone", class: "control-label" %>
+    <%= text_input f, :telephone, class: "form-control" %>
+    <%= error_tag f, :telephone %>
+    <span id="helpBlock" class="help-block">
+      Main office telephone number where customers should call for assistance after booking.
+    </span>
+  </div>
+
+  <div class="form-group">
     <%= label f, :cancellation_policy_days, "Cancelation Policy", class: "control-label" %>
 
     <div class="input-group">

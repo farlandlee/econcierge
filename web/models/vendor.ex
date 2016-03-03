@@ -10,6 +10,8 @@ defmodule Grid.Vendor do
     field :description, :string
     field :slug, :string
     field :notification_email, :string
+    field :website, :string
+    field :telephone, :string
     field :cancellation_policy_days, :integer, default: 2
     field :admin_notes, :string
 
@@ -71,6 +73,8 @@ defmodule Grid.Vendor do
     admin_notes
     default_image_id
     notification_email
+    website
+    telephone
     slug
     tripadvisor_location_id
   )
@@ -92,6 +96,8 @@ defmodule Grid.Vendor do
     |> validate_length(:notification_email, min: 1, max: 255)
     |> validate_format(:notification_email, ~r/(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)/)
     |> validate_format(:tripadvisor_location_id, ~r/^[^d]/, message: "Cannot start with the letter d")
+    |> validate_format(:website, ~r/(^([a-zA-Z0-9_.+-]+\.)?[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)/)
+    |> validate_format(:telephone, ~r/^\(?\d{3}\)?([\s.-])?\d{3}([\s.-])?\d{4}$/, message: "Please include full 10 digit number in this format (###) ###-####")
     |> foreign_key_constraint(:default_image_id)
     |> maybe_mark_for_tripadvisor_update
     |> cast_slug
