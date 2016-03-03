@@ -48,6 +48,13 @@ export default Ember.Component.extend({
     set (_key, value) {return value;}
   }),
 
+  processing: false,
+  disableSubmit: computed('processing', 'valid', {
+    get () {
+      return this.get('processing') || !this.get('valid');
+    }
+  }),
+
   submit (event) {
     event.preventDefault();
 
@@ -77,6 +84,8 @@ export default Ember.Component.extend({
       name: this.get('ccName')
     };
 
+    this.set('processing', true);
+
     return new Ember.RSVP.Promise(function (resolve, reject) {
       Stripe.card.createToken(card, (status, response) => {
         if (response.error) {
@@ -98,10 +107,9 @@ export default Ember.Component.extend({
         stripe_token: id
       });
 
-      document.getElementById('submit-request').setAttribute("disabled", "disabled");
-
       return this.placeOrder(payload);
     }, ({error}) => {
+      this.set('processing', false);
       return this.set('cardErrorMessage', error.message);
     });
   },
@@ -123,6 +131,8 @@ export default Ember.Component.extend({
         this.get('cart').forEach(i => i.destroyRecord());
         this.set('cartErrors', responseJSON.cart_errors);
       }
+
+      this.set('processing', false);
 
       return;
     });

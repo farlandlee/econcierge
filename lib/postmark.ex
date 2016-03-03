@@ -14,7 +14,7 @@ defmodule Postmark do
     content = Poison.encode! %{
       "From" => "book@outpostjh.com",
       "To" => to,
-      "Bcc" => "book@outpostjh.com, jhopple@gmail.com",
+      "Bcc" => "book@outpostjh.com",
       "Subject" => subject,
       "Tag" => tag,
       "HtmlBody" => body
