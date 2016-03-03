@@ -12,9 +12,9 @@ defmodule Postmark do
 
   def email(to, body, subject, tag) do
     content = Poison.encode! %{
-      "From" => "book@outpostjh.com",
+      "From" => Grid.fetch_env!(:booking_emails_from),
       "To" => to,
-      "Bcc" => "book@outpostjh.com",
+      "Bcc" => Grid.fetch_env!(:booking_emails_bcc),
       "Subject" => subject,
       "Tag" => tag,
       "HtmlBody" => body
