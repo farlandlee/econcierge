@@ -15,6 +15,12 @@
       <dt>Notification Email</dt>
       <dd><%= @vendor.notification_email %></dd>
 
+      <dt>Telephone</dt>
+      <dd><%= @vendor.telephone %></dd>
+
+      <dt>Website</dt>
+      <dd><%= @vendor.website %></dd>
+
       <dt>Internal Notes</dt>
       <dd><%= @vendor.admin_notes %></dd>
     </dl>
