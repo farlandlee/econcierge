@@ -11,7 +11,8 @@ config :grid,
   postmark_server_token: {:system, "POSTMARK_API_TOKEN"},
   tripadvisor_api_key: "disabled",
   google_client_secret: {:system, "GOOGLE_CLIENT_SECRET"},
-  google_client_id: {:system, "GOOGLE_CLIENT_ID"}
+  google_client_id: {:system, "GOOGLE_CLIENT_ID"},
+  notify_vendors: false
 
 # Configures the endpoint
 config :grid, Grid.Endpoint,
