@@ -24,10 +24,23 @@ defmodule Grid.EmailView do
     end
   end
 
-  def location(%{meeting_location: location}) do
-    case location do
-      nil -> "Pickup"
-      _ -> "#{location.address1}, #{location.city}, #{location.state} #{location.zip}"
+  def location(%{meeting_location: loc}) do
+    if loc do
+      ~E"""
+      Vendor Office:
+      <%= loc.address1 %>,
+      <%= if a2=loc.address2 do %>
+        <%= a2 %>,
+      <% end %>
+      <%= loc.city %>,
+      <%= loc.state %>
+      <%= loc.zip %>
+      """
+    else
+      ~E"""
+      Pick Up:
+      Vendor will contact you the day before to arrange pickup details
+      """
     end
   end
 end
