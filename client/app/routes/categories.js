@@ -27,10 +27,9 @@ export default Ember.Route.extend(NotFoundMixin, ResetScrollMixin, {
     // if there's only one category for the activity,
     // immediately select that category
     if (categories.get('length') === 1) {
-      this.replaceWith('dateRedirect', {
-        category: categories.get('firstObject'),
-        activity: activity
-      });
+      let activitySlug = activity.get('slug');
+      let categorySlug = categories.get('firstObject.slug');
+      this.replaceWith('explore', activitySlug, categorySlug);
     }
   },
 

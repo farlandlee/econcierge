@@ -73,9 +73,18 @@ vendor_tuples = [
   {"SnowMoCo", "Do you know what the street value of this mountain is?", "Snowmobiling"}
 ]
 for {name, desc, act_name} <- vendor_tuples, activity = Repo.get_by!(Activity, name: act_name) |> Repo.preload([:categories, :experiences]) do
+  # tripadvisor data is from Fish the Fly in Jackson Hole
   vendor = %Vendor{}
-  |> Vendor.changeset(%{name: name, description: desc})
-  |> Repo.insert!
+    |> Vendor.changeset(%{name: name, description: desc, tripadvisor_location_id: "3396800"})
+    |> Repo.insert!
+    |> Vendor.tripadvisor_changeset(%{
+      tripadvisor_url: "http://www.tripadvisor.com/Attraction_Review-g60491-d3396800-Reviews-Fish_the_Fly-Jackson_Jackson_Hole_Wyoming.html",
+      tripadvisor_review_url: "https://www.tripadvisor.com/UserReviewEdit-g60491-d3396800-Fish_the_Fly-Jackson_Jackson_Hole_Wyoming.html",
+      tripadvisor_rating: 5.0,
+      tripadvisor_rating_image_url: "http://www.tripadvisor.com/img/cdsi/img2/ratings/traveler/5.0-29492-5.png",
+      tripadvisor_reviews_count: 1337
+    })
+    |> Repo.update!
 
 
   va = %VendorActivity{

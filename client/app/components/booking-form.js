@@ -11,11 +11,12 @@ export default Component.extend({
   quantities: null,
   time: null,
 
-  canSubmit: computed('time', 'quantities.@each.quantity', 'product.prices.[]', {
+  canSubmit: computed('total', 'time', 'quantities.@each.quantity', 'product.prices.[]', {
     get () {
       let valid = true;
       let prices = this.get('product.prices');
       let quantities = this.get('quantities');
+      let total = this.get('total');
       prices.forEach(price => {
         let amounts = price.amounts;
         let {quantity} = quantities.findBy('id', price.id);
@@ -24,7 +25,7 @@ export default Component.extend({
         }
       });
       if (valid) {
-        valid = !!this.get('time');
+        valid = !!this.get('time') && total > 0;
       }
       return valid;
     }

@@ -32,6 +32,9 @@
     label{
       text-align: left;
     }
+    .date, .time {
+      max-width: 256px;
+    }
   }
   .meeting-address {
     color: $dark-gray;

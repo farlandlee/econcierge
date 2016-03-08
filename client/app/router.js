@@ -8,9 +8,8 @@ const Router = Ember.Router.extend({
 Router.map(function () {
   this.route('activities');
   this.route('categories', {path: ':activity_slug/categories'});
-  this.route('dateRedirect', {path: ':activity_slug/:category_slug'});
 
-  this.route('explore', {path: ':activity_slug/:category_slug/:date'}, function () {
+  this.route('explore', {path: ':activity_slug/:category_slug'}, function () {
     this.route('default-experience', {path: '/'});
     this.route('experience', {path: ':experience_slug'}, function () {
       this.route('products', {path: '/'}, function () {
