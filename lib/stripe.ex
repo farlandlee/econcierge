@@ -67,7 +67,7 @@ defmodule Grid.Stripe do
 
       params = [
         customer: user.stripe_id,
-        description: "#{product.name} - #{product.vendor.name}"
+        description: String.replace("#{product.name} - #{product.vendor.name}", "&", "%26")
       ]
 
       cents = round(order_item.amount * 100)
