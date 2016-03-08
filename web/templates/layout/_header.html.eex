@@ -9,7 +9,7 @@
         <ul class="menu" >
           <li class="logo"><a href="/">Outpost</a></li>
           <li><a href="http://www.outpostjh.com/rentals/">Lodging</a></li>
-          <li><%= link "Activities", to: explore_path(Grid.Endpoint, :index, ["activities"]) %></li>
+          <li><%= link "Activities", to: explore_path(Grid.Endpoint, :index, ["activities"]), class: assigns[:activities_class] %></li>
           <li><a href="http://itswhatwedohere.com">Journal</a></li>
           <li><a href="http://www.outpostjh.com/about/">About Us</a></li>
         </ul>

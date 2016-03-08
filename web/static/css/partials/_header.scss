@@ -29,7 +29,7 @@
           padding-top: 0;
           padding-bottom: 0;
           text-transform: uppercase;
-          &:hover {
+          &:hover, &.active {
             border-bottom: 4px solid $primary-color;
           }
           &:not(.shopping-cart) {
