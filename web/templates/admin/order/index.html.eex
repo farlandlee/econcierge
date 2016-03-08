@@ -4,19 +4,29 @@
       <th>#</th>
       <th>Reference Id</th>
       <th>User</th>
-      <th>Total amount</th>
+      <th># of items</th>
+      <th># accepted</th>
+      <th># rejected</th>
+      <th>Processed / Total amount</th>
       <th>Placed On</th>
 
       <th></th>
     </tr>
   </thead>
   <tbody>
-<%= for order <- @orders do %>
+<%= for order <- @orders,
+        accepted_items = order |> items_with_status("accepted"),
+        rejected_items = order |> items_with_status("rejected"),
+        amount_processed = Enum.reduce(accepted_items, 0, fn i, t -> i.amount + t end)
+    do %>
     <tr>
       <td><%= order.id %></td>
       <td><%= link order.customer_token, to: admin_order_path(@conn, :show, order) %></td>
       <td><%= order.user.email %></td>
-      <td>$<%= order.total_amount %></td>
+      <td><%= Enum.count(order.order_items) %></td>
+      <td><%= Enum.count(accepted_items) %></td>
+      <td><%= Enum.count(rejected_items) %></tdh>
+      <td>$<%= amount_processed %>/$<%= order.total_amount %></td>
       <td><%= order.inserted_at %></td>
 
       <td class="text-right">

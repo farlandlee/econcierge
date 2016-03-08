@@ -239,6 +239,20 @@ defmodule Grid.Factory do
     create_start_time %{season: season, product: product}
   end
 
+  def create_user_order_for_product() do
+    user = create(:user)
+    product = create(:product)
+    order = create_user_order_for_product(user, product)
+    item = order.order_items |> hd
+
+    [
+      user: user,
+      product: product,
+      order: order,
+      order_item: item
+    ]
+  end
+
   def create_user_order_for_product(user, %Product{} = product) do
     price = create(:price, product: product)
     amount = create(:amount, price: price)
