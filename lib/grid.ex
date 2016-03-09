@@ -29,6 +29,7 @@ defmodule Grid do
   If the value is configured to a `{:system, some_env_var :: string}` tuple in config.exs,
   the returned value will be the value of `System.get_env(some_env_var)`.
   """
+  @spec get_env(Atom.t, term) :: term
   def get_env(key, default \\ nil) do
     case Application.get_env(:grid, key, default) do
       {:system, sys_env} -> System.get_env(sys_env) || default
@@ -37,6 +38,7 @@ defmodule Grid do
   end
 
   @doc "wraps `get_env/2` in {:ok, result} tuple or else :error if not found"
+  @spec fetch_env(Atom.t) :: {:ok, term} | :error
   def fetch_env(key) do
     case get_env(key, :error) do
       :error -> :error

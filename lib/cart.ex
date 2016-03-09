@@ -57,7 +57,7 @@ defmodule Grid.Cart do
           product_id: product.id,
           activity_at: activity_at,
           amount: sub_total,
-          quantities: %{items: quantities}
+          quantities: %{"items" => quantities}
         }}
       {:error, error} -> {:error, error}
     end
@@ -73,7 +73,7 @@ defmodule Grid.Cart do
 
     {params, sub_total} = Enum.map_reduce(quants, 0, fn(q, acc) ->
       case extract_quantity(q, prices) do
-        {:ok, params} -> {params, acc + params.sub_total}
+        {:ok, params} -> {params, acc + params["sub_total"]}
         {:error, error} -> throw(error)
       end
     end)
@@ -104,17 +104,16 @@ defmodule Grid.Cart do
   def extract_with_amount(_, _, nil), do: {:error, "Amount not found"}
   def extract_with_amount(%{"cost" => cost, "quantity" => quantity}, price, amount) do
     total = amount.amount * quantity
-    cond do
-      total == cost ->
-        {:ok, %{
-          price_id: price.id,
-          sub_total: cost,
-          quantity: quantity,
-          price_name: price.name,
-          price_people_count: price.people_count
-        }}
-      total != cost ->
-        {:error, "Quantity cost is invalid for price: #{price.id}"}
+    if total == cost do
+      {:ok, %{
+        "price_id" => price.id,
+        "sub_total" => cost,
+        "quantity" => quantity,
+        "price_name" => price.name,
+        "price_people_count" => price.people_count
+      }}
+    else
+      {:error, "Quantity cost is invalid for price: #{price.id}"}
     end
   end
   def extract_with_amount(_, _, _), do: {:error, "Cost not included"}

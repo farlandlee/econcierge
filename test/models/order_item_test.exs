@@ -13,9 +13,9 @@ defmodule Grid.OrderItemTest do
     amount: 120.5,
     client_id: "af0de8",
     quantities: %{
-      items: [
-        %{price_id: 1, sub_total: 120.5, quantity: 3,
-          price_name: "Adults", price_people_count: 1}
+      "items" => [
+        %{"price_id" => 1, "sub_total" => 120.5, "quantity" => 3,
+          "price_name" => "Adults", "price_people_count" => 1}
       ]
     }
   }

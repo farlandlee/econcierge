@@ -4,13 +4,16 @@ defmodule Postmark do
   ###############
   ##    API    ##
   ###############
-  def email(_, _, _, _, :test), do: nil
-  def email(to, body, subject, tag, :prod), do: email(to, body, subject, tag)
-  def email(to, body, subject, tag, env),
-    do: email(to, body, "[#{env}] #{subject}", "[#{env}] #{tag}")
-
 
   def email(to, body, subject, tag) do
+    case Grid.get_env(:env) do
+      :test -> :ok
+      :prod -> do_email(to, body, subject, tag)
+      env -> do_email(to, body, "[#{env}] #{subject}", "[#{env}] #{tag}")
+    end
+  end
+
+  defp do_email(to, body, subject, tag) do
     content = Poison.encode! %{
       "From" => Grid.fetch_env!(:booking_emails_from),
       "To" => to,
