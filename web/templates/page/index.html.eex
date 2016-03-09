@@ -5,7 +5,7 @@
       <div class="small-12 columns search-bar" >
         <div class="row small-collapse align-center expanded">
           <div class="small-12 columns">
-            <div class="search-label">Book your Adventure <span>in Jackson Hole</span></div>
+            <div class="search-label">Book Your Adventure <span>in Jackson Hole</span></div>
           </div>
           <div class="small-12 medium-10 large-8 columns form-group">
             <label for="activity[id]">Explore</label>
@@ -74,16 +74,16 @@
             </a>
           </div>
           <div class="column small-12 medium-8">
-            <div class="double-wide fly-cta">
+            <div class="double-wide snowshoeing-cta">
               <div class="darken-overlay"></div>
               <div class="overlay-text">
-                <p>Scenic Flights</p>
-                <p>Alpenglow Sunset Tour</p>
-                <p class="small">By Fly Jackson Hole</p>
+                <p>Snowshoeing</p>
+                <p>Grand Teton National Park</p>
+                <p class="small">By Hole Hiking Experience</p>
               </div>
               <p class="booking-button">
                 <!-- TODO: Fix path paths -->
-                <a href="<%= explore_path(@conn, :index, ["scenic_flights", "categories"]) %>">
+                <a href="<%= explore_path(@conn, :index, ["snowshoeing", "categories"]) %>">
                   Request to Book
                 </a>
               </p>
