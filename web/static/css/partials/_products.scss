@@ -11,20 +11,30 @@ $bookings-blue: #77BAF0;
 }
 .products {
   > .columns {
-    margin-bottom: 2rem;
-    display: flex;
-    flex-direction: column;
+    margin: 1rem 1rem;
     position: relative;
+    background-color: $white;
+    border-radius: 12px;
+    padding-left: 0;
+    padding-right: 0;
+    flex-shrink: 1;
+    @include breakpoint (medium) {
+      margin: 1rem 1.5rem;
+      min-width: 340px;
+      max-width:340px;
+    }
+    @include breakpoint (large) {
+      margin: 1rem 2rem;
+
+    }
   }
 }
 .product {
-  background-color: $white;
-  border-radius: 12px;
-  max-width: 340px;
-  width: 100%;
+  max-width: 100%;
+  width: 340px;
   height:100%;
-  margin: 0 auto;
-  flex: 1;
+  margin: 0;
+  flex: 0 2 340px;
   position: relative;
   padding-bottom: 88px;
   .product-header,
