@@ -25,7 +25,7 @@
         </div>
         <div class="element-description column">
           <p>
-            {{#link-to 'dateRedirect' (hash activity=activity category=category) tagName="button"}}
+            {{#link-to 'explore' activity.slug category.slug tagName="button"}}
               <span>{{category.description}}</span>
             {{/link-to}}
           </p>

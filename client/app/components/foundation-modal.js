@@ -38,7 +38,13 @@ export default Ember.Component.extend({
         .attr({ 'tabindex': -1, 'aria-hidden': true })
         .on('click.zf.reveal', function (e) {
           // modified from a c/p of foundation's code
-          if (e.target === reveal.$element[0] || Ember.$.contains(reveal.$element[0], e.target)) {
+          if (
+            e.target === reveal.$element[0] ||
+            Ember.$.contains(reveal.$element[0], e.target) ||
+            // this line is custom. makes foundation modal
+            // play nice with an embedded flatpickr
+            e.isDefaultPrevented()
+          ) {
             return;
           }
           reveal.close();

@@ -1,26 +1,8 @@
 import Ember from 'ember';
 import momentCP from 'ember-moment/computeds/moment';
+import {startTimeFilterForDate} from 'client/utils/time';
 
 const {computed} = Ember;
-
-const dayOfTheWeek = function dayOfTheWeek(momentDate) {
-  switch (momentDate.day()) {
-    case 0:
-      return "sunday";
-    case 1:
-      return "monday";
-    case 2:
-      return "tuesday";
-    case 3:
-      return "wednesday";
-    case 4:
-      return "thursday";
-    case 5:
-      return "friday";
-    case 6:
-      return "saturday";
-  }
-};
 
 export default Ember.Component.extend({
   date: null,
@@ -31,13 +13,8 @@ export default Ember.Component.extend({
     get () {
       let times = this.get('times');
       let date = this.get('momentDate');
-      return times.filter(time => {
-        let {start_date, end_date} = time;
-        if (date.isSameOrAfter(start_date) && date.isSameOrBefore(end_date)) {
-          let dotw = dayOfTheWeek(date);
-          return time[dotw];
-        }
-      }).sortBy('starts_at_time');
+      let filter = startTimeFilterForDate(date);
+      return times.filter(filter).sortBy('starts_at_time');
     }
   }),
 

@@ -1,18 +1,20 @@
 import Ember from 'ember';
-import moment from 'moment';
 import NotFoundMixin from 'client/mixins/not-found';
 import ResetScrollMixin from 'client/mixins/reset-scroll';
+import {format, parseDate} from 'client/utils/time';
 
 export default Ember.Route.extend(NotFoundMixin, ResetScrollMixin, {
-  // used to maintain selected experience on date change
-  currentExperience: null,
+  queryParams: {
+    date: {
+      refreshModel: true
+    }
+  },
 
   model (params) {
-    let {date, activity_slug, category_slug} = params;
+    let {activity_slug, category_slug, date} = params;
 
-    if (!moment(date, 'YYYY-MM-DD').isValid()) {
-      console.error("Invalid date");
-      return this.throwNotFound();
+    if (!parseDate(date).isValid()) {
+      date = undefined;
     }
 
     let activities = this.store.peekAll('activity');
@@ -57,22 +59,9 @@ export default Ember.Route.extend(NotFoundMixin, ResetScrollMixin, {
   },
 
   actions: {
-    setCurrentExperience (experience) {
-      this.set('currentExperience', experience);
-    },
-
     changeDate (date) {
-      let {activity, category} = this.controller.model;
-      let activitySlug = activity.get('slug');
-      let categorySlug = category.get('slug');
-      let currentExperience = this.get('currentExperience');
-      date = moment(date).format('YYYY-MM-DD');
-
-      if (currentExperience) {
-        this.transitionTo('explore.experience', activitySlug, categorySlug, date, currentExperience.get('slug'));
-      } else {
-        this.transitionTo('explore', activitySlug, categorySlug, date);
-      }
+      date = format(date);
+      this.transitionTo({queryParams: {date: date}});
     }
   }
 });

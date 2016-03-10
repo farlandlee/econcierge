@@ -17,7 +17,7 @@ test('it renders', function(assert) {
     changeDate () {}
   });
 
-  this.render(hbs`{{grid-calendar date=date changeDate=(action 'changeDate')}}`);
+  this.render(hbs`{{grid-calendar defaultDate=date changeDate=(action 'changeDate')}}`);
 
-  assert.equal(this.$('input.grid-calendar').val(), tomorrow.format('ddd, MMMM D, YYYY'));
+  assert.equal(this.$('input.datepicker').val(), tomorrow.format('ddd, MMMM D, YYYY'));
 });

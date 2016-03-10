@@ -75,6 +75,9 @@ defmodule Grid.Mixfile do
   # See the documentation for `Mix` for more info on aliases.
   defp aliases do
     [
+      "clean.client": &clean_client/1,
+      "clean.server": &clean_server/1,
+      "clean.all": [&clean_client/1, &clean_server/1],
       "deps.client": &client_deps/1,
       "test.all": [&mix_test/1, "test.client"],
       "test.client": [&test_client/1],
@@ -83,6 +86,18 @@ defmodule Grid.Mixfile do
       "ecto.seed": ["run priv/repo/seeds.exs"],
       "s": [&ember_build/1, "phoenix.server"]
     ]
+  end
+
+  defp clean_client(_) do
+    Mix.Shell.IO.info [:yellow, "Deleting all node_modules, bower_components and built files!"]
+    Mix.Shell.IO.cmd """
+    rm -rf node_modules bower_components client/node_modules client/bower_components priv/static
+    """
+  end
+
+  defp clean_server(_) do
+    Mix.Shell.IO.info [:yellow, "Deleting all server dependencies and compiled files!"]
+    Mix.Shell.IO.cmd "rm -rf _build deps"
   end
 
   defp client_deps(_) do

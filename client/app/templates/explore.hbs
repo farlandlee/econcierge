@@ -9,7 +9,7 @@
             <ul>
               {{#item-sorter items=activity.categories as |category|}}
               <li>
-                {{link-to category.name 'explore' activity.slug category.slug date activeClass="selected"}}
+                {{link-to category.name 'explore' activity.slug category.slug activeClass="selected"}}
               </li>
               {{/item-sorter}}
             </ul>
@@ -19,7 +19,7 @@
       </div>
     </div>
     <div class="columns small-12 large-6 large-align-right">
-      {{grid-calendar date=date changeDate=(route-action 'changeDate')}}
+      {{grid-calendar defaultDate=date changeDate=(route-action 'changeDate')}}
     </div>
   </div>
   {{outlet}}

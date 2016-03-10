@@ -16,8 +16,12 @@
   {{/unless}}
   {{/each}}
   </div>
-  <div class="row align-spaced date-selection">
-    <div class="columns shrink">
+  <div class="row align-center date-selection">
+    <div class="columns date">
+      <label>Date</label>
+      {{product-date-picker product=product date=date changeDate=(action attrs.changeDate)}}
+    </div>
+    <div class="columns time">
       {{time-selector date=date times=product.startTimes onChange=(action "updateTime")}}
     </div>
   </div>

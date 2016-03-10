@@ -25,18 +25,5 @@ export default Ember.Route.extend(NotFoundMixin, ResetScrollMixin, {
       experiences: experiences,
       activeCategoryName: category.get('name')
     });
-  },
-
-  deactivate () {
-    this.send('setCurrentExperience', null);
-  },
-
-  actions: {
-    didTransition () {
-      let experience = this.controller.get('experience');
-      this.send('setCurrentExperience', experience);
-
-      return true;
-    }
   }
 });
