@@ -5,22 +5,25 @@ defmodule Grid.Factory do
 
   alias Grid.Repo
 
-  alias Grid.Amount
-  alias Grid.Activity
-  alias Grid.Amenity
-  alias Grid.AmenityOption
-  alias Grid.Category
-  alias Grid.Experience
-  alias Grid.ExperienceCategory
-  alias Grid.Location
-  alias Grid.Order
-  alias Grid.Price
-  alias Grid.Product
-  alias Grid.Season
-  alias Grid.StartTime
-  alias Grid.User
-  alias Grid.Vendor
-  alias Grid.VendorActivity
+  # Models we factorize!
+  alias Grid.{
+    Amount,
+    Activity,
+    Amenity,
+    AmenityOption,
+    Category,
+    Experience,
+    ExperienceCategory,
+    Location,
+    Order,
+    Price,
+    Product,
+    Season,
+    StartTime,
+    User,
+    Vendor,
+    VendorActivity
+  }
 
   def random(), do: :random.uniform()
   def random(n), do: :random.uniform(n)
@@ -256,13 +259,13 @@ defmodule Grid.Factory do
           product_id: product.id,
           amount: cost,
           quantities: %{
-            items: [
+            "items" => [
               %{
-                  price_id: price.id,
-                  sub_total: cost,
-                  quantity: quantity,
-                  price_name: price.name,
-                  price_people_count: price.people_count
+                  "price_id" => price.id,
+                  "sub_total" => cost,
+                  "quantity" => quantity,
+                  "price_name" => price.name,
+                  "price_people_count" => price.people_count
                 }
             ]
           }

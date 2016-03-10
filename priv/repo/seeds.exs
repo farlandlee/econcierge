@@ -152,20 +152,20 @@ for {name, desc, act_name} <- vendor_tuples, activity = Repo.get_by!(Activity, n
           product_id: product.id,
           amount: 640,
           quantities: %{
-            items: [
+            "items" => [
               %{
-                  price_id: price.id,
-                  sub_total: 540,
-                  quantity: 3,
-                  price_name: price.name,
-                  price_people_count: price.people_count
+                  "price_id" => price.id,
+                  "sub_total" => 540,
+                  "quantity" => 3,
+                  "price_name" => price.name,
+                  "price_people_count" => price.people_count
                 },
               %{
-                  price_id: child.id,
-                  sub_total: 100,
-                  quantity: 1,
-                  price_name: child.name,
-                  price_people_count: child.people_count
+                  "price_id" => child.id,
+                  "sub_total" => 100,
+                  "quantity" => 1,
+                  "price_name" => child.name,
+                  "price_people_count" => child.people_count
                 }
             ]
           }

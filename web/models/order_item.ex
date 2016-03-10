@@ -8,6 +8,7 @@ defmodule Grid.OrderItem do
     field :vendor_token, :string, nil: false
     field :vendor_reply_at, Ecto.DateTime, default: nil
     field :status, :string
+    field :status_info, :map
     field :stripe_charge_id, :string
     field :charged_at, Ecto.DateTime, default: nil
     belongs_to :order, Grid.Order
@@ -37,21 +38,26 @@ defmodule Grid.OrderItem do
     |> foreign_key_constraint(:product_id)
   end
 
-  def maybe_assign_vendor_token(changeset) do
-    case get_field(changeset, :vendor_token) do
-      nil -> put_change(changeset, :vendor_token, UUID.uuid4(:hex))
-      _ -> changeset
-    end
-  end
-
   def status_changeset(model, :accept) do
-    params = %{status: "accepted", vendor_reply_at: Calendar.DateTime.now_utc}
-    cast(model, params, [:status, :vendor_reply_at], [])
+    do_status_changeset(model, "accepted")
   end
 
   def status_changeset(model, :reject) do
-    params = %{status: "rejected", vendor_reply_at: Calendar.DateTime.now_utc}
-    cast(model, params, [:status, :vendor_reply_at], [])
+    do_status_changeset(model, "rejected")
+  end
+
+  defp do_status_changeset(model, status) do
+    params = %{
+      status: status,
+      status_info: nil,
+      vendor_reply_at: Calendar.DateTime.now_utc
+    }
+    cast(model, params, [:status, :vendor_reply_at], [:status_info])
+  end
+
+  def error_changeset(model, error) do
+    params = %{status: "errored", status_info: error}
+    cast(model, params, [:status, :status_info], [])
   end
 
   def charge_changeset(model, charge_id) do
@@ -59,55 +65,59 @@ defmodule Grid.OrderItem do
     cast(model, params, [:stripe_charge_id, :charged_at], [])
   end
 
+  #######################
+  ## Changeset Helpers ##
+  #######################
+
+  def maybe_assign_vendor_token(changeset) do
+    case get_field(changeset, :vendor_token) do
+      nil -> put_change(changeset, :vendor_token, UUID.uuid4(:hex))
+      _ -> changeset
+    end
+  end
+
   #################
   ## Validations ##
   #################
 
   defp validate_activity_at(changeset) do
-    activity_at = get_field(changeset, :activity_at)
-
-    changeset
-    |> validate_activity_at(activity_at)
+    case get_field(changeset, :activity_at) do
+      nil ->
+        changeset
+      activity_at ->
+        do_validate_activity_at(changeset, activity_at)
+    end
   end
-  defp validate_activity_at(changeset, %Ecto.DateTime{} = activity_at) do
+
+  defp do_validate_activity_at(changeset, activity_at) do
     tomorrow = Calendar.DateTime.now!("MST")
       |> Ecto.DateTime.cast!
 
     case Ecto.DateTime.compare(tomorrow, activity_at) do
       :gt ->
+        add_error(changeset, :start_date, "Activity must be on or after tomorrow.")
+      _ ->
         changeset
-        |> add_error(:start_date, "Activity must be on or after tomorrow.")
-      _ -> changeset
     end
   end
-  defp validate_activity_at(changeset, nil), do: changeset
 
   defp validate_quantities(changeset) do
-    quantities = get_field(changeset, :quantities)
-
-    changeset
-    |> validate_quantities(quantities)
-  end
-  defp validate_quantities(changeset, %{items: items = [_|_]}) do
-    changeset
-    |> validate_quantity_items(items)
-  end
-  defp validate_quantities(changeset, _) do
-    changeset
-    |> add_error(:quantities, "Quantity Map Is Invalid!")
+    case get_field(changeset, :quantities) do
+      %{"items" => items = [_|_]} ->
+        Enum.reduce(items, changeset, &validate_quantity_item/2)
+      _ ->
+        add_error(changeset, :quantities, "Quantity Map Is Invalid!")
+    end
   end
 
-  defp validate_quantity_items(changeset, [hd|tail]) do
-    changeset
-    |> validate_quantity_item(hd)
-    |> validate_quantity_items(tail)
+  @required_item_keys ~w(price_id sub_total quantity price_name price_people_count)
+  defp validate_quantity_item(quantity_item, changeset) do
+    valid = @required_item_keys |> Enum.all?(&Map.has_key?(quantity_item, &1))
+    if valid do
+      changeset
+    else
+      add_error(changeset, :quantities, "Quantity Item Is Invalid!")
+    end
   end
-  defp validate_quantity_items(changeset, []), do: changeset
-  defp validate_quantity_item(changeset, %{price_id: _, sub_total: _, quantity: _, price_name: _, price_people_count: _}) do
-    changeset
-  end
-  defp validate_quantity_item(changeset, _) do
-    changeset
-    |> add_error(:quantities, "Quantity Item Is Invalid!")
-  end
+
 end

@@ -100,8 +100,7 @@ defmodule Grid.Api.OrderController do
       order.user.email,
       html,
       "Your booking requests have been submitted",
-      "Customer Request",
-      Mix.env
+      "Customer Request"
     )
   end
 
@@ -112,8 +111,7 @@ defmodule Grid.Api.OrderController do
       Vendor.email(oi.product.vendor),
       html,
       "New Booking Request - #{oi.product.name}",
-      "Vendor Notice",
-      Mix.env
+      "Vendor Notice"
     )
   end
 end
