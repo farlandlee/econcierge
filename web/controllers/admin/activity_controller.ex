@@ -38,8 +38,8 @@ defmodule Grid.Admin.ActivityController do
       |> Repo.preload([
         :amenities,
         :images,
-        [categories: :image],
-        [experiences: [:categories, :image]]
+        categories: [:image, :default_experience],
+        experiences: [:categories, :image]
       ])
 
     render(conn, "show.html", activity: activity, page_title: activity.name)

@@ -5,6 +5,7 @@
       <th>Description</th>
       <th>Slug</th>
       <th>Image</th>
+      <th>Default Experience</th>
 
       <th></th>
     </tr>
@@ -16,6 +17,7 @@
       <td><%= category.description %></td>
       <td><code><%= category.slug %></code></td>
       <td><%= Grid.Admin.ImageView.filename category.image %></td>
+      <td><%= if exp = category.default_experience, do: exp.name, else: "Not set" %></th>
 
       <td class="text-right">
         <div class="dropdown actions">

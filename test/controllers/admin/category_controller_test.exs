@@ -65,6 +65,12 @@ defmodule Grid.Admin.Activity.CategoryControllerTest do
     assert html_response(conn, 200) =~ "Edit Category"
   end
 
+  test "update 404s for invalid default experience ids", %{conn: conn, activity: activity, category: category} do
+    assert_raise Ecto.NoResultsError, fn ->
+      put conn, admin_activity_category_path(conn, :update, activity, category), category: %{default_experience_id: -1}
+    end
+  end
+
   test "deletes chosen resource", %{conn: conn, activity: activity, category: category} do
     conn = delete conn, admin_activity_category_path(conn, :delete, activity, category)
     assert redirected_to(conn) == admin_activity_path(conn, :show, activity, tab: "categories")

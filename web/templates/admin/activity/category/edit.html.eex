@@ -1,5 +1,6 @@
 <%= render "form.html", changeset: @changeset,
                         action: admin_activity_category_path(@conn, :update, @activity, @category),
                         back: admin_activity_category_path(@conn, :index, @activity),
+                        experiences: @experiences,
                         activity: @activity,
                         images: @images %>
