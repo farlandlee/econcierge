@@ -11,6 +11,7 @@ defmodule Grid.Category do
 
     has_many :experience_categories, Grid.ExperienceCategory
     has_many :experiences, through: [:experience_categories, :experience]
+    belongs_to :default_experience, Grid.Experience
 
     has_many :products, through: [:experiences, :products]
 
@@ -25,7 +26,7 @@ defmodule Grid.Category do
 
   @creation_fields ~w(activity_id)
   @required_fields ~w(name description)
-  @optional_fields ~w(image_id slug)
+  @optional_fields ~w(image_id slug default_experience_id)
 
   @doc """
   Creates a changeset based on the `model` and `params`.

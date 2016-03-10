@@ -16,7 +16,8 @@ defmodule Grid.Api.CategoryView do
       description: category.description,
       slug: category.slug,
       activity: category.activity_id,
-      image: render_one(category.image, Grid.Api.ImageView, "image.json")
+      image: render_one(category.image, Grid.Api.ImageView, "image.json"),
+      default_experience: category.default_experience_id
     }
   end
 end
