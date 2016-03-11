@@ -1,6 +1,9 @@
 import Ember from 'ember';
+import RouteTitleMixin from 'client/mixins/route-title';
 
-export default Ember.Route.extend({
+export default Ember.Route.extend(RouteTitleMixin, {
+  titleToken: 'Checkout',
+
   beforeModel () {
     let hasBookings = this.modelFor('cart').get('length');
     if (!hasBookings) {

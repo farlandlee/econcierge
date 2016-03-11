@@ -1,11 +1,16 @@
 import Ember from 'ember';
 import ResetScrollMixin from 'client/mixins/reset-scroll';
+import RouteTitleMixin from 'client/mixins/route-title';
+import RouteDescriptionMixin from 'client/mixins/route-meta-description';
 
 const {
   RSVP: {all, hash}
 } = Ember;
 
-export default Ember.Route.extend(ResetScrollMixin, {
+export default Ember.Route.extend(ResetScrollMixin, RouteTitleMixin, RouteDescriptionMixin, {
+  titleToken: 'Activities Cart',
+  description: 'Online Shopping cart for Jackson Hole Activities',
+
   model () {
     return this.store.findAll('booking');
   },
