@@ -23,61 +23,53 @@
       }
       &:hover {
         .element-name {
-          opacity: 0;
-          visibility: hidden;
-          display: none;
+          margin-bottom: 0;
+          margin-top: 2rem;
+          top: 0;
         }
         .element-description {
-          position: relative;
-          visibility:visible;
+          display:block;
+        }
+        .lower-right {
           opacity: 1;
+          bottom: 1.0rem;
         }
       }
     }
+  }
+  a.element-container {
+    display: block;
+    width: 100%;
+    height: 100%;
+    color: $white;
   }
   .element-name {
     position: relative;
     z-index: 2;
-    opacity: 1;
-    transition: opacity 0.5s linear, visibility 0s;
-    p {
-      font-size: 1.8rem;
-    }
+    transition-duration: 0.5s;
+    font-size: 1.8rem;
+    text-transform: uppercase;
+    font-weight: bold;
+    margin-top: -1rem;
+    top: 50%;
   }
   .element-description {
-    opacity: 0;
-    visibility: hidden;
-    position: absolute;
+    position: relative;
+    z-index: 2;
+    display: none;
     font-weight: normal;
     font-size: 1.2rem;
     width: 100%;
-    height: 100%;
     margin: 0;
-    padding: 0;
-    transition: opacity 0.5s linear, visibility 0s;
-    p {
-      width: 100%;
-      height: 100%;
-      margin: 0;
-      padding: 0;
-    }
-    a, button {
-      display: block;
-      position: relative;
-      z-index: 2;
-      min-width: 100%;
-      width: 100%;
-      height: 100%;
-      margin: 0;
-      padding: 0;
-      span {
-        @include center-content();
-        min-width: 90%;
-      }
-    }
+    padding: 0 1rem 2rem;;
+    transition-duration: 0.5s;
+    color: $white;
   }
   .lower-right {
     font-weight: $global-weight-bold;
+    opacity: 0;
+    transition-duration: 0.5s;
+    bottom: 0rem;
   }
 }
 .activities {
