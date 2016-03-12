@@ -96,3 +96,4 @@ ENV Variable            | Description                                           
 DATABASE_URL            | Database connection url, e.g. postgres://un:pw@host:port/db |
 POSTMARK_SERVER_TOKEN   | Postmark Server Token                                       |
 TRIPADVISOR_API_KEY     | TripAdvisor api key                                         |
+PRERENDER_TOKEN         | Prerender.io Token                                          |

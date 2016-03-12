@@ -14,7 +14,9 @@ config :grid,
   google_client_id: {:system, "GOOGLE_CLIENT_ID"},
   booking_emails_from: "book@outpostjh.com",
   booking_emails_bcc: "dev@outpostjh.com",
-  notify_vendors: false
+  notify_vendors: false,
+  prerender_service_url: "http://localhost:3000",
+  prerender_service_token: nil
 
 # Configures the endpoint
 config :grid, Grid.Endpoint,
