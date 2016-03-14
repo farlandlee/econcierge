@@ -13,4 +13,19 @@ defmodule Grid.Admin.OrderView do
 
   defp people(1), do: "1 person"
   defp people(n), do: "#{n} people"
+
+  def items_with_status(order, status) do
+    Enum.filter(order.order_items, &(&1.status == status))
+  end
+
+  def stripe_charge_link(text, nil) do
+    text
+  end
+
+  def stripe_charge_link(text, charge_id) do
+    link text,
+      to: "https://dashboard.stripe.com/payments/#{charge_id}",
+      target: "_blank",
+      title: "View Charge in Stripe"
+  end
 end

@@ -7,12 +7,7 @@ defmodule Grid.OrderStatusControllerTest do
   }
 
   setup do
-    user = Factory.create(:user)
-    product = Factory.create(:product)
-    order = Factory.create_user_order_for_product(user, product)
-    item = order.order_items |> hd
-
-    {:ok, order: order, order_item: item}
+    {:ok, Factory.create_user_order_for_product}
   end
 
   test "Show vendor order item status without status 404s", %{conn: conn, order_item: oi} do
