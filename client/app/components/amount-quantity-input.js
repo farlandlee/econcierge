@@ -7,9 +7,11 @@ const {sort, alias} = computed;
 
 export default Ember.Component.extend({
   tagName: '',
+  showAmountLabel: false,
 
   price: null,
   quantities: null,
+
 
   amounts: sort('price.amounts', 'minQuantityAscending'),
   minQuantityAscending: ['min_quantity:asc'],
@@ -42,10 +44,19 @@ export default Ember.Component.extend({
     }
   }),
 
+  amount: computed('quantity', 'amounts.@each.{min_quantity,max_quantity}', {
+    get () {
+      let quantity = this.get('quantity');
+      let amounts = this.get('amounts');
+      return amountForQuantity(amounts, quantity);
+    }
+  }),
+
   _onChange (quantity) {
+    // Can't just `get('amount')` because that triggers an infinite loop.
+    // Just recalculating it isn't that big of a deal.
     let amounts = this.get('amounts');
     let amount = amountForQuantity(amounts, quantity);
-
     return this.attrs.onChange(amount, quantity);
   },
 

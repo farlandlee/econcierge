@@ -11,5 +11,15 @@
   <div onclick={{action "increment"}} class="input-group-button">
     <span class="fa fa-plus-square"></span>
   </div>
-  {{yield cost}}
 </div>
+{{#if showAmountLabel}}
+<div class="amount-label text-center">
+  ${{amount.amount}} per
+  {{#if (gt price.people_count 1)}}
+    {{price.people_count}} people
+  {{else}}
+    person
+  {{/if}}
+</div>
+{{/if}}
+{{yield cost amount}}

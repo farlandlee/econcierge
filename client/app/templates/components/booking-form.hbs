@@ -6,12 +6,12 @@
   </div>
   <div class="row align-left body-count">
     <div class="columns shrink">
-      {{amount-quantity-input price=product.defaultPrice quantities=quantities onChange=(action "updateQuantity" product.defaultPrice)}}
+      {{amount-quantity-input price=product.defaultPrice quantities=quantities onChange=(action "updateQuantity" product.defaultPrice) showAmountLabel=true}}
     </div>
   {{#each product.prices as |price|}}
   {{#unless (eq price.id product.defaultPrice.id)}}
     <div class="columns shrink">
-      {{amount-quantity-input price=price quantities=quantities onChange=(action "updateQuantity" price)}}
+      {{amount-quantity-input price=price quantities=quantities onChange=(action "updateQuantity" price) showAmountLabel=true}}
     </div>
   {{/unless}}
   {{/each}}
