@@ -11,5 +11,5 @@ test('it renders', function(assert) {
 
   this.render(hbs`{{activity-card}}`);
 
-  assert.equal(this.$().text().trim(), '');
+  assert.equal(this.$().text().trim(), 'click to continue');
 });
