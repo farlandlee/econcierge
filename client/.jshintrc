@@ -3,7 +3,8 @@
     "server",
     "document",
     "window",
-    "-Promise"
+    "-Promise",
+    "introJs"
   ],
   "browser": true,
   "boss": true,
