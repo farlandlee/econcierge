@@ -54,12 +54,13 @@
             <div class="single-wide snowmobiling-cta">
               <div class="darken-overlay"></div>
               <div class="overlay-text">
-                <p>Snowmobiling</p>
-                <p class="small">Take a trip into the Wyoming Wilderness</p>
+                <p>Snowmobiling Day Trip</p>
+                <p class="small">Visit beautiful Granite Hot Springs</p>
+                <p class="small">by Togwotee Mountain Lodge</p>
               </div>
               <p class="booking-button">
                 <!-- TODO: Fix path path -->
-                <a href="<%= explore_path(@conn, :index, ["snowmobiling", "categories"]) %>">
+                <a href="<%= explore_path(@conn, :index, ["snowmobiling", "scenic_snowmobiling", "granite_hot_springs_snowmobile_trip", "book", "241"]) %>">
                   Request to Book
                 </a>
               </p>
@@ -77,13 +78,13 @@
             <div class="double-wide snowshoeing-cta">
               <div class="darken-overlay"></div>
               <div class="overlay-text">
-                <p>Snowshoeing</p>
-                <p>Grand Teton National Park</p>
+                <p>Snowshoeing Sampler</p>
+                <p class="small">Grand Teton National Park</p>
                 <p class="small">By Hole Hiking Experience</p>
               </div>
               <p class="booking-button">
                 <!-- TODO: Fix path paths -->
-                <a href="<%= explore_path(@conn, :index, ["snowshoeing", "categories"]) %>">
+                <a href="<%= explore_path(@conn, :index, ["snowshoeing", "snowshoeing", "snowshoeing_in_grand_teton_national_park", "book", "373" ]) %>">
                   Request to Book
                 </a>
               </p>
