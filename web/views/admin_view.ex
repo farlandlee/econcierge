@@ -6,6 +6,7 @@ defmodule Grid.AdminView do
       :prod -> {"text-success", "Production"}
       :dev -> {"", "Development"}
       :test -> {"text-primary", "Test"}
+      :staging -> {"text-primary", "Staging"}
       _ -> {"text-warning", "Unknown Environment"}
     end
     content_tag :span, text, class: class
