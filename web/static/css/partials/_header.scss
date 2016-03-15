@@ -51,6 +51,23 @@
   					  border: 1px solid $secondary-color;
 				    }
           }
+          &.telephone-cta {
+            text-align: center;
+            display: block;
+            span {
+              width: 100%;
+              line-height: 1;
+              height: 30px;
+              display: block;
+              &:first-of-type {
+                font-size: 11px;
+                padding-top: 18px;
+              }
+            }
+            &:hover {
+              border-bottom: none;
+            }
+          }
         }
       }
     }
