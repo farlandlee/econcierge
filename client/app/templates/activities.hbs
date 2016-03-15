@@ -4,10 +4,10 @@
     <p class="page-subtitle">Search, discover &amp; reserve the various activities offered in Jackson Hole.<br>Hover over an activity to learn more.</p>
   </div>
 </div>
-<div class="activities">
+<div class="activities element-cards">
   <div class="row align-spaced">
-    {{#item-sorter items=activities as |activity|}}
-      {{activity-card activity=activity}}
+    {{#item-sorter items=activities as |element|}}
+      {{element-card element=element}}
     {{/item-sorter}}
   </div>
 </div>
