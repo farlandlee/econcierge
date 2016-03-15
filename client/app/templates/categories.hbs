@@ -15,9 +15,18 @@
       </div>
     </div>
   </div>
-  <div class="row align-spaced categories element-cards">
-    {{#item-sorter items=categories as |element|}}
-      {{element-card element=element}}
+  <div class="row align-spaced categories">
+    {{#item-sorter items=categories as |category|}}
+    <div class="columns small-12 medium-6 large-4" >
+      <div class="row align-middle text-center" style="background-image: url('{{category.image.full}}');">
+        {{#link-to 'explore' activity.slug category.slug class="element-container"}}
+          <div class="darken-overlay"></div>
+          <p class="element-name column small-12">{{category.name}}</p>
+          <p class="element-description column small-12">{{category.description}}</p>
+          <p class="lower-right column small-12">click to continue</p>
+        {{/link-to}}
+      </div>
+    </div>
     {{/item-sorter}}
     {{#unless categories}}
     <div class="columns small-12" >
