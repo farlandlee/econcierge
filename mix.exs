@@ -63,7 +63,8 @@ defmodule Grid.Mixfile do
       {:rollbax, "~> 0.5"},
       {:slugger, git: "git://github.com/h4cc/slugger.git"},
       {:stripity_stripe, "~> 1.3.0"},
-      {:uuid, "~> 1.1"}
+      {:uuid, "~> 1.1"},
+      {:number, "~> 0.4.1"}
     ]
   end
 

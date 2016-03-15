@@ -624,43 +624,42 @@
                   </tr>
                 </table>
                 <table class="row" style="border-spacing: 0; border-collapse: collapse; vertical-align: top; text-align: left; width: 100%; position: relative; display: block; padding: 0px;">
-                  <tr class="no-top" style="vertical-align: top; text-align: left; padding: 0;" align="left">
+                  <tr class="no-top" style="vertical-align: top; text-align: left; padding: 0;" align="center">
                     <td
-                      class="wrapper"
-                      style="word-break: break-word; -webkit-hyphens: none; -moz-hyphens: none; hyphens: none; border-collapse: collapse !important; vertical-align: top; text-align: left; position: relative; color: #222222; font-family: Helvetica, Arial, sans-serif; font-weight: normal; line-height: 19px; font-size: 14px; margin: 0; padding: 0 20px 0px 0px;"
-                      align="left"
+                      class="wrapper last"
+                      style="word-break: break-word; -webkit-hyphens: none; -moz-hyphens: none; hyphens: none; border-collapse: collapse !important; vertical-align: top; text-align: center; position: relative; color: #222222; font-family: Helvetica, Arial, sans-serif; font-weight: normal; line-height: 19px; font-size: 14px; margin: 0; padding: 0 20px 0px 0px;width:580px;max-width: 100%"
+                      align="center"
                       valign="top">
-                      <table class="four columns" style="border-spacing: 0; border-collapse: collapse; vertical-align: top; text-align: left; width: 180px; margin: 0 auto; padding: 0;">
-                        <tr style="vertical-align: top; text-align: left; padding: 0;" align="left">
-                          <td
-                            class="expander"
-                            style="word-break: break-word; -webkit-hyphens: none; -moz-hyphens: none; hyphens: none; border-collapse: collapse !important; vertical-align: top; text-align: left; visibility: hidden; width: 0px; color: #222222; font-family: Helvetica, Arial, sans-serif; font-weight: normal; line-height: 19px; font-size: 14px; margin: 0; padding: 0;"
-                            align="left"
-                            valign="top"></td>
-                        </tr>
-                      </table>
+                      <center style="text-align:center">
+                      <%= for q <- @order_item.quantities["items"] do %>
+                        <div style="display:inline-block; width: 80px; vertical-align:top">
+                          <%= q["quantity"] %>
+                          <br/>
+                          <span class="small" style="font-size: 11px;">
+                            <%= q["price_name"] %>
+                          </span>
+                        </div>
+                      <% end %>
+                      </center>
                     </td>
-
-                    <%= for q <- @order_item.quantities["items"] do %>
+                  </tr>
+                </table>
+                <table class="row" style="border-spacing: 0; border-collapse: collapse; vertical-align: top; text-align: left; width: 100%; position: relative; display: block; padding: 0px;">
+                  <tr style="vertical-align: top; text-align: left; padding: 0;" align="left">
                     <td
-                      class="wrapper"
-                      style="word-break: break-word; -webkit-hyphens: none; -moz-hyphens: none; hyphens: none; border-collapse: collapse !important; vertical-align: top; text-align: left; position: relative; color: #222222; font-family: Helvetica, Arial, sans-serif; font-weight: normal; line-height: 19px; font-size: 14px; margin: 0; padding: 0 20px 0px 0px;"
+                      class="wrapper last"
+                      style="word-break: break-word; -webkit-hyphens: none; -moz-hyphens: none; hyphens: none; border-collapse: collapse !important; vertical-align: top; text-align: left; position: relative; color: #222222; font-family: Helvetica, Arial, sans-serif; font-weight: normal; line-height: 19px; font-size: 14px; margin: 0; padding: 10px 0px 0px;"
                       align="left"
                       valign="top">
-                      <table class="two columns" style="border-spacing: 0; border-collapse: collapse; vertical-align: top; text-align: left; width: 80px; margin: 0 auto; padding: 0;">
-                        <tr style="vertical-align: top; text-align: left; padding: 0;" align="left">
+
+                      <table class="twelve columns" style="border-spacing: 0; border-collapse: collapse; vertical-align: top; text-align: left; width: 580px; margin: 0 auto; padding: 0;">
+                        <tr class="no-bottom" style="vertical-align: top; text-align: left; padding: 0;" align="left">
                           <td
-                            class="center"
-                            style="word-break: break-word; -webkit-hyphens: none; -moz-hyphens: none; hyphens: none; border-collapse: collapse !important; vertical-align: top; text-align: center; color: #222222; font-family: Helvetica, Arial, sans-serif; font-weight: normal; line-height: 19px; font-size: 14px; margin: 0; padding: 0 0px 10px;"
+                            class="template-label center"
+                            style="word-break: break-word; -webkit-hyphens: none; -moz-hyphens: none; hyphens: none; border-collapse: collapse !important; vertical-align: top; text-align: center; color: #aaaaaa; font-family: Helvetica, Arial, sans-serif; font-weight: bold; line-height: 19px; font-size: 10px; margin: 0; padding: 0px 0px 0;"
                             align="center"
                             valign="top">
-                            <center style="width: 100%; min-width: 80px;">
-                              <%= q["quantity"] %>
-                              <br/>
-                              <span class="small" style="font-size: 11px;">
-                                <%= q["price_name"] %>
-                              </span>
-                            </center>
+                            <center style="width: 100%; min-width: 580px;">TOTAL BOOKING AMOUNT</center>
                           </td>
                           <td
                             class="expander"
@@ -668,16 +667,16 @@
                             align="left"
                             valign="top"></td>
                         </tr>
-                      </table>
-                    </td>
-                    <% end %>
-                    <td
-                      class="wrapper last"
-                      style="word-break: break-word; -webkit-hyphens: none; -moz-hyphens: none; hyphens: none; border-collapse: collapse !important; vertical-align: top; text-align: left; position: relative; color: #222222; font-family: Helvetica, Arial, sans-serif; font-weight: normal; line-height: 19px; font-size: 14px; margin: 0; padding: 0 0px 0px;"
-                      align="left"
-                      valign="top">
-                      <table class="four columns" style="border-spacing: 0; border-collapse: collapse; vertical-align: top; text-align: left; width: 180px; margin: 0 auto; padding: 0;">
-                        <tr style="vertical-align: top; text-align: left; padding: 0;" align="left">
+                        <tr class="no-top" style="vertical-align: top; text-align: left; padding: 0;" align="left">
+                          <td
+                            class="center"
+                            style="word-break: break-word; -webkit-hyphens: none; -moz-hyphens: none; hyphens: none; border-collapse: collapse !important; vertical-align: top; text-align: center; color: #222222; font-family: Helvetica, Arial, sans-serif; font-weight: normal; line-height: 19px; font-size: 14px; margin: 0; padding: 0 0px 10px;"
+                            align="center"
+                            valign="top">
+                            <center style="width: 100%; min-width: 580px;">
+                              <%= number_to_currency(@order_item.amount) %>
+                            </center>
+                          </td>
                           <td
                             class="expander"
                             style="word-break: break-word; -webkit-hyphens: none; -moz-hyphens: none; hyphens: none; border-collapse: collapse !important; vertical-align: top; text-align: left; visibility: hidden; width: 0px; color: #222222; font-family: Helvetica, Arial, sans-serif; font-weight: normal; line-height: 19px; font-size: 14px; margin: 0; padding: 0;"

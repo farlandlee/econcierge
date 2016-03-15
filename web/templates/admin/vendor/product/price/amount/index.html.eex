@@ -11,7 +11,7 @@
   <tbody>
 <%= for amount <- @amounts |> sorted do %>
     <tr>
-      <td><%= amount.amount %></td>
+      <td><%= number_to_currency(amount.amount) %></td>
       <td><%= amount.min_quantity %></td>
       <td>
       <%= if amount.max_quantity == 0 do %>
