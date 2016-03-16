@@ -1,0 +1,18 @@
+.filter-header {
+  text-transform: uppercase;
+  color: $medium-gray;
+}
+.filter-list {
+  @extend .no-bullet;
+  
+  color: $dark-gray;
+  button:focus {
+    outline: none;
+  }
+  .checkmark {
+    color: $primary-color;
+  }
+  .checkbox {
+    color: $light-gray;
+  }
+}

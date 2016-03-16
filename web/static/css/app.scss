@@ -30,6 +30,8 @@
 @import "partials/introjs";
 @import "partials/how_works";
 
+@import "components/filter-selector";
+
 // fix foundation row in expanded row bug
 .row.expanded .row {
   margin-left: auto;
