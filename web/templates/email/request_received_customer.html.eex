@@ -482,8 +482,7 @@
                                   valign="top">
                                   <p class="template-label" style="color: #aaaaaa; font-family: Helvetica, Arial, sans-serif; font-weight: normal; text-align: left; line-height: 19px; font-size: 12px; margin: 0; padding: 0;" align="left">Duration</p>
                                   <p style="color: #999; font-family: Helvetica, Arial, sans-serif; font-weight: normal; text-align: left; line-height: 19px; font-size: 14px; margin: 0 0 10px; padding: 0;" align="left">
-                                    <%= div(order_item.product.duration, 60) %>
-                                    hours
+                                    <%= duration_string(order_item.product.duration) %> hours
                                   </p>
                                 </td>
                                 <td

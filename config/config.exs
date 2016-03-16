@@ -13,7 +13,7 @@ config :grid,
   google_client_secret: {:system, "GOOGLE_CLIENT_SECRET"},
   google_client_id: {:system, "GOOGLE_CLIENT_ID"},
   booking_emails_from: "book@outpostjh.com",
-  booking_emails_bcc: "dev@outpostjh.com",
+  booking_emails_bcc: "matthew@outpostjh.com",
   notify_vendors: false
 
 # Configures the endpoint
