@@ -51,6 +51,7 @@ defmodule Grid.Router do
     plug Plugs.Breadcrumb, resource: Grid.Amenity
   end
 
+
   scope "/", Grid do
     pipe_through :browser
 
