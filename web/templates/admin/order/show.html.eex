@@ -8,7 +8,7 @@
     <dd><%= @order.inserted_at %></dd>
 
     <dt>Total amount</dt>
-    <dd>$<%= @order.total_amount %></dd>
+    <dd><%= number_to_currency(@order.total_amount) %></dd>
   </dl>
 
   <dl class="dl-horizontal col-md-6">
@@ -51,7 +51,7 @@
               <p><%= quantity_display(quantity) %></p>
             <% end %>
           </td>
-          <td>$<%= order_item.amount %></td>
+          <td><%= number_to_currency(order_item.amount) %></td>
           <td>
           <%= if order_item.status == "accepted" do %>
             <%= stripe_charge_link "accepted", order_item.stripe_charge_id %>

@@ -1,6 +1,8 @@
 defmodule Grid.Admin.OrderControllerTest do
   use Grid.ConnCase
 
+  import Number.Currency
+
   setup do
     {:ok, Factory.create_user_order_for_product}
   end
@@ -23,7 +25,7 @@ defmodule Grid.Admin.OrderControllerTest do
     assert response =~ "# rejected"
     assert response =~ "1"
     assert response =~ "Processed / Total amount"
-    assert response =~ "$0/$#{order.total_amount}"
+    assert response =~ "$0/#{number_to_currency(order.total_amount)}"
     assert response =~ "Placed On"
     assert response =~ "#{order.inserted_at}"
   end
@@ -38,7 +40,7 @@ defmodule Grid.Admin.OrderControllerTest do
     assert response =~ "Placed On"
     assert response =~ "#{order.inserted_at}"
     assert response =~ "Total amount"
-    assert response =~ "#{order.total_amount}"
+    assert response =~ "#{number_to_currency(order.total_amount)}"
 
     # Customer
     assert response =~ "Customer Name"
@@ -61,7 +63,7 @@ defmodule Grid.Admin.OrderControllerTest do
     assert response =~ "#{order_item.activity_at}"
     assert response =~ "Quantities"
     assert response =~ "Cost"
-    assert response =~ "$#{order_item.amount}"
+    assert response =~ "#{number_to_currency(order_item.amount)}"
     assert response =~ "Status"
     assert response =~ "#{order_item.status}"
     assert response =~ "Vendor Reply At"

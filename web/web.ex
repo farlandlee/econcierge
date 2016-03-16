@@ -50,6 +50,7 @@ defmodule Grid.Web do
       use Phoenix.HTML
 
       import Grid.Router.Helpers
+      import Number.Currency
     end
   end
 

@@ -506,7 +506,7 @@
                                     valign="top">
                                     <p class="template-label" style="color: #000; font-family: Helvetica, Arial, sans-serif; font-weight: normal; text-align: left; line-height: 19px; font-size: 18px; margin: 0 0 6px; padding: 0;" align="left">Payment Method</p>
                                     <p style="color: #999; font-family: Helvetica, Arial, sans-serif; font-weight: normal; text-align: left; line-height: 19px; font-size: 14px; margin: 0 0 10px; padding: 0;" align="left">
-                                      We have billed the credit card you supplied for $<%= round(@order_item.amount) %>
+                                      We have billed the credit card you supplied for <%= @order_item.amount |> round |> number_to_currency %>
                                       (the full amount of the trip).
                                     </p>
                                   </td>

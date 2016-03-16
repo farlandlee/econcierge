@@ -8,7 +8,7 @@ defmodule Grid.Admin.OrderView do
     "Adult x 3 = $100 (3 people)"
   """
   def quantity_display(%{"price_name" => name, "quantity" => quantity, "sub_total" => sub_total, "price_people_count" => ppc}) do
-    "#{name} x #{quantity} = $#{sub_total} (#{people(ppc * quantity)})"
+    "#{name} x #{quantity} = #{number_to_currency(sub_total)} (#{people(ppc * quantity)})"
   end
 
   defp people(1), do: "1 person"
