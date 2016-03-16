@@ -53,6 +53,7 @@ defmodule Grid.Mixfile do
       {:ex_machina, "~> 0.5", only: :test},
       {:httpoison, "~> 0.7"},
       {:inflex, "~> 1.5.0"},
+      {:mock, "~> 0.1.1", only: :test},
       {:oauth2, "~> 0.5.0"},
       {:phoenix, "~> 1.1.4"},
       {:phoenix_ecto, "~> 2.0"},
