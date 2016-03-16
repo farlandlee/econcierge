@@ -1,5 +1,8 @@
 {{#unless hasBlock}}
-<label>{{price.name}}</label>
+<label>
+  {{price.name}}
+  {{foundation-tooltip tipText=price.description}}
+</label>
 {{/unless}}
 <div class="input-group body-count">
   <div onclick={{action "decrement"}} class="input-group-button">

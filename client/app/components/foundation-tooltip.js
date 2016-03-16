@@ -2,17 +2,18 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
+  tagName: 'span',
+  tipText: null,
+  positionClass: 'bottom',
 
-  tooltipText: null,
+  classNames: ['has-tip', 'right'],
 
   didInsertElement () {
     let el = this.$();
-    let text = this.get('tooltipText');
-    let options = {
-      tipText: text,
-      positionClass: 'bottom'
-    };
-    new Foundation.Tooltip(el, options);
-  },
-
+    let options = this.getProperties(
+      'tipText', 'positionClass'
+    );
+    let tooltip = new Foundation.Tooltip(el, options);
+    this.setProperties({tooltip});
+  }
 });
