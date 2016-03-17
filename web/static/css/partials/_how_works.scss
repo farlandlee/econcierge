@@ -39,11 +39,9 @@
       color: $secondary-color;
     }
     a {
-      color: #eee;
-
+      color: $white;
       &:hover {
-        color: $white;
-        text-decoration: underline;
+        opacity: 0.8;
       }
     }
 }
