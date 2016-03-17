@@ -43,12 +43,14 @@
           <div class="columns quantities body-count small-12 medium-6 large-5">
             <div class="data-wrapper">
               {{#item-sorter items=booking.product.prices as |price|}}
+              <div class="quantity">
                 {{#amount-quantity-input price=price quantities=booking.quantities onChange=(route-action "updateBooking" booking price) as |cost|}}
-                  <div class="price-label">x {{price.name}}...</div>
-                  <div class="total">
-                    {{format-number cost format='$0,0[.]00'}}
-                  </div>
+                <div class="price-label">x {{price.name}}...</div>
+                <div class="total">
+                  {{format-number cost format='$0,0[.]00'}}
+                </div>
                 {{/amount-quantity-input}}
+              </div>
               {{/item-sorter}}
             </div>
             <div class="booking-total row align-justify">

@@ -72,12 +72,24 @@
       white-space: nowrap;
     }
   }
-  .data-wrapper {
-    min-height: 110px;
-  }
   .quantities {
+    .data-wrapper {
+      min-height: 110px;
+    }
     .quantity {
+      display: flex;
+      flex-direction: row;
       align-items: baseline;
+      .body-count {
+        flex: 1 1 0;
+      }
+      .price-label {
+        flex: 2 1 0;
+        padding: 0 0.5rem;
+      }
+      .total {
+        flex: 1 1 0;
+      }
     }
     .input-group {
       align-items: center;
@@ -95,9 +107,6 @@
       display: block;
       flex-shrink: 0;
       flex-grow: 0;
-    }
-    .price-label {
-      padding: 0 0.5rem;
     }
     .total {
       flex-grow: 2;
