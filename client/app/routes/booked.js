@@ -28,5 +28,14 @@ export default Ember.Route.extend(NotFoundMixin, ResetScrollMixin, {
   setupController (controller, model) {
     this._super(...arguments);
     controller.setProperties(model);
+  },
+
+  renderTemplate () {
+    this._super(...arguments);
+    this.render('activities', {
+      into: 'booked',
+      outlet: 'activities',
+      controller: 'booked'
+    });
   }
 });
