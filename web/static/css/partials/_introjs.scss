@@ -2,3 +2,12 @@
 .introjs-helperNumberLayer  {
   box-sizing: content-box;
 }
+.introjs-helperNumberLayer {
+  display: none;
+}
+.introjs-helperLayer {
+  background-color: $white;
+}
+.introjs-overlay {
+  background-color: $black;
+}
