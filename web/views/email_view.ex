@@ -13,6 +13,12 @@ defmodule Grid.EmailView do
     |> Calendar.Strftime.strftime!("%I:%M%P")
   end
 
+  def duration_string(stamp) do
+    ~E"""
+    <%= div(stamp, 60) %>:<%= rem(stamp, 60) |> to_string |> String.rjust(2, ?0) %>
+    """
+  end
+
   def people_count(%{"items" => items}) do
     count = Enum.reduce(items, 0, fn(i, acc) ->
       acc + i["quantity"] * i["price_people_count"]
