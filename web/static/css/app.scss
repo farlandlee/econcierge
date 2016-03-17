@@ -31,3 +31,13 @@
   margin-left: auto;
   margin-right: auto;
 }
+
+// show tooltips over modals
+.tooltip {
+  z-index: 10000;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+  &.right::before {
+    display: none;
+    border: none;
+  }
+}
