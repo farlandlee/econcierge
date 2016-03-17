@@ -6,7 +6,9 @@
 @import "settings";
 @import 'foundation';
 @import "spinners";
+@import 'motion-ui';
 @include foundation-everything(true);
+@include motion-ui-transitions;
 
 @import "partials/mixins";
 
@@ -26,6 +28,7 @@
 @import "partials/products";
 @import "partials/vendors";
 @import "partials/introjs";
+@import "partials/how_works";
 
 // fix foundation row in expanded row bug
 .row.expanded .row {

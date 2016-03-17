@@ -16,7 +16,8 @@ exports.config = {
         "css/app.css": [
           /^(web\/static\/css)/,
           /^(bower_components\/font\-awesome)/,
-          "bower_components/intro.js/introjs.css"
+          "bower_components/intro.js/introjs.css",
+          /^(bower_components\/motion\-ui\/src)/
         ],
         "css/admin.css": [
           /^(web\/static\/admin\/css)/,
@@ -42,7 +43,8 @@ exports.config = {
     ignored: [
       /[\\/]_/, //any file starting with `_`, like sass partials
       /^(bower_components\/foundation-sites\/scss)/,
-      /^(bower_components\/what-input\/)/
+      /^(bower_components\/what-input\/)/,
+      /^(bower_components\/motion\-ui)/
     ]
   },
 
@@ -79,7 +81,8 @@ exports.config = {
       options: {
         includePaths: [
           'bower_components/foundation-sites/scss/',
-          'bower_components/spinners/stylesheets'
+          'bower_components/spinners/stylesheets',
+          'bower_components/motion-ui/src/',
         ]
       }
     },

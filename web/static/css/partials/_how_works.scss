@@ -1,0 +1,49 @@
+.how-it-works {
+    min-height: 662px;
+    left: 0;
+    position: absolute;
+    display: none;
+    right: 0;
+    width:100%;
+    z-index: 1000;
+    top: 0;
+    background-color: $primary-color;
+    color: $white;
+    padding-bottom: 4rem;
+    .image {
+      width:171px;
+      height:146px;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      margin: 2rem auto 4rem;
+      &.image-house {
+        background-image: url(../images/house.png);
+      }
+      &.image-activities {
+        background-image: url(../images/activities.png);
+      }
+      &.image-assistant {
+        background-image: url(../images/assistant.png);
+      }
+    }
+    .lead {
+      text-transform: none;
+      font-size: 1.6rem;
+    }
+    .close-section {
+      margin-top: 1rem;
+      margin-bottom: 3rem;
+    }
+    .close-button {
+      color: $secondary-color;
+    }
+    a {
+      color: #eee;
+
+      &:hover {
+        color: $white;
+        text-decoration: underline;
+      }
+    }
+}

@@ -19,7 +19,9 @@
 // paths "./socket" or full ones "web/static/js/socket".
 
 import fulloverlaySelect from "./fulloverlay-select";
+import howItWorks from "./how-it-works";
 
 jQuery(function($){
   $(document).foundation();
+  howItWorks($);
 });
