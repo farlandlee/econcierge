@@ -11,17 +11,17 @@
       <div class="columns small-12 medium-4 large-3 text-center">
         <div class="image-house image"></div>
         <p class="lead">Find a Place to Stay</p>
-        <p>Browse our homes and book your outpost in Jackson Hole. <%= link "Browse through our portfolio.", to: explore_path(@conn, :index, ["activities"]) %></p></p>
+        <p>Browse our homes and book your outpost in Jackson Hole. <a href="http://www.outpostjh.com/rentals/">Look through our portfolio.</a></p></p>
       </div>
       <div class="columns small-12 medium-4 large-3 text-center">
         <div class="image-activities image"></div>
         <p class="lead">Book Activities</p>
-        <p>Plan your Jackson Hole adventure by discovering new activities, comparing vendors side-by-side, and booking your whole itinerary online.</p>
+        <p>Plan your Jackson Hole adventure by discovering new activities, comparing vendors side-by-side, and <%= link "booking your whole itinerary online.", to: explore_path(@conn, :index, ["activities"]) %></p>
       </div>
       <div class="columns small-12 medium-4 large-3 text-center">
         <div class="image-assistant image"></div>
         <p class="lead">Or, Let us Do the Work</p>
-        <p>Tired of researching and planning? Chat with us — we’ll point you in the right direction and book activities, lodging, or restaurants for you at no extra cost.</p>
+        <p>Tired of researching and planning? <a href="mailto:book@outpostjh.com">Chat with us</a> — we’ll point you in the right direction and book activities, lodging, or restaurants for you at no extra cost.</p>
       </div>
     </div>
     <div class="row align-center align-middle">
