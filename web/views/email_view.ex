@@ -43,4 +43,17 @@ defmodule Grid.EmailView do
       """
     end
   end
+
+  def item_amount_after_coupon(order_item) do
+    item_amount_after_coupon(order_item, order_item.order)
+  end
+  
+  def item_amount_after_coupon(order_item, order) do
+    percent_off = order.coupon["percent_off"] || 0
+    order_item.amount * (1 - percent_off / 100)
+  end
+
+  def order_total_after_coupon(order) do
+    Grid.Admin.OrderView.total_after_coupon(order)
+  end
 end

@@ -11,5 +11,5 @@ test('gets real image source', function(assert) {
 
 test('gets placehold.it src', function(assert) {
   let result = placeholdIt([null, "150x150"]);
-  assert.equal(result, "http://placehold.it/150x150?text=Image+Coming+Soon");
+  assert.equal(result, "https://placehold.it/150x150?text=Image+Coming+Soon");
 });

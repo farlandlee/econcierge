@@ -12,6 +12,7 @@ defmodule Grid.Factory do
     Amenity,
     AmenityOption,
     Category,
+    Coupon,
     Experience,
     ExperienceCategory,
     Location,
@@ -27,6 +28,17 @@ defmodule Grid.Factory do
 
   def random(), do: :random.uniform()
   def random(n), do: :random.uniform(n)
+
+  def factory(:coupon) do
+    %Coupon{
+      code: sequence(:code, &"CODE_#{&1}"),
+      expiration_date: %Ecto.Date{year: 2017, month: 1, day: 1},
+      usage_count: 0,
+      max_usage_count: nil,
+      percent_off: 10 + random(80),
+      disabled: false
+    }
+  end
 
   def factory(:user) do
     %User{
@@ -285,7 +297,7 @@ defmodule Grid.Factory do
           }
         }
       ]
-    }, user.id)
+    }, user_id: user.id)
 
     Repo.insert! order_changeset
   end

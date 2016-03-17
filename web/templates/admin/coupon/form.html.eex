@@ -1,0 +1,42 @@
+<%= form_for @changeset, @action, fn f -> %>
+  <%= if @changeset.action do %>
+    <div class="alert alert-danger">
+      <p>Oops, something went wrong! Please check the errors below.</p>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= label f, :code, class: "control-label" %>
+    <%= text_input f, :code, class: "form-control" %>
+    <%= error_tag f, :code %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :percent_off, class: "control-label" %>
+    <%= number_input f, :percent_off, class: "form-control" %>
+    <%= error_tag f, :percent_off %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :max_usage_count, "Max Usage Count (Leave blank to not set a max usage)", class: "control-label" %>
+    <%= number_input f, :max_usage_count, class: "form-control" %>
+    <%= error_tag f, :max_usage_count %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :expiration_date, class: "control-label" %>
+    <%= date_select f, :expiration_date, class: "form-control" %>
+    <%= error_tag f, :expiration_date %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :disabled, "Disabled?", class: "control-label" %>
+    <%= checkbox f, :disabled, class: "form-control" %>
+    <%= error_tag f, :disabled %>
+  </div>
+
+  <div class="form-group">
+    <%= submit "Submit", class: "btn btn-primary" %>
+    <%= link "Cancel", to: @back, class: "btn btn-default" %>
+  </div>
+<% end %>

@@ -7,6 +7,9 @@ defmodule <%= module %>Controller do
   plug Plugs.PageTitle, title: "<%= human %>"
   plug :scrub_params, <%= inspect singular %> when action in [:create, :update]
 
+  @assign_model_actions [:show, :edit, :update, :delete]
+  plug Plugs.AssignModel, <%= alias %> when action in @assign_model_actions
+
   def index(conn, _) do
     <%= plural %> = Repo.all(<%= alias %>)
     render(conn, "index.html", <%= plural %>: <%= plural %>)

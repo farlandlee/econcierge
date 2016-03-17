@@ -1,11 +1,16 @@
 defmodule Grid.Order do
   use Grid.Web, :model
 
-  alias Grid.OrderItem
+  alias Grid.{
+    Coupon,
+    OrderItem
+  }
 
   schema "orders" do
     field :total_amount, :float
     field :customer_token, :string
+    field :coupon_id, :integer
+    field :coupon, :map
     belongs_to :user, Grid.User
 
     has_many :order_items, OrderItem
@@ -29,14 +34,29 @@ defmodule Grid.Order do
     |> validate_number(:total_amount, greater_than_or_equal_to: 0)
   end
 
-  @creation_fields ~w(user_id customer_token)
-  def creation_changeset(params, user_id) do
+  @required_creation_fields ~w(user_id customer_token)
+  @optional_creation_fields ~w(coupon_id coupon)
+  @doc """
+  - **relationships** :user_id required, :coupon optional
+  """
+  def creation_changeset(params, relationships) do
     customer_token = UUID.uuid4(:hex) |> String.slice(0..7)
+    user_id = relationships[:user_id]
+    coupon = if c = relationships[:coupon], do: Coupon.to_map(c)
+    coupon_id = if coupon, do: coupon.id
+
+    creation_params = %{
+      user_id: user_id,
+      coupon: coupon,
+      coupon_id: coupon_id,
+      customer_token: customer_token
+    }
 
     %__MODULE__{}
     |> changeset(params)
-    |> cast(%{user_id: user_id, customer_token: customer_token}, @creation_fields, [])
+    |> cast(creation_params, @required_creation_fields, @optional_creation_fields)
     |> foreign_key_constraint(:user_id)
+    |> foreign_key_constraint(:coupon_id)
     |> cast_assoc(:order_items, required: true)
   end
 end

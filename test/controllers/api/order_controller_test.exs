@@ -1,6 +1,10 @@
 defmodule Grid.Api.OrderControllerTest do
   use Grid.ConnCase
 
+  alias Grid.CartError
+
+  alias Grid.Order
+
   setup %{conn: conn} do
     {:ok, conn: put_req_header(conn, "accept", "application/json")}
   end
@@ -51,124 +55,161 @@ defmodule Grid.Api.OrderControllerTest do
       phone: "307-413-9999"
     }
 
+    valid_params = %{
+      user: user, cart: [cart_item], stripe_token: "12345", coupon: nil
+    }
+
     {:ok,
       product: p, price: price, startTime: st, user: user,
-      cart_item: cart_item, quantity: quantity
+      cart_item: cart_item, quantity: quantity,
+      valid_params: valid_params
     }
   end
 
-  test "creates and renders resource when data is valid", %{conn: conn, user: user, cart_item: ci} do
-    conn = post conn, api_order_path(conn, :process_cart), %{user: user, cart: [ci], stripe_token: "12345"}
+  defp create_coupon_param(properties \\ []) do
+    Factory.create(:coupon, properties) |> Map.take([:id, :code, :percent_off])
+  end
+
+  test "creates and renders resource when data is valid", %{conn: conn, valid_params: valid_params} do
+    conn = post conn, api_order_path(conn, :process_cart), valid_params
     response = json_response(conn, 201)
     assert response["order"]["customer_token"]
   end
 
-  test "does not create resource and renders errors on bad user", %{conn: conn} do
-    conn = post conn, api_order_path(conn, :process_cart), %{user: %{}}
-    response = json_response(conn, 422)
-    assert ["No user in payload"] == response["cart_errors"]
-
-    conn = post conn, api_order_path(conn, :process_cart), %{}
-    response = json_response(conn, 422)
-    assert ["No user in payload"] == response["cart_errors"]
-
-    conn = post conn, api_order_path(conn, :process_cart), %{user: %{email: "jjjj"}}
-    response = json_response(conn, 422)
-    assert %{"email" => ["has invalid format"], "name" => ["can't be blank"]} == response["errors"]
+  test "increments coupon usage count", %{conn: conn, valid_params: valid_params} do
+    coupon = create_coupon_param()
+    %{usage_count: original_usage_count} = Repo.get!(Grid.Coupon, coupon.id)
+    post conn, api_order_path(conn, :process_cart), %{valid_params | coupon: coupon}
+    coupon = Repo.get(Grid.Coupon, coupon.id)
+    assert coupon
+    assert coupon.usage_count == original_usage_count + 1
   end
 
-  test "does not create resource and renders errors with empty cart", %{conn: conn, user: user} do
-    conn = post conn, api_order_path(conn, :process_cart), %{user: user, cart: []}
-    response = json_response(conn, 422)
-    assert ["No items in cart"] == response["cart_errors"]
-
-    conn = post conn, api_order_path(conn, :process_cart), %{user: user}
-    response = json_response(conn, 422)
-    assert ["No items in cart"] == response["cart_errors"]
+  test "errors on invalid coupon", %{conn: conn, valid_params: valid_params} do
+    coupon = create_coupon_param(max_usage_count: 5, usage_count: 5)
+    assert_raise CartError, "Invalid coupon", fn ->
+      post conn, api_order_path(conn, :process_cart), %{valid_params | coupon: coupon}
+    end
   end
 
-  test "does not create resource and renders errors with invalid cart item", %{conn: conn, user: user, cart_item: ci} do
+  test "applies coupon correctly", %{conn: conn, valid_params: valid_params} do
+    coupon = create_coupon_param()
+    conn = post conn, api_order_path(conn, :process_cart), %{valid_params | coupon: coupon}
+    assert json_response(conn, 201)
+
+    order = Repo.get_by(Order, coupon_id: coupon.id)
+    assert order
+    assert order.coupon
+    assert order.coupon["percent_off"] == coupon.percent_off
+    assert order.coupon["id"] == coupon.id
+  end
+
+  test "does not create resource and renders errors on bad user", %{conn: conn, valid_params: valid_params} do
+    assert_raise CartError, "User email is required", fn ->
+      post conn, api_order_path(conn, :process_cart), valid_params |> Map.put(:user, %{})
+    end
+
+    assert_raise Phoenix.MissingParamError, ~r/^expected key "user".+/, fn ->
+      post conn, api_order_path(conn, :process_cart), valid_params |> Map.delete(:user)
+    end
+
+    assert_raise Ecto.InvalidChangesetError, fn ->
+      post conn, api_order_path(conn, :process_cart), valid_params |> Map.put(:user, %{email: "bad email"})
+    end
+  end
+
+  test "does not create resource and renders errors with empty cart", %{conn: conn, valid_params: valid_params} do
+    assert_raise CartError, "No items in cart", fn ->
+      post conn, api_order_path(conn, :process_cart), valid_params |> Map.put(:cart, [])
+    end
+
+    assert_raise Phoenix.MissingParamError, ~r/^expected key "cart".+/, fn ->
+      post conn, api_order_path(conn, :process_cart), valid_params |> Map.delete(:cart)
+    end
+  end
+
+  test "does not create resource and renders errors with invalid cart item", %{conn: conn, cart_item: ci, valid_params: valid_params} do
     ci = Map.delete(ci, :product)
 
-    conn = post conn, api_order_path(conn, :process_cart), %{user: user, cart: [ci]}
-    response = json_response(conn, 422)
-    assert [%{"message" => "No product id"}] == response["cart_errors"]
+    assert_raise CartError, "No product id", fn ->
+      post conn, api_order_path(conn, :process_cart), valid_params |> Map.put(:cart, [ci])
+    end
   end
 
-  test "does not create resource and renders errors with bad product", %{conn: conn, user: user, cart_item: ci} do
+  test "does not create resource and renders errors with bad product", %{conn: conn, valid_params: valid_params, cart_item: ci} do
     ci = put_in(ci.product, 9999)
 
-    conn = post conn, api_order_path(conn, :process_cart), %{user: user, cart: [ci], stripe_token: "12345"}
-    response = json_response(conn, 422)
-    assert [%{"product" => 9999, "message" => "Could not find product"}] == response["cart_errors"]
+    assert_raise CartError, "Could not find product", fn ->
+      post conn, api_order_path(conn, :process_cart), valid_params |> Map.put(:cart, [ci])
+    end
   end
 
-  test "does not create resource and renders errors with bad start_time", %{conn: conn, product: p, user: user, cart_item: ci} do
+  test "does not create resource and renders errors with bad start_time", %{conn: conn, valid_params: valid_params, cart_item: ci} do
     ci = put_in(ci.startTime.id, 9999)
 
-    conn = post conn, api_order_path(conn, :process_cart), %{user: user, cart: [ci]}
-    response = json_response(conn, 422)
-    assert [%{"product" => p.id, "message" => "Could not find start_time"}] == response["cart_errors"]
+    assert_raise CartError, "Could not find start_time", fn ->
+      post conn, api_order_path(conn, :process_cart), valid_params |> Map.put(:cart, [ci])
+    end
   end
 
-  test "does not create resource and renders errors, no prices", %{conn: conn, product: p, user: user, cart_item: ci} do
+  test "does not create resource and renders errors, no prices", %{conn: conn, valid_params: valid_params} do
     Repo.delete_all(Grid.Price)
 
-    conn = post conn, api_order_path(conn, :process_cart), %{user: user, cart: [ci]}
-    response = json_response(conn, 422)
-    assert [%{"product" => p.id, "message" => "No prices found for product"}] == response["cart_errors"]
+    assert_raise CartError, "No prices found for product", fn ->
+      post conn, api_order_path(conn, :process_cart), valid_params
+    end
   end
 
-  test "does not create resource and renders errors, no price id", %{conn: conn, product: p, user: user, cart_item: ci, quantity: q} do
+  test "does not create resource and renders errors, no price id", %{conn: conn, cart_item: ci, quantity: q, valid_params: valid_params} do
     q = Map.delete(q, :id)
     ci = put_in(ci.quantities, [q])
 
-    conn = post conn, api_order_path(conn, :process_cart), %{user: user, cart: [ci]}
-    response = json_response(conn, 422)
-    assert [%{"product" => p.id, "message" => "No price id included in quantity"}] == response["cart_errors"]
+    assert_raise CartError, "No price id included in quantity", fn ->
+      post conn, api_order_path(conn, :process_cart), valid_params |> Map.put(:cart, [ci])
+    end
   end
 
-  test "does not create resource and renders errors, price not found", %{conn: conn, product: p, user: user, cart_item: ci, quantity: q} do
+  test "does not create resource and renders errors, price not found", %{conn: conn, quantity: q, cart_item: ci, valid_params: valid_params} do
     q = put_in(q.id, 9999)
     ci = put_in(ci.quantities, [q])
 
-    conn = post conn, api_order_path(conn, :process_cart), %{user: user, cart: [ci]}
-    response = json_response(conn, 422)
-    assert [%{"product" => p.id, "message" => "Price not found"}] == response["cart_errors"]
+    assert_raise CartError, "Price not found", fn ->
+      post conn, api_order_path(conn, :process_cart), valid_params |> Map.put(:cart, [ci])
+    end
   end
 
-  test "does not create resource and renders errors, quantity not included", %{conn: conn, product: p, user: user, cart_item: ci, quantity: q} do
+  test "does not create resource and renders errors, quantity not included", %{conn: conn, cart_item: ci, quantity: q, valid_params: valid_params} do
     q = Map.delete(q, :quantity)
     ci = put_in(ci.quantities, [q])
 
-    conn = post conn, api_order_path(conn, :process_cart), %{user: user, cart: [ci]}
-    response = json_response(conn, 422)
-    assert [%{"product" => p.id, "message" => "Quantity not included"}] == response["cart_errors"]
+    assert_raise CartError, "Quantity not included", fn ->
+      post conn, api_order_path(conn, :process_cart), valid_params |> Map.put(:cart, [ci])
+    end
   end
 
-  test "does not create resource and renders errors, amount not found", %{conn: conn, product: p, user: user, cart_item: ci} do
+  test "does not create resource and renders errors, amount not found", %{conn: conn, valid_params: valid_params} do
     Repo.delete_all(Grid.Amount)
 
-    conn = post conn, api_order_path(conn, :process_cart), %{user: user, cart: [ci]}
-    response = json_response(conn, 422)
-    assert [%{"product" => p.id, "message" => "Amount not found"}] == response["cart_errors"]
+    assert_raise CartError, "Amount not found", fn ->
+      post conn, api_order_path(conn, :process_cart), valid_params
+    end
   end
 
-  test "does not create resource and renders errors, cost not included", %{conn: conn, product: p, user: user, cart_item: ci, quantity: q} do
+  test "does not create resource and renders errors, cost not included", %{conn: conn, cart_item: ci, quantity: q, valid_params: valid_params} do
     q = Map.delete(q, :cost)
     ci = put_in(ci.quantities, [q])
 
-    conn = post conn, api_order_path(conn, :process_cart), %{user: user, cart: [ci]}
-    response = json_response(conn, 422)
-    assert [%{"product" => p.id, "message" => "Cost not included"}] == response["cart_errors"]
+    assert_raise CartError, "Cost not included", fn ->
+      post conn, api_order_path(conn, :process_cart), valid_params |> Map.put(:cart, [ci])
+    end
   end
 
-  test "does not create resource and renders errors with invalid cost", %{conn: conn, product: p, user: user, cart_item: ci, quantity: q} do
+  test "does not create resource and renders errors with invalid cost", %{conn: conn, user: user, cart_item: ci, quantity: q} do
     q = put_in(q.cost, 10)
     ci = put_in(ci.quantities, [q])
 
-    conn = post conn, api_order_path(conn, :process_cart), %{user: user, cart: [ci]}
-    response = json_response(conn, 422)
-    assert [%{"product" => p.id, "message" => "Quantity cost is invalid for price: #{q.id}"}] == response["cart_errors"]
+    assert_raise CartError, "Quantity cost is invalid for price: #{q.id}", fn ->
+      post conn, api_order_path(conn, :process_cart), %{user: user, cart: [ci], stripe_token: "t"}
+    end
   end
 end

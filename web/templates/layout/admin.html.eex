@@ -65,8 +65,11 @@
             <li class="<%= nav_class(@conn, Grid.Admin.UserController) %>">
               <%= link "Users", to: admin_user_path(@conn, :index) %>
             </li>
-            <li class="<%= nav_class(@conn, Grid.Admin.ORderController) %>">
+            <li class="<%= nav_class(@conn, Grid.Admin.OrderController) %>">
               <%= link "Orders", to: admin_order_path(@conn, :index) %>
+            </li>
+            <li class="<%= nav_class(@conn, Grid.Admin.CouponController) %>">
+              <%= link "Coupons", to: admin_coupon_path(@conn, :index) %>
             </li>
           </ul>
         </div>

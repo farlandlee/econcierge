@@ -28,4 +28,9 @@ defmodule Grid.Admin.OrderView do
       target: "_blank",
       title: "View Charge in Stripe"
   end
+
+  def total_after_coupon(order) do
+    percent_off = order.coupon["percent_off"] || 0
+    order.total_amount * (1 - percent_off / 100)
+  end
 end
