@@ -1,6 +1,6 @@
 <div class="experiences">
   <div class="top-row row expanded align-justify activity-date-row">
-    <div class="columns small-12 large-6">
+    <div class="columns small-12 large-8">
       <div class="input-group select-activity">
         <span>Activity:</span>
         <div class="input-group-field">
@@ -18,8 +18,8 @@
         </div>
       </div>
     </div>
-    <div class="columns small-12 large-6 large-align-right">
-      {{grid-calendar defaultDate=date changeDate=(route-action 'changeDate')}}
+    <div class="columns small-12 large-3 large-align-right">
+      {{product-filtering-calendar defaultDate=date changeDate=(route-action 'changeDate')}}
     </div>
   </div>
   {{outlet}}
