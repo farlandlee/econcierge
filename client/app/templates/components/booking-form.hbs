@@ -17,11 +17,11 @@
   {{/each}}
   </div>
   <div class="row align-center date-selection">
-    <div class="columns date">
+    <div class="columns small-12 medium-6 date">
       <label>Date</label>
       {{product-date-picker product=product date=date changeDate=(action attrs.changeDate)}}
     </div>
-    <div class="columns time">
+    <div class="columns small-12 medium-6 time">
       {{time-selector date=date times=product.startTimes onChange=(action "updateTime")}}
     </div>
   </div>
