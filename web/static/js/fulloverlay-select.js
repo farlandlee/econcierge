@@ -1,6 +1,4 @@
-jQuery(function($){
-  /* Event listeners */
-
+export default function ($) {
   // Open/close
   $(document).on('click', '.full-overlay-select', function(event) {
     event.stopPropagation();
@@ -90,4 +88,4 @@ jQuery(function($){
       }
     }
   });
-});
+};

@@ -24,4 +24,5 @@ import howItWorks from "./how-it-works";
 jQuery(function($){
   $(document).foundation();
   howItWorks($);
+  fulloverlaySelect($);
 });
