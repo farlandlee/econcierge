@@ -1,8 +1,13 @@
 import Ember from 'ember';
 import NotFoundMixin from 'client/mixins/not-found';
 import ResetScrollMixin from 'client/mixins/reset-scroll';
+import RouteTitleMixin from 'client/mixins/route-title';
 
-export default Ember.Route.extend(NotFoundMixin, ResetScrollMixin, {
+export default Ember.Route.extend(NotFoundMixin, ResetScrollMixin, RouteTitleMixin, {
+  titleToken ({booking}) {
+    return `${booking.get('product.name')} Booked!`;
+  },
+
   model (params) {
     let {booking_id} = params;
     return Ember.RSVP.hash({

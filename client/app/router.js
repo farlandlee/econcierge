@@ -1,7 +1,8 @@
 import Ember from 'ember';
 import config from 'client/config/environment';
+import {RouterTitleMixin} from 'client/mixins/route-title';
 
-const Router = Ember.Router.extend({
+const Router = Ember.Router.extend(RouterTitleMixin, {
   location: config.locationType
 });
 

@@ -1,8 +1,18 @@
 import Ember from 'ember';
 import NotFoundMixin from 'client/mixins/not-found';
 import ResetScrollMixin from 'client/mixins/reset-scroll';
+import RouteTitleMixin from 'client/mixins/route-title';
+import RouteDescriptionMixin from 'client/mixins/route-meta-description';
 
-export default Ember.Route.extend(NotFoundMixin, ResetScrollMixin, {
+export default Ember.Route.extend(NotFoundMixin, ResetScrollMixin, RouteTitleMixin, RouteDescriptionMixin, {
+  titleToken ({activity}) {
+    return [activity.get('name'), "Activities"];
+  },
+
+  description ({activity}) {
+    return activity.get('description');
+  },
+
   model (params) {
     let {activity_slug} = params;
     let activities = this.store.peekAll('activity');
@@ -18,7 +28,6 @@ export default Ember.Route.extend(NotFoundMixin, ResetScrollMixin, {
 
     return Ember.RSVP.hash({
       activity: activity,
-      activities: activities,
       categories: categories
     });
   },
@@ -36,5 +45,6 @@ export default Ember.Route.extend(NotFoundMixin, ResetScrollMixin, {
   setupController (controller, model) {
     this._super(...arguments);
     controller.setProperties(model);
+    controller.set('activities', this.store.peekAll('activity'));
   }
 });
