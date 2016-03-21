@@ -13,8 +13,10 @@ config :grid,
   google_client_secret: {:system, "GOOGLE_CLIENT_SECRET"},
   google_client_id: {:system, "GOOGLE_CLIENT_ID"},
   booking_emails_from: "book@outpostjh.com",
-  booking_emails_bcc: "matthew@outpostjh.com",
-  notify_vendors: false
+  booking_emails_bcc: "matthew@outpostjh.com, jhopple@gmail.com",
+  notify_vendors: false,
+  prerender_service_url: "http://localhost:3000",
+  prerender_service_token: nil
 
 # Configures the endpoint
 config :grid, Grid.Endpoint,
