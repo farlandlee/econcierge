@@ -52,7 +52,7 @@ defmodule TripAdvisor do
     end
   end
 
-  if Mix.env() != :prod do
+  if Mix.env != :prod && Mix.env != :staging do
     def handle_cast({:update_vendor, _}, "disabled") do
       {:noreply, "disabled"}
     end
