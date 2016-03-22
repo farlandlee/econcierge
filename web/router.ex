@@ -4,7 +4,7 @@ defmodule Grid.Router do
   alias Grid.Plugs
 
   pipeline :browser do
-    if Mix.env() == :prod do
+    if Mix.env == :prod do
       plug Plug.SSL, rewrite_on: [:x_forwarded_proto]
     end
 
