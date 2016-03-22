@@ -134,8 +134,8 @@ defmodule Grid.Plugs.Prerender do
     %{status_code: code, body: body, headers: headers}
       = HTTPoison.get!("#{service_url}/#{page_uri}", headers,
         follow_redirect: true,
-        timeout: 10_000,
-        recv_timeout: 10_000
+        timeout: 120_000,
+        recv_timeout: 120_000
       )
 
     if {"Content-Encoding", "gzip"} == List.keyfind(headers, "Content-Encoding", 0) do
