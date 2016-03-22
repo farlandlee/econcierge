@@ -1,22 +1,29 @@
 export default function ($) {
-  if($('.home').length > 0) {
-    var howHeight = $("#how-it-works").outerHeight();
-    setInterval(function(){
-      if($("#how-it-works").hasClass('active')) {
-        howHeight = $("#how-it-works").outerHeight();
-        if($(document).scrollTop() > howHeight) {
-          $(".close-button","#how-it-works").click();
-        }
-      }
-    }, 300);
-    $("#how-it-works")
-    .on("on.zf.toggler", function(e) {
-      $(this).addClass('active');
-    })
-    .on("off.zf.toggler", function(e) {
-      $(this).removeClass('active');
-    }).on('close.zf.trigger', function(e) {
-      $(this).removeClass('active');
-    });
+  let elem = $('#how-it-works');
+  let options = {
+    animationIn: "scale-in-up",
+    animationOut: "scale-out-down"
+  };
+  let reveal = new Foundation.Reveal(elem, options);
+  //open automatically after 2.5 seconds
+  debugger;
+  let seen = !!Cookies.get('howseen');
+  if(!seen) {
+    setTimeout(function() {
+      reveal.open();
+    },2500);
   }
+
+  let el = $('#how-orbit');
+  let orbOpt = {
+    autoPlay: false,
+    infiniteWrap: false
+  };
+  let orbit = new Foundation.Orbit(el, orbOpt);
+
+  elem.on("closed.zf.reveal", function() {
+    Cookies.set('howseen', true, { expires: 2 });
+  });
+
+
 };

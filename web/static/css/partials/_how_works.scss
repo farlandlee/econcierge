@@ -1,47 +1,148 @@
 .how-it-works {
-    min-height: 662px;
-    left: 0;
-    position: absolute;
-    display: none;
-    right: 0;
-    width:100%;
-    z-index: 1000;
-    top: 0;
-    background-color: $primary-color;
-    color: $white;
-    padding-bottom: 4rem;
-    .image {
-      width:171px;
-      height:146px;
-      background-size: contain;
-      background-repeat: no-repeat;
-      background-position: center;
+  background-color: $primary-color;
+  color: $white;
+  padding-bottom: 1rem;
+  min-height: 70vh;
+  max-height:500px;
+  @include breakpoint(medium) {
+    min-height: none;
+    max-height: 100vh;
+  }
+  @include breakpoint(large) {
+    background-color: $white;
+    color: $primary-color;
+  }
+  .image {
+    width:171px;
+    height:146px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin: 1rem auto;
+    @include breakpoint(large) {
       margin: 2rem auto 4rem;
-      &.image-house {
-        background-image: url(../images/house.png);
-      }
-      &.image-activities {
-        background-image: url(../images/activities.png);
-      }
-      &.image-assistant {
-        background-image: url(../images/assistant.png);
+    }
+    &.image-house {
+      background-image: url(../images/house.png);
+      @include breakpoint(large) {
+        background-image: url(../images/house-green.png);
       }
     }
-    .lead {
-      text-transform: none;
-      font-size: 1.6rem;
+    &.image-activities {
+      background-image: url(../images/activities.png);
+      @include breakpoint(large) {
+        background-image: url(../images/activities-green.png);
+      }
     }
-    .close-section {
+    &.image-assistant {
+      background-image: url(../images/assistant.png);
+      @include breakpoint(large) {
+        background-image: url(../images/assistant-green.png);
+      }
+    }
+  }
+  .lead {
+    text-transform: none;
+    font-size: 1.6rem;
+    margin: 0;
+    @include breakpoint(large) {
+      margin: 1rem 0 2rem;
+    }
+  }
+  .close-section {
+    @include breakpoint(large) {
       margin-top: 1rem;
       margin-bottom: 3rem;
     }
-    .close-button {
+  }
+  .close-button {
+    color: $white;
+    @include breakpoint(large) {
       color: $secondary-color;
     }
-    a {
+  }
+  a {
+    color: $white;
+    @include breakpoint(large) {
+      color: $primary-color;
+    }
+    p {
       color: $white;
-      &:hover {
-        opacity: 0.8;
+      @include breakpoint(large) {
+        color: $dark-gray;
+      }
+      &.lead {
+        color: $white;
+        @include breakpoint(large) {
+          color: $primary-color;
+        }
       }
     }
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+  .orbit-container {
+    min-height: 330px;
+    background-color: $primary-color;
+    overflow:visible;
+    @include breakpoint(medium) {
+      min-height: 240px;
+    }
+    .orbit-slide {
+      min-height: 330px;
+      height: 330px;
+      position: relative;
+      @include breakpoint(medium) {
+        min-height: 230px;
+        height: 230px;
+      }
+    }
+    .image {
+      position:absolute;
+      top: 0;
+      left:50%;
+      margin-left: -85.5px;
+      @include breakpoint(medium) {
+        top: -20px;
+        margin-top: 0;
+        margin-bottom: 0;
+      }
+    }
+    .orbit-text {
+      min-height: 140px;
+      position: absolute;
+      bottom: 0;
+      left:10%;
+      width:80%;
+      @include breakpoint(medium) {
+        height: auto;
+        width:96%;
+        left:2%;
+        min-height: 0;
+      }
+    }
+    a.full-box-link {
+      width: 80%;
+      margin: 0 auto;
+    }
+    p {
+      margin-bottom: 0;
+    }
+    .bottom-row {
+      position: absolute;
+      bottom: -100px;
+      right: 0;
+      @include breakpoint(medium) {
+        bottom: -60px;
+      }
+      .fa {
+        font-size: 36px;
+      }
+      .hollow {
+        border-color: $white;
+        color: $white;
+      }
+    }
+  }
 }

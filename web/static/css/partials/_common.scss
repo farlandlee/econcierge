@@ -382,12 +382,29 @@ a.more-info {
     padding-right: 4rem;
   }
   &.glassy {
-    background-color: rgba($primary-color, 0.5);
+    background-color: rgba($primary-color, 0.7);
     font-weight: bold;
     &:hover {
       background-color: rgba($primary-color, 1);
     }
   }
+  &.primary {
+    padding-left: 2.6rem;
+    padding-right: 2.6rem;
+    text-transform: uppercase;
+  }
+  &.hollow {
+    color: $medium-gray;
+    border-color: $medium-gray;
+  }
+}
+
+.vertical-button {
+  position: absolute;
+  left: 20px;
+  top: 50vh;
+  transform: rotate(-90deg);
+  transform-origin: left;
 }
 
 .tripadvisor-logo {
