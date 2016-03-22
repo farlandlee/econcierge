@@ -24,7 +24,7 @@
     {{/cart-summary}}
   </div>
 
-  {{#item-sorter items=bookings by=['date:asc'] as |booking|}}
+  {{#item-sorter items=bookings by=sort as |booking|}}
   <section class="booking columns small-12 large-11">
     <div class="row expanded">
       <div class="columns booking-image small-12 text-center xlarge-text-left xlarge-3">

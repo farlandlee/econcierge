@@ -28,6 +28,7 @@ export default Ember.Route.extend(ResetScrollMixin, RouteTitleMixin, RouteDescri
   setupController (controller, bookings) {
     this._super(...arguments);
     controller.set('bookings', bookings);
+    controller.set('sort', ['date:asc']);
   },
 
   actions: {
