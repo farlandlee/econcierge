@@ -14,7 +14,7 @@ export default GridCalendar.extend({
       steps: [
         {
           element: "#"+this.elementId + ' .selected-date',
-          intro: "Select your desired date to see only those products available on it."
+          intro: "Select a date to get a more accurate look at what's available."
         },
       ],
       doneLabel: "Got it!",
