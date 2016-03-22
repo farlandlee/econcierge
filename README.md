@@ -97,3 +97,24 @@ DATABASE_URL            | Database connection url, e.g. postgres://un:pw@host:po
 POSTMARK_SERVER_TOKEN   | Postmark Server Token                                       |
 TRIPADVISOR_API_KEY     | TripAdvisor api key                                         |
 PRERENDER_TOKEN         | Prerender.io Token                                          |
+
+### Deploy
+
+We currently deploy the application to Heroku.  To deploy to heroku, you need
+to add git remotes for heroku.  We have two heroku applications, one for staging
+and one for production:
+
+```sh
+# Staging
+heroku git:remote -a outpost-grid-staging -r heroku-staging
+
+# Production
+heroku git:remote -a outpost-grid -r heroku
+```
+
+Any commits to master will automatically be deployed to production by Travis.
+To deployed a branch to staging for testing, run:
+
+```sh
+git push heroku-staging <your-branch>:master
+```

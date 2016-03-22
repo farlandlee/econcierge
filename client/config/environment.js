@@ -13,14 +13,14 @@ module.exports = function(environment) {
       }
     },
 
-    stripePublishableKey: 'pk_test_b43KzmrhHOT2zqdUFk7bZeG0', // TODO: Use env, but can't figure it out on heroku
+    stripePublishableKey: process.env.STRIPE_PUBLISHABLE_KEY,
 
     rollbar: {
       enabled: environment === 'production',
-      accessToken: "50b70bf6e3d04779995e7a08ffcb35b7", // TODO: Use env, but can't figure it out on heroku
+      accessToken: process.env.ROLLBAR_POST_CLIENT_ACCESS_TOKEN,
       captureUncaught: true,
       payload: {
-        environment: environment
+        environment: process.env.MIX_ENV || environment // We always build production, even on staging, but use a different rollbar identifier.
       }
     },
 
@@ -49,10 +49,6 @@ module.exports = function(environment) {
     ENV.APP.LOG_VIEW_LOOKUPS = false;
 
     ENV.APP.rootElement = '#ember-testing';
-  }
-
-  if (environment === 'production') {
-    ENV.stripePublishableKey = 'pk_live_xH0VpyWMmobdSGOdZGbeEvjE';
   }
 
   return ENV;
