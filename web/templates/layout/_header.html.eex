@@ -23,4 +23,5 @@
       </div>
     </div>
   </div>
+  <%= render "_how_it_works.html" %>
 </header>

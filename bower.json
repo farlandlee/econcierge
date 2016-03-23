@@ -9,7 +9,8 @@
     "spinners": "~1.2.2",
     "urijs": "~1.17.0",
     "intro.js": "^2.0.0",
-    "motion-ui": "^1.2.2"
+    "motion-ui": "^1.2.2",
+    "js-cookie": "^2.1.0"
   },
   "overrides": {
     "chosen": {

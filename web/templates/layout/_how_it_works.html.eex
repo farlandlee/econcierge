@@ -1,0 +1,90 @@
+<div class="how-it-works reveal large" id="how-it-works" >
+  <div class="row expanded">
+    <div class="columns text-right close-section">
+      <button class="close-button" aria-label="Close alert" type="button" data-close>
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  </div>
+  <div class="show-for-large">
+    <div class="row align-spaced align-middle">
+      <div class="columns small-12 medium-4 large-3 text-center">
+        <a class="full-box-link" href="http://www.outpostjh.com/rentals/">
+          <div class="image-house image"></div>
+          <p class="lead">Find a Place to Stay</p>
+          <p>Browse our homes and book your outpost in Jackson Hole. Look through our portfolio.</p>
+        </a>
+      </div>
+      <div class="columns small-12 medium-4 large-3 text-center">
+        <a class="full-box-link" href="<%= explore_path(Grid.Endpoint, :index, ["activities"]) %>">
+          <div class="image-activities image"></div>
+          <p class="lead">Book Activities</p>
+          <p>Plan your Jackson Hole adventure by discovering new activities, comparing vendors side-by-side, and booking your whole itinerary online.</p>
+        </a>
+      </div>
+      <div class="columns small-12 medium-4 large-3 text-center">
+        <a class="full-box-link" href="mailto:book@outpostjh.com">
+          <div class="image-assistant image"></div>
+          <p class="lead">Or, Let us Do the Work</p>
+          <p>Tired of researching and planning? Chat with us — we’ll point you in the right direction and book activities, lodging, or restaurants for you at no extra cost.</p>
+        </a>
+      </div>
+    </div>
+    <div class="row align-center align-middle">
+      <p class="columns small-12 lead text-center">All activities and Outpost services come at no extra cost to you.</p>
+    </div>
+    <div class="row align-middle">
+      <div class="columns small-12 text-right"><button type="button" class="button hollow" data-close>Got it!</button></div>
+    </div>
+  </div>
+  <div class="hide-for-large" >
+    <div class="row hide-for-medium">
+      <div class="columns small-12 text-center">
+        <p class="lead">How it Works</p>
+      </div>
+    </div>
+    <div class="orbit" id="how-orbit" role="region" aria-label="How It Works" >
+      <ul class="orbit-container">
+        <li class="is-active orbit-slide text-center">
+          <a class="full-box-link" href="http://www.outpostjh.com/rentals/">
+            <div class="image-house image"></div>
+            <div class="orbit-text" >
+              <p class="lead">Find a Place to Stay</p>
+              <p>Browse our homes and book your outpost in Jackson Hole. Look through our portfolio.</p>
+            </div>
+          </a>
+          <div class="row align-middle bottom-row">
+            <div class="columns small-12 text-right"><p class="fa fa-long-arrow-right"></p><p>Swipe to Continue</p></div>
+          </div>
+        </li>
+        <li class="orbit-slide text-center">
+          <a class="full-box-link" href="<%= explore_path(Grid.Endpoint, :index, ["activities"]) %>">
+            <div class="image-activities image"></div>
+            <div class="orbit-text" >
+              <p class="lead">Book Activities</p>
+              <p>Plan your Jackson Hole adventure by discovering new activities, comparing vendors side-by-side, and booking your whole itinerary online.</p>
+            </div>
+          </a>
+        </li>
+        <li class="orbit-slide text-center">
+          <a class="full-box-link" href="mailto:book@outpostjh.com">
+            <div class="image-assistant image"></div>
+            <div class="orbit-text" >
+              <p class="lead">Or, Let us Do the Work</p>
+              <p>Tired of researching and planning? Chat with us — we’ll point you in the right direction and book activities, lodging, or restaurants for you at no extra cost.</p>
+            </div>
+          </a>
+          <div class="row align-middle bottom-row">
+            <div class="columns small-12 text-right"><button type="button" class="button hollow" data-close>Got it!</button></div>
+          </div>
+        </li>
+      </ul>
+      <nav class="orbit-bullets">
+        <button class="is-active" data-slide="0"><span class="show-for-sr">First slide details.</span><span class="show-for-sr">Current Slide</span></button>
+        <button data-slide="1"><span class="show-for-sr">Second slide details.</span></button>
+        <button data-slide="2"><span class="show-for-sr">Third slide details.</span></button>
+      </nav>
+    </div>
+  </div>
+</div>
+<p class="vertical-button show-for-medium"><a data-open="how-it-works" class="button glassy">How it Works</a></p>

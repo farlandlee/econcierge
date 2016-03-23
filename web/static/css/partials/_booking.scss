@@ -89,17 +89,6 @@
   .book-total-label {
     font-size: rem-calc(12);
   }
-  .button {
-    &.primary {
-      padding-left: 2.6rem;
-      padding-right: 2.6rem;
-      text-transform: uppercase;
-    }
-    &.hollow {
-      color: $medium-gray;
-      border-color: $medium-gray;
-    }
-  }
   .booking-footer {
     & > .column {
       margin-bottom: 1rem;
