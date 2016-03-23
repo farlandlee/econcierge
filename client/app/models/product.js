@@ -1,4 +1,7 @@
 import DS from 'ember-data';
+import Ember from 'ember';
+
+const {computed} = Ember;
 
 export default DS.Model.extend({
   description: DS.attr(),
@@ -12,5 +15,11 @@ export default DS.Model.extend({
 
   meetingLocation: DS.attr(),
   prices: DS.attr(),
-  startTimes: DS.attr()
+  startTimes: DS.attr(),
+  minDefaultPrice: computed('defaultPrice.amounts.@each.min_quantity', {
+    get() {
+      let quantitySort = this.get('defaultPrice').amounts.sortBy('min_quantity');
+      return quantitySort.objectAt(0).amount;
+    }
+  })
 });

@@ -1,5 +1,5 @@
 <div class="row experience-filter align-justify">
-  <div class="column small-12 large-10">
+  <div class="column small-6 medium-8 large-9">
     <span class="filters-label">
       Filters:
     </span>
@@ -27,6 +27,27 @@
       </li>
     </ul>
   </div>
+
+  <div class="column small-6 medium-4 large-3 text-right">
+    <span>
+      Sort By:
+    </span>
+    <button type="button" data-toggle="product-sorter" onClick={{action 'toggleDisplaySort'}}>
+      {{sort}}
+      {{chevron-icon direction=(if displaySort 'up' 'down')}}
+    </button>
+    {{#foundation-dropdown id="product-sorter" class="product-sorter-dropdown"
+      vOffset=20
+      closeOnClick=true
+      show=displaySort
+      onClose=(action 'hideSort')
+    }}
+      {{product-sorter
+        options=sortFieldToString
+        onSelect=(action "updateSortParam")
+        sort=sort}}
+    {{/foundation-dropdown}}
+  </div>
 </div>
 
 <div class="experience-middle">
@@ -42,13 +63,16 @@
     </div>
   </div>
   <div class="row align-center products align-stretch">
-    {{#each filteredProducts as |product|}}
-    <div class="columns small-11 medium-5 large-3">
-      {{new-product-card product=product}}
-    </div>
+    {{#if filteredProducts}}
+      {{#item-sorter items=filteredProducts by=currentSortOrder as |product|}}
+        <div class="columns small-11 medium-5 large-3">
+          {{new-product-card product=product}}
+        </div>
+      {{/item-sorter}}
     {{else}}
       <p>There are no products available for this experience on this date.  Please select a different experience or a date using the calendar above.</p>
-    {{/each}}
+    {{/if}}
   </div>
 </div>
+
 {{outlet}}

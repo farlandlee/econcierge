@@ -1,5 +1,6 @@
 /* global Foundation */
 import Ember from 'ember';
+
 /**
  When you use this, you need to provide an "anchor" element to go with it,
  or a lot Foundation's code will vomit all over your face.
@@ -11,13 +12,14 @@ import Ember from 'ember';
 
 (see product filters for example use)
  */
+
 export default Ember.Component.extend({
   hover: false,
   hoverPane: true,
   vOffset: 1,
   hOffset: 1,
   closeOnClick: false,
-
+  alignment: 'right',
   show: false,
 
   classNames: ['dropdown-pane'],
