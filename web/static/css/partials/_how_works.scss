@@ -3,9 +3,14 @@
   left: 5px;
   bottom:5px;
   z-index: 200;
+  display:inline-block;
+  width: auto;
+  height: 30px;
   @include breakpoint(large) {
-    left: 15px;
+    left: 10px;
     top: 50vh;
+    transform: rotate(-90deg);
+    transform-origin: left;
   }
 }
 .how-it-works-button {
@@ -20,8 +25,7 @@
     padding: 6px 12px;
   }
   @include breakpoint(large) {
-    transform: rotate(-90deg);
-    transform-origin: left;
+
     a {
       background-color: rgba($primary-color, 0.7);
       font-weight: bold;
