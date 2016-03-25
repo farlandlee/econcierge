@@ -75,17 +75,15 @@
             </a>
           </div>
           <div class="column small-12 medium-8">
-            <div class="double-wide snowshoeing-cta">
+            <div class="double-wide teton-tiger-cta">
               <div class="darken-overlay"></div>
               <div class="overlay-text">
-                <p>Snowshoeing Sampler</p>
-                <p class="small">Grand Teton National Park</p>
-                <p class="small">By Hole Hiking Experience</p>
+                <p>Introducing Teton Tiger</p>
+                <p class="small">Exotic Twists on Classic Drinks and Dishes</p>
               </div>
               <p class="booking-button">
-                <!-- TODO: Fix path paths -->
-                <a href="<%= explore_path(@conn, :index, ["snowshoeing", "snowshoeing", "snowshoeing_in_grand_teton_national_park", "book", "373" ]) %>">
-                  Request to Book
+                <a href="http://www.outpostjh.com/cavalry-gt-the-indian/">
+                  Read More
                 </a>
               </p>
             </div>
