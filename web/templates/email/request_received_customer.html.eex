@@ -580,7 +580,7 @@
                                   valign="top">
                                   <p class="template-label" style="color: #aaaaaa; font-family: Helvetica, Arial, sans-serif; font-weight: normal; text-align: left; line-height: 19px; font-size: 12px; margin: 0; padding: 0;" align="left">Total</p>
                                   <p class="total" style="color: #999; font-family: Helvetica, Arial, sans-serif; font-weight: normal; text-align: left; line-height: 19px; font-size: 14px; margin: 0 0 10px; padding: 0;" align="left">
-                                    <%= order_item |> item_amount_after_coupon(@order) |> number_to_currency %>
+                                    <%= order_item |> item_amount_display(@order) %>
                                   </p>
                                 </td>
                               </tr>
