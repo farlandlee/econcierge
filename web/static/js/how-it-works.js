@@ -6,7 +6,6 @@ export default function ($) {
   };
   let reveal = new Foundation.Reveal(elem, options);
   //open automatically after 2.5 seconds
-  debugger;
   let seen = !!Cookies.get('howseen');
   if(!seen) {
     setTimeout(function() {

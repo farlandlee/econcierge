@@ -45,3 +45,11 @@
     border: none;
   }
 }
+
+//fix orbit-bullet over close button button-margin
+.orbit {
+  text-align: center;
+}
+nav.orbit-bullets {
+  display: inline-block;
+}

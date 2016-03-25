@@ -1,3 +1,44 @@
+.how-it-works-button-outer {
+  position: fixed;
+  left: 5px;
+  bottom:5px;
+  z-index: 200;
+  @include breakpoint(large) {
+    position: absolute;
+    left: 20px;
+    top: 50vh;
+  }
+}
+.how-it-works-button {
+  margin: 0;
+  padding: 0;
+  a {
+    margin: 0;
+    color: #101010;
+    background-color: $primary-color;
+    border-radius: 2px;
+    font-size: 16px;
+    padding: 6px 12px;
+  }
+  @include breakpoint(large) {
+    transform: rotate(-90deg);
+    transform-origin: left;
+    a {
+      background-color: rgba($primary-color, 0.7);
+      font-weight: bold;
+      color: $white;
+      border: 1px solid transparent;
+      border-radius: 6px;
+      padding: 0.85em 1em;
+      font-size: 0.9rem;
+      color: #fff;
+      &:hover {
+        background-color: rgba($primary-color, 1);
+      }
+    }
+  }
+}
+
 .how-it-works {
   background-color: $primary-color;
   color: $white;
@@ -11,6 +52,7 @@
   @include breakpoint(large) {
     background-color: $white;
     color: $primary-color;
+    padding-bottom: 3rem;
   }
   .image {
     width:171px;

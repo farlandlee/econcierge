@@ -66,6 +66,10 @@ body {
   margin-bottom: 2.4rem;
 }
 
+.hidden {
+  display: none;
+}
+
 .error-404 {
   background: url('/images/error-404.jpg') no-repeat center;
 }
@@ -397,14 +401,6 @@ a.more-info {
     color: $medium-gray;
     border-color: $medium-gray;
   }
-}
-
-.vertical-button {
-  position: absolute;
-  left: 20px;
-  top: 50vh;
-  transform: rotate(-90deg);
-  transform-origin: left;
 }
 
 .tripadvisor-logo {

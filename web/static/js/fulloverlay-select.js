@@ -19,8 +19,10 @@ export default function ($) {
 
     if (dropdown.hasClass('open')) {
       $('.page-header').css('z-index',1);
+      $('.how-it-works-button-outer,.purechat-mobile-widget-button').addClass('hidden');
     } else {
       $('.page-header').css('z-index',100);
+      $('.how-it-works-button-outer,.purechat-mobile-widget-button').removeClass('hidden');
       dropdown.focus();
     }
   });
@@ -28,6 +30,7 @@ export default function ($) {
   // Close when clicking outside
   $('body :not(a)').on('click', function(event) {
     $('.full-overlay-select').removeClass('open');
+    $('.how-it-works-button-outer,.purechat-mobile-widget-button').removeClass('hidden');
     $('.page-header').css('z-index',100);
   });
 
