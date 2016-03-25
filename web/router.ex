@@ -86,6 +86,8 @@ defmodule Grid.Router do
     get "/activities", ActivityController, :index
     get "/activities/:id", ActivityController, :show
 
+    put "/coupons", CouponController, :get_by_code
+
     get "/categories", CategoryController, :index
     get "/categories/:id", CategoryController, :show
 
@@ -112,6 +114,8 @@ defmodule Grid.Router do
     get "/", DashboardController, :index
 
     get "/users", UserController, :index
+
+    resources "/coupons", CouponController
 
     resources "/orders", OrderController, [only: [:index, :show]]
 

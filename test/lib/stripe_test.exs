@@ -29,7 +29,7 @@ defmodule Grid.StripeTest do
 
     link_customer(user, stripe_token)
     # Curse you GenServer.cast!
-    :timer.sleep(100)
+    :timer.sleep(50)
 
     user = Repo.get(User, user.id)
     assert user
@@ -42,7 +42,7 @@ defmodule Grid.StripeTest do
 
     link_customer(user, stripe_token)
     # Curse you GenServer.cast!
-    :timer.sleep(100)
+    :timer.sleep(50)
 
     user = Repo.get(User, user.id)
     assert user
@@ -51,12 +51,24 @@ defmodule Grid.StripeTest do
 
   test "charge customer updates order item with charge data", %{order_item: item} do
     charge_customer(item)
-    :timer.sleep(100)
+    :timer.sleep(50)
 
     item = Repo.get(OrderItem, item.id)
     assert item
     assert item.stripe_charge_id
     assert item.charged_at
+    assert item.amount_charged == item.amount
+  end
+
+  test "charge customer with coupon on order", %{order_item: item, order: order} do
+    coupon = Factory.create(:coupon) |> Grid.Coupon.to_map
+    order |> Ecto.Changeset.change(coupon: coupon, coupon_id: coupon.id) |> Repo.update!
+
+    charge_customer(item)
+    :timer.sleep(50)
+
+    item = Repo.get(OrderItem, item.id)
+    assert item.amount_charged == item.amount * (1 - coupon.percent_off / 100)
   end
 
   test "charge customer with error", %{order_item: item} do
@@ -66,7 +78,7 @@ defmodule Grid.StripeTest do
       |> Repo.update!
 
     charge_customer(item)
-    :timer.sleep(100)
+    :timer.sleep(50)
 
     item = Repo.get(OrderItem, item.id)
     assert item

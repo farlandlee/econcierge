@@ -414,7 +414,7 @@
                             <p style="color: #999; font-family: Helvetica, Arial, sans-serif; font-weight: normal; text-align: left; line-height: 19px; font-size: 14px; margin: 0 0 10px; padding: 0;" align="left">See below for a summary of your request(s). This is not a confirmed reservation - at least not yet.</p>
                             <p style="color: #999; font-family: Helvetica, Arial, sans-serif; font-weight: normal; text-align: left; line-height: 19px; font-size: 14px; margin: 0 0 10px; padding: 0;" align="left">The vendor(s) will respond to your request(s) within 24 hours. We'll let you know as soon as that happens.</p>
                             <p style="color: #999; font-family: Helvetica, Arial, sans-serif; font-weight: normal; text-align: left; line-height: 19px; font-size: 14px; margin: 0 0 10px; padding: 0;" align="left">
-                              You may see an authorization for <%= @order.total_amount |> round |> number_to_currency %>
+                              You may see an authorization for <%= @order |> order_total_after_coupon |> number_to_currency %>
                               on the payment method you provided, but you won't be charged unless your request is confirmed.
                             </p>
                           </td>
@@ -579,7 +579,7 @@
                                   valign="top">
                                   <p class="template-label" style="color: #aaaaaa; font-family: Helvetica, Arial, sans-serif; font-weight: normal; text-align: left; line-height: 19px; font-size: 12px; margin: 0; padding: 0;" align="left">Total</p>
                                   <p class="total" style="color: #999; font-family: Helvetica, Arial, sans-serif; font-weight: normal; text-align: left; line-height: 19px; font-size: 14px; margin: 0 0 10px; padding: 0;" align="left">
-                                    <%= order_item.amount |> round |> number_to_currency %>
+                                    <%= order_item |> item_amount_display(@order) %>
                                   </p>
                                 </td>
                               </tr>

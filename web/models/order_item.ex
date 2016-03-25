@@ -3,6 +3,7 @@ defmodule Grid.OrderItem do
 
   schema "order_items" do
     field :amount, :float, nil: false
+    field :amount_charged, :float, nil: false, default: 0.0
     field :activity_at, Ecto.DateTime, nil: false
     field :quantities, :map, nil: false
     field :vendor_token, :string, nil: false
@@ -60,9 +61,14 @@ defmodule Grid.OrderItem do
     cast(model, params, [:status, :status_info], [])
   end
 
-  def charge_changeset(model, charge_id) do
-    params = %{stripe_charge_id: charge_id, charged_at: Calendar.DateTime.now_utc}
-    cast(model, params, [:stripe_charge_id, :charged_at], [])
+  @charge_changeset_params ~w(stripe_charge_id charged_at amount_charged)a
+  def charge_changeset(model, charge_id, amount_charged) do
+    params = %{
+      stripe_charge_id: charge_id,
+      charged_at: Calendar.DateTime.now_utc,
+      amount_charged: amount_charged
+    }
+    cast(model, params, @charge_changeset_params, [])
   end
 
   #######################

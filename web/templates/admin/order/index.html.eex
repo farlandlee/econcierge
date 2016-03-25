@@ -4,9 +4,11 @@
       <th>#</th>
       <th>Reference Id</th>
       <th>User</th>
+
       <th># of items</th>
       <th># accepted</th>
       <th># rejected</th>
+
       <th>Processed / Total amount</th>
       <th>Placed On</th>
 
@@ -17,16 +19,18 @@
 <%= for order <- @orders,
         accepted_items = order |> items_with_status("accepted"),
         rejected_items = order |> items_with_status("rejected"),
-        amount_processed = Enum.reduce(accepted_items, 0, fn i, t -> i.amount + t end)
+        amount_processed = Enum.reduce(accepted_items, 0, fn i, t -> i.amount_charged + t end)
     do %>
     <tr>
       <td><%= order.id %></td>
       <td><%= link order.customer_token, to: admin_order_path(@conn, :show, order) %></td>
       <td><%= order.user.email %></td>
-      <td><%= Enum.count(order.order_items) %></td>
-      <td><%= Enum.count(accepted_items) %></td>
-      <td><%= Enum.count(rejected_items) %></tdh>
-      <td><%= number_to_currency(amount_processed) %>/<%= number_to_currency(order.total_amount) %></td>
+
+      <td><%= order.order_items |> Enum.count %></td>
+      <td><%= accepted_items    |> Enum.count %></td>
+      <td><%= rejected_items    |> Enum.count %></td>
+
+      <td><%= amount_processed |> number_to_currency %>/<%= order |> total_after_coupon |> number_to_currency %></td>
       <td><%= order.inserted_at %></td>
 
       <td class="text-right">

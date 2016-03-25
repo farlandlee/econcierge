@@ -49,4 +49,31 @@ defmodule Grid.EmailView do
       """
     end
   end
+
+  def item_amount_display(order_item, order) do
+    if coupon = order.coupon do
+      ~E"""
+      <del><%= order_item.amount |> number_to_currency %></del>
+      <%= order_item |> item_amount_after_coupon(order) |> number_to_currency %>
+      (with <%= coupon["percent_off"] %>% off coupon)
+      """
+    else
+      ~E"""
+      <%= order_item.amount |> number_to_currency %>
+      """
+    end
+  end
+
+  def item_amount_after_coupon(order_item) do
+    item_amount_after_coupon(order_item, order_item.order)
+  end
+
+  def item_amount_after_coupon(order_item, order) do
+    percent_off = order.coupon["percent_off"] || 0
+    order_item.amount * (1 - percent_off / 100)
+  end
+
+  def order_total_after_coupon(order) do
+    Grid.Admin.OrderView.total_after_coupon(order)
+  end
 end

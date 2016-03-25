@@ -7,8 +7,26 @@
     <dt>Placed On</dt>
     <dd><%= @order.inserted_at %></dd>
 
+    <dt>Coupon</dt>
+    <dd>
+    <%= if coupon = @order.coupon do %>
+      <%= link to: admin_coupon_path(@conn, :show, coupon["id"]) do %>
+      <%= coupon["code"] %>
+      <% end %>
+      (<%= coupon["percent_off"] %>% off)
+    <% else %>
+      <em>No coupon used</em>
+    <% end %>
+    </dd>
+
     <dt>Total amount</dt>
-    <dd><%= number_to_currency(@order.total_amount) %></dd>
+    <dd>
+      <%= number_to_currency(@order.total_amount) %>
+      <%= if @order.coupon_id do %>
+        (<%= @order |> total_after_coupon |> number_to_currency %>
+        after coupon)
+      <% end %>
+    </dd>
   </dl>
 
   <dl class="dl-horizontal col-md-6">

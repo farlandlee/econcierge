@@ -1,5 +1,6 @@
 defmodule Grid.Cart do
   alias Grid.{
+    CartError,
     Repo,
     Product
   }
@@ -8,72 +9,116 @@ defmodule Grid.Cart do
   Converts a shopping cart payload into parameters that are valid for creating
   an `Order` the its nested list of `OrderItem` entries.
   """
-  def to_order_params(items = [_|_]) do
-    {order_items, total} = Enum.map_reduce(items, 0, fn
-      (%{"product" => p} = item, acc) ->
-        case extract_order_item(item) do
-          {:ok, oi_params} ->
-            {oi_params, acc + oi_params.amount}
+  def to_order_params!([]) do
+    raise CartError, message: "No items in cart"
+  end
 
-          {:error, error} -> throw(%{product: p, message: error})
-        end
-      (_, _) -> throw(%{message: "No product id"})
+  def to_order_params!(items) do
+    {order_items, total} = Enum.map_reduce(items, 0, fn item, acc ->
+      case extract_order_item(item) do
+        {:ok, oi_params} -> {oi_params, acc + oi_params.amount}
+        {:error, error} -> raise CartError, message: error, product: item["product"]
+      end
     end)
 
-    {:ok, %{total_amount: total, order_items: order_items}}
-  catch
-    error -> {:error, error}
+    %{total_amount: total, order_items: order_items}
   end
-  def to_order_params(_), do: {:error, "No items in cart"}
-
-  def extract_order_item(%{"product" => p_id} = items) do
-    product = Repo.get(Product, p_id)
-    extract_for_product(items, product)
+  @doc """
+  Starts with something like
+  %{
+    product: p.id,
+    date: two_days_from_now,
+    startTime: %{ id: st.id },
+    quantities: [%{
+      id: price.id,
+      quantity: 3,
+      cost: amount.amount * 3
+    }, %{
+      id: price2.id,
+      quantity: 0,
+      cost: 0
+    }]
+  }
+  ends with this
+  %{
+    product_id: product.id,
+    activity_at: activity_at,
+    amount: sub_total,
+    quantities: %{"items" => quantities}
+  }
+  """
+  def extract_order_item(item) do
+    with {:ok, product} <- load_product(item),
+         {:ok, activity_at} <- calculate_activity_at(item, product),
+         {:ok, quantities, subtotal} <- extract_quantities(item, product),
+      do: {:ok, %{
+            product_id: product.id,
+            activity_at: activity_at,
+            amount: subtotal,
+            quantities: %{"items" => quantities}
+          }}
   end
-  def extract_order_item(_), do: {:error, "Invalid cart item"}
 
-  def extract_for_product(_, nil), do: {:error, "Could not find product"}
-  def extract_for_product(%{"startTime" => %{"id" => st_id}} = items, product) do
-    product = Repo.preload(product, start_times: :season, prices: :amounts)
+  #################
+  ##   product   ##
+  #################
 
-    start_time = Enum.find(product.start_times, fn(t) ->
-      t.id == st_id #TODO: could add more validation here to verify date and dotw
-    end)
-
-    extract_for_start_time(items, product, start_time)
-  end
-  def extract_for_product(_, _), do: {:error, "No start time supplied"}
-
-  def extract_for_start_time(_, _, nil), do: {:error, "Could not find start_time"}
-  def extract_for_start_time(%{"date" => date, "quantities" => quants}, product, start_time) do
-    activity_at = Ecto.DateTime.from_date_and_time(
-      Ecto.Date.cast!(date),
-      start_time.starts_at_time
-    )
-
-    case extract_quantities(quants, product.prices) do
-      {:ok, quantities, sub_total} ->
-        {:ok, %{
-          product_id: product.id,
-          activity_at: activity_at,
-          amount: sub_total,
-          quantities: %{"items" => quantities}
-        }}
-      {:error, error} -> {:error, error}
+  defp load_product(%{"product" => product_id}) do
+    # @TODO only allow published products
+    case Repo.get(Product, product_id) do
+      nil -> {:error, "Could not find product"}
+      product ->
+        product = Repo.preload(product, start_times: :season, prices: :amounts)
+        {:ok, product}
     end
   end
-  def extract_for_start_time(_, _, _), do: {:error, "Date or quantities not supplied"}
 
+  defp load_product(_) do
+    {:error, "No product id"}
+  end
 
-  def extract_quantities(quants, prices = [_|_]) do
-    quants = Enum.filter(quants, fn
-      %{"quantity" => 0} -> false
-      _ -> true
-    end)
+  #################
+  ## activity_at ##
+  #################
 
-    {params, sub_total} = Enum.map_reduce(quants, 0, fn(q, acc) ->
+  defp calculate_activity_at(item = %{"startTime" => %{"id" => start_time_id}}, product) do
+    #TODO: could add more validation here to verify date and dotw
+    product.start_times
+    |> Enum.find(&(&1.id == start_time_id))
+    |> do_calculate_activity_at(item["date"])
+  end
+
+  defp calculate_activity_at(_, _) do
+    {:error, "No start time supplied"}
+  end
+
+  defp do_calculate_activity_at(start_time, date)
+  when is_nil(start_time) or is_nil(date) do
+    error = cond do
+      start_time -> "Date not supplied"
+      date       -> "Could not find start_time"
+      :both_nil  -> ["Could not find start_time", "Date not supplied"]
+    end
+    {:error, error}
+  end
+
+  defp do_calculate_activity_at(%{starts_at_time: time}, date) do
+    activity_at = date
+      |> Ecto.Date.cast!
+      |> Ecto.DateTime.from_date_and_time(time)
+    {:ok, activity_at}
+  end
+
+  #####################
+  ##    Quantities   ##
+  #####################
+
+  def extract_quantities(%{"quantities" => quants}, %{prices: prices = [_|_]}) do
+    quants = Enum.reject(quants, &(&1["quantity"] == 0))
+
+    {params, sub_total} = Enum.map_reduce(quants, 0, fn q, acc ->
       case extract_quantity(q, prices) do
-        {:ok, params} -> {params, acc + params["sub_total"]}
+        {:ok, quantity} -> {quantity, acc + quantity["sub_total"]}
         {:error, error} -> throw(error)
       end
     end)
@@ -82,39 +127,71 @@ defmodule Grid.Cart do
   catch
     error -> {:error, error}
   end
-  def extract_quantities(_, _), do: {:error, "No prices found for product"}
 
-  def extract_quantity(%{"id" => pid} = quantity, prices) do
-    price = Enum.find(prices, &(&1.id == pid))
-    extract_with_price(quantity, price)
+  def extract_quantities(%{"quantities" => _}, _) do
+    {:error, "No prices found for product"}
   end
-  def extract_quantity(_, _), do: {:error, "No price id included in quantity"}
 
-  def extract_with_price(_, nil), do: {:error, "Price not found"}
-  def extract_with_price(%{"quantity" => quantity} = q_params, price) do
-    amount = Enum.find(price.amounts, fn(a) ->
-      a.min_quantity <= quantity &&
-      (a.max_quantity >= quantity || a.max_quantity == 0)
+  def extract_quantities(_, _) do
+    {:error, "No quantities provided"}
+  end
+
+  ####################
+  ##    Quantity    ##
+  ####################
+
+  def extract_quantity(quantity, prices) do
+    with {:ok, price} <- extract_quantity_price(quantity, prices),
+         {:ok, amount} <- extract_quantity_price_amount(quantity, price),
+         {:ok, cost} <- calculate_quantity_cost(quantity, amount),
+         :ok <- verify_calculated_cost(quantity, cost, price),
+      do: {:ok, %{
+            "price_id" => price.id,
+            "sub_total" => cost,
+            "quantity" => quantity["quantity"],
+            "price_name" => price.name,
+            "price_people_count" => price.people_count
+          }}
+  end
+
+  defp extract_quantity_price(%{"id" => price_id}, prices) do
+    case Enum.find(prices, &(&1.id == price_id)) do
+      nil -> {:error, "Price not found"}
+      price -> {:ok, price}
+    end
+  end
+
+  defp extract_quantity_price(_, _) do
+    {:error, "No price id included in quantity"}
+  end
+
+  defp extract_quantity_price_amount(%{"quantity" => quantity}, %{amounts: amounts}) do
+    amount = Enum.find(amounts, fn %{min_quantity: min, max_quantity: max} ->
+      min <= quantity && (max >= quantity || max == 0)
     end)
-
-    extract_with_amount(q_params, price, amount)
+    case amount do
+      nil -> {:error, "Amount not found"}
+      amount -> {:ok, amount}
+    end
   end
-  def extract_with_price(_, _), do: {:error, "Quantity not included"}
 
-  def extract_with_amount(_, _, nil), do: {:error, "Amount not found"}
-  def extract_with_amount(%{"cost" => cost, "quantity" => quantity}, price, amount) do
-    total = amount.amount * quantity
-    if total == cost do
-      {:ok, %{
-        "price_id" => price.id,
-        "sub_total" => cost,
-        "quantity" => quantity,
-        "price_name" => price.name,
-        "price_people_count" => price.people_count
-      }}
+  defp extract_quantity_price_amount(_, _) do
+    {:error, "Quantity not included"}
+  end
+
+  defp calculate_quantity_cost(%{"quantity" => quantity}, %{amount: amount}) do
+    {:ok, quantity * amount}
+  end
+
+  defp verify_calculated_cost(%{"cost" => client}, expected, price) do
+    if client == expected do
+      :ok
     else
       {:error, "Quantity cost is invalid for price: #{price.id}"}
     end
   end
-  def extract_with_amount(_, _, _), do: {:error, "Cost not included"}
+
+  defp verify_calculated_cost(_, _, _) do
+    {:error, "Cost not included"}
+  end
 end

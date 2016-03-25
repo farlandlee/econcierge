@@ -69,12 +69,16 @@ defmodule Grid.Stripe do
       description: String.replace("#{product.name} - #{product.vendor.name}", "&", "%26")
     ]
 
-    cents = round(order_item.amount * 100)
+    percent_off = order_item.order.coupon["percent_off"] || 0
 
-    case stripe_create_charge(cents, params) do
+    cost = order_item.amount * (1 - percent_off / 100)
+
+    cost_in_cents = round(cost * 100)
+
+    case stripe_create_charge(cost_in_cents, params) do
       {:ok, %{id: id}} ->
         order_item
-        |> OrderItem.charge_changeset(id)
+        |> OrderItem.charge_changeset(id, cost)
         |> Repo.update!
       {:error, %{"error" => error}} ->
         handle_error(order_item, error)

@@ -67,6 +67,8 @@ defmodule Grid.Admin.BreadcrumbsView do
     |> Enum.reverse
   end
 
+  defp link_text(%{customer_token: token}), do: token
+  defp link_text(%{code: code}), do: code
   defp link_text(%{name: name}), do: name
   defp link_text(%{filename: filename}), do: filename
   defp link_text(%VA{activity: a}), do: link_text(a)

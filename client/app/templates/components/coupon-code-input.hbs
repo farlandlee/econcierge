@@ -1,0 +1,11 @@
+{{input class="input-group-field" value=code name="coupon_code"}}
+<div class="input-group-button">
+  {{async-button class="button"
+    action=(action "submitCode")
+    disableWhen=disabled
+    default="Check Code"
+    pending="Verifying Code..."
+    fulfilled="Coupon Applied!"
+    rejected="Invalid Code. Try another?"
+  }}
+</div>

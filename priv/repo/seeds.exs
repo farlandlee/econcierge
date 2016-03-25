@@ -5,6 +5,7 @@ alias Grid.Amenity
 alias Grid.AmenityOption
 alias Grid.Amount
 alias Grid.Category
+alias Grid.Coupon
 alias Grid.Experience
 alias Grid.ExperienceCategory
 alias Grid.Image
@@ -21,6 +22,11 @@ alias Grid.VendorActivity
 user = Repo.insert! %User{
   name: "Development User",
   email: "dev@outpostjh.com"
+}
+
+Repo.insert! %Coupon{
+  percent_off: 50,
+  code: "FIFTY_OFF"
 }
 
 for activity <- ["Fly Fishing", "Snowmobiling", "Paragliding"] do
@@ -171,7 +177,7 @@ for {name, desc, act_name} <- vendor_tuples, activity = Repo.get_by!(Activity, n
           }
         }
       ]
-    }, user.id)
+    }, user_id: user.id)
 
     Repo.insert! order_changeset
   end

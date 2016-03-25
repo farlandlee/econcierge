@@ -1,0 +1,46 @@
+<%= link to: admin_coupon_path(@conn, :new), class: "btn btn-success header-action" do  %>
+  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add coupon
+<% end %>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Code</th>
+      <th>Percent off</th>
+      <th>Usage Count</th>
+      <th>Expiration date</th>
+      <th>Disabled?</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for coupon <- @coupons do %>
+    <tr>
+      <td><%= link coupon.code, to: admin_coupon_path(@conn, :show, coupon) %></td>
+      <td><%= coupon.percent_off %></td>
+      <td>
+        <%= coupon.usage_count %><%= if max = coupon.max_usage_count, do: " / #{max}" %>
+      </td>
+      <td><%= coupon.expiration_date %></td>
+      <td><%= checkbox_icon(coupon.disabled) %></td>
+
+      <td class="text-right">
+        <div class="dropdown actions">
+          <button class="btn btn-xs btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+            Actions <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-right">
+            <li>
+              <%= link "Edit", to: admin_coupon_path(@conn, :edit, coupon), class: "edit" %>
+            </li>
+            <li>
+              <%= link "Delete", to: admin_coupon_path(@conn, :delete, coupon), method: :delete, data: [confirm: "Are you sure?"], class: "delete" %>
+            </li>
+          </ul>
+        </div>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>

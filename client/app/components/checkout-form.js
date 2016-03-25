@@ -8,13 +8,27 @@ Stripe.setPublishableKey(config.stripePublishableKey);
 
 const {
   computed,
-  computed: {notEmpty, and}
+  computed: {notEmpty, and},
+  inject
 } = Ember;
+
+const devData = {
+  email: "fake-email@outpostjh.com",
+  name: "Fake Dev",
+  phone: "123-456-7890",
+  ccName: "Fake Dev",
+  ccNumber: "4242424242424242",
+  ccMonth: "12",
+  ccYear: "20",
+  ccCode: "123"
+};
 
 export default Ember.Component.extend({
   tagName: 'form',
 
   cart: null,
+  coupon: null,
+  ajax: inject.service(),
 
   email: null,
   name: null,
@@ -35,6 +49,13 @@ export default Ember.Component.extend({
   ccMonthNotEmpty: notEmpty('ccMonth'),
   ccYearNotEmpty: notEmpty('ccYear'),
   ccCodeNotEmpty: notEmpty('ccCode'),
+
+  init () {
+    this._super(...arguments);
+    if (config.environment === 'development') {
+      this.setProperties(devData);
+    }
+  },
 
   userValid: and('emailNotEmpty', 'nameNotEmpty', 'phoneNotEmpty'),
   cardValid: and('ccNumberNotEmpty', 'ccNameNotEmpty', 'ccMonthNotEmpty', 'ccYearNotEmpty', 'ccCodeNotEmpty'),
@@ -86,6 +107,14 @@ export default Ember.Component.extend({
 
     this.set('processing', true);
 
+    return this._createStripeToken(card)
+    .then(
+      stripeToken => this._placeOrder(stripeToken),
+      ({error}) => this.set('cardErrorMessage', error.message)
+    ).finally(() => this.set('processing', false));
+  },
+
+  _createStripeToken (card) {
     return new Ember.RSVP.Promise(function (resolve, reject) {
       Stripe.card.createToken(card, (status, response) => {
         if (response.error) {
@@ -95,46 +124,53 @@ export default Ember.Component.extend({
           return resolve(response);
         }
       });
-    }).then(({id}) => {
-      let user = this.getProperties('email', 'name', 'phone');
-
-      // map bookings so that we have a basic array,
-      // rather than a record array (can't stringify record arrays)
-      let bookings = this.get('cart').map(b => b);
-      let payload = JSON.stringify({
-        cart: bookings,
-        user: user,
-        stripe_token: id
-      });
-
-      return this.placeOrder(payload);
-    }, ({error}) => {
-      this.set('processing', false);
-      return this.set('cardErrorMessage', error.message);
     });
   },
 
-  placeOrder (payload) {
-    return Ember.$.ajax('/web_api/orders', {
-      method: 'POST',
-      data: payload,
-      contentType: 'application/json',
-    }).then(() => {
-      return this.attrs.onSubmit();
-    }, ({responseJSON}) => {
-      //TODO: Better error handling and display
-      if (responseJSON.errors) {
-        this.set('contactErrorMessage', 'Validation errors on contact information. Please check that your email is correct.');
-      }
+  _placeOrder ({id}) {
+    let user = this.getProperties('email', 'name', 'phone');
+    let coupon = this.get('coupon');
 
-      if (responseJSON.cart_errors) {
-        this.get('cart').forEach(i => i.destroyRecord());
-        this.set('cartErrors', responseJSON.cart_errors);
-      }
+    // map bookings so that we have a basic array,
+    // rather than a record array (can't stringify record arrays)
+    let bookings = this.get('cart').map(b => b);
 
-      this.set('processing', false);
-
-      return;
+    let payload = JSON.stringify({
+      cart: bookings,
+      user: user,
+      stripe_token: id,
+      coupon: coupon
     });
+
+    return this.get('ajax')
+    .post('orders', {data: payload})
+    .then(
+      this.attrs.onSubmit,
+      (error) => this._orderFailure(error)
+    );
+  },
+
+  _orderFailure ({errors}) {
+    if (errors) {
+      let cartErrors = [];
+      errors.forEach(error => {
+        if (error.type === 'ValidationError') {
+          this.set('contactErrorMessage', 'Validation errors on contact information. Please check that your email is correct.');
+        } else if (error.type === 'CartError') {
+          this.get('cart').forEach(i => i.destroyRecord());
+          cartErrors.push(error);
+        } else {
+          // don't know what it is, throw up
+          throw error;
+        }
+      });
+      this.set('cartErrors', cartErrors);
+    }
+  },
+
+  actions: {
+    setCoupon (coupon) {
+      this.set('coupon', coupon);
+    }
   }
 });

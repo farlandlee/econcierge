@@ -11,7 +11,8 @@
     <p class="cart-error column small-10 ">Sorry, we could not complete your order at this time.</p>
   </div>
   {{/if}}
-  <fieldset class="fieldset columns small-10">
+
+  <fieldset class="fieldset columns small-10 credit-card">
     <legend>Credit Card</legend>
     <div class="row">
       <div class="columns small-7">
@@ -40,7 +41,8 @@
     </div>
     {{/if}}
   </fieldset>
-  <fieldset class="fieldset columns small-10">
+
+  <fieldset class="fieldset columns small-10 contact-information">
     <legend>Contact Information</legend>
     <div class="row">
       <div class="columns">
@@ -57,6 +59,14 @@
     <div class="row small-10">
       <p class="cart-error column small-10 ">{{contactErrorMessage}}</p>
     </div>
+    {{/if}}
+  </fieldset>
+
+  <fieldset class="fieldset columns small-10 coupon">
+    <legend>Got a coupon code? Enter it below.</legend>
+    {{coupon-code-input couponVerified=(action "setCoupon")}}
+    {{#if coupon.percent_off}}
+    <p>{{coupon.percent_off}}% discount applied.</p>
     {{/if}}
   </fieldset>
 </div>

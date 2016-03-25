@@ -13,7 +13,7 @@ export default DS.Model.extend({
   date: DS.attr(),
   // {id: id, time: string}
   startTime: DS.attr(),
-  // list of {id: price.id, quantity: integer}
+  // list of {id: price.id, quantity: integer, cost: integer}
   quantities: DS.attr(),
 
   total: computed('quantities.@each.{quantity,id}', {
@@ -25,15 +25,22 @@ export default DS.Model.extend({
         Make sure you preloaded this booking's product if you need its total.
         `;
       }
-      
+
       let prices = product.get('prices');
       let quantities = this.get('quantities');
       let total = 0;
 
-      quantities.forEach(({id, quantity}) => {
-        let amounts = prices.findBy('id', id).amounts;
-        let amount = amountForQuantity(amounts, quantity);
-        let cost = amount.amount * quantity;
+      quantities.forEach(({cost}) => {
+        if (cost === undefined) {
+          // @TODO this is legacy code from before quantities
+          // had their cost built in. I'm reluctant to remove it
+          // wholly though, since we don't have "data versioning"
+          // for bookings and a user may have a booking without cost.
+          let {id, quantity} = arguments[0];
+          let amounts = prices.findBy('id', id).amounts;
+          let amount = amountForQuantity(amounts, quantity);
+          cost = amount.amount * quantity;
+        }
         total += cost;
       });
 

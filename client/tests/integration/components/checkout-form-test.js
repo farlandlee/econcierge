@@ -8,7 +8,7 @@ moduleForComponent('checkout-form', 'Integration | Component | checkout form', {
 test('it renders', function(assert) {
   this.render(hbs`{{checkout-form}}`);
 
-  assert.equal(this.$('legend').first().text().trim(), 'Credit Card');
+  assert.equal(this.$('.credit-card legend').text().trim(), 'Credit Card');
 
   assert.ok(this.$('input[name="ccname"]').length);
   assert.ok(this.$('input[name="ccnumber"]').length);
@@ -16,7 +16,7 @@ test('it renders', function(assert) {
   assert.ok(this.$('input[name="ccyear"]').length);
   assert.ok(this.$('input[name="cccode"]').length);
 
-  assert.equal(this.$('legend').last().text().trim(), 'Contact Information');
+  assert.equal(this.$('.contact-information legend').text().trim(), 'Contact Information');
   // renders inputs
   assert.ok(this.$('input[name="name"]').length);
   assert.ok(this.$('input[name="email"]').length);
@@ -24,6 +24,8 @@ test('it renders', function(assert) {
   // no errors on render
   assert.notOk(this.$('.checkout-error').length);
 
-  assert.equal(this.$('button[type="submit"]').text().trim(), 'Submit Request(s)');
+  assert.equal(this.$('.coupon legend').text().trim(), 'Got a coupon code? Enter it below.');
+
+  assert.equal(this.$('button[type="submit"]').last().text().trim(), 'Submit Request(s)');
 
 });
