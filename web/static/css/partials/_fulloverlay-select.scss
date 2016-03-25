@@ -41,17 +41,16 @@ $arrow_color: $white;
   font-family: inherit;
   font-size: $font_size;
   font-weight: normal;
-  line-height: 30px;
+  line-height: 30px;  
+  outline: none;
+  padding-left: $dropdown_padding;
+  text-align: left !important;
+  transition: all 0.2s ease-in-out;
+  width: auto;
   @include breakpoint ( medium ) {
     line-height: $input_height - 2;
     position: relative;
   }
-  outline: none;
-  padding-left: $dropdown_padding;
-
-  text-align: left !important;
-  transition: all 0.2s ease-in-out;
-  width: auto;
   .current {
     position:relative;
     font-size: 1rem;

@@ -7,9 +7,6 @@
           <div class="small-12 columns">
             <div class="search-label">Book Your Adventure <span>in Jackson Hole</span></div>
           </div>
-          <div class="columns small-12 text-center align-middle hide-for-medium">
-            <p><a data-open="how-it-works" class="button glassy large">How it Works</a></p>
-          </div>
           <div class="small-12 medium-10 large-8 columns form-group">
             <label for="activity[id]">Explore</label>
             <div class="input-group-field">
