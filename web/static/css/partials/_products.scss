@@ -166,3 +166,19 @@ $bookings-blue: #77BAF0;
     }
   }
 }
+.duration,
+.age-restriction,
+.location,
+.product-icons {
+  &.fi {
+    text-align:center;
+    color: $medium-gray;
+  	font-size: 0.8rem;
+    &:before {
+      margin-bottom: 0.5rem;
+      font-size: 1.2rem;
+      display: block;
+      text-align:center;
+    }
+  }
+}

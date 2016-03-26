@@ -357,22 +357,6 @@ a.more-info {
   margin: 0;
 }
 
-.duration,
-.age-restriction,
-.location {
-  &.fi {
-    text-align:center;
-    color: $medium-gray;
-  	font-size: 0.8rem;
-    &:before {
-      margin-bottom: 0.5rem;
-      font-size: 1.2rem;
-      display: block;
-      text-align:center;
-    }
-  }
-}
-
 .truncate {
   width: 100%;
   white-space: nowrap;

@@ -4,6 +4,8 @@ import RouteTitleMixin from 'client/mixins/route-title';
 import RouteDescriptionMixin from 'client/mixins/route-meta-description';
 import {format} from 'client/utils/time';
 
+const {computed} = Ember;
+
 export default Ember.Route.extend(NotFoundMixin, RouteTitleMixin, RouteDescriptionMixin, {
   titleToken (product) {
     return product.get('name');
@@ -28,6 +30,13 @@ export default Ember.Route.extend(NotFoundMixin, RouteTitleMixin, RouteDescripti
 
     return product;
   },
+
+  showVendor: computed( {
+    //@TODO see cart.js
+    get () {
+      return false;
+    }
+  }),
 
   setupController (controller, product) {
     this._super(...arguments);

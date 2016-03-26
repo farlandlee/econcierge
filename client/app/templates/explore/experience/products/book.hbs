@@ -2,8 +2,11 @@
   <section class="row column">
       <h3>{{product.name}}</h3>
   </section>
-  <section class="row">
+
+  <section class="row align-right">
+
     <div class="columns small-12 medium-6">
+      {{#if showVendor}}
       <h4 class="subheader">
         Vendor
       </h4>
@@ -17,6 +20,12 @@
         {{/with}}
       </p>
       {{/unless}}
+      {{else}}
+      <h4 class="subheader">
+        Experience
+      </h4>
+      <p>{{product.experience.name}}</p>
+      {{/if}}
     </div>
     <div class="columns small-12 medium-6">
       <div class="row">
@@ -24,6 +33,7 @@
       </div>
     </div>
   </section>
+  {{#if showVendor}}
   <section class="row">
     <div class="columns">
       <h4 class="subheader">
@@ -32,6 +42,7 @@
       <p>{{product.experience.name}}</p>
     </div>
   </section>
+  {{/if}}
   <section class="row">
     <div class="columns">
       <h4 class="subheader">
@@ -49,7 +60,7 @@
     </div>
   </section>
   {{booking-form product=product date=date
-    changeDate=(route-action "setDate") 
+    changeDate=(route-action "setDate")
     cancel=(action close)
     submit=(route-action "book" product)}}
 {{/foundation-modal}}
