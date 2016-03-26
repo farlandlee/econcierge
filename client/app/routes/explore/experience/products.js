@@ -14,7 +14,7 @@ export default Ember.Route.extend({
       date: date
     };
 
-    return this.store.query('product', query );
+    return this.store.query('product', query);
   },
 
   afterModel (products) {
