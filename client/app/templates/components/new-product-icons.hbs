@@ -1,0 +1,21 @@
+<div class="column small-3">
+  <p class="duration fi flaticon-duration product-icons">{{duration}}</p>
+</div>
+{{!-- <div class="column small-12 large-4">
+  <p class="age-restriction fi flaticon-adult-child">6+ Years</p>
+</div> --}}
+<div class="column small-5">
+  <p class="location fi flaticon-location product-icons">
+    {{if product.pickup "Pick Up" "Meet At Location"}}
+  </p>
+</div>
+<div class="column small-4">
+  <p class="vendor-rating product-icons fi">
+    {{#if product.vendor.tripadvisorRating}}
+      {{rating}}<br>
+      Vendor Rating
+    {{else}}
+      This vendor is not yet rated
+    {{/if}}
+  </p>
+</div>

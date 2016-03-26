@@ -1,0 +1,15 @@
+<div class="row product-header">
+  <div class="product-name column small-12">
+    {{new-price-display price=product.defaultPrice}}
+    <p class="product-title">{{#link-to "explore.experience.products.book" product}}<span>{{product.experience.name}}</span> {{product.name}}{{/link-to}}</p>
+  </div>
+</div>
+<div class="row product-body align-bottom">
+  {{new-product-icons product=product}}
+  {{product-description product=product}}
+</div>
+<div class="row product-footer text-center">
+  <div class="column">
+    <p class="request-to-book">{{link-to "Click To Book" "explore.experience.products.book" product}}</p>
+  </div>
+</div>

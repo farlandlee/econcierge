@@ -38,7 +38,9 @@
             <dt>Time</dt><dd>{{moment-format booking.startTime.time 'h:mm a' 'hh:mm:ss'}}</dd>
             <dt>Activity</dt><dd>{{booking.activity.name}}</dd>
             <dt>Category</dt><dd>{{booking.category.name}}</dd>
+            {{#if showVendor}}
             <dt>Vendor</dt><dd>{{booking.product.vendor.name}}</dd>
+            {{/if}}
           </dl>
           <div class="columns quantities body-count small-12 medium-6 large-5">
             <div class="data-wrapper">

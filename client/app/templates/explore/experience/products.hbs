@@ -10,7 +10,7 @@
   <div class="row align-center products align-stretch">
     {{#each products as |product|}}
     <div class="columns small-11 medium-5 large-3">
-      {{product-card product=product}}
+      {{new-product-card product=product}}
     </div>
     {{else}}
       <p>There are no products available for this experience on this date.  Please select a different experience or a date using the calendar above.</p>

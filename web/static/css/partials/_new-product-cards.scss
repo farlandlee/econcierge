@@ -1,0 +1,40 @@
+.products > .columns {
+  border-radius: 2px;
+}
+
+.new-card.product {
+  border-radius: 0;
+  .price {
+    float:right;
+    font-weight: normal;
+    color: $white;
+    background-color: $primary-color;
+    font-size: 1rem;
+    padding: 0.5rem;
+    line-height: 1;
+    margin-right: -1.45rem;
+    margin-left: 1rem;
+    span {
+      font-size: 0.5rem;
+      text-transform: lowercase;
+    }
+  }
+  .product-icons.fi {
+    font-size: 0.7rem;
+    .gold {
+      color: #f7e53b;
+    }
+    .fa {
+      &:before {
+        font-size: 0.9rem;
+      }
+    }
+    &:before {
+      font-size: 1.4rem;
+    }
+  }
+  .product-title {
+    text-transform: capitalize;
+    padding-top: 0.9rem;
+  }
+}
