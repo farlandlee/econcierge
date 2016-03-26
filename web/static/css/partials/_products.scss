@@ -1,4 +1,48 @@
 $bookings-blue: #77BAF0;
+.filters-label {
+  padding-left: 1rem;
+  font-weight: $global-weight-bold;
+  text-transform: uppercase;
+  text-decoration: underline;
+  margin-right: 3rem;
+}
+.product-filters {
+  @extend .no-bullet;
+  display: inline-block;
+  margin-bottom: 0;
+  & > li {
+    display: inline-block;
+  }
+}
+.product-filter-dropdown {
+  // draw a triangle on the dropdown
+  &::before, &::after {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-color: transparent;
+    border-top: 0;
+  }
+  // triangle border
+  &::before {
+    top: -11px;
+    left: 21px;
+    /* If 1px darken stroke slightly */
+    border-bottom-color: $medium-gray;
+    border-width: 11px;
+  }
+  // triangle fill
+  &::after {
+    top: -10px;
+    left: 22px;
+    border-bottom-color: white;
+    // 1px smaller than border draws a
+    // 1px border!
+    border-width: 10px;
+  }
+}
 .product-count {
   padding-bottom: 0.5rem;
   p {

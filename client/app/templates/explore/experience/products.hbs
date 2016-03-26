@@ -1,14 +1,48 @@
+<div class="row experience-filter align-justify">
+  <div class="column small-12 large-10">
+    <span class="filters-label">
+      Filters:
+    </span>
+    <ul class="product-filters">
+      <li>
+        <button type="button" data-toggle="vendor-filter" onClick={{action 'toggleDisplayFilter' 'vendor'}}>
+          Vendors
+          {{#if vendorFilter.length}}
+          ({{vendorFilter.length}})
+          {{/if}}
+          {{chevron-icon direction=(if (eq displayFilter 'vendor') 'up' 'down')}}
+        </button>
+        {{#foundation-dropdown id="vendor-filter" class="product-filter-dropdown"
+          vOffset=20 closeOnClick=true
+          show=(eq displayFilter 'vendor')
+          onClose=(action 'hideFilter' 'vendor')
+        }}
+          {{filter-selector title="Vendor"
+            options=vendors labelPath="name" valuePath="slug"
+            selectedValues=vendorFilter
+            onSelect=(action "toggleFilter" "vendorFilter")
+            clear=(action "clearFilter" "vendorFilter")
+          }}
+        {{/foundation-dropdown}}
+      </li>
+    </ul>
+  </div>
+</div>
+
 <div class="experience-middle">
   <div class="row product-count align-top">
     <div class="column small-12 medium-9 large-10">
-      <p>Explore <span>{{products.length}}</span> {{if (gt products.length 1) 'products' 'product'}} under "{{experienceName}}"</p>
+      <p>
+        Explore <span>{{filteredProducts.length}}</span>
+        {{if (gt filteredProducts.length 1) 'products' 'product'}} under "{{experienceName}}"
+      </p>
     </div>
     <div class="column small-12 medium-3 large-2 tripadvisor-logo medium-text-right">
       <img src="/images/tripadvisor.png" />
     </div>
   </div>
   <div class="row align-center products align-stretch">
-    {{#each products as |product|}}
+    {{#each filteredProducts as |product|}}
     <div class="columns small-11 medium-5 large-3">
       {{new-product-card product=product}}
     </div>
