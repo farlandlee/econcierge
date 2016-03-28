@@ -4,7 +4,6 @@ import RouteTitleMixin from 'client/mixins/route-title';
 import RouteDescriptionMixin from 'client/mixins/route-meta-description';
 
 const {
-  computed,
   RSVP: {all, hash}
 } = Ember;
 
@@ -30,15 +29,8 @@ export default Ember.Route.extend(ResetScrollMixin, RouteTitleMixin, RouteDescri
     this._super(...arguments);
     controller.set('bookings', bookings);
     controller.set('sort', ['date:asc']);
+    controller.set('showVendor', false);
   },
-
-  showVendor: computed( {
-    //@TODO this will need to be turned into a test maybe using localStorage?
-    //@TODO can this be moved further up the routers so it can be shared everywhere?
-    get () {
-      return false;
-    }
-  }),
 
   actions: {
     updateBooking (booking, price, amount, quantity) {
