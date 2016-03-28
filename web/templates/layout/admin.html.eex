@@ -9,6 +9,7 @@
 
     <title>Admin | Outpost | Jackson Hole eConcierge</title>
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/admin.css") %>">
+    <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
   </head>
 
   <body>

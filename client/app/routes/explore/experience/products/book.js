@@ -34,6 +34,7 @@ export default Ember.Route.extend(NotFoundMixin, RouteTitleMixin, RouteDescripti
     let {date} = this.modelFor('explore');
     controller.setProperties({product, date});
     controller.set('showVendor', false);
+    controller.set('description', Ember.String.htmlSafe(product.get('description')));
   },
 
   actions: {
