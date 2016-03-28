@@ -37,4 +37,11 @@
     text-transform: capitalize;
     padding-top: 0.9rem;
   }
+  .product-body {
+    > .column,
+    > .columns {
+      padding-left: 0.5rem;
+      padding-right: 0.5rem;
+    }
+  }
 }

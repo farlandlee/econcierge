@@ -8,7 +8,7 @@ defmodule Grid.ExploreController do
   def index(conn, _) do
     conn
     |> put_layout(false)
-    |> assign(:is_home, true)
+    |> assign(:is_home, false)
     |> render
   end
 end
