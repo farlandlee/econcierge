@@ -35,3 +35,16 @@ $('table').each(function () {
 $('th:not(:last-child)').each(function () {
   $(this).append('<span class="glyphicon glyphicon-sort table-icon"></span>');
 });
+
+//add tinymce to product_description
+tinymce.init({
+  selector: '#product_description',
+  plugins: 'advlist autolink link image lists charmap print preview autoresize code textcolor colorpicker media wordcount',
+  toolbar: [
+    "bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | formatselect bullist numlist outdent indent | image media",
+    "fontselect fontsizeselect forecolor backcolor | blockquote subscript superscript | cut copy paste undo redo removeformat"
+  ],
+  image_caption: true,
+  browser_spellcheck: true,
+  media_live_embeds: true
+});
