@@ -4,16 +4,26 @@ const {computed} = Ember;
 
 export default Ember.Controller.extend({
   queryParams: [
-    {vendorFilter: 'vendor'}
+    {vendorFilter: 'vendor'},
+    {sort: 'sort'}
   ],
 
   vendorFilter: [],
+  sort: 'Trip Duration',
+
+  sortFieldToString: {
+    "Price" : ["minDefaultPrice:asc"],
+    "Rating" : ["vendor.tripadvisorRating:desc"],
+    "Trip Name" : ["name:asc"],
+    "Trip Duration" : ["duration:asc"]
+  },
 
   // route assigned properties
   experienceName: null,
   products: null,
   date: null,
   displayFilter: false,
+  displaySort: false,
   vendors: null,
 
   filteredProducts: computed('products.@each.vendor', 'vendorFilter.[]', {
@@ -24,6 +34,13 @@ export default Ember.Controller.extend({
         products = products.filter(p => vendorFilter.contains(p.get('vendor.slug')));
       }
       return products;
+    }
+  }),
+
+  currentSortOrder: computed('sort', 'sortFieldToString', {
+    get() {
+      let sortField = this.get('sort');
+      return this.get('sortFieldToString')[sortField];
     }
   }),
 
@@ -56,6 +73,20 @@ export default Ember.Controller.extend({
       } else {
         filter.pushObject(value);
       }
+    },
+
+    hideSort () {
+      this.set('displaySort', false);
+    },
+
+    toggleDisplaySort () {
+      event.preventDefault();
+      this.toggleProperty('displaySort');
+    },
+
+    updateSortParam (value) {
+      this.set('sort', value);
+      this.toggleProperty('displaySort'); // hide dropdown after click
     }
   }
 });
