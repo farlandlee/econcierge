@@ -61,7 +61,7 @@ defmodule Grid.Mixfile do
       {:postgrex, "~> 0.11.0"},
       {:phoenix_html, "~> 2.5"},
       {:phoenix_live_reload, "~> 1.0", only: :dev},
-      {:rollbax, "~> 0.5"},
+      {:rollbax, "0.5.4"},
       {:slugger, git: "git://github.com/h4cc/slugger.git"},
       {:stripity_stripe, "~> 1.3.0"},
       {:uuid, "~> 1.1"},
