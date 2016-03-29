@@ -9,7 +9,7 @@ export default Ember.Controller.extend({
   ],
 
   vendorFilter: [],
-  sort: 'Trip Duration',
+  sort: 'Price',
 
   sortFieldToString: {
     "Price" : ["minDefaultPrice:asc"],
