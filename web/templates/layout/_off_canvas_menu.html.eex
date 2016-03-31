@@ -3,7 +3,7 @@
     <li class="menu-text"><a href="/">Home</a></li>
     <li class="menu-text"><a href="http://www.outpostjh.com/rentals/">Lodging</a></li>
     <li class="menu-text"><%= link "Activities", to: explore_path(Grid.Endpoint, :index, ["activities"]) %></li>
-    <li class="menu-text"><a href="http://www.outpostjh.com/outpostchronicles">Journal</a></li>
+    <li class="menu-text"><a href="http://www.outpostjh.com/itswhatwedohere">Journal</a></li>
     <li class="menu-text"><a href="http://www.outpostjh.com/about/">About Us</a></li>
     <li class="menu-text"><a href="http://www.outpostjh.com/list-your-house-with-outpost/">List Your Property</a></li>
     <li class="menu-text"><a href="<%= explore_path(Grid.Endpoint, :index, ["cart"]) %>" class="flaticon-cart fi">&nbsp;</a></li>
