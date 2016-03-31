@@ -10,12 +10,19 @@ export default Ember.Component.extend({
   description: computed('product.description', {
     get () {
       let description = this.get('product.description');
-      let limit = 160;
-      let output = description;
-      if (output !== undefined && output !== null && output.length > limit){
-        output = truncate([output], {limit: limit});
+      
+      if (!Ember.isEmpty(description)) {
+        let limit = 160;
+        let output = description.replace(/(<([^>]+)>)/ig,"");
+
+        if (output.length > limit){
+          output = truncate([output], {limit: limit});
+        }
+
+        return output;
       }
-      return output;
+
+      return description;
     }
   })
 });
