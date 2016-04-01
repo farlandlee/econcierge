@@ -1,3 +1,4 @@
 <div class="product-description column small-12">
-  {{sanitize-html description}} {{#if (gt product.description.length 160)}}{{link-to "Read More" "explore.experience.products.book" product}}{{/if}}
+  {{short_description}}
+  <p>{{link-to "Read More" "explore.experience.products.book" product}}</p>
 </div>

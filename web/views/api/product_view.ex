@@ -28,6 +28,7 @@ defmodule Grid.Api.ProductView do
     %{
       id: product.id,
       description: product.description,
+      short_description: product.short_description,
       name: product.name,
       pickup: product.pickup,
       duration: product.duration,
