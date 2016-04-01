@@ -38,7 +38,7 @@ $('th:not(:last-child)').each(function () {
 
 //add tinymce to product_description
 tinymce.init({
-  selector: '#product_description',
+  selector: '.tinymce',
   plugins: 'advlist autolink link image lists charmap print preview autoresize code textcolor colorpicker media wordcount',
   toolbar: [
     "bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | formatselect bullist numlist outdent indent | image media",

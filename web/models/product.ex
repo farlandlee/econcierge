@@ -3,6 +3,7 @@ defmodule Grid.Product do
 
   schema "products" do
     field :description, :string
+    field :short_description, :string
     field :name, :string
     field :published, :boolean, default: false
     field :pickup, :boolean, default: true
@@ -90,7 +91,7 @@ defmodule Grid.Product do
 
   @creation_fields ~w(vendor_id experience_id)a
   @required_fields ~w(description name published duration)a
-  @optional_fields ~w(pickup experience_id meeting_location_id)a
+  @optional_fields ~w(pickup experience_id meeting_location_id short_description)a
 
   @doc """
   Creates a changeset based on the `model` and `params`.
