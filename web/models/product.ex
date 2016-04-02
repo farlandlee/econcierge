@@ -104,6 +104,7 @@ defmodule Grid.Product do
     |> cast(params, @required_fields, @optional_fields)
     |> update_change(:name, &String.strip/1)
     |> validate_length(:name, min: 1, max: 255)
+    |> validate_length(:short_description, max: 255)
     |> update_change(:description, &String.strip/1)
     |> validate_length(:description, min: 1)
     |> validate_number(:duration, greater_than: 0)
