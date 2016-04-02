@@ -12,5 +12,6 @@
     "postcss-brunch": "^0.5.0",
     "sass-brunch": "^1.9.2",
     "uglify-js-brunch": ">= 1.0 < 1.8"
-  }
+  },
+  "license": "copyright OutpostJH"
 }

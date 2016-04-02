@@ -25,11 +25,9 @@ export default Ember.Route.extend({
     this._super(...arguments);
     let {date} = this.modelFor('explore');
     let experienceName = this.modelFor('explore.experience').get('name');
-    let vendors = this.store.peekAll('vendor');
 
     controller.setProperties({
       products,
-      vendors,
       date,
       experienceName
     });
