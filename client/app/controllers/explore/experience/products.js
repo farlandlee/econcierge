@@ -24,7 +24,27 @@ export default Ember.Controller.extend({
   date: null,
   displayFilter: false,
   displaySort: false,
-  vendors: null,
+
+  /* the set of vendors whose products are on display */
+  vendors: computed('products.@each.vendor', {
+    get () {
+      let products = this.get('products');
+      let vendors = [];
+      let seenVendors = {};
+
+      let addToSet = (vendor => {
+        let id = vendor.get('id');
+        if (!seenVendors[id]) {
+          seenVendors[id] = true;
+          vendors.pushObject(vendor);
+        }
+      });
+
+      products.mapBy('vendor').forEach(addToSet);
+
+      return vendors;
+    }
+  }),
 
   filteredProducts: computed('products.@each.vendor', 'vendorFilter.[]', {
     get () {
