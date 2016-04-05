@@ -13,7 +13,7 @@ defmodule Grid.Admin.Activity.AmenityControllerTest do
 
   test "index redirects to activity show", %{conn: conn, activity: a} do
     conn = get conn, admin_activity_amenity_path(conn, :index, a)
-    assert redirected_to(conn) == admin_activity_path(conn, :show, a)
+    assert redirected_to(conn) == admin_activity_path(conn, :show, a, tab: "amenities")
   end
 
   test "renders form for new resources", %{conn: conn, activity: a} do

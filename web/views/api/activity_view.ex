@@ -1,6 +1,8 @@
 defmodule Grid.Api.ActivityView do
   use Grid.Web, :view
 
+  alias Grid.Api.AmenityView
+
   def render("index.json", %{activities: activities}) do
     %{activities: render_many(activities, __MODULE__, "activity.json")}
   end
@@ -15,7 +17,8 @@ defmodule Grid.Api.ActivityView do
       name: activity.name,
       description: activity.description,
       slug: activity.slug,
-      default_image: render_one(activity.default_image, Grid.Api.ImageView, "image.json")
+      default_image: render_one(activity.default_image, Grid.Api.ImageView, "image.json"),
+      amenities: render_many(activity.amenities, AmenityView, "amenity.json")
     }
   end
 end

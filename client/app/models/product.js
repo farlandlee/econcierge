@@ -16,6 +16,9 @@ export default DS.Model.extend({
   meetingLocation: DS.attr(),
   prices: DS.attr(),
   startTimes: DS.attr(),
+  // list of integer ids, see activity.js
+  amenityOptions: DS.attr(),
+
   minDefaultPrice: computed('defaultPrice.amounts.@each.min_quantity', {
     get() {
       let quantitySort = this.get('defaultPrice').amounts.sortBy('min_quantity');

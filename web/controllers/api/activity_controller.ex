@@ -6,13 +6,20 @@ defmodule Grid.Api.ActivityController do
   def index(conn, _) do
     activities = Activity.having_published_products
       |> Repo.all
-      |> Repo.preload(:default_image)
+      |> preload
     render(conn, "index.json", activities: activities)
   end
 
   def show(conn, %{"id" => id}) do
     activity = Repo.get!(Activity , id)
-      |> Repo.preload(:default_image)
+      |> preload
     render(conn, "show.json", activity: activity)
+  end
+
+  def preload(activities) do
+    Repo.preload(activities, [
+      :default_image,
+      amenities: :amenity_options
+    ])
   end
 end

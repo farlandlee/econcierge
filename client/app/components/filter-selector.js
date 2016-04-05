@@ -1,14 +1,23 @@
 import Ember from 'ember';
 
-const {computed} = Ember;
+const {computed, get} = Ember;
 
 export default Ember.Component.extend({
-  title: null,
+  clearButtonLabel: null,
   currentValue: null,
   options: null,
   labelPath: null,
   valuePath: null,
   selectedValues: null,
+
+  isFiltering: computed('valuePath', 'selectedValues.[]', 'options.[]', {
+    get () {
+      let {valuePath, selectedValues} = this.getProperties('valuePath', 'selectedValues');
+      let optionValues = this.get('options').mapBy(valuePath);
+
+      return selectedValues.any(v => optionValues.contains(v));
+    }
+  }),
 
   displayableOptions: computed('labelPath', 'valuePath', 'selectedValues.[]', 'options.[]', {
     get () {
@@ -16,24 +25,19 @@ export default Ember.Component.extend({
         = this.getProperties('labelPath', 'valuePath', 'selectedValues', 'options');
 
       return options.map(option => {
-        let value;
-        let label;
-        let selected;
-        if (option.get) {
-          value = option.get(valuePath);
-          label = option.get(labelPath);
-        } else {
-          value = option[valuePath];
-          label = option[labelPath];
-        }
-        selected = selectedValues.contains(value);
+        let value = get(option, valuePath);
+        let label = get(option, labelPath);
+        let selected = selectedValues.contains(value);
+
         return {label, selected, value};
       });
     }
   }),
 
   actions: {
-    select (value) {
+    select (value, ev) {
+      // stop foundation from being buggy and closing the modal
+      ev.stopPropagation();
       return this.attrs.onSelect(value);
     }
   }

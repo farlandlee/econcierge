@@ -7,7 +7,7 @@ moduleForComponent('filter-selector', 'Integration | Component | filter selector
 
 const initialize = function initialize (what) {
   what.setProperties({
-    title: "Test",
+    clearButtonLabel: "Clear Test",
     options: [
       {label: "label", value: "value"}
     ],
@@ -22,7 +22,7 @@ const initialize = function initialize (what) {
 const render = function render (what) {
   what.render(hbs`
     {{filter-selector
-      title=title options=options
+      clearButtonLabel=clearButtonLabel options=options
       selectedValues=selectedValues
       labelPath="label" valuePath="value"
       onSelect=(action 'selected')
@@ -45,8 +45,7 @@ test('it renders', function(assert) {
   this.$('button').click();
   assert.ok(calledAction);
 
-  assert.equal(this.$('.filter-header').text().trim(), this.get('title'));
-  assert.equal(this.$('.filter-option:first-child .filter-label').text().trim(), `All ${this.get('title')}s`);
+  assert.equal(this.$('.filter-option:first-child .filter-label').text().trim(), this.get('clearButtonLabel'));
   assert.equal(this.$('.filter-option:nth-child(2) .filter-label').text().trim(), this.get('options.firstObject.label'));
 });
 
@@ -58,6 +57,6 @@ test('it renders checkmarks', function (assert) {
   this.set('selectedValues', [this.get('options.firstObject.value')]);
   // still only one thing checked, but...
   assert.ok(this.$('.checkmark').length === 1);
-  // it's the
+  // it's the first option now
   assert.ok(this.$('.filter-option:nth-child(2) .checkmark').length);
 });

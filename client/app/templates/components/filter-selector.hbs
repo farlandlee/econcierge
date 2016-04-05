@@ -1,17 +1,14 @@
-<h4 class="filter-header">
-  {{title}}
-</h4>
 <ul class="filter-list">
   <li class="filter-option">
     <button onClick={{action attrs.clear}}>
       <span class="fa-stack">
-        {{#if (eq selectedValues.length 0)}}
+        {{#unless isFiltering}}
         <i class="fa fa-check fa-stack-1x checkmark"></i>
-        {{/if}}
+        {{/unless}}
         <i class="fa fa-square-o fa-lg checkbox"></i>
       </span>
       <span class="filter-label">
-        All {{title}}s
+        {{clearButtonLabel}}
       </span>
     </button>
   </li>

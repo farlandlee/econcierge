@@ -5,5 +5,7 @@ export default DS.Model.extend({
   description: DS.attr(),
   slug: DS.attr(),
   categories: DS.hasMany('category'),
-  defaultImage: DS.attr()
+  defaultImage: DS.attr(),
+  // [{id, name, options: [{id, name}]}]
+  amenities: DS.attr()
 });

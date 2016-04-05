@@ -55,8 +55,11 @@ defmodule Grid.Api.ProductViewTest do
     assert rendered_product.default_price.id == product.default_price_id
 
     # Has many fields, preloaded
-    for k <- ~w(prices start_times amenity_options)a do
+    for k <- ~w(prices start_times)a do
       assert Enum.count(rendered_product[k]) == Enum.count(Map.get(product, k))
     end
+    
+    # product_amenity_options -> amenity_options
+    assert Enum.count(rendered_product.amenity_options) == Enum.count(product.product_amenity_options)
   end
 end

@@ -4,8 +4,7 @@ defmodule Grid.Api.ProductView do
   alias Grid.Api.{
     LocationView,
     PriceView,
-    StartTimeView,
-    AmenityOptionView
+    StartTimeView
   }
 
   def render("index.json", %{products: products}) do
@@ -21,10 +20,8 @@ defmodule Grid.Api.ProductView do
   end
 
   def render("product.json", %{product: product = %{default_price_id: default_price_id}}) do
-    default_price = Enum.find(product.prices, :error, fn
-      %{id: ^default_price_id} -> true
-      _ -> false
-    end)
+    default_price = Enum.find(product.prices, :error, &match?(%{id: ^default_price_id}, &1))
+
     %{
       id: product.id,
       description: product.description,
@@ -39,7 +36,7 @@ defmodule Grid.Api.ProductView do
       meeting_location: render_one(product.meeting_location, LocationView, "location.json"),
       prices: render_many(product.prices, PriceView, "price.json"),
       start_times: render_many(product.start_times, StartTimeView, "start_time.json"),
-      amenity_options: render_many(product.amenity_options, AmenityOptionView, "amenity_option.json")
+      amenity_options: Enum.map(product.product_amenity_options, &(&1.amenity_option_id))
     }
   end
 end

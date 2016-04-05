@@ -1,4 +1,4 @@
-<div class="row experience-filter align-justify">
+<div class="row product-bar align-justify">
   <div class="column small-6 medium-8 large-9">
     <span class="filters-label">
       Filters:
@@ -17,14 +17,37 @@
           show=(eq displayFilter 'vendor')
           onClose=(action 'hideFilter' 'vendor')
         }}
-          {{filter-selector title="Vendor"
+          {{filter-selector
+            clearButtonLabel="All Vendors"
             options=vendors labelPath="name" valuePath="slug"
             selectedValues=vendorFilter
-            onSelect=(action "toggleFilter" "vendorFilter")
+            onSelect=(action "toggleFilter" vendorFilter)
             clear=(action "clearFilter" "vendorFilter")
           }}
         {{/foundation-dropdown}}
       </li>
+      {{#each amenities as |amenity|}}
+      <li>
+        <button type="button" data-toggle="amenity-filter-{{amenity.id}}" onClick={{action 'toggleDisplayFilter' amenity.name}}>
+          {{amenity.name}}
+          {{selectedAmenityOptionCount amenity.options amenityOptionFilter}}
+          {{chevron-icon direction=(if (eq displayFilter amenity.name) 'up' 'down')}}
+        </button>
+        {{#foundation-dropdown id=(concat 'amenity-filter-' amenity.id) class="product-filter-dropdown"
+          vOffset=20 closeOnClick=true
+          show=(eq displayFilter amenity.name)
+          onClose=(action 'hideFilter' amenity.name)
+        }}
+          {{filter-selector
+            clearButtonLabel=(concat "All " (pluralize amenity.name))
+            options=amenity.options labelPath="name" valuePath="id"
+            selectedValues=amenityOptionFilter
+            onSelect=(action "toggleFilter" amenityOptionFilter)
+            clear=(action "clearAmenityFilter" amenity)
+          }}
+        {{/foundation-dropdown}}
+      </li>
+      {{/each}}
     </ul>
   </div>
 
@@ -43,12 +66,41 @@
       onClose=(action 'hideSort')
     }}
       {{product-sorter
-        options=sortFieldToString
         onSelect=(action "updateSortParam")
         sort=sort}}
     {{/foundation-dropdown}}
   </div>
 </div>
+{{#if filtering}}
+<div class="row product-bar">
+  <div class="columns small-12">
+    <ul class="product-filters">
+
+      {{#each vendorFilter as |vendorSlug|}}
+      <li>
+        {{filter-label
+          value=vendorSlug
+          filters=vendors
+          onClick=(action "removeFilter" vendorFilter vendorSlug)
+        }}
+      </li>
+      {{/each}}
+
+      {{#each amenityOptionFilter as |amenityOptionId|}}
+      <li>
+        {{filter-label
+          value=amenityOptionId
+          filters=amenityOptions
+          valuePath="id"
+          onClick=(action "removeFilter" amenityOptionFilter amenityOptionId)
+        }}
+      </li>
+      {{/each}}
+
+    </ul>
+  </div>
+</div>
+{{/if}}
 
 <div class="experience-middle">
   <div class="row product-count align-top">
@@ -60,15 +112,13 @@
     </div>
   </div>
   <div class="row align-center products align-stretch">
-    {{#if filteredProducts}}
-      {{#item-sorter items=filteredProducts by=currentSortOrder as |product|}}
-        <div class="columns small-11 medium-5 large-3">
-          {{new-product-card product=product}}
-        </div>
-      {{/item-sorter}}
-    {{else}}
-      <p>There are no products available for this experience on this date.  Please select a different experience or a date using the calendar above.</p>
-    {{/if}}
+    {{#item-sorter items=filteredProducts by=currentSortOrder as |product|}}
+      <div class="columns small-11 medium-5 large-3">
+        {{new-product-card product=product}}
+      </div>
+      {{else}}
+      <p>There are no products available for this experience on this date.  Please select a different experience or date using the calendar above.</p>
+    {{/item-sorter}}
   </div>
 </div>
 
