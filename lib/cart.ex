@@ -181,6 +181,13 @@ defmodule Grid.Cart do
 
   defp calculate_quantity_cost(%{"quantity" => quantity}, %{amount: amount}) do
     {:ok, quantity * amount}
+  rescue
+    ArithmeticError ->
+      raise ArithmeticError, message: """
+      Arithmetic error in Grid.Cart.calculate_quantity_cost/2
+      quantity: #{inspect quantity}
+      amount: #{inspect amount}
+      """
   end
 
   defp verify_calculated_cost(%{"cost" => client}, expected, price) do
