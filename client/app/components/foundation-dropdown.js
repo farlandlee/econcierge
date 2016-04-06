@@ -16,9 +16,9 @@ import Ember from 'ember';
 export default Ember.Component.extend({
   hover: false,
   hoverPane: true,
-  vOffset: 1,
+  vOffset: 20,
   hOffset: 1,
-  closeOnClick: false,
+  closeOnClick: true,
   alignment: 'right',
   show: false,
 
