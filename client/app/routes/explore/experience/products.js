@@ -1,35 +1,46 @@
 import Ember from 'ember';
+import {parseDate} from 'client/utils/time';
 
 const {
-  RSVP: {all}
+  RSVP: {all, hash}
 } = Ember;
 
 export default Ember.Route.extend({
-  model () {
-    let experience = this.modelFor('explore.experience');
-    let {date} = this.modelFor('explore');
-
-    let query = {
-      experience_id: experience.id,
-      date: date
-    };
-
-    return this.store.query('product', query);
+  queryParams: {
+    date: {
+      refreshModel: true
+    }
   },
 
-  afterModel (products) {
+  model ({date}) {
+    if (date && !parseDate(date).isValid()) {
+      this.transitionTo({queryParams: {date: undefined}});
+    }
+
+    let experience = this.modelFor('explore.experience');
+
+    let productsQuery = this.store.query('product', {
+      experience_id: experience.id,
+      date: date
+    });
+
+    return hash({
+      products: productsQuery,
+      date: date
+    });
+  },
+
+  afterModel ({products}) {
     return all(products.mapBy('vendor'));
   },
 
-  setupController (controller, products) {
+  setupController (controller, model) {
     this._super(...arguments);
-    let {date, activity} = this.modelFor('explore');
+    let {activity} = this.modelFor('explore');
     let amenities = activity.get('amenities');
     let experienceName = this.modelFor('explore.experience').get('name');
-
+    controller.setProperties(model);
     controller.setProperties({
-      products,
-      date,
       experienceName,
       activityAmenities: amenities
     });

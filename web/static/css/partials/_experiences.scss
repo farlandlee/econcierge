@@ -3,47 +3,6 @@
     border-bottom: 1px solid #cacaca;
     padding-top: 0.4rem;
     padding-bottom: 0.4rem;
-    .selected-date {
-      display: flex;
-      justify-content: flex-end;
-      line-height: 40px;
-      vertical-align: middle;
-      color: darken($medium-gray,30%);
-      font-weight: 500;
-
-      .flaticon-calendar {
-        cursor: pointer;
-        &:before {
-          width: 30px;
-        }
-      }
-
-      &:before {
-        margin-right: 0.6rem;
-        text-decoration: none;
-      }
-
-      .flatpickr-wrapper {
-        width: 100%;
-        &.open {
-          width: 100%;
-          .flatpickr-calendar {
-            /* override vendor code and align to the right */
-            left: auto;
-            right: -20px; // move extra far to account for icon
-          }
-        }
-        input {
-          padding: 0;
-          min-width: 200px;
-          border: 0;
-          text-decoration: underline;
-          @include breakpoint (large) {
-            text-align:right;
-          }
-        }
-      }
-    }
   }
   .select-activity {
     margin-bottom: 0;

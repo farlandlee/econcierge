@@ -16,7 +16,8 @@ export default Ember.Route.extend(NotFoundMixin, RouteTitleMixin, RouteDescripti
     let product = this.store.peekRecord('product', product_id);
 
     if (!product) {
-      if (this.modelFor('explore').date) {
+      let {date} = this.modelFor('explore.experience.products');
+      if (date) {
         // maybe it's a date error? try without date.
         // @TODO let the user know it wasn't a valid date.
         return this.replaceWith('explore.experience.products.book', {
@@ -31,7 +32,7 @@ export default Ember.Route.extend(NotFoundMixin, RouteTitleMixin, RouteDescripti
 
   setupController (controller, product) {
     this._super(...arguments);
-    let {date} = this.modelFor('explore');
+    let {date} = this.modelFor('explore.experience.products');
     controller.setProperties({product, date});
     controller.set('showVendor', false);
     controller.set('description', Ember.String.htmlSafe(product.get('description')));
