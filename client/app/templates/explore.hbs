@@ -5,12 +5,26 @@
         <span>Activity:</span>
         <div class="input-group-field">
           <div class="full-overlay-select" tabindex="0">
-            <span class="current">{{category.activity.name}} - {{category.name}}</span>
+            <span class="current">{{activity.name}} - {{category.name}}</span>
             <ul>
-              {{#item-sorter items=activity.categories as |category|}}
               <li>
-                {{link-to category.name 'explore' activity.slug category.slug activeClass="selected"}}
+                {{!-- print out a sublist of categories for the active activity --}}
+                {{link-to activity.name 'categories' activity.slug}}
+                <ul>
+                {{#item-sorter items=activity.categories as |category|}}
+                  <li>
+                    {{link-to category.name 'explore' activity.slug category.slug activeClass="selected"}}
+                  </li>
+                {{/item-sorter}}
+                </ul>
               </li>
+              {{!-- print out all the other activities --}}
+              {{#item-sorter items=activities as |otherActivity|}}
+              {{#unless (eq otherActivity.id activity.id)}}
+              <li>
+                {{link-to otherActivity.name 'categories' otherActivity.slug activeClass="selected"}}
+              </li>
+              {{/unless}}
               {{/item-sorter}}
             </ul>
             <div class="full-overlay-black-overlay"></div>
