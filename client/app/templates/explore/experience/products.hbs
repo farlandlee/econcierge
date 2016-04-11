@@ -39,7 +39,7 @@
           onClose=(action 'hideFilter' amenity.name)
         }}
           {{filter-selector
-            clearButtonLabel=(concat "All " (pluralize amenity.name))
+            clearButtonLabel="All"
             options=amenity.options labelPath="name" valuePath="id"
             selectedValues=amenityOptionFilter
             onSelect=(action "toggleFilter" amenityOptionFilter)
