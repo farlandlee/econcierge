@@ -14,7 +14,6 @@ defmodule Grid.Api.AmenityOptionViewTest do
     end
 
     refute Map.has_key?(rendered_amenity_option, :amenity_id)
-    assert Map.has_key?(rendered_amenity_option, :amenity)
-    assert rendered_amenity_option.amenity == amenity_option.amenity_id
+    refute Map.has_key?(rendered_amenity_option, :amenity)
   end
 end

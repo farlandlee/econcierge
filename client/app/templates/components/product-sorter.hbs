@@ -1,5 +1,7 @@
 <ul class="filter-list text-right">
-  {{#each-in options as |key value|}}
-    <li class="{{if (eq sort key) 'selected-sort'}} filter-option" onClick={{action "select" key}}>{{key}}</li>
-  {{/each-in}}
+{{#each options as |option|}}
+  <li class="{{if (eq sort option) 'selected-sort'}}" onClick={{action attrs.onSelect option}}>
+    {{option}}
+  </li>
+{{/each}}
 </ul>

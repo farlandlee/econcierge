@@ -23,13 +23,15 @@ export default Ember.Route.extend({
 
   setupController (controller, products) {
     this._super(...arguments);
-    let {date} = this.modelFor('explore');
+    let {date, activity} = this.modelFor('explore');
+    let amenities = activity.get('amenities');
     let experienceName = this.modelFor('explore.experience').get('name');
 
     controller.setProperties({
       products,
       date,
-      experienceName
+      experienceName,
+      activityAmenities: amenities
     });
   }
 });

@@ -63,8 +63,7 @@
 }
 
 .row {
-  &.selected-experience,
-  &.experience-filter {
+  &.selected-experience {
     max-width: rem-calc(1440);
     border-bottom: 1px solid #eee;
   }
@@ -129,33 +128,6 @@
       &:hover {
         color: $button-background-hover;
       }
-    }
-  }
-}
-.experience-filter {
-  padding: 0.5rem 0;
-  p {
-    margin-bottom: 0;
-  }
-  .filter-search {
-    a {
-      text-decoration: underline;
-    }
-  }
-  label {
-    display: table-cell;
-    text-align: right;
-  }
-  .input-group {
-    margin: 0;
-  }
-  .chosen-single,
-  .full-overlay-select {
-    height: 1.2rem;
-    font-size: 1rem;
-    line-height: 1.8;
-    &:after {
-      font-size: 1.6rem;
     }
   }
 }

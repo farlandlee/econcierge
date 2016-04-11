@@ -14,7 +14,7 @@ defmodule Grid.Admin.Activity.AmenityController do
   plug Plugs.Breadcrumb, [show: Amenity] when action in [:show, :edit]
 
   def index(conn, _) do
-    redirect(conn, to: admin_activity_path(conn, :show, conn.assigns.activity))
+    redirect(conn, to: admin_activity_path(conn, :show, conn.assigns.activity, tab: "amenities"))
   end
 
   def new(conn, _) do

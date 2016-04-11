@@ -4,8 +4,7 @@ defmodule Grid.Api.AmenityOptionView do
   def render("amenity_option.json", %{amenity_option: amenity_option}) do
     %{
       id: amenity_option.id,
-      name: amenity_option.name,
-      amenity: amenity_option.amenity_id
+      name: amenity_option.name
     }
   end
 end

@@ -1,10 +1,38 @@
 $bookings-blue: #77BAF0;
+
+.product-bar {
+  max-width: rem-calc(1440);
+  border-bottom: 1px solid #eee;
+  padding: 1rem;
+  .fa {
+    color: $medium-gray;
+  }
+  p {
+    margin-bottom: 0;
+  }
+  label {
+    display: table-cell;
+    text-align: right;
+  }
+  .input-group {
+    margin: 0;
+  }
+  .chosen-single,
+  .full-overlay-select {
+    height: 1.2rem;
+    font-size: 1rem;
+    line-height: 1.8;
+    &:after {
+      font-size: 1.6rem;
+    }
+  }
+}
+
 .filters-label {
-  padding-left: 1rem;
   font-weight: $global-weight-bold;
   text-transform: uppercase;
   text-decoration: underline;
-  margin-right: 3rem;
+  margin-right: 1rem;
 }
 .product-filters {
   @extend .no-bullet;
@@ -12,6 +40,7 @@ $bookings-blue: #77BAF0;
   margin-bottom: 0;
   & > li {
     display: inline-block;
+    margin-right: 1rem;
   }
 }
 .product-filter-dropdown {

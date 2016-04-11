@@ -26,9 +26,9 @@ defmodule Grid.Api.ProductController do
     render(conn, "show.json", product: product)
   end
 
-  def preload(query_or_products) do
-    Repo.preload(query_or_products, [
-      :amenity_options,
+  def preload(products) do
+    Repo.preload(products, [
+      :product_amenity_options,
       :meeting_location,
       start_times: :season,
       prices: :amounts,
