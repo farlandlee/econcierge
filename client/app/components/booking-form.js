@@ -7,27 +7,31 @@ export default Component.extend({
   product: null,
   date: null,
 
+  step: 0,
   total: 0,
   quantities: null,
   time: null,
 
-  canSubmit: computed('total', 'time', 'quantities.@each.quantity', 'product.prices.[]', {
+  canProceed: computed('step', 'total', 'time', 'quantities.@each.quantity', 'product.prices.[]', {
     get () {
-      let valid = true;
-      let prices = this.get('product.prices');
-      let quantities = this.get('quantities');
-      let total = this.get('total');
-      prices.forEach(price => {
-        let amounts = price.amounts;
-        let {quantity} = quantities.findBy('id', price.id);
-        if (!amountForQuantity(amounts, quantity)) {
-          valid = false;
-        }
-      });
-      if (valid) {
-        valid = !!this.get('time') && total > 0;
+      if (!this.get('total')) {
+        return false;
       }
-      return valid;
+
+      let step = this.get('step');
+      // All prices have valid quantities
+      if (step === 0) {
+        let quantities = this.get('quantities');
+        let priceHasValidQuantity = (price) => {
+          let {amounts, id} = price;
+          let {quantity} = quantities.findBy('id', id);
+          return !!amountForQuantity(amounts, quantity);
+        };
+        return this.get('product.prices').every(priceHasValidQuantity);
+      } else {
+        // Choose a date and time (step 1)
+        return !!this.get('date') && !!this.get('time');
+      }
     }
   }),
 
@@ -61,10 +65,23 @@ export default Component.extend({
       this.set('time', time);
     },
 
-    submit () {
-      if (this.get('canSubmit')) {
-        let properties = this.getProperties('quantities', 'time', 'date');
-        return this.attrs.submit(properties);
+    next () {
+      if (this.get('canProceed')) {
+        let step = this.get('step');
+        if (step === 0) {
+          this.incrementProperty('step');
+        }
+        if (step === 1) {
+          let properties = this.getProperties('quantities', 'time', 'date');
+          this.attrs.submit(properties);
+        }
+      }
+    },
+
+    previous () {
+      let step = this.incrementProperty('step', -1);
+      if (step < 0) {
+        this.attrs.cancel();
       }
     }
   }

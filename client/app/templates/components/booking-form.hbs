@@ -1,43 +1,52 @@
 <section class="trip-details">
-  <div class="row align-center">
-    <div class="columns">
-      <h3 class="text-center">Enter Your Trip Details</h3>
-    </div>
-  </div>
+  <header>
+    <button type="button" class="button hollow button-back" onclick={{action "previous"}}>Back</button>
+    <h3 class="text-center">Enter Your Trip Details</h3>
+  </header>
+{{#if (eq step 0)}}
   <div class="row align-left body-count">
     <div class="columns shrink">
       {{amount-quantity-input price=product.defaultPrice quantities=quantities onChange=(action "updateQuantity" product.defaultPrice) showAmountLabel=true}}
     </div>
-  {{#each product.prices as |price|}}
-  {{#unless (eq price.id product.defaultPrice.id)}}
+    {{#each product.prices as |price|}}
+    {{#unless (eq price.id product.defaultPrice.id)}}
     <div class="columns shrink">
       {{amount-quantity-input price=price quantities=quantities onChange=(action "updateQuantity" price) showAmountLabel=true}}
     </div>
-  {{/unless}}
-  {{/each}}
+    {{/unless}}
+    {{/each}}
   </div>
+{{/if}}
+{{#if (eq step 1)}}
   <div class="row align-center date-selection">
     <div class="columns small-12 medium-6 date">
-      <label>Date</label>
+      <label>Select a date</label>
       {{product-date-picker product=product date=date changeDate=(action attrs.changeDate)}}
     </div>
+  </div>
+  {{#if date}}
+  <div class="row align-center time-selection">
     <div class="columns small-12 medium-6 time">
       {{time-selector date=date times=product.startTimes onChange=(action "updateTime")}}
     </div>
   </div>
+  {{/if}}
+{{/if}}
 </section>
 
-<section class="row align-justify align-bottom booking-footer ">
-  <div class="column small-12 medium-3 small-order-2 medium-order-1 text-center medium-text-left">
-    <button type="button" class="button hollow" onclick={{action attrs.cancel}}>Back</button>
-  </div>
-  <div class="column small-12 medium-4 small-order-1 medium-order-2 text-center medium-text-right">
-    <div class="book-total">${{total}}</div>
-    <div class="book-total-label">Total</div>
-  </div>
-  <div class="column small-12 medium-5 small-order-3 text-center medium-text-right">
-    <button onclick={{action "submit"}} type="button" class="{{unless canSubmit "disabled"}} button primary large">
-      Add to Cart
+<section class="row align-justify align-bottom booking-footer">
+  <div class="column small-12 text-center">
+    <button onclick={{action "next"}} type="button" class="{{unless canProceed "disabled hollow"}} button primary large button-next">
+      {{#if (eq step 0)}}
+      Next: Choose a {{if date 'time' 'date'}}
+      {{/if}}
+      {{#if (eq step 1)}}
+      Add to cart
+      {{/if}}
     </button>
+  </div>
+  <div class="booking-total text-center">
+    <span class="book-total-amount">${{total}}</span>
+    <div class="book-total-label">Total</div>
   </div>
 </section>
