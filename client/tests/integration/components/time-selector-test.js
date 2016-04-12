@@ -41,7 +41,7 @@ test('it filters start times by date and dotw', function(assert) {
 
   assert.equal(this.$('label').text().trim(), 'Time');
   assert.equal(this.$('option').length, 4);
-  assert.equal(this.$('option:nth-child(1)').text().trim(), 'Select a time...');
+  assert.equal(this.$('option:nth-child(1)').text().trim(), 'Select');
   assert.equal(this.$('option:nth-child(2)').text().trim(), '8:00 am');
   assert.equal(this.$('option:nth-child(3)').text().trim(), '11:00 am');
   assert.equal(this.$('option:nth-child(4)').text().trim(), '6:00 pm');

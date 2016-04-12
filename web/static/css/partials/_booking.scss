@@ -12,8 +12,20 @@
   }
   .trip-details {
     margin-top: rem-calc(20);
-    padding-top: rem-calc(20);
     border-top: 1px solid $medium-gray;
+    header {
+      position: relative;
+      padding: rem-calc(20) 0;
+      margin-bottom: rem-calc(20);
+      color: $dark-gray;
+      background-color: $light-gray;
+      .button-back {
+        position: absolute;
+        left: rem-calc(20);
+        text-transform: uppercase;
+        background-color: lighten($light-gray, 10%);
+      }
+    }
   }
   label {
     font-size: 1rem;
@@ -41,10 +53,10 @@
   section {
     margin-bottom: 1rem;
   }
-  .date-selection {
+  .date-selection, .time-selection {
     margin-bottom: 2rem;
     label{
-      text-align: left;
+      text-align: center;
     }
     .date, .time {
       max-width: 256px;
@@ -77,19 +89,29 @@
       height: 38px;
     }
   }
-  .book-total,
-  .book-total-label {
-    width: 100%;
-    color: $dark-gray;
-    line-height: 1;
-  }
-  .book-total {
-    font-size: 2.6rem;
-  }
-  .book-total-label {
-    font-size: rem-calc(12);
+  .booking-total {
+    position: absolute;
+    right: rem-calc(20);
+    .book-total-amount,
+    .book-total-label {
+      width: 100%;
+      color: $dark-gray;
+      line-height: 1;
+    }
+    .book-total-amount {
+      font-size: 2.6rem;
+    }
+    .book-total-label {
+      text-transform: lowercase;
+      font-size: rem-calc(12);
+    }
   }
   .booking-footer {
+    .button-next {
+      &.disabled {
+        opacity: .9
+      }
+    }
     & > .column {
       margin-bottom: 1rem;
     }
