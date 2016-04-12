@@ -1,10 +1,48 @@
 import Ember from 'ember';
+import {formatTime} from 'client/utils/time';
 
 const {computed, isEmpty} = Ember;
+
+const toSet = (set, value) => {
+  if (!set.contains(value)) {
+    set.pushObject(value);
+  }
+  return set;
+};
 
 const flatten = (flattened, arr) => {
   arr.forEach(x => flattened.pushObject(x));
   return flattened;
+};
+
+// See the 'times' property
+const arbitraryTimes = [
+  {
+    name: 'Morning (5:00AM - 11:30AM)',
+    value: 'morning',
+    start: '05:00:00',
+    end: '11:30:00'
+  },
+  {
+    name: 'Afternoon (12:00PM - 4:00PM)',
+    value: 'afternoon',
+    start: '12:00:00',
+    end: '16:00:00'
+  },
+  {
+    name: 'Evening (5:00PM - 6:00PM)',
+    value: 'evening',
+    start: '17:00:00',
+    end: '18:00:00'
+  }
+];
+
+const inArbitraryTime = ({start, end}) => {
+  return (productTime) => {
+    // could be an object with a string value or just that string value
+    productTime = productTime.value || productTime;
+    return productTime >= start && productTime <= end;
+  };
 };
 
 export const sortFieldToString = {
@@ -16,6 +54,7 @@ export const sortFieldToString = {
 
 export default Ember.Controller.extend({
   queryParams: [
+    {timeFilter: 'time'},
     {amenityOptionFilter: 'amenity'},
     {vendorFilter: 'vendor'},
     {sort: 'sort'}
@@ -70,7 +109,7 @@ export default Ember.Controller.extend({
     }
   }),
 
-  /* all amenity options. useful for mapping amenityOptionFilter -> amenityOption */
+  /* all amenity options. also validates query params as side effect */
   amenityOptions: computed('amenities.@each.options', {
     get () {
       let amenityOptions = this.get('amenities')
@@ -81,12 +120,37 @@ export default Ember.Controller.extend({
     }
   }),
 
-  // 'vendor' || {{amenity.name}} || ''
+  times: computed('products.@each.startTimes', {
+    get () {
+      let toTimeFilter = (t) => {
+        return {
+          name: formatTime(t),
+          value: t
+        };
+      };
+
+      let times = this.get('products')
+        .mapBy('startTimes')
+        .reduce(flatten, [])
+        .mapBy('starts_at_time')
+        .reduce(toSet, [])
+        .map(toTimeFilter)
+        .sortBy('value');
+
+      times = arbitraryTimes.filter(t => times.any(inArbitraryTime(t))).concat(times);
+      this._cleanTimeFilter(times);
+      return times;
+    }
+  }),
+
+  // 'vendor' || {{amenity.name}} || 'time' || ''
   displayFilter: '',
   // [vendorSlug, vendorSlug, ...]
   vendorFilter: [],
   // [amenityOptionId, amenityOptionId, ...]
   amenityOptionFilter: [],
+  // ["00:00:00", "13:37:00", ...]
+  timeFilter: [],
 
   _cleanVendorFilter (vendors) {
     let validSlugs = vendors.mapBy('slug');
@@ -102,18 +166,27 @@ export default Ember.Controller.extend({
     this.set('amenityOptionFilter', amenityOptionFilter);
   },
 
-  filteredProducts: computed('products.[]', 'vendorFilter.[]', 'amenityOptionFilter.[]', {
+  _cleanTimeFilter (times) {
+    let validTimes = times.mapBy('value');
+    let timeFilter = this.get('timeFilter');
+    timeFilter = timeFilter.filter(time => validTimes.contains(time));
+    this.set('timeFilter', timeFilter);
+  },
+
+  filteredProducts: computed('products.[]', 'vendorFilter.[]', 'amenityOptionFilter.[]', 'timeFilter.[]', {
     get () {
-      let {vendorFilter, amenityOptionFilter, products} =
-        this.getProperties('vendorFilter', 'amenityOptionFilter', 'products');
+      let filters = this.getProperties('vendorFilter', 'amenityOptionFilter', 'timeFilter');
+      let products = this.get('products');
 
       // @TODO would be useful to abstract filters and have them be services that we
       // call on to filter things down perhaps, hmmm?
-      if (vendorFilter && vendorFilter.length) {
+      if (filters.vendorFilter.length) {
+        let {vendorFilter} = filters;
         products = products.filter(p => vendorFilter.contains(p.get('vendor.slug')));
       }
 
-      if (amenityOptionFilter && amenityOptionFilter.length) {
+      if (filters.amenityOptionFilter.length) {
+        let {amenityOptionFilter} = filters;
         // This filter is complex, as each amenity is filtered individually.
         // So, amenity filters act as an AND across amenities,
         // but an OR across an amenity's options.
@@ -132,14 +205,30 @@ export default Ember.Controller.extend({
         });
       }
 
+      if (filters.timeFilter.length) {
+        let {timeFilter} = filters;
+        products = products.filter(p => {
+          let times = p.get('startTimes').mapBy('starts_at_time');
+
+          return timeFilter.any(t => {
+            let arbitraryTime = arbitraryTimes.findBy('value', t);
+            if (arbitraryTime) {
+              return times.any(inArbitraryTime(arbitraryTime));
+            } else {
+              return times.contains(t);
+            }
+          });
+        });
+      }
+
       return products;
     }
   }),
 
-  filtering: computed('vendorFilter.[]', 'amenityOptionFilter.[]', {
+  isFiltering: computed('vendorFilter.[]', 'amenityOptionFilter.[]', 'timeFilter.[]', {
     get () {
-      let {vendorFilter, amenityOptionFilter} = this.getProperties('vendorFilter', 'amenityOptionFilter');
-      return !isEmpty(vendorFilter) || !isEmpty(amenityOptionFilter);
+      return ['vendorFilter', 'amenityOptionFilter', 'timeFilter']
+        .any(filterName => !isEmpty(this.get(filterName)));
     }
   }),
 

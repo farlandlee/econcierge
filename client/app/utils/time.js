@@ -1,23 +1,28 @@
 import Ember from 'ember';
 import moment from 'moment';
 
-export const toMoment = function toMoment (date) {
+export const toMoment = (date) => {
   if (!date) {
     Ember.Logger.warn('TimeUtils#toMoment expected value. Defaulting to now..');
   }
   return moment.isMoment(date) ? date : moment(date);
 };
 
-export const parseDate = function parseDate (date) {
+export const parseDate = (date) => {
   // the "true" means it has to match this format exactly
   return moment(date, 'YYYY-MM-DD', true);
 };
 
-export const format = function format (date) {
+export const format = (date) => {
   return toMoment(date).format('YYYY-MM-DD');
 };
 
-export const dayOfTheWeek = function dayOfTheWeek(date) {
+export const formatTime = (time) => {
+  // 00:00:00 -> 12:00AM
+  return moment(time, 'HH:mm:ss', true).format('h:mmA');
+};
+
+export const dayOfTheWeek = (date) => {
   switch (toMoment(date).day()) {
     case 0:
       return "sunday";

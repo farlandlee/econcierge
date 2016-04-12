@@ -5,6 +5,27 @@
     </span>
     <ul class="product-filters">
       <li>
+        <button type="button" data-toggle="time-filter" onClick={{action 'toggleDisplayFilter' 'time'}}>
+          Start Time
+          {{#if timeFilter.length}}
+          ({{timeFilter.length}})
+          {{/if}}
+          {{chevron-icon direction=(if (eq displayFilter 'time') 'up' 'down')}}
+        </button>
+        {{#foundation-dropdown id="time-filter" class="product-filter-dropdown"
+          show=(eq displayFilter 'time')
+          onClose=(action 'hideFilter' 'time')
+        }}
+          {{filter-selector
+            clearButtonLabel="All Times"
+            options=times valuePath="value"
+            selectedValues=timeFilter
+            onSelect=(action "toggleFilter" timeFilter)
+            clear=(action "clearFilter" "timeFilter")
+          }}
+        {{/foundation-dropdown}}
+      </li>
+      <li>
         <button type="button" data-toggle="vendor-filter" onClick={{action 'toggleDisplayFilter' 'vendor'}}>
           Vendors
           {{#if vendorFilter.length}}
@@ -13,13 +34,12 @@
           {{chevron-icon direction=(if (eq displayFilter 'vendor') 'up' 'down')}}
         </button>
         {{#foundation-dropdown id="vendor-filter" class="product-filter-dropdown"
-          vOffset=20 closeOnClick=true
           show=(eq displayFilter 'vendor')
           onClose=(action 'hideFilter' 'vendor')
         }}
           {{filter-selector
             clearButtonLabel="All Vendors"
-            options=vendors labelPath="name" valuePath="slug"
+            options=vendors valuePath="slug"
             selectedValues=vendorFilter
             onSelect=(action "toggleFilter" vendorFilter)
             clear=(action "clearFilter" "vendorFilter")
@@ -34,13 +54,12 @@
           {{chevron-icon direction=(if (eq displayFilter amenity.name) 'up' 'down')}}
         </button>
         {{#foundation-dropdown id=(concat 'amenity-filter-' amenity.id) class="product-filter-dropdown"
-          vOffset=20 closeOnClick=true
           show=(eq displayFilter amenity.name)
           onClose=(action 'hideFilter' amenity.name)
         }}
           {{filter-selector
             clearButtonLabel="All"
-            options=amenity.options labelPath="name" valuePath="id"
+            options=amenity.options valuePath="id"
             selectedValues=amenityOptionFilter
             onSelect=(action "toggleFilter" amenityOptionFilter)
             clear=(action "clearAmenityFilter" amenity)
@@ -60,10 +79,7 @@
       {{chevron-icon direction=(if displaySort 'up' 'down')}}
     </button>
     {{#foundation-dropdown id="product-sorter" class="product-sorter-dropdown"
-      vOffset=20
-      closeOnClick=true
-      show=displaySort
-      onClose=(action 'hideSort')
+      show=displaySort onClose=(action 'hideSort')
     }}
       {{product-sorter
         onSelect=(action "updateSortParam")
@@ -71,16 +87,28 @@
     {{/foundation-dropdown}}
   </div>
 </div>
-{{#if filtering}}
+{{#if isFiltering}}
 <div class="row product-bar">
   <div class="columns small-12">
     <ul class="product-filters">
+      {{#each timeFilter as |time|}}
+      <li>
+        {{filter-label
+          value=time
+          filters=times
+          labelPath="name"
+          valuePath="value"
+          onClick=(action "removeFilter" timeFilter time)
+        }}
+      </li>
+      {{/each}}
 
       {{#each vendorFilter as |vendorSlug|}}
       <li>
         {{filter-label
           value=vendorSlug
           filters=vendors
+          valuePath="slug"
           onClick=(action "removeFilter" vendorFilter vendorSlug)
         }}
       </li>

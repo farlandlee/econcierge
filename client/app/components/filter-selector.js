@@ -6,7 +6,7 @@ export default Ember.Component.extend({
   clearButtonLabel: null,
   currentValue: null,
   options: null,
-  labelPath: null,
+  labelPath: 'name',
   valuePath: null,
   selectedValues: null,
 
