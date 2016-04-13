@@ -16,6 +16,8 @@ defmodule Grid.Api.ProductControllerTest do
     price = Factory.create(:price, product: p)
     Factory.create(:amount, price: price)
 
+    Factory.create_product_image(assoc_id: p.id, postion: 1)
+
     p = Repo.update!(Grid.Product.default_price_changeset(p, price.id))
 
     {:ok, product: p, start_time: st, season: s}
@@ -27,11 +29,15 @@ defmodule Grid.Api.ProductControllerTest do
 
     conn = get conn, api_product_path(conn, :index)
     response = json_response(conn, 200)
+
     products = response["products"]
     assert products
     assert Enum.count(products) == 1
-
     resp_ids = Enum.map(products, &(&1["id"]))
+
+    images = products |> hd |> Map.get("images")
+    assert images
+    assert Enum.count(images) == 1
 
     assert product.id in resp_ids
     refute published_fails_check.id in resp_ids

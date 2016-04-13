@@ -3,6 +3,7 @@
     <tr>
       <th>Filename</th>
       <th>Caption</th>
+      <th>Position</th>
       <th>Default Image?</th>
       <th></th>
     </tr>
@@ -10,14 +11,15 @@
   <tbody>
   <%= for image <- @images do %>
     <tr>
-      <td><%= link image.filename, to: image_path(@image_path, [@conn, :show, @ancestor, image]) %></td>
+      <td><%= link image.filename, to: image_path(@image_path, [@conn, :show] ++ @ancestors ++ [image]) %></td>
       <td><%= caption image %> </td>
+      <td><%= image.position %> </td>
       <td>
       <%= if image.error do %>
         There was an error processing this image.
       <% else %>
-        <%= Grid.AdminView.default_switcher @ancestor.default_image_id, image.id,
-        image_path(@image_path, [@conn, :set_default, @ancestor, image]) %>
+        <%= Grid.AdminView.default_switcher List.last(@ancestors).default_image_id, image.id,
+        image_path(@image_path, [@conn, :set_default] ++ @ancestors ++ [image]) %>
       <% end %>
       </td>
 
@@ -28,10 +30,10 @@
           </button>
           <ul class="dropdown-menu dropdown-menu-right">
             <li>
-              <%= link "Edit", to: image_path(@image_path, [@conn, :edit, @ancestor, image]), class: "edit" %>
+              <%= link "Edit", to: image_path(@image_path, [@conn, :edit] ++ @ancestors ++ [image]), class: "edit" %>
             </li>
             <li>
-              <%= link "Delete", to: image_path(@image_path, [@conn, :delete, @ancestor, image]), method: :delete, data: [confirm: "Are you sure?"], class: "delete" %>
+              <%= link "Delete", to: image_path(@image_path, [@conn, :delete] ++ @ancestors ++ [image]), method: :delete, data: [confirm: "Are you sure?"], class: "delete" %>
             </li>
           </ul>
         </div>

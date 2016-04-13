@@ -41,7 +41,7 @@ defmodule Grid.AdminView do
   end
 
   def tab_link(target) do
-    lowercase = String.downcase(target)
-    link target, to: "#" <> lowercase, class: "grid-tab"
+    param = Inflex.parameterize(target, "_")
+    link target, to: "#" <> param, class: "grid-tab"
   end
 end

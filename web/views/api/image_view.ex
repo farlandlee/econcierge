@@ -9,7 +9,8 @@ defmodule Grid.Api.ImageView do
       title: image.filename,
       alt: image.alt,
       full: image.original,
-      medium: image.medium
+      medium: image.medium,
+      position: image.position
     }
   end
 end

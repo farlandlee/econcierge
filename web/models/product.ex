@@ -1,6 +1,8 @@
 defmodule Grid.Product do
   use Grid.Web, :model
 
+  alias Grid.Image
+
   schema "products" do
     field :description, :string
     field :short_description, :string
@@ -21,6 +23,9 @@ defmodule Grid.Product do
     has_many :start_times, Grid.StartTime
     has_many :product_amenity_options, Grid.ProductAmenityOption
     has_many :order_items, Grid.OrderItem
+
+    belongs_to :default_image, {"product_images", Image}
+    has_many :images, {"product_images", Image}, foreign_key: :assoc_id
 
     has_many :amenity_options, through: [:product_amenity_options, :amenity_option]
     has_many :categories, through: [:experience, :experience_categories, :category]
@@ -91,7 +96,7 @@ defmodule Grid.Product do
 
   @creation_fields ~w(vendor_id experience_id)a
   @required_fields ~w(description name published duration)a
-  @optional_fields ~w(pickup experience_id meeting_location_id short_description)a
+  @optional_fields ~w(pickup experience_id meeting_location_id short_description default_image_id)a
 
   @doc """
   Creates a changeset based on the `model` and `params`.
@@ -110,6 +115,7 @@ defmodule Grid.Product do
     |> foreign_key_constraint(:experience_id)
     |> pickup_and_location_constraints()
     |> foreign_key_constraint(:meeting_location_id)
+    |> foreign_key_constraint(:default_image_id)
   end
 
   def default_price_changeset(model, default_price_id) do

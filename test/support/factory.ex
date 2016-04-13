@@ -107,13 +107,15 @@ defmodule Grid.Factory do
   end
 
   def factory(:vendor_image) do
-    name = sequence(:filename, &"file-#{&1}.jpg")
-    build_assoc(%Vendor{}, :images, [
-      filename: name,
-      alt: "Caption text for #{name}",
-      medium: "priv/images/medium-#{name}",
-      original: "priv/images/original-#{name}"
-    ])
+    build_image(%Vendor{})
+  end
+
+  def factory(:product_image) do
+    build_image(%Product{})
+  end
+
+  def factory(:activity_image) do
+    build_image(%Activity{})
   end
 
   def factory(:activity) do
@@ -138,16 +140,6 @@ defmodule Grid.Factory do
       experience: build(:experience),
       category: build(:category)
     }
-  end
-
-  def factory(:activity_image) do
-    name = sequence(:filename, &"file-#{&1}.jpg")
-    build_assoc(%Activity{}, :images, [
-      filename: name,
-      alt: "Caption text for #{name}",
-      medium: "priv/images/medium-#{name}",
-      original: "priv/images/original-#{name}"
-    ])
   end
 
   def factory(:vendor) do
@@ -197,8 +189,23 @@ defmodule Grid.Factory do
     }
   end
 
+  def build_image(schema) do
+    name = sequence(:filename, &"file-#{&1}.jpg")
+    build_assoc(schema, :images, [
+      filename: name,
+      alt: "Caption text for #{name}",
+      medium: "priv/images/medium-#{name}",
+      original: "priv/images/original-#{name}",
+      position: sequence(:position, &(&1))
+    ])
+  end
+
   def create_vendor_image(attrs \\ %{}) do
     build(:vendor_image, attrs) |> Repo.insert!
+  end
+
+  def create_product_image(attrs \\ %{}) do
+    build(:product_image, attrs) |> Repo.insert!
   end
 
   def create_activity_image(attrs \\ %{}) do
