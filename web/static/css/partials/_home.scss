@@ -2,6 +2,7 @@ section {
   &.home-main {
     margin-bottom: 0;
     width: 100%;
+    min-width: 100vw;
     height: 600px;
     max-height: 70vh;
     min-height: 340px;
@@ -159,7 +160,7 @@ section {
       max-width:370px;
     }
   }
-  .full-overlay-select {
+  .full-overlay-select-opener {
     background-color: transparent;
     border: 2px solid $white;
     border-radius: 6px;

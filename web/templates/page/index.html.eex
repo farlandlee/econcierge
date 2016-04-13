@@ -1,3 +1,13 @@
+<div class="full-overlay-select-list-container home" id="full-overlay-select-list-container">
+  <ul>
+    <li><%= link "Lodging", to: "http://www.outpostjh.com/rentals/" %></li>
+    <li><%= link "All Activities", to: explore_path(@conn, :index, ["activities"]), class: "selected" %></li>
+    <%= for activity <- @available_activities do %>
+      <li><%= link activity.name, to: explore_path(@conn, :index, [activity.slug, "categories"]) %></li>
+    <% end %>
+  </ul>
+  <div class="full-overlay-black-overlay"></div>
+</div>
 <div class="home page">
   <section class="top-row small-collapse home-main expanded row">
     <div class="darken-overlay"></div>
@@ -10,16 +20,8 @@
           <div class="small-12 medium-10 large-8 columns form-group">
             <label for="activity[id]">Explore</label>
             <div class="input-group-field">
-              <div class="full-overlay-select" tabindex="0">
+              <div class="full-overlay-select-opener" tabindex="0">
                 <span class="current">All Activities</span>
-                <ul>
-                  <li><%= link "Lodging", to: "http://www.outpostjh.com/rentals/" %></li>
-                  <li><%= link "All Activities", to: explore_path(@conn, :index, ["activities"]), class: "selected" %></li>
-                  <%= for activity <- @available_activities do %>
-                    <li><%= link activity.name, to: explore_path(@conn, :index, [activity.slug, "categories"]) %></li>
-                  <% end %>
-                </ul>
-                <div class="full-overlay-black-overlay"></div>
               </div>
             </div>
             <div class="input-group-button">

@@ -13,6 +13,10 @@ body {
 	height: 100%;
 	overflow-y: auto;
 }
+
+.off-canvas-content {
+  min-height: 100vh;
+}
 .page {
   min-height: 100vh;
   /* equal to footer height */
