@@ -1,49 +1,24 @@
 export default function ($) {
-  // Open/close
-  $(document).on('click', '.full-overlay-select', function(event) {
-    event.stopPropagation();
-    var dropdown = $(this);
-
-    if (!dropdown.hasClass('open') && dropdown.find('.selected').length === 0) {
-      dropdown.find('.selected').removeClass('selected');
-      dropdown.find('li').children().first().addClass('selected');
-    }
-
-    $('.full-overlay-select').not(dropdown).removeClass('open');
-
-    if (event.target.tagName === 'A') {
-      dropdown.removeClass('open');
-    } else {
-      dropdown.toggleClass('open');
-    }
-
-    if (dropdown.hasClass('open')) {
-      $('.page-header').css('z-index',1);
-      $('.how-it-works-button-outer,.purechat-mobile-widget-button').addClass('hidden');
-    } else {
-      $('.page-header').css('z-index',100);
-      $('.how-it-works-button-outer,.purechat-mobile-widget-button').removeClass('hidden');
-      dropdown.focus();
-    }
+  // this will only open the fulloverlay selector
+  $(document).on('click', '.full-overlay-select-opener', function() {
+    $('#full-overlay-select-list-container, .full-overlay-select-opener').addClass('open');
+    $('.purechat, .purechat-mobile-widget-button, .page-footer').addClass('hidden');
   });
 
   // Close when clicking outside
-  $('body :not(a)').on('click', function(event) {
-    $('.full-overlay-select').removeClass('open');
-    $('.how-it-works-button-outer,.purechat-mobile-widget-button').removeClass('hidden');
-    $('.page-header').css('z-index',100);
+  $('body').on('click', '#full-overlay-select-list-container', function() {
+    $('#full-overlay-select-list-container, .full-overlay-select-opener').removeClass('open');
+    $('.purechat, .purechat-mobile-widget-button, .page-footer').removeClass('hidden');
   });
 
   // Keyboard events
-  $(document).on('keydown', '.full-overlay-select', function(event) {
+  $(document).on('keydown','.full-overlay-select-opener', function(event) {
     event.stopPropagation();
-    var dropdown = $(this);
+    let dropdown = $('#full-overlay-select-list-container');
 
     // Space or Enter
     if (event.keyCode == 32 || event.keyCode == 13) {
-
-      if (dropdown.hasClass('open')) {
-        var href = $('.selected',dropdown).attr('href');
+        let href = $('.selected',dropdown).attr('href');
         // this is basically just for development
         if( typeof href == 'undefined' || href.slice(-1) === '#') {
           $('.selected',dropdown).click();
@@ -51,44 +26,49 @@ export default function ($) {
         else {
           window.location.href = href;
         }
-      } else {
-        dropdown.trigger('click');
-      }
-      //return false;
     // Down
     } else if (event.keyCode == 40) {
-      if (!dropdown.hasClass('open')) {
-        dropdown.trigger('click');
-      } else {
-        var next = $('.selected',dropdown).parent('li').next().children('a').first();
-        if (next.length > 0) {
-          dropdown.find('.selected').removeClass('selected');
-          next.addClass('selected');
-        }
-      }
-      return false;
-    // Up
-    } else if (event.keyCode == 38) {
-      if (!dropdown.hasClass('open')) {
-        dropdown.trigger('click');
-      } else {
-        var prev = $('.selected',dropdown).parent('li').prev().children('a').first();
-        if (prev.length > 0) {
-          dropdown.find('.selected').removeClass('selected');
-          prev.addClass('selected');
-        }
-      }
-      return false;
-    // Esc
-    } else if (event.keyCode == 27) {
-      if (dropdown.hasClass('open')) {
-        dropdown.trigger('click');
-      }
-    // Tab
-    } else if (event.keyCode == 9) {
-      if (dropdown.hasClass('open')) {
+      // test if element has category children (i.e., nested category)
+      let next = $('.selected',dropdown).siblings('ul').find('a').first();
+      if(next.length) {
+        dropdown.find('.selected').removeClass('selected');
+        next.addClass('selected');
         return false;
       }
+
+      //check if this just has a regular sibling (activity or category)
+      next = $('.selected',dropdown).parent('li').next().find('a').first();
+      if(next.length) {
+        dropdown.find('.selected').removeClass('selected');
+        next.addClass('selected');
+        return false;
+      }
+
+      //check to see if this is a nested category
+      next = $('.selected',dropdown).parent('li').parents('li').next().find('a').first();
+      if(next.length) {
+        dropdown.find('.selected').removeClass('selected');
+        next.addClass('selected');
+        return false;
+      }
+    // Up
+    } else if (event.keyCode == 38) {
+      //this should cover previous element with or without categories
+      let prev = $('.selected',dropdown).parent().prev().find('a').last();
+      if (prev.length) {
+        dropdown.find('.selected').removeClass('selected');
+        prev.addClass('selected');
+        return false;
+      }
+      prev = $('.selected',dropdown).parents('ul').siblings('a').last();
+      if (prev.length) {
+        dropdown.find('.selected').removeClass('selected');
+        prev.addClass('selected');
+        return false;
+      }
+    // Esc
+    } else if (event.keyCode == 27) {
+        dropdown.trigger('click');
     }
   });
 };

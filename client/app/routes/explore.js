@@ -61,6 +61,7 @@ export default Ember.Route.extend(NotFoundMixin, ResetScrollMixin, RouteTitleMix
   setupController (controller, model) {
     this._super(...arguments);
     controller.setProperties(model);
+    controller.set('activities', this.store.peekAll('activity'));
   },
 
   actions: {

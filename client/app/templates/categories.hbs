@@ -1,16 +1,18 @@
+<div class="full-overlay-select-list-container" id="full-overlay-select-list-container">
+  <ul>
+    {{#item-sorter items=activities as |activity|}}
+      <li>{{link-to activity.name "categories" activity.slug activeClass="selected"}}</li>
+    {{/item-sorter}}
+  </ul>
+  <div class="full-overlay-black-overlay"></div>
+</div>
 <div class="activity">
   <div class="row expanded">
     <div class="input-group select-activity">
       <span>Activity:</span>
       <div class="input-group-field" >
-        <div class="full-overlay-select" tabindex="0">
+        <div class="full-overlay-select-opener" tabindex="0">
           <span class="current">{{activity.name}}</span>
-          <ul>
-            {{#item-sorter items=activities as |activity|}}
-              <li>{{link-to activity.name "categories" activity.slug activeClass="selected"}}</li>
-            {{/item-sorter}}
-          </ul>
-          <div class="full-overlay-black-overlay"></div>
         </div>
       </div>
     </div>
