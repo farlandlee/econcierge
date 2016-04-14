@@ -41,30 +41,30 @@
       <div class="small-12 large-11 columns">
         <div class="row align-center align-stretch">
           <div class="column small-12 medium-8">
-            <div class="double-wide rentals-cta">
-              <div class="darken-overlay"></div>
-              <div class="overlay-text">
-                <p>Vacation Rentals</p>
-                <p class="small">Book Your stay in Jackson Hole</p>
+            <a href="http://www.outpostjh.com/rentals/">
+              <div class="double-wide rentals-cta">
+                <div class="darken-overlay"></div>
+                <div class="overlay-text">
+                  <p>Vacation Rentals</p>
+                  <p class="small">Book Your stay in Jackson Hole</p>
+                </div>
+                <p class="booking-button">Book Now</p>
               </div>
-              <p class="booking-button"><a href="http://www.outpostjh.com/rentals/">Book Now</a></p>
-            </div>
+            </a>
           </div>
           <div class="column small-12 medium-4">
-            <div class="single-wide snowmobiling-cta">
-              <div class="darken-overlay"></div>
-              <div class="overlay-text">
-                <p>Snowmobiling Day Trip</p>
-                <p class="small">Visit beautiful Granite Hot Springs</p>
-                <p class="small">by Togwotee Mountain Lodge</p>
+            <a href="<%= explore_path(@conn, :index, ["wildlife_tours", "full_day_wildlife_tour", "full_day_grand_teton_national_park", "book", "396"]) %>">
+              <div class="single-wide wildlife-tours-cta">
+                <div class="darken-overlay"></div>
+                <div class="overlay-text">
+                  <p>Wildlife Safari</p>
+                  <p class="small">Visit Grand Teton National Park</p>
+                </div>
+                <p class="booking-button">
+                    Request to Book
+                </p>
               </div>
-              <p class="booking-button">
-                <!-- TODO: Fix path path -->
-                <a href="<%= explore_path(@conn, :index, ["snowmobiling", "scenic_snowmobiling", "granite_hot_springs_snowmobile_trip", "book", "241"]) %>">
-                  Request to Book
-                </a>
-              </p>
-            </div>
+            </a>
           </div>
           <div class="column small-12 medium-4 align-center align-middle">
             <a class="dark-green big-button text-center align-middle" href="<%= vendor_path(@conn, :index) %>">
@@ -75,18 +75,18 @@
             </a>
           </div>
           <div class="column small-12 medium-8">
-            <div class="double-wide teton-tiger-cta">
-              <div class="darken-overlay"></div>
-              <div class="overlay-text">
-                <p>Introducing Teton Tiger</p>
-                <p class="small">Exotic Twists on Classic Drinks and Dishes</p>
+            <a href="http://www.outpostjh.com/cavalry-gt-the-indian/">
+              <div class="double-wide teton-tiger-cta">
+                <div class="darken-overlay"></div>
+                <div class="overlay-text">
+                  <p>Introducing Teton Tiger</p>
+                  <p class="small">Exotic Twists on Classic Drinks and Dishes</p>
+                </div>
+                <p class="booking-button">
+                    Read More
+                </p>
               </div>
-              <p class="booking-button">
-                <a href="http://www.outpostjh.com/cavalry-gt-the-indian/">
-                  Read More
-                </a>
-              </p>
-            </div>
+            </a>
           </div>
         </div>
       </div>
