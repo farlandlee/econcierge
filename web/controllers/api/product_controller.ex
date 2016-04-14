@@ -30,6 +30,7 @@ defmodule Grid.Api.ProductController do
     Repo.preload(products, [
       :product_amenity_options,
       :meeting_location,
+      :images,
       start_times: :season,
       prices: :amounts,
       default_price: :amounts

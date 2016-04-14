@@ -157,6 +157,9 @@ defmodule Grid.Router do
 
         resources "/start_times", StartTimeController
 
+        resources "/images", ImageController
+        put "/images/:id/default", ImageController, :set_default
+
         put "/prices/:id/default", PriceController, :set_default
         resources "/prices", PriceController, [alias: Price] do
           pipe_through :assign_product_price

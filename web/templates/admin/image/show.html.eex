@@ -1,10 +1,12 @@
-<%= link to: image_path(@image_path, [@conn, :edit, @ancestor, @image]), class: "btn-sm btn-primary header-action" do %>
+<%= link to: image_path(@image_path, [@conn, :edit] ++ @ancestors ++ [@image]), class: "btn-sm btn-primary header-action" do %>
   <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Edit
 <% end %>
 
 <dl class="dl-horizontal">
     <dt>Caption</dt>
     <dd><%= caption @image %></dd>
+    <dt>Position</dt>
+    <dd><%= @image.position %></dd>
 
   <%= if @image.error do %>
     <dt>Error</dt>

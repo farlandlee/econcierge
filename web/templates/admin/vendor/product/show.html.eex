@@ -47,35 +47,74 @@
       <%= pretty_errors(errors) %>
     </span>
   </dd>
-
 </dl>
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <%= link to: admin_vendor_product_price_path(@conn, :new, @vendor, @product), class: "btn btn-xs btn-success pull-right" do  %>
-      <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Price
-    <% end %>
-    <h3 class="panel-title">Prices</h3>
-  </div>
-  <%= render Grid.Admin.Vendor.Product.PriceView, "index.html",
-    conn: @conn,
-    vendor: @vendor,
-    product: @product,
-    prices: @product.prices
-  %>
-</div>
 
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <%= link to: admin_vendor_product_start_time_path(@conn, :new, @vendor, @product), class: "btn btn-xs btn-success pull-right" do %>
-      <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Start Time
-    <% end %>
-    <h3 class="panel-title">Start Times</h3>
+<div>
+  <ul class="nav nav-tabs">
+    <li role="presentation">
+      <%= tab_link "Prices" %>
+      </a>
+    </li>
+    <li role="presentation">
+      <%= tab_link "Start Times" %>
+      </a>
+    </li>
+    <li role="presentation">
+      <%= tab_link "Images" %>
+      </a>
+    </li>
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <section role="tabpanel" class="tab-pane" id="prices">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <%= link to: admin_vendor_product_price_path(@conn, :new, @vendor, @product), class: "btn btn-xs btn-success pull-right" do  %>
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Price
+          <% end %>
+          <h3 class="panel-title">Prices</h3>
+        </div>
+        <%= render Grid.Admin.Vendor.Product.PriceView, "index.html",
+          conn: @conn,
+          vendor: @vendor,
+          product: @product,
+          prices: @product.prices
+        %>
+      </div>
+    </section>
+    <section role="tabpanel" class="tab-pane" id="start_times">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <%= link to: admin_vendor_product_start_time_path(@conn, :new, @vendor, @product), class: "btn btn-xs btn-success pull-right" do %>
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Start Time
+          <% end %>
+          <h3 class="panel-title">Start Times</h3>
+        </div>
+        <%= render Grid.Admin.Vendor.Product.StartTimeView, "index.html",
+          conn: @conn,
+          vendor: @vendor,
+          product: @product,
+          start_times: @product.start_times,
+          changeset: Grid.StartTime.changeset(%Grid.StartTime{})
+        %>
+      </div>
+    </section>
+    <section role="tabpanel" class="tab-pane" id="images">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <%= link to: admin_vendor_product_image_path(@conn, :new, @vendor, @product), class: "btn btn-xs btn-success pull-right" do %>
+          <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Image
+          <% end %>
+          <h3 class="panel-title">Images</h3>
+        </div>
+        <%= render Grid.Admin.Vendor.Product.ImageView, "index.html",
+          conn: @conn,
+          vendor: @vendor,
+          product: @product,
+          images: @product.images
+        %>
+      </div>
+    </section>
   </div>
-  <%= render Grid.Admin.Vendor.Product.StartTimeView, "index.html",
-    conn: @conn,
-    vendor: @vendor,
-    product: @product,
-    start_times: @product.start_times,
-    changeset: Grid.StartTime.changeset(%Grid.StartTime{})
-  %>
 </div>

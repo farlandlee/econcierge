@@ -2,7 +2,7 @@ defmodule Grid.Image do
   use Grid.Web, :model
 
   # Images are an abstraction over relationship-specific
-  # images, such as `VendorImage` or `ActivityImage`.
+  # images, such as `vendor_images` or `activity_images`.
   # See the "Polymorphic associations" header on
   # the Ecto.Schema docs for more.
   # https://hexdocs.pm/ecto/Ecto.Schema.html
@@ -11,6 +11,7 @@ defmodule Grid.Image do
     field :alt, :string
     field :original, :string
     field :medium, :string
+    field :position, :integer
 
     field :error, :boolean, default: false
 
@@ -21,7 +22,7 @@ defmodule Grid.Image do
 
   @creation_fields ~w(assoc_id)
   @required_fields ~w(filename)
-  @optional_fields ~w(alt error)
+  @optional_fields ~w(alt error position)
   @source_fields ~w(original medium)
 
 

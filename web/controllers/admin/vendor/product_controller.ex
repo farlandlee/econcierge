@@ -60,6 +60,7 @@ defmodule Grid.Admin.Vendor.ProductController do
       |> Repo.preload([
         :activity,
         :experience,
+        :images,
         :meeting_location,
         start_times: :season,
         prices: :amounts,

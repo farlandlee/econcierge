@@ -56,6 +56,7 @@ defmodule Grid.Admin.VendorImageControllerTest do
     assert html_response(conn, 200) =~ "#{i.alt}"
     assert html_response(conn, 200) =~ "#{i.original}"
     assert html_response(conn, 200) =~ "#{i.medium}"
+    assert html_response(conn, 200) =~ "#{i.position}"
   end
 
   test "renders page not found when id is nonexistent", %{conn: conn, vendor: v} do
