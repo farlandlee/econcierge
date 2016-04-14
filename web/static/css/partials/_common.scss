@@ -132,16 +132,14 @@ a.full-box-link {
   position:absolute;
   bottom: 1.0rem;
   left: 0.8rem;
-  a {
-    padding:0.5rem 1.6rem;
-    background-color: $primary-color;
-    color: $white;
-    text-transform: uppercase;
-    font-size: 0.6rem;
-    font-weight: $global-weight-bold;
-    &:hover {
-      background-color: $button-background-hover;
-    }
+  padding:0.5rem 1.6rem;
+  background-color: $primary-color;
+  color: $white;
+  text-transform: uppercase;
+  font-size: 0.6rem;
+  font-weight: $global-weight-bold;
+  &:hover {
+    background-color: $button-background-hover;
   }
 }
 
@@ -240,6 +238,9 @@ a.full-box-link {
     background-size: cover;
     &.snowmobiling-cta {
       background-image: url('/images/snowmobile.jpg');
+    }
+    &.wildlife-tours-cta {
+      background-image: url('/images/wildlife-tours.jpg');
     }
   }
   .double-wide {
