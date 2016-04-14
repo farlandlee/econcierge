@@ -4,9 +4,10 @@
 
 ## Useful Links
 
+- [Production Site](https://book.outpostjh.com)
+- [Staging Site](http://outpost-grid-staging.herokuapp.com/)
 - [Invision Mocks](https://projects.invisionapp.com/share/3E5XNSPY2)
 - [Design Docs](https://www.lucidchart.com/documents/edit/099b9222-c340-48ed-a5fe-b9a2c60176cf/0?shared=true)
-- [Staging Site](http://outpost-grid.herokuapp.com/)
 - [Rollbar](https://rollbar.com/Outpost/Grid/)
 
 ## Installation
@@ -117,4 +118,18 @@ To deployed a branch to staging for testing, run:
 
 ```sh
 git push heroku-staging <your-branch>:master
+```
+
+#### Debugging Staging
+
+Tip #1:
+
+```sh
+heroku logs --remote heroku-staging —tail
+```
+
+Tip #2: Manual deploy does not automatically run migrations
+
+```sh
+heroku run mix ecto.migrate --remote heroku-staging
 ```
