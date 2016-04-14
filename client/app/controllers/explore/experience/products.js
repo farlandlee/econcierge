@@ -137,7 +137,12 @@ export default Ember.Controller.extend({
         .map(toTimeFilter)
         .sortBy('value');
 
-      times = arbitraryTimes.filter(t => times.any(inArbitraryTime(t))).concat(times);
+      let isApplicableArbitraryTime = (arbitraryTime) => {
+        let inThisArbitraryTime = inArbitraryTime(arbitraryTime);
+        return times.any(inThisArbitraryTime) && !times.every(inThisArbitraryTime);
+      };
+
+      times = arbitraryTimes.filter(isApplicableArbitraryTime).concat(times);
       this._cleanTimeFilter(times);
       return times;
     }
