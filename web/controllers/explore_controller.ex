@@ -9,6 +9,8 @@ defmodule Grid.ExploreController do
     conn
     |> put_layout(false)
     |> assign(:is_home, false)
-    |> render
+    |> render("index.html")
   end
+
+  def shared_cart(conn, params), do: index(conn, params)
 end

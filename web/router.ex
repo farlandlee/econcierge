@@ -65,7 +65,10 @@ defmodule Grid.Router do
     # put "/orders/:vendor_token/reject", OrderController, :reject
     # put "/orders/:customer_token/cancel/:id", OrderController, :cancel
 
-    get "/explore/*path", ExploreController, :index
+    scope "/explore" do
+      get "/shared_cart/:uuid", ExploreController, :shared_cart
+      get "/*path", ExploreController, :index
+    end
 
     get "/500", ErrorController, :render_500
     get "/404", ErrorController, :render_404
@@ -106,6 +109,9 @@ defmodule Grid.Router do
     get "/vendors/:id", VendorController, :show
 
     post "/orders", OrderController, :process_cart
+
+    get "/shared_cart/:uuid", SharedCartController, :show
+    post "/shared_cart", SharedCartController, :create
   end
 
   scope "/admin", Grid.Admin, as: :admin do
