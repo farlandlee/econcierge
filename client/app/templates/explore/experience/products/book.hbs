@@ -2,9 +2,10 @@
   <section class="row column">
       <h3>{{product.name}}</h3>
   </section>
-
+  {{#if product.images}}
+  {{foundation-orbit images=product.images}}
+  {{/if}}
   <section class="row align-right">
-
     <div class="columns small-12 medium-6">
       {{#if showVendor}}
       <h4 class="subheader">

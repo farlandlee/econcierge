@@ -116,6 +116,78 @@
       margin-bottom: 1rem;
     }
   }
+  .orbit {
+    width: 100%;
+    padding: 0;
+    height: 160px;
+    overflow: hidden;
+    position: relative;
+    @media (min-width: 480px) {
+      height: 240px;
+    }
+    @media (min-width: 568px) {
+      height: 359px;
+    }
+  }
+  .orbit-image {
+    width: 100%;
+    max-width: 100%;
+    @media (min-width: 568px) {
+      width: 718px;
+      max-width: 718px;
+    }
+  }
+  .orbit-container {
+    min-width: 100%;
+    max-height: 160px;
+    // needed to keep the slideshow displaying after being opened, closed, then opened again
+    min-height: 160px;
+    @media (min-width: 480px) {
+      max-height: 240px;
+      // needed to keep the slideshow displaying after being opened, closed, then opened again
+      min-height: 240px;
+    }
+    @media (min-width: 568px) {
+      max-height: 359px;
+      // needed to keep the slideshow displaying after being opened, closed, then opened again
+      min-height: 359px;
+    }
+  }
+  .orbit-slide {
+    // also needed to keep the slideshow displaying after being opened, closed, then opened again
+    min-height: 160px;
+    max-height: 160px !important;
+    cursor: pointer;
+    @media (min-width: 480px) {
+      max-height: 240px;
+      // needed to keep the slideshow displaying after being opened, closed, then opened again
+      min-height: 240px;
+    }
+    @media (min-width: 568px) {
+      min-height: 359px;
+      max-height: 359px !important;
+    }
+  }
+  .orbit-previous,
+  .orbit-next {
+    font-size: 3rem;
+    padding: 0.5rem;
+    border-radius: 0;
+  }
+  .photo-gallery-button {
+    position: absolute;
+    z-index: 10;
+    color: white;
+    font-size: 2rem;
+    bottom: 0;
+    right: 0;
+    padding: 0.5rem;
+    line-height: 1;
+    &:hover {
+      background-color: rgba(25, 18, 10, 0.5);
+      cursor: pointer;
+    }
+  }
 }
 
 .body-count {

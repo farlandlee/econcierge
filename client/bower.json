@@ -10,7 +10,8 @@
     "localforage": "~1.3.1",
     "numeral": "^1.5.3",
     "flatpickr": "git://github.com/chmln/flatpickr#1.6.6",
-    "sanitize.js": "^1.0.0"
+    "sanitize.js": "^1.0.0",
+    "lightgallery": "^1.2.18"
   },
   "resolutions": {
     "ember": "2.3.0"

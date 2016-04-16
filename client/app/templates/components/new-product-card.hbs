@@ -1,7 +1,12 @@
 <div class="row product-header">
-  <div class="product-name column small-12">
-    {{new-price-display price=product.defaultPrice}}
+  <div class="product-name column small-8">
     <p class="product-title">{{#link-to "explore.experience.products.book" product}}{{product.name}}{{/link-to}}</p>
+  </div>
+  <div class="product-details column small-4">
+    {{new-price-display price=product.defaultPrice}}
+    {{#if product.images}}
+    {{product-images images=product.images}}
+    {{/if}}
   </div>
 </div>
 <div class="row product-body align-bottom">

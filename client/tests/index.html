@@ -36,7 +36,11 @@
         this.open = function () {};
         this.close = function () {};
         this.destroy = function () {};
-      }
+      },
+      // used by foundation slideshow
+      Orbit: function () {
+        this.destroy = function () {};
+      },
     };
     window.Stripe = {
       // used in checkout-form.js
