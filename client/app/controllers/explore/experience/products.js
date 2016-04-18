@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import {formatTime} from 'client/utils/time';
+import {formatTime, format} from 'client/utils/time';
 
 const {computed, isEmpty} = Ember;
 
@@ -57,7 +57,8 @@ export default Ember.Controller.extend({
     {timeFilter: 'time'},
     {amenityOptionFilter: 'amenity'},
     {vendorFilter: 'vendor'},
-    {sort: 'sort'}
+    'sort',
+    'date'
   ],
 
   sort: 'Price',
@@ -73,19 +74,10 @@ export default Ember.Controller.extend({
   /* the set of vendors whose products are on display */
   vendors: computed('products.@each.vendor', {
     get () {
-      let products = this.get('products');
-      let vendors = [];
-      let seenVendors = {};
-
-      let addToSet = (vendor => {
-        let id = vendor.get('id');
-        if (!seenVendors[id]) {
-          seenVendors[id] = true;
-          vendors.pushObject(vendor);
-        }
-      });
-
-      products.mapBy('vendor').forEach(addToSet);
+      let vendors = this.get('products').mapBy('vendor');
+      vendors = vendors.mapBy('id')
+        .reduce(toSet, [])
+        .map(id => vendors.findBy('id', id));
       this._cleanVendorFilter(vendors);
       return vendors;
     }
@@ -180,7 +172,7 @@ export default Ember.Controller.extend({
 
   filteredProducts: computed('products.[]', 'vendorFilter.[]', 'amenityOptionFilter.[]', 'timeFilter.[]', {
     get () {
-      let filters = this.getProperties('vendorFilter', 'amenityOptionFilter', 'timeFilter');
+      let filters = this.getProperties('vendorFilter', 'amenityOptionFilter', 'timeFilter', 'date');
       let products = this.get('products');
 
       // @TODO would be useful to abstract filters and have them be services that we
@@ -230,8 +222,11 @@ export default Ember.Controller.extend({
     }
   }),
 
-  isFiltering: computed('vendorFilter.[]', 'amenityOptionFilter.[]', 'timeFilter.[]', {
+  isFiltering: computed('date', 'vendorFilter.[]', 'amenityOptionFilter.[]', 'timeFilter.[]', {
     get () {
+      if (this.get('date')) {
+        return true;
+      }
       return ['vendorFilter', 'amenityOptionFilter', 'timeFilter']
         .any(filterName => !isEmpty(this.get(filterName)));
     }
@@ -301,6 +296,13 @@ export default Ember.Controller.extend({
     updateSortParam (value) {
       this.set('sort', value);
       this.toggleProperty('displaySort'); // hide dropdown after click
+    },
+
+    changeDate (date) {
+      if (date) {
+        date = format(date);
+      }
+      this.set('date', date);
     }
   }
 });

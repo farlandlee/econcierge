@@ -16,7 +16,6 @@ exports.config = {
         "css/app.css": [
           /^(web\/static\/css)/,
           /^(bower_components\/font\-awesome)/,
-          "bower_components/intro.js/introjs.css",
           /^(bower_components\/motion\-ui\/src)/
         ],
         "css/admin.css": [

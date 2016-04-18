@@ -5,6 +5,7 @@ import moment from 'moment';
 const {computed} = Ember;
 
 export default Ember.Component.extend({
+  classNames: 'grid-calendar',
   // Default settings
   dateFormat: 'D, F j, Y',
   defaultDate: null,
@@ -14,9 +15,10 @@ export default Ember.Component.extend({
   maxDate: null,
   placeholder: 'Pick a date',
   flatpickr: null,
-  inline: false,
+  inline: true,
 
   didRender () {
+    this._super(...arguments);
     let selector = `#${this.elementId} .datepicker`;
     let options = this.getProperties(
       'dateFormat',
@@ -28,23 +30,31 @@ export default Ember.Component.extend({
       'placeholder',
       'inline'
     );
-    options.onChange = Ember.run.bind(this, function (date) {
-      // flatpickr immediately runs its onChange on initialization
-      // make sure that we don't notify for the same value we initialized with
-      if (date) {
-        let defaultDate = this.get('defaultDate');
-        if (!moment(date).isSame(defaultDate)) {
-          return this.attrs.changeDate(...arguments);
-        }
-      }
-    });
 
     this.set('flatpickr', flatpickr(selector, options));
+    // Flatpickr immediately triggers onchange when it's initialized,
+    // so don't add the onchange listener until after render.
+    Ember.run.next(this, () => {
+      this.get('flatpickr').set('onChange', Ember.run.bind(this, this._dateDidChange));
+    });
+  },
+
+  _dateDidChange (newDate) {
+    if (newDate) {
+      let defaultDate = this.get('defaultDate');
+      if (!moment(newDate).isSame(defaultDate)) {
+        return this.attrs.changeDate(...arguments);
+      }
+    }
   },
 
   actions: {
     open () {
       this.get('flatpickr').open();
+    },
+
+    clear () {
+      this.attrs.changeDate(null);
     }
   }
 });

@@ -1,9 +1,1 @@
-{{#if inline}}
-<input class="datepicker" type="hidden" />
-{{else}}
-<div class="selected-date large-text-right" {{action 'open'}}>
-  <div class="fi flaticon-calendar hide-for-large" />
-  <input class="datepicker" placeholder="{{placeholder}}" />
-  <div class="fi flaticon-calendar show-for-large"/>
-</div>
-{{/if}}
+<input class="datepicker" type="hidden" value="{{defaultDate}}"/>

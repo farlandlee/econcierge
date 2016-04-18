@@ -28,11 +28,11 @@
 @import "partials/products";
 @import "partials/new-product-cards";
 @import "partials/vendors";
-@import "partials/introjs";
 @import "partials/how_works";
 
 @import "components/filter-selector";
 @import "components/filter-label";
+@import "components/grid-calendar";
 
 // fix foundation row in expanded row bug
 .row.expanded .row {

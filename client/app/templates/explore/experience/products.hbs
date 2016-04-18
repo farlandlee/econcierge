@@ -1,9 +1,23 @@
 <div class="row product-bar align-justify">
-  <div class="column small-6 medium-8 large-9">
-    <span class="filters-label">
+  <div class="column product-filters-bar">
+    <span class="filters-label pull-left">
       Filters:
     </span>
     <ul class="product-filters">
+      {{!----- date -------}}
+      <li>
+        <button type="button" data-toggle="date-filter" onClick={{action 'toggleDisplayFilter' 'date'}}>
+          Pick A Date
+          {{chevron-icon direction=(if (eq displayFilter 'date') 'up' 'down')}}
+        </button>
+        {{#foundation-dropdown id="date-filter" class="product-filter-dropdown"
+          show=(eq displayFilter 'date')
+          onClose=(action 'hideFilter' 'date')
+        }}
+          {{grid-calendar defaultDate=date changeDate=(action 'changeDate')}}
+        {{/foundation-dropdown}}
+      </li>
+      {{!----- time -------}}
       <li>
         <button type="button" data-toggle="time-filter" onClick={{action 'toggleDisplayFilter' 'time'}}>
           Start Time
@@ -25,6 +39,7 @@
           }}
         {{/foundation-dropdown}}
       </li>
+      {{!----- vendor -------}}
       <li>
         <button type="button" data-toggle="vendor-filter" onClick={{action 'toggleDisplayFilter' 'vendor'}}>
           Vendors
@@ -46,6 +61,7 @@
           }}
         {{/foundation-dropdown}}
       </li>
+      {{!----- amenities -------}}
       {{#each amenities as |amenity|}}
       <li>
         <button type="button" data-toggle="amenity-filter-{{amenity.id}}" onClick={{action 'toggleDisplayFilter' amenity.name}}>
@@ -70,7 +86,7 @@
     </ul>
   </div>
 
-  <div class="column small-6 medium-4 large-3 text-right">
+  <div class="column shrink product-sort-bar text-right">
     <span>
       Sort By:
     </span>
@@ -91,6 +107,11 @@
 <div class="row product-bar">
   <div class="columns small-12">
     <ul class="product-filters">
+      {{#if date}}
+      <li>
+        {{filter-label label=(moment-format date 'MMMM Do, YYYY') onClick=(action "changeDate" null)}}
+      </li>
+      {{/if}}
       {{#each timeFilter as |time|}}
       <li>
         {{filter-label

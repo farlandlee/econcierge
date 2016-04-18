@@ -2,25 +2,14 @@ import Ember from 'ember';
 import NotFoundMixin from 'client/mixins/not-found';
 import ResetScrollMixin from 'client/mixins/reset-scroll';
 import RouteTitleMixin from 'client/mixins/route-title';
-import {format, parseDate} from 'client/utils/time';
 
 export default Ember.Route.extend(NotFoundMixin, ResetScrollMixin, RouteTitleMixin, {
-  queryParams: {
-    date: {
-      refreshModel: true
-    }
-  },
-
   titleToken ({activity, category}) {
     return [category.get('name'), activity.get('name')];
   },
 
   model (params) {
     let {activity_slug, category_slug, date} = params;
-
-    if (!parseDate(date).isValid()) {
-      date = undefined;
-    }
 
     let activities = this.store.peekAll('activity');
     let activity = activities.findBy('slug', activity_slug);
@@ -50,10 +39,8 @@ export default Ember.Route.extend(NotFoundMixin, ResetScrollMixin, RouteTitleMix
       });
 
       return Ember.RSVP.hash({
-        activity: activity,
-        category: category,
-        experiences: experiencesQuery,
-        date: date
+        activity, category, date,
+        experiences: experiencesQuery
       });
     });
   },
@@ -62,12 +49,5 @@ export default Ember.Route.extend(NotFoundMixin, ResetScrollMixin, RouteTitleMix
     this._super(...arguments);
     controller.setProperties(model);
     controller.set('activities', this.store.peekAll('activity'));
-  },
-
-  actions: {
-    changeDate (date) {
-      date = format(date);
-      this.transitionTo({queryParams: {date: date}});
-    }
   }
 });
