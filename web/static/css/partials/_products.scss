@@ -1,5 +1,10 @@
 $bookings-blue: #77BAF0;
-
+.products-loading {
+  background: linear-gradient(to bottom, $white 30%, $black);
+  padding-top: 4rem;
+  min-height: 60vh;
+  font-size: 1.6rem;
+}
 .product-bar {
   max-width: rem-calc(1440);
   border-bottom: 1px solid #eee;
