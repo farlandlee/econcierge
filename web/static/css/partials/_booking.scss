@@ -119,6 +119,7 @@
 }
 
 .body-count {
+  min-width:131px;
   .fa-plus-square, .fa-minus-square {
     color: $primary-color;
     &:hover {
