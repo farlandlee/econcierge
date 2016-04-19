@@ -20,8 +20,7 @@ export default Ember.Route.extend(ResetScrollMixin, RouteTitleMixin, RouteDescri
     return hash({
       products: all(bookings.mapBy('product')),
       categories: all(bookings.mapBy('category')),
-      activities: all(bookings.mapBy('activity')),
-      experiences: all(bookings.mapBy('experience'))
+      activities: all(bookings.mapBy('activity'))
     });
   },
 

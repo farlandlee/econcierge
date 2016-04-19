@@ -1,13 +1,16 @@
 .experiences {
+  // Account for the fixed .activity-date-row
+  padding-top: 114px;
+  @include breakpoint( medium ) {
+    padding-top: 95px;
+  }
+  @include breakpoint( large ) {
+    padding-top: 54px;
+  }
   .top-row {
     border-bottom: 1px solid #cacaca;
     padding-top: 0.4rem;
     padding-bottom: 0.4rem;
-  }
-  .select-activity {
-    margin-bottom: 0;
-    border-bottom: 0;
-    padding: 0;
   }
 }
 .activity-date-row {
@@ -16,7 +19,7 @@
   width: 100%;
   z-index: 100;
   background-color: $white;
-  @include breakpoint ( large ) {
+  @include breakpoint (large) {
     top: 61px;
   }
 }
@@ -27,13 +30,6 @@
     border-bottom: 1px solid #eee;
   }
   &.selected-experience {
-    margin-top: 114px;
-    @include breakpoint( medium ) {
-      margin-top: 95px;
-    }
-    @include breakpoint( large ) {
-      margin-top: 54px;
-    }
   }
 }
 
@@ -89,12 +85,6 @@
       }
     }
   }
-}
-
-.experience-middle {
-  background-color: $offwhite;
-  padding-bottom: 6rem;
-  padding-top: 0.5rem;
 }
 
 .temp-tripadvisor {

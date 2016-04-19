@@ -1,0 +1,16 @@
+.explore {
+  display: flex;
+  flex-flow: row;
+  .explore-left {
+    flex: 0 0 320px;
+    padding: 2rem;
+    margin-top: -1px;
+    border: 2px groove $offwhite;
+    border-left: none;
+    border-bottom: none;
+  }
+  .explore-right {
+    flex: 3 1;
+    background-color: $offwhite;
+  }
+}

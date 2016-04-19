@@ -8,7 +8,6 @@ export default DS.Model.extend({
   product: DS.belongsTo('product'),
   // through product... stored here so we don't have to chain preloads, can do them all at once
   activity: DS.belongsTo('activity'),
-  experience: DS.belongsTo('experience'),
   category: DS.belongsTo('category'),
   date: DS.attr(),
   // {id: id, time: string}

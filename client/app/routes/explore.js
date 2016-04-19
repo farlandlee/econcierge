@@ -18,29 +18,20 @@ export default Ember.Route.extend(NotFoundMixin, ResetScrollMixin, RouteTitleMix
       console.error("Activity not found");
       return this.throwNotFound();
     }
-
-    let categoriesQuery = this.store.query('category', {
+    // we're loading all categories for this activity
+    // because we need them in the template anyways
+    return this.store.query('category', {
       activity_id: activity.get('id')
-    });
-
-    return Ember.RSVP.hash({
-      activity: activity,
-      categories: categoriesQuery
-    }).then(({activity, categories}) => {
+    }).then(categories => {
       let category = categories.findBy('slug', category_slug);
+      
       if (!category) {
         console.error("Category not found");
         return this.throwNotFound();
       }
 
-      let experiencesQuery = this.store.query('experience', {
-        activity_id: activity.get('id'),
-        category_id: category.get('id')
-      });
-
       return Ember.RSVP.hash({
-        activity, category, date,
-        experiences: experiencesQuery
+        activity, category
       });
     });
   },

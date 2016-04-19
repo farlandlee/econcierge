@@ -1,0 +1,72 @@
+<header class="product-filters-header row align-justify">
+  <h3 class="filters-label">Filters:</h3>
+  <button class="clear hollow button small" {{action "clearFilters"}}>Clear</button>
+</header>
+<ul class="product-filters">
+{{!----- date -------}}
+<li class="filter">
+  <h4>
+    Pick A Date
+    {{chevron-icon direction=(if (eq displayFilter 'date') 'up' 'down')}}
+  </h4>
+  {{#if date}}
+  <div class="row align-center">
+    <button class="text-center" {{action "changeDate" null}}>
+      Clear Date <i class="fa fa-remove"></i>
+    </button>
+  </div>
+  {{/if}}
+  {{product-date-picker products=filteredProducts date=date changeDate=(action 'changeDate')}}
+</li>
+{{!----- time -------}}
+<li class="filter">
+  <h4>
+    Start Time
+    {{#if timeFilter.length}}
+    ({{timeFilter.length}})
+    {{/if}}
+    {{chevron-icon direction=(if (eq displayFilter 'time') 'up' 'down')}}
+  </h4>
+  {{filter-selector
+    clearButtonLabel="All Times"
+    options=times valuePath="value"
+    selectedValues=timeFilter
+    onSelect=(action "toggleFilter" timeFilter)
+    clear=(action "clearFilter" "timeFilter")
+  }}
+</li>
+{{!----- vendor -------}}
+<li class="filter">
+  <h4>
+    Vendors
+    {{#if vendorFilter.length}}
+    ({{vendorFilter.length}})
+    {{/if}}
+    {{chevron-icon direction=(if (eq displayFilter 'vendor') 'up' 'down')}}
+  </h4>
+  {{filter-selector
+    clearButtonLabel="All Vendors"
+    options=vendors valuePath="slug"
+    selectedValues=vendorFilter
+    onSelect=(action "toggleFilter" vendorFilter)
+    clear=(action "clearFilter" "vendorFilter")
+  }}
+</li>
+{{!----- amenities -------}}
+{{#each amenities as |amenity|}}
+<li class="filter">
+  <h4>
+    {{amenity.name}}
+    {{selectedAmenityOptionCount amenity.options amenityOptionFilter}}
+    {{chevron-icon direction=(if (eq displayFilter amenity.name) 'up' 'down')}}
+  </h4>
+  {{filter-selector
+    clearButtonLabel="All"
+    options=amenity.options valuePath="id"
+    selectedValues=amenityOptionFilter
+    onSelect=(action "toggleFilter" amenityOptionFilter)
+    clear=(action "clearAmenityFilter" amenity)
+  }}
+</li>
+{{/each}}
+</ul>

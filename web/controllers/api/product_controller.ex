@@ -10,7 +10,7 @@ defmodule Grid.Api.ProductController do
   def index(conn, params) do
     products = Product.published
       |> Product.for_date(conn.assigns.date)
-      |> Product.for_experience(params["experience_id"])
+      |> Product.for_category(params["category_id"])
       |> distinct(true)
       |> Repo.all
       |> preload

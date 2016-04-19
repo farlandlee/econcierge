@@ -1,15 +1,11 @@
 $bookings-blue: #77BAF0;
 .products-loading {
-  background: linear-gradient(to bottom, $white 30%, $black);
+  background: $white;
   padding-top: 4rem;
-  min-height: 60vh;
   font-size: 1.6rem;
 }
-.product-bar {
-  max-width: rem-calc(1440);
-  border-bottom: 1px solid #eee;
-  padding: 1rem;
-  .fa {
+.explore-left {
+  .fa.fa-chevron-up, .fa.fa-chevron-down {
     color: $medium-gray;
   }
   p {
@@ -22,84 +18,65 @@ $bookings-blue: #77BAF0;
   .input-group {
     margin: 0;
   }
-  .chosen-single,
-  .full-overlay-select {
-    height: 1.2rem;
-    font-size: 1rem;
-    line-height: 1.8;
-    &:after {
-      font-size: 1.6rem;
-    }
+}
+
+.product-filters-header {
+  margin-bottom: 2rem;
+  width: 104%;
+  margin-left: -2%;
+  .filters-label {
+    margin: 0;
+    font-weight: $global-weight-bold;
+    text-transform: uppercase;
+    text-decoration: underline;
+    margin-right: 1rem;
   }
-  .product-filters {
-    @extend .no-bullet;
-    margin-bottom: 0;
-    & > li {
-      display: inline-block;
-      margin-right: 1rem;
-    }
+  .clear {
+    margin: 0;
+    text-transform: uppercase;
+    border-radius: 0;
+    padding: .5em 1em;
   }
-  .product-filters-bar {
-    .filters-label {
-      float: left;
-      font-weight: $global-weight-bold;
-      text-transform: uppercase;
-      text-decoration: underline;
-      margin-right: 1rem;
+}
+
+.product-filters {
+  @extend .no-bullet;
+  margin-bottom: 0;
+  clear: both;
+  .filter {
+    margin-bottom: 1rem;
+    &:not(:first-child) {
+      border-top: 1px solid $gray;
+      padding-top: 1rem;
     }
-    .product-filter-dropdown {
-      // draw a triangle on the dropdown
-      &::before, &::after {
-        content: "";
-        position: absolute;
-        width: 0;
-        height: 0;
-        border-style: solid;
-        border-color: transparent;
-        border-top: 0;
-      }
-      // triangle border
-      &::before {
-        top: -11px;
-        left: 21px;
-        /* If 1px darken stroke slightly */
-        border-bottom-color: $medium-gray;
-        border-width: 11px;
-      }
-      // triangle fill
-      &::after {
-        top: -10px;
-        left: 22px;
-        border-bottom-color: white;
-        // 1px smaller than border draws a
-        // 1px border!
-        border-width: 10px;
-      }
-    }
-    .flatpickr-wrapper {
-      // visibility determined by dropdown
-      &.inline .flatpickr-calendar {
-        visibility: inherit;
-      }
-      .flatpickr-calendar {
-        border: none;
+    h4 {
+      i {
+        float: right;
       }
     }
   }
 }
-.product-count {
-  padding-bottom: 0.5rem;
-  p {
-    width: 100%;
-    span {
-      color: $primary-color;
-      font-weight: $global-weight-bold;
+
+.product-bar {
+  padding-top: 1rem;
+  .product-count {
+    padding-bottom: 0.5rem;
+    p {
+      width: 100%;
+      span {
+        color: $primary-color;
+        font-weight: $global-weight-bold;
+      }
     }
   }
 }
+
 .products {
+  background-color: $offwhite;
+  padding-bottom: 10rem;
+  padding-top: 0.5rem;
   > .columns {
-    margin: 1rem 1rem;
+    margin: 15px;
     position: relative;
     background-color: $white;
     border-radius: 12px;
@@ -113,10 +90,11 @@ $bookings-blue: #77BAF0;
     }
     @include breakpoint (large) {
       margin: 1rem 2rem;
-
     }
   }
 }
+
+
 .product {
   max-width: 100%;
   width: 340px;
@@ -273,7 +251,7 @@ $bookings-blue: #77BAF0;
   &.fi {
     text-align:center;
     color: $medium-gray;
-  	font-size: 0.8rem;
+    font-size: 0.8rem;
     &:before {
       margin-bottom: 0.5rem;
       font-size: 1.2rem;

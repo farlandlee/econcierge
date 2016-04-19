@@ -18,7 +18,7 @@
 @import "partials/categories";
 @import "partials/cart";
 @import "partials/common";
-@import "partials/experiences";
+@import "partials/explore";
 @import "partials/flaticon";
 @import "partials/footer";
 @import "partials/fulloverlay-select";
@@ -30,6 +30,7 @@
 @import "partials/vendors";
 @import "partials/how_works";
 
+@import "components/activity-navigator-bar";
 @import "components/filter-selector";
 @import "components/filter-label";
 @import "components/grid-calendar";

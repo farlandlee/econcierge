@@ -1,39 +1,9 @@
-<div class="full-overlay-select-list-container" id="full-overlay-select-list-container">
-  <ul>
-    <li>
-      {{!-- print out a sublist of categories for the active activity --}}
-      {{link-to activity.name 'categories' activity.slug}}
-      <ul>
-      {{#item-sorter items=activity.categories as |category|}}
-        <li>
-          {{link-to category.name 'explore' activity.slug category.slug activeClass="selected"}}
-        </li>
-      {{/item-sorter}}
-      </ul>
-    </li>
-    {{!-- print out all the other activities --}}
-    {{#item-sorter items=activities as |otherActivity|}}
-    {{#unless (eq otherActivity.id activity.id)}}
-    <li>
-      {{link-to otherActivity.name 'categories' otherActivity.slug}}
-    </li>
-    {{/unless}}
-    {{/item-sorter}}
-  </ul>
-  <div class="full-overlay-black-overlay"></div>
-</div>
-<div class="experiences">
-  <div class="top-row row expanded align-justify activity-date-row">
-    <div class="columns small-12">
-      <div class="input-group select-activity">
-        <span>Activity:</span>
-        <div class="input-group-field">
-          <div class="full-overlay-select-opener" tabindex="0">
-            <span class="current">{{activity.name}} - {{category.name}}</span>
-          </div>
-        </div>
-      </div>
-    </div>
+<div class="explore">
+  <div class="explore-left">
+    {{outlet "explore-left"}}
   </div>
-  {{outlet}}
+  <div class="explore-right">
+    {{activity-navigator-bar activities=activities currentActivity=activity currentCategory=category}}
+    {{outlet}}
+  </div>
 </div>

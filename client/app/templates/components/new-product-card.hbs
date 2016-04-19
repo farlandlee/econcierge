@@ -1,6 +1,6 @@
 <div class="row product-header">
   <div class="product-name column small-8">
-    <p class="product-title">{{#link-to "explore.experience.products.book" product}}{{product.name}}{{/link-to}}</p>
+    <p class="product-title">{{#link-to "explore.products.book" product}}{{product.name}}{{/link-to}}</p>
   </div>
   <div class="product-details column small-4">
     {{new-price-display price=product.defaultPrice}}
@@ -13,11 +13,11 @@
   {{new-product-icons product=product}}
   <div class="product-description column small-12">
     {{{product.short_description}}}
-    <p>{{link-to "Read More" "explore.experience.products.book" product}}</p>
+    <p>{{link-to "Read More" "explore.products.book" product}}</p>
   </div>
 </div>
 <div class="row product-footer text-center">
   <div class="column">
-    <p class="request-to-book">{{link-to "Click To Book" "explore.experience.products.book" product}}</p>
+    <p class="request-to-book">{{link-to "Click To Book" "explore.products.book" product}}</p>
   </div>
 </div>

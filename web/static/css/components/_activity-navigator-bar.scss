@@ -1,0 +1,41 @@
+.activity-navigator-bar {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  height: 40vh;
+
+
+  padding: 1rem;
+	@include breakpoint (large) {
+    padding-left: 3rem;
+	}
+
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  .select-activity {
+    color: white;
+    margin-bottom: 0;
+    border-bottom: 0;
+    padding: 0;
+    p {
+      text-transform: uppercase;
+      font-weight: $global-weight-bold;
+    }
+    .full-overlay-select-opener {
+      padding: 0;
+    }
+    .current {
+      font-size: 2em;
+      text-decoration: none;
+      border-bottom: 2px solid;
+      &::after {
+        font-size: 3.2rem;
+        top: 0;
+        margin-top: -0.6rem;
+      }
+    }
+  }
+}

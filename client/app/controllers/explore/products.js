@@ -57,7 +57,6 @@ export default Ember.Controller.extend({
   displaySort: false,
 
   // route assigned properties
-  experienceName: null,
   products: null,
   date: null,
   // all possible amenities for this activity
@@ -132,8 +131,6 @@ export default Ember.Controller.extend({
     }
   }),
 
-  // 'vendor' || {{amenity.name}} || 'time' || ''
-  displayFilter: '',
   // [vendorSlug, vendorSlug, ...]
   vendorFilter: [],
   // [amenityOptionId, amenityOptionId, ...]
@@ -247,23 +244,6 @@ export default Ember.Controller.extend({
   }),
 
   actions: {
-    hideFilter (filter) {
-      let current = this.get('displayFilter');
-      if (current === filter) {
-        this.set('displayFilter', null);
-      }
-    },
-
-    toggleDisplayFilter (filter, event) {
-      event.preventDefault(); // stop it foundation!
-      let current = this.get('displayFilter');
-      if (current === filter) {
-        this.set('displayFilter', null);
-      } else {
-        this.set('displayFilter', filter);
-      }
-    },
-
     clearFilter (filterName) {
       this.set(filterName, []);
     },
@@ -287,10 +267,6 @@ export default Ember.Controller.extend({
       }
     },
 
-    removeFilter (filter, value) {
-      filter.removeObject(value);
-    },
-
     hideSort () {
       this.set('displaySort', false);
     },
@@ -310,6 +286,16 @@ export default Ember.Controller.extend({
         date = format(date);
       }
       this.set('date', date);
+    },
+
+    clearFilters () {
+      this.setProperties({
+        displayFilter: '',
+        vendorFilter: [],
+        amenityOptionFilter: [],
+        timeFilter: [],
+        date: null
+      });
     }
   }
 });
