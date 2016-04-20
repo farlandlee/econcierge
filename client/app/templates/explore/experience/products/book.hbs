@@ -60,7 +60,6 @@
     </div>
   </section>
   {{booking-form product=product date=date
-    changeDate=(route-action "setDate")
     cancel=(action close)
     submit=(route-action "book" product)}}
 {{/foundation-modal}}

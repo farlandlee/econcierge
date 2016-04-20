@@ -43,13 +43,6 @@ export default Ember.Route.extend(NotFoundMixin, RouteTitleMixin, RouteDescripti
       this.transitionTo('explore.experience.products');
     },
 
-    setDate (date) {
-      let dateParam = format(date);
-      this.transitionTo('explore.experience.products.book', {
-        queryParams: {date: dateParam}
-      });
-    },
-
     book (product, {quantities, date, time}) {
       let {category, activity} = this.modelFor('explore');
       let experience = this.modelFor('explore.experience');
