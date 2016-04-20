@@ -2,7 +2,6 @@ import Ember from 'ember';
 import NotFoundMixin from 'client/mixins/not-found';
 import RouteTitleMixin from 'client/mixins/route-title';
 import RouteDescriptionMixin from 'client/mixins/route-meta-description';
-import {format} from 'client/utils/time';
 
 export default Ember.Route.extend(NotFoundMixin, RouteTitleMixin, RouteDescriptionMixin, {
   titleToken (product) {
