@@ -28,7 +28,7 @@
   <section class="booking columns small-12 large-11">
     <div class="row expanded">
       <div class="columns booking-image small-12 text-center xlarge-text-left xlarge-3">
-        <img src="{{placehold-it booking.experience.image.medium '300x250'}}" alt="">
+        <img src="{{placehold-it booking.category.image.medium '300x250'}}" alt="">
       </div>
       <div class="columns small-12 xlarge-9 booking-data">
         <h2>{{booking.product.name}}</h2>
@@ -38,9 +38,6 @@
             <dt>Time</dt><dd>{{moment-format booking.startTime.time 'h:mm a' 'hh:mm:ss'}}</dd>
             <dt>Activity</dt><dd>{{booking.activity.name}}</dd>
             <dt>Category</dt><dd>{{booking.category.name}}</dd>
-            {{#if showVendor}}
-            <dt>Vendor</dt><dd>{{booking.product.vendor.name}}</dd>
-            {{/if}}
           </dl>
           <div class="columns quantities body-count small-12 medium-6 large-5">
             <div class="data-wrapper">

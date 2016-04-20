@@ -9,7 +9,7 @@ export default Ember.Route.extend(NotFoundMixin, ResetScrollMixin, RouteTitleMix
   },
 
   model (params) {
-    let {activity_slug, category_slug, date} = params;
+    let {activity_slug, category_slug} = params;
 
     let activities = this.store.peekAll('activity');
     let activity = activities.findBy('slug', activity_slug);
@@ -24,7 +24,7 @@ export default Ember.Route.extend(NotFoundMixin, ResetScrollMixin, RouteTitleMix
       activity_id: activity.get('id')
     }).then(categories => {
       let category = categories.findBy('slug', category_slug);
-      
+
       if (!category) {
         console.error("Category not found");
         return this.throwNotFound();

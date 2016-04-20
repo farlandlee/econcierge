@@ -6,19 +6,26 @@ moduleForComponent('activity-navigator-bar', 'Integration | Component | activity
 });
 
 test('it renders', function(assert) {
-  // Set any properties with this.set('myProperty', 'value');
-  // Handle any actions with this.on('myAction', function(val) { ... });"
-
-  this.render(hbs`{{activity-navigator-bar}}`);
-
-  assert.equal(this.$().text().trim(), '');
-
-  // Template block usage:"
+  this.setProperties({
+    activity: {
+      id: 'act-id',
+      name: 'act name',
+      slug: 'act-slug',
+      categories: []
+    },
+    category: {
+      name: 'cat name',
+      slug: 'cat-slug'
+    },
+    activities: []
+  });
   this.render(hbs`
-    {{#activity-navigator-bar}}
-      template block text
-    {{/activity-navigator-bar}}
+    {{activity-navigator-bar
+      activities=activities
+      currentActivity=activity
+      currentCategory=category}}
   `);
 
-  assert.equal(this.$().text().trim(), 'template block text');
+  assert.equal(this.$('.select-activity p').text().trim(), 'Activity:');
+  assert.equal(this.$('.current').text().trim(), 'act name - cat name');
 });

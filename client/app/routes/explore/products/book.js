@@ -26,14 +26,14 @@ export default Ember.Route.extend(NotFoundMixin, RouteTitleMixin, RouteDescripti
   setupController (controller, product) {
     this._super(...arguments);
     controller.set('product', product);
-    controller.set('showVendor', false);
+    controller.setProperties(this.modelFor('explore'));
   },
 
   actions: {
     goToProducts () {
       this.transitionTo('explore.products');
     },
-    
+
     book (product, {quantities, date, time}) {
       let {category, activity} = this.modelFor('explore');
       time = {
