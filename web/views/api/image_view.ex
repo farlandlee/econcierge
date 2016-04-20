@@ -10,6 +10,8 @@ defmodule Grid.Api.ImageView do
       alt: image.alt,
       full: image.original,
       medium: image.medium,
+      large: image.large,
+      thumb: image.thumb,
       position: image.position
     }
   end

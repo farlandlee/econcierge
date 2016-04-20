@@ -21,7 +21,7 @@ config :logger,
 config :logger,
   backends: [:console, Rollbax.Notifier]
 
-config :arc, bucket: "outpost-grid-staging"
+config :arc, bucket: "staging-outpost-grid"
 
 config :grid, Grid.Repo,
   adapter: Ecto.Adapters.Postgres,

@@ -194,8 +194,10 @@ defmodule Grid.Factory do
     build_assoc(schema, :images, [
       filename: name,
       alt: "Caption text for #{name}",
-      medium: "priv/images/medium-#{name}",
       original: "priv/images/original-#{name}",
+      medium: "priv/images/medium-#{name}",
+      large: "priv/images/large-#{name}",
+      thumb: "priv/images/thumb-#{name}",
       position: sequence(:position, &(&1))
     ])
   end
