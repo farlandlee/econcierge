@@ -61,6 +61,10 @@ export default Component.extend({
       this.set('quantities', quantities);
     },
 
+    updateDate (date) {
+      this.set('date', date);
+    },
+
     updateTime (time) {
       this.set('time', time);
     },

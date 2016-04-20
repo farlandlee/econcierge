@@ -21,7 +21,7 @@
   <div class="row align-center date-selection">
     <div class="columns small-12 medium-6 date">
       <label>Select a date</label>
-      {{product-date-picker product=product date=date changeDate=(action attrs.changeDate)}}
+      {{product-date-picker product=product date=date changeDate=(action "updateDate")}}
     </div>
   </div>
   {{#if date}}
