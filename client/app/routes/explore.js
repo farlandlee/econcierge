@@ -3,9 +3,19 @@ import NotFoundMixin from 'client/mixins/not-found';
 import ResetScrollMixin from 'client/mixins/reset-scroll';
 import RouteTitleMixin from 'client/mixins/route-title';
 
+const { $ } = Ember;
+
 export default Ember.Route.extend(NotFoundMixin, ResetScrollMixin, RouteTitleMixin, {
   titleToken ({activity, category}) {
     return [category.get('name'), activity.get('name')];
+  },
+
+  activate () {
+    $('body').addClass('no-footer');
+  },
+
+  deactivate () {
+    $('body').removeClass('no-footer');
   },
 
   model (params) {
