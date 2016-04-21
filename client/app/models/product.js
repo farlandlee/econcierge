@@ -5,6 +5,7 @@ const {computed} = Ember;
 
 export default DS.Model.extend({
   description: DS.attr(),
+  short_description: DS.attr(),
   name: DS.attr(),
   pickup: DS.attr('boolean'),
   duration: DS.attr('number'),
