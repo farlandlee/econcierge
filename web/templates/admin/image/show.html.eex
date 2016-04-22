@@ -15,7 +15,13 @@
     <dt>Original</dt>
     <dd><%= tag :img, src: @image.original, class: "img-responsive" %></dd>
 
+    <dt>Large</dt>
+    <dd><%= img @image, version: :large, class: "img-responsive" %></dd>
+
     <dt>Medium</dt>
-    <dd><%= tag :img, src: @image.medium, class: "img-responsive" %></dd>
+    <dd><%= img @image, version: :medium , class: "img-responsive"%></dd>
+
+    <dt>Thumb</dt>
+    <dd><%= img @image, version: :thumb, class: "img-responsive" %></dd>
   <% end %>
 </dl>

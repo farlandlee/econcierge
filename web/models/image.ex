@@ -11,6 +11,9 @@ defmodule Grid.Image do
     field :alt, :string
     field :original, :string
     field :medium, :string
+    field :large, :string
+    field :thumb, :string
+
     field :position, :integer
 
     field :error, :boolean, default: false
@@ -23,8 +26,7 @@ defmodule Grid.Image do
   @creation_fields ~w(assoc_id)
   @required_fields ~w(filename)
   @optional_fields ~w(alt error position)
-  @source_fields ~w(original medium)
-
+  @source_fields ~w(original medium large thumb)
 
   @doc """
   Creates a changeset based on the `model` and `params`.
@@ -51,4 +53,8 @@ defmodule Grid.Image do
     |> changeset(params)
     |> cast(%{}, @creation_fields, [])
   end
+
+  def dimensions(:large), do: {718, 359}
+  def dimensions(:medium), do: {350, 233}
+  def dimensions(:thumb), do: {75, 75}
 end

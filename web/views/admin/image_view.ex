@@ -14,8 +14,12 @@ defmodule Grid.Admin.ImageView do
     content_tag(:p, "#{name} still uploading...")
   end
   def img(img, opts)do
-    options = [src: img.medium, alt: img.alt, title: img.filename]
+    {version, opts} = Keyword.pop(opts, :version, :medium)
+    {w, h} = Image.dimensions(version)
+
+    options = [src: Map.get(img, version), alt: img.alt, title: img.filename, height: h, width: w]
       |> Keyword.merge(opts)
+
     tag(:img, options)
   end
 

@@ -1,6 +1,7 @@
 <table class="table">
   <thead>
     <tr>
+      <th></th>
       <th>Filename</th>
       <th>Caption</th>
       <th>Position</th>
@@ -11,6 +12,7 @@
   <tbody>
   <%= for image <- @images do %>
     <tr>
+      <td><%= img image, version: :thumb, class: "img-responsive" %></td>
       <td><%= link image.filename, to: image_path(@image_path, [@conn, :show] ++ @ancestors ++ [image]) %></td>
       <td><%= caption image %> </td>
       <td><%= image.position %> </td>
