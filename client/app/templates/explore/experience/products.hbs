@@ -14,7 +14,7 @@
           show=(eq displayFilter 'date')
           onClose=(action 'hideFilter' 'date')
         }}
-          {{grid-calendar defaultDate=date changeDate=(action 'changeDate')}}
+          {{product-date-picker products=filteredProducts date=date changeDate=(action 'changeDate')}}
         {{/foundation-dropdown}}
       </li>
       {{!----- time -------}}
@@ -155,13 +155,13 @@
   <div class="row product-count align-top">
     <div class="column small-12 medium-9 large-10">
       <p>
-        Explore <span>{{filteredProducts.length}}</span>
-        {{if (gt filteredProducts.length 1) 'products' 'product'}} under "{{experienceName}}"
+        Explore <span>{{dateFilteredProducts.length}}</span>
+        {{if (gt dateFilteredProducts.length 1) 'products' 'product'}} under "{{experienceName}}"
       </p>
     </div>
   </div>
   <div class="row align-center products align-stretch">
-    {{#item-sorter items=filteredProducts by=currentSortOrder as |product|}}
+    {{#item-sorter items=dateFilteredProducts by=currentSortOrder as |product|}}
       <div class="columns small-11 medium-5 large-3">
         {{new-product-card product=product}}
       </div>

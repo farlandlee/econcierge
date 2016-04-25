@@ -25,7 +25,10 @@
     <p>{{link-to product.name "explore.experience.products.book" product}}</p>
   </div>
   {{product-icons product=product}}
-  {{product-description product=product}}
+  <div class="product-description column small-12">
+    {{{product.short_description}}}
+    <p>{{link-to "Read More" "explore.experience.products.book" product}}</p>
+  </div>
   {{price-display price=product.defaultPrice}}
   {{#if (gt product.prices.length 1)}}
   <div class="columns small-12 more-prices">

@@ -7,22 +7,16 @@ export default Ember.Route.extend(NotFoundMixin, RouteTitleMixin, RouteDescripti
   titleToken (product) {
     return product.get('name');
   },
+
   description (product) {
     return product.get('description');
   },
+
   model (params) {
     let {product_id} = params;
     let product = this.store.peekRecord('product', product_id);
 
     if (!product) {
-      let {date} = this.modelFor('explore.experience.products');
-      if (date) {
-        // maybe it's a date error? try without date.
-        // @TODO let the user know it wasn't a valid date.
-        return this.replaceWith('explore.experience.products.book', {
-          queryParams: {date: undefined}
-        });
-      }
       return this.throwNotFound();
     }
 
@@ -31,10 +25,8 @@ export default Ember.Route.extend(NotFoundMixin, RouteTitleMixin, RouteDescripti
 
   setupController (controller, product) {
     this._super(...arguments);
-    let {date} = this.modelFor('explore.experience.products');
-    controller.setProperties({product, date});
+    controller.set('product', product);
     controller.set('showVendor', false);
-    controller.set('description', Ember.String.htmlSafe(product.get('description')));
   },
 
   actions: {

@@ -1,19 +1,11 @@
 import Ember from 'ember';
-import {formatTime, format} from 'client/utils/time';
+import {
+  formatTime, format,
+  startTimeAvailableForDate
+} from 'client/utils/time';
+import {toSet, flatten} from 'client/utils/fn';
 
 const {computed, isEmpty} = Ember;
-
-const toSet = (set, value) => {
-  if (!set.contains(value)) {
-    set.pushObject(value);
-  }
-  return set;
-};
-
-const flatten = (flattened, arr) => {
-  arr.forEach(x => flattened.pushObject(x));
-  return flattened;
-};
 
 // See the 'times' property
 const arbitraryTimes = [
@@ -170,16 +162,17 @@ export default Ember.Controller.extend({
     this.set('timeFilter', timeFilter);
   },
 
-  filteredProducts: computed('products.[]', 'vendorFilter.[]', 'amenityOptionFilter.[]', 'timeFilter.[]', {
+  filteredProducts: computed('products.[]', 'vendorFilter.[]', 'amenityOptionFilter.[]', 'timeFilter.[]', 'date', {
     get () {
-      let filters = this.getProperties('vendorFilter', 'amenityOptionFilter', 'timeFilter', 'date');
+      let filters = this.getProperties('vendorFilter', 'amenityOptionFilter', 'timeFilter');
       let products = this.get('products');
+      let filterFns = [];
 
       // @TODO would be useful to abstract filters and have them be services that we
       // call on to filter things down perhaps, hmmm?
       if (filters.vendorFilter.length) {
         let {vendorFilter} = filters;
-        products = products.filter(p => vendorFilter.contains(p.get('vendor.slug')));
+        filterFns.pushObject(p => vendorFilter.contains(p.get('vendor.slug')));
       }
 
       if (filters.amenityOptionFilter.length) {
@@ -194,7 +187,7 @@ export default Ember.Controller.extend({
           });
         }).reject(isEmpty);
 
-        products = products.filter(p => {
+        filterFns.pushObject(p => {
           let productOptions = p.get('amenityOptions');
           return amenityFilters.every(options => {
             return options.any(o => productOptions.contains(o.id));
@@ -204,7 +197,7 @@ export default Ember.Controller.extend({
 
       if (filters.timeFilter.length) {
         let {timeFilter} = filters;
-        products = products.filter(p => {
+        filterFns.pushObject(p => {
           let times = p.get('startTimes').mapBy('starts_at_time');
 
           return timeFilter.any(t => {
@@ -218,7 +211,21 @@ export default Ember.Controller.extend({
         });
       }
 
-      return products;
+      return products.filter(p => filterFns.every(f => f(p)));
+    }
+  }),
+
+  dateFilteredProducts: computed('filteredProducts.[]', 'date', {
+    get () {
+      let date = this.get('date');
+      let filteredProducts = this.get('filteredProducts');
+
+      if (date) {
+        let availableOnDate = startTimeAvailableForDate(date);
+        return filteredProducts.filter(p => p.get('startTimes').any(availableOnDate));
+      }
+
+      return filteredProducts;
     }
   }),
 

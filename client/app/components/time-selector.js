@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import momentCP from 'ember-moment/computeds/moment';
-import {startTimeFilterForDate} from 'client/utils/time';
+import {startTimeAvailableForDate} from 'client/utils/time';
 
 const {computed} = Ember;
 
@@ -13,7 +13,7 @@ export default Ember.Component.extend({
     get () {
       let times = this.get('times');
       let date = this.get('momentDate');
-      let filter = startTimeFilterForDate(date);
+      let filter = startTimeAvailableForDate(date);
       return times.filter(filter).sortBy('starts_at_time');
     }
   }),
