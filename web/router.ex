@@ -123,6 +123,7 @@ defmodule Grid.Router do
 
     resources "/coupons", CouponController
 
+    get "/orders/find_order_item", OrderController, :find_order_item
     resources "/orders", OrderController, [only: [:index, :show]]
 
     resources "/activities", ActivityController, [alias: Activity] do

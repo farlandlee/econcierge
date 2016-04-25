@@ -423,223 +423,17 @@
                     </td>
                   </tr>
                 </table>
-                <table class="row" style="border-spacing: 0; border-collapse: collapse; vertical-align: top; text-align: left; width: 100%; position: relative; display: block; padding: 0px;">
-                  <tr style="vertical-align: top; text-align: left; padding: 0;" align="left">
-                    <td
-                      class="wrapper last"
-                      style="word-break: break-word; -webkit-hyphens: none; -moz-hyphens: none; hyphens: none; border-collapse: collapse !important; vertical-align: top; text-align: left; position: relative; color: #222222; font-family: Helvetica, Arial, sans-serif; font-weight: normal; line-height: 19px; font-size: 14px; margin: 0; padding: 10px 0px 0px;"
-                      align="left"
-                      valign="top">
 
-                      <table class="twelve columns" style="border-spacing: 0; border-collapse: collapse; vertical-align: top; text-align: left; width: 580px; margin: 0 auto; padding: 0;">
-                        <tr class="no-bottom" style="vertical-align: top; text-align: left; padding: 0;" align="left">
-                          <td
-                            class="template-label center"
-                            style="word-break: break-word; -webkit-hyphens: none; -moz-hyphens: none; hyphens: none; border-collapse: collapse !important; vertical-align: top; text-align: center; color: #aaaaaa; font-family: Helvetica, Arial, sans-serif; font-weight: bold; line-height: 19px; font-size: 10px; margin: 0; padding: 0px 0px 0;"
-                            align="center"
-                            valign="top">
-                            <center style="width: 100%; min-width: 580px;">EXPERIENCE</center>
-                          </td>
-                          <td
-                            class="expander"
-                            style="word-break: break-word; -webkit-hyphens: none; -moz-hyphens: none; hyphens: none; border-collapse: collapse !important; vertical-align: top; text-align: left; visibility: hidden; width: 0px; color: #222222; font-family: Helvetica, Arial, sans-serif; font-weight: normal; line-height: 19px; font-size: 14px; margin: 0; padding: 0;"
-                            align="left"
-                            valign="top"></td>
-                        </tr>
-                        <tr class="no-top" style="vertical-align: top; text-align: left; padding: 0;" align="left">
-                          <td
-                            class="center"
-                            style="word-break: break-word; -webkit-hyphens: none; -moz-hyphens: none; hyphens: none; border-collapse: collapse !important; vertical-align: top; text-align: center; color: #222222; font-family: Helvetica, Arial, sans-serif; font-weight: normal; line-height: 19px; font-size: 14px; margin: 0; padding: 0 0px 10px;"
-                            align="center"
-                            valign="top">
-                            <center style="width: 100%; min-width: 580px;">
-                              <%= @order_item.product.experience.name %>
-                            </center>
-                          </td>
-                          <td
-                            class="expander"
-                            style="word-break: break-word; -webkit-hyphens: none; -moz-hyphens: none; hyphens: none; border-collapse: collapse !important; vertical-align: top; text-align: left; visibility: hidden; width: 0px; color: #222222; font-family: Helvetica, Arial, sans-serif; font-weight: normal; line-height: 19px; font-size: 14px; margin: 0; padding: 0;"
-                            align="left"
-                            valign="top"></td>
-                        </tr>
-                      </table>
-                    </td>
-                  </tr>
-                </table>
-                <table class="row" style="border-spacing: 0; border-collapse: collapse; vertical-align: top; text-align: left; width: 100%; position: relative; display: block; padding: 0px;">
-                  <tr style="vertical-align: top; text-align: left; padding: 0;" align="left">
-                    <td
-                      class="wrapper last"
-                      style="word-break: break-word; -webkit-hyphens: none; -moz-hyphens: none; hyphens: none; border-collapse: collapse !important; vertical-align: top; text-align: left; position: relative; color: #222222; font-family: Helvetica, Arial, sans-serif; font-weight: normal; line-height: 19px; font-size: 14px; margin: 0; padding: 10px 0px 0px;"
-                      align="left"
-                      valign="top">
+                <%= render "_vendor_received_row.html", title: "EXPERIENCE", value: @order_item.product.experience.name %>
 
-                      <table class="twelve columns" style="border-spacing: 0; border-collapse: collapse; vertical-align: top; text-align: left; width: 580px; margin: 0 auto; padding: 0;">
-                        <tr class="no-bottom" style="vertical-align: top; text-align: left; padding: 0;" align="left">
-                          <td
-                            class="template-label center"
-                            style="word-break: break-word; -webkit-hyphens: none; -moz-hyphens: none; hyphens: none; border-collapse: collapse !important; vertical-align: top; text-align: center; color: #aaaaaa; font-family: Helvetica, Arial, sans-serif; font-weight: bold; line-height: 19px; font-size: 10px; margin: 0; padding: 0px 0px 0;"
-                            align="center"
-                            valign="top">
-                            <center style="width: 100%; min-width: 580px;">PRODUCT</center>
-                          </td>
-                          <td
-                            class="expander"
-                            style="word-break: break-word; -webkit-hyphens: none; -moz-hyphens: none; hyphens: none; border-collapse: collapse !important; vertical-align: top; text-align: left; visibility: hidden; width: 0px; color: #222222; font-family: Helvetica, Arial, sans-serif; font-weight: normal; line-height: 19px; font-size: 14px; margin: 0; padding: 0;"
-                            align="left"
-                            valign="top"></td>
-                        </tr>
-                        <tr class="no-top" style="vertical-align: top; text-align: left; padding: 0;" align="left">
-                          <td
-                            class="center"
-                            style="word-break: break-word; -webkit-hyphens: none; -moz-hyphens: none; hyphens: none; border-collapse: collapse !important; vertical-align: top; text-align: center; color: #222222; font-family: Helvetica, Arial, sans-serif; font-weight: normal; line-height: 19px; font-size: 14px; margin: 0; padding: 0 0px 10px;"
-                            align="center"
-                            valign="top">
-                            <center style="width: 100%; min-width: 580px;">
-                              <%= @order_item.product.name %>
-                            </center>
-                          </td>
-                          <td
-                            class="expander"
-                            style="word-break: break-word; -webkit-hyphens: none; -moz-hyphens: none; hyphens: none; border-collapse: collapse !important; vertical-align: top; text-align: left; visibility: hidden; width: 0px; color: #222222; font-family: Helvetica, Arial, sans-serif; font-weight: normal; line-height: 19px; font-size: 14px; margin: 0; padding: 0;"
-                            align="left"
-                            valign="top"></td>
-                        </tr>
-                      </table>
-                    </td>
-                  </tr>
-                </table>
-                <table class="row" style="border-spacing: 0; border-collapse: collapse; vertical-align: top; text-align: left; width: 100%; position: relative; display: block; padding: 0px;">
-                  <tr style="vertical-align: top; text-align: left; padding: 0;" align="left">
-                    <td
-                      class="wrapper last"
-                      style="word-break: break-word; -webkit-hyphens: none; -moz-hyphens: none; hyphens: none; border-collapse: collapse !important; vertical-align: top; text-align: left; position: relative; color: #222222; font-family: Helvetica, Arial, sans-serif; font-weight: normal; line-height: 19px; font-size: 14px; margin: 0; padding: 10px 0px 0px;"
-                      align="left"
-                      valign="top">
+                <%= render "_vendor_received_row.html", title: "PRODUCT", value: @order_item.product.name %>
 
-                      <table class="twelve columns" style="border-spacing: 0; border-collapse: collapse; vertical-align: top; text-align: left; width: 580px; margin: 0 auto; padding: 0;">
-                        <tr class="no-bottom" style="vertical-align: top; text-align: left; padding: 0;" align="left">
-                          <td
-                            class="template-label center"
-                            style="word-break: break-word; -webkit-hyphens: none; -moz-hyphens: none; hyphens: none; border-collapse: collapse !important; vertical-align: top; text-align: center; color: #aaaaaa; font-family: Helvetica, Arial, sans-serif; font-weight: bold; line-height: 19px; font-size: 10px; margin: 0; padding: 0px 0px 0;"
-                            align="center"
-                            valign="top">
-                            <center style="width: 100%; min-width: 580px;">DURATION</center>
-                          </td>
-                          <td
-                            class="expander"
-                            style="word-break: break-word; -webkit-hyphens: none; -moz-hyphens: none; hyphens: none; border-collapse: collapse !important; vertical-align: top; text-align: left; visibility: hidden; width: 0px; color: #222222; font-family: Helvetica, Arial, sans-serif; font-weight: normal; line-height: 19px; font-size: 14px; margin: 0; padding: 0;"
-                            align="left"
-                            valign="top"></td>
-                        </tr>
-                        <tr class="no-top" style="vertical-align: top; text-align: left; padding: 0;" align="left">
-                          <td
-                            class="center"
-                            style="word-break: break-word; -webkit-hyphens: none; -moz-hyphens: none; hyphens: none; border-collapse: collapse !important; vertical-align: top; text-align: center; color: #222222; font-family: Helvetica, Arial, sans-serif; font-weight: normal; line-height: 19px; font-size: 14px; margin: 0; padding: 0 0px 10px;"
-                            align="center"
-                            valign="top">
-                            <center style="width: 100%; min-width: 580px;">
-                              <%= duration_string(@order_item.product.duration) %> hours
-                            </center>
-                          </td>
-                          <td
-                            class="expander"
-                            style="word-break: break-word; -webkit-hyphens: none; -moz-hyphens: none; hyphens: none; border-collapse: collapse !important; vertical-align: top; text-align: left; visibility: hidden; width: 0px; color: #222222; font-family: Helvetica, Arial, sans-serif; font-weight: normal; line-height: 19px; font-size: 14px; margin: 0; padding: 0;"
-                            align="left"
-                            valign="top"></td>
-                        </tr>
-                      </table>
-                    </td>
-                  </tr>
-                </table>
-                <table class="row" style="border-spacing: 0; border-collapse: collapse; vertical-align: top; text-align: left; width: 100%; position: relative; display: block; padding: 0px;">
-                  <tr style="vertical-align: top; text-align: left; padding: 0;" align="left">
-                    <td
-                      class="wrapper last"
-                      style="word-break: break-word; -webkit-hyphens: none; -moz-hyphens: none; hyphens: none; border-collapse: collapse !important; vertical-align: top; text-align: left; position: relative; color: #222222; font-family: Helvetica, Arial, sans-serif; font-weight: normal; line-height: 19px; font-size: 14px; margin: 0; padding: 10px 0px 0px;"
-                      align="left"
-                      valign="top">
+                <%= render "_vendor_received_row.html", title: "DURATION", value: duration_string(@order_item.product.duration) %>
 
-                      <table class="twelve columns" style="border-spacing: 0; border-collapse: collapse; vertical-align: top; text-align: left; width: 580px; margin: 0 auto; padding: 0;">
-                        <tr class="no-bottom" style="vertical-align: top; text-align: left; padding: 0;" align="left">
-                          <td
-                            class="template-label center"
-                            style="word-break: break-word; -webkit-hyphens: none; -moz-hyphens: none; hyphens: none; border-collapse: collapse !important; vertical-align: top; text-align: center; color: #aaaaaa; font-family: Helvetica, Arial, sans-serif; font-weight: bold; line-height: 19px; font-size: 10px; margin: 0; padding: 0px 0px 0;"
-                            align="center"
-                            valign="top">
-                            <center style="width: 100%; min-width: 580px;">LOCATION</center>
-                          </td>
-                          <td
-                            class="expander"
-                            style="word-break: break-word; -webkit-hyphens: none; -moz-hyphens: none; hyphens: none; border-collapse: collapse !important; vertical-align: top; text-align: left; visibility: hidden; width: 0px; color: #222222; font-family: Helvetica, Arial, sans-serif; font-weight: normal; line-height: 19px; font-size: 14px; margin: 0; padding: 0;"
-                            align="left"
-                            valign="top"></td>
-                        </tr>
-                        <tr class="no-top" style="vertical-align: top; text-align: left; padding: 0;" align="left">
-                          <td
-                            class="center"
-                            style="word-break: break-word; -webkit-hyphens: none; -moz-hyphens: none; hyphens: none; border-collapse: collapse !important; vertical-align: top; text-align: center; color: #222222; font-family: Helvetica, Arial, sans-serif; font-weight: normal; line-height: 19px; font-size: 14px; margin: 0; padding: 0 0px 10px;"
-                            align="center"
-                            valign="top">
-                            <center style="width: 100%; min-width: 580px;">
-                              <%= location(@order_item.product) %>
-                            </center>
-                          </td>
-                          <td
-                            class="expander"
-                            style="word-break: break-word; -webkit-hyphens: none; -moz-hyphens: none; hyphens: none; border-collapse: collapse !important; vertical-align: top; text-align: left; visibility: hidden; width: 0px; color: #222222; font-family: Helvetica, Arial, sans-serif; font-weight: normal; line-height: 19px; font-size: 14px; margin: 0; padding: 0;"
-                            align="left"
-                            valign="top"></td>
-                        </tr>
-                      </table>
-                    </td>
-                  </tr>
-                </table>
-                <table class="row" style="border-spacing: 0; border-collapse: collapse; vertical-align: top; text-align: left; width: 100%; position: relative; display: block; padding: 0px;">
-                  <tr style="vertical-align: top; text-align: left; padding: 0;" align="left">
-                    <td
-                      class="wrapper last"
-                      style="word-break: break-word; -webkit-hyphens: none; -moz-hyphens: none; hyphens: none; border-collapse: collapse !important; vertical-align: top; text-align: left; position: relative; color: #222222; font-family: Helvetica, Arial, sans-serif; font-weight: normal; line-height: 19px; font-size: 14px; margin: 0; padding: 10px 0px 0px;"
-                      align="left"
-                      valign="top">
+                <%= render "_vendor_received_row.html", title: "LOCATION", value: location(@order_item.product) %>
 
-                      <table class="twelve columns" style="border-spacing: 0; border-collapse: collapse; vertical-align: top; text-align: left; width: 580px; margin: 0 auto; padding: 0;">
-                        <tr class="no-bottom" style="vertical-align: top; text-align: left; padding: 0;" align="left">
-                          <td
-                            class="template-label center"
-                            style="word-break: break-word; -webkit-hyphens: none; -moz-hyphens: none; hyphens: none; border-collapse: collapse !important; vertical-align: top; text-align: center; color: #aaaaaa; font-family: Helvetica, Arial, sans-serif; font-weight: bold; line-height: 19px; font-size: 10px; margin: 0; padding: 0px 0px 0;"
-                            align="center"
-                            valign="top">
-                            <center style="width: 100%; min-width: 580px;">DATE &amp; TIME</center>
-                          </td>
-                          <td
-                            class="expander"
-                            style="word-break: break-word; -webkit-hyphens: none; -moz-hyphens: none; hyphens: none; border-collapse: collapse !important; vertical-align: top; text-align: left; visibility: hidden; width: 0px; color: #222222; font-family: Helvetica, Arial, sans-serif; font-weight: normal; line-height: 19px; font-size: 14px; margin: 0; padding: 0;"
-                            align="left"
-                            valign="top"></td>
-                        </tr>
-                        <tr class="no-top" style="vertical-align: top; text-align: left; padding: 0;" align="left">
-                          <td
-                            class="center"
-                            style="word-break: break-word; -webkit-hyphens: none; -moz-hyphens: none; hyphens: none; border-collapse: collapse !important; vertical-align: top; text-align: center; color: #222222; font-family: Helvetica, Arial, sans-serif; font-weight: normal; line-height: 19px; font-size: 14px; margin: 0; padding: 0 0px 10px;"
-                            align="center"
-                            valign="top">
-                            <center style="width: 100%; min-width: 580px;">
-                              <%= date_string(@order_item.activity_at) %>
-                              <span class="small" style="font-size: 11px;">at</span>
-                              <%= time_string(@order_item.activity_at) %>
-                            </center>
-                          </td>
-                          <td
-                            class="expander"
-                            style="word-break: break-word; -webkit-hyphens: none; -moz-hyphens: none; hyphens: none; border-collapse: collapse !important; vertical-align: top; text-align: left; visibility: hidden; width: 0px; color: #222222; font-family: Helvetica, Arial, sans-serif; font-weight: normal; line-height: 19px; font-size: 14px; margin: 0; padding: 0;"
-                            align="left"
-                            valign="top"></td>
-                        </tr>
-                      </table>
-                    </td>
-                  </tr>
-                </table>
+                <%= render "_vendor_received_row.html", title: "DATE &amp; TIME", value: date_time_string(@order_item.activity_at) %>
+
                 <table class="row" style="border-spacing: 0; border-collapse: collapse; vertical-align: top; text-align: left; width: 100%; position: relative; display: block; padding: 0px;">
                   <tr style="vertical-align: top; text-align: left; padding: 0;" align="left">
                     <td
@@ -687,49 +481,11 @@
                     </td>
                   </tr>
                 </table>
-                <table class="row" style="border-spacing: 0; border-collapse: collapse; vertical-align: top; text-align: left; width: 100%; position: relative; display: block; padding: 0px;">
-                  <tr style="vertical-align: top; text-align: left; padding: 0;" align="left">
-                    <td
-                      class="wrapper last"
-                      style="word-break: break-word; -webkit-hyphens: none; -moz-hyphens: none; hyphens: none; border-collapse: collapse !important; vertical-align: top; text-align: left; position: relative; color: #222222; font-family: Helvetica, Arial, sans-serif; font-weight: normal; line-height: 19px; font-size: 14px; margin: 0; padding: 10px 0px 0px;"
-                      align="left"
-                      valign="top">
 
-                      <table class="twelve columns" style="border-spacing: 0; border-collapse: collapse; vertical-align: top; text-align: left; width: 580px; margin: 0 auto; padding: 0;">
-                        <tr class="no-bottom" style="vertical-align: top; text-align: left; padding: 0;" align="left">
-                          <td
-                            class="template-label center"
-                            style="word-break: break-word; -webkit-hyphens: none; -moz-hyphens: none; hyphens: none; border-collapse: collapse !important; vertical-align: top; text-align: center; color: #aaaaaa; font-family: Helvetica, Arial, sans-serif; font-weight: bold; line-height: 19px; font-size: 10px; margin: 0; padding: 0px 0px 0;"
-                            align="center"
-                            valign="top">
-                            <center style="width: 100%; min-width: 580px;">TOTAL BOOKING AMOUNT</center>
-                          </td>
-                          <td
-                            class="expander"
-                            style="word-break: break-word; -webkit-hyphens: none; -moz-hyphens: none; hyphens: none; border-collapse: collapse !important; vertical-align: top; text-align: left; visibility: hidden; width: 0px; color: #222222; font-family: Helvetica, Arial, sans-serif; font-weight: normal; line-height: 19px; font-size: 14px; margin: 0; padding: 0;"
-                            align="left"
-                            valign="top"></td>
-                        </tr>
-                        <tr class="no-top" style="vertical-align: top; text-align: left; padding: 0;" align="left">
-                          <td
-                            class="center"
-                            style="word-break: break-word; -webkit-hyphens: none; -moz-hyphens: none; hyphens: none; border-collapse: collapse !important; vertical-align: top; text-align: center; color: #222222; font-family: Helvetica, Arial, sans-serif; font-weight: normal; line-height: 19px; font-size: 14px; margin: 0; padding: 0 0px 10px;"
-                            align="center"
-                            valign="top">
-                            <center style="width: 100%; min-width: 580px;">
-                              <%= number_to_currency(@order_item.amount) %>
-                            </center>
-                          </td>
-                          <td
-                            class="expander"
-                            style="word-break: break-word; -webkit-hyphens: none; -moz-hyphens: none; hyphens: none; border-collapse: collapse !important; vertical-align: top; text-align: left; visibility: hidden; width: 0px; color: #222222; font-family: Helvetica, Arial, sans-serif; font-weight: normal; line-height: 19px; font-size: 14px; margin: 0; padding: 0;"
-                            align="left"
-                            valign="top"></td>
-                        </tr>
-                      </table>
-                    </td>
-                  </tr>
-                </table>
+                <%= render "_vendor_received_row.html", title: "TOTAL BOOKING AMOUNT", value: number_to_currency(@order_item.amount) %>
+
+                <%= render "_vendor_received_row.html", title: "REFERENCE ID", value: @order_item.vendor_token %>
+
                 <table class="row" style="border-spacing: 0; border-collapse: collapse; vertical-align: top; text-align: left; width: 100%; position: relative; display: block; padding: 0px;">
                   <tr style="vertical-align: top; text-align: left; padding: 0;" align="left">
                     <td

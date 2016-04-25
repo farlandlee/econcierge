@@ -5,7 +5,7 @@ use Mix.Config
 config :grid, Grid.Endpoint,
   http: [port: 4001],
   server: false,
-  notify_vendors: false
+  send_external_emails: false
 
 # Print only warnings and errors during test
 config :logger, level: :warn

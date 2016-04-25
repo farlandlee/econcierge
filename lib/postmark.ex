@@ -14,14 +14,19 @@ defmodule Postmark do
   end
 
   defp do_email(to, body, subject, tag) do
-    content = Poison.encode! %{
+    options = %{
       "From" => Grid.fetch_env!(:booking_emails_from),
-      "To" => to,
       "Bcc" => Grid.fetch_env!(:booking_emails_bcc),
       "Subject" => subject,
       "Tag" => tag,
       "HtmlBody" => body
     }
+
+    options = if Grid.fetch_env!(:send_external_emails) do
+      Map.put(options, "To", to)
+    end
+
+    content = Poison.encode!(options)
 
     {:ok, %{status_code: 200, body: body}} = post("/email", content)
 

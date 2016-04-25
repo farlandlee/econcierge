@@ -5,25 +5,26 @@ defmodule Grid.OrderStatusController do
 
   alias Grid.{
     OrderItem,
-    Repo,
-    Vendor
+    Repo
   }
+
+  plug Grid.Plugs.AssignVendorToken
 
   def accept(conn, params), do: handle(conn, :accept, params)
 
   def reject(conn, params), do: handle(conn, :reject, params)
 
-  def vendor_status(conn, %{"vendor_token" => vt}) do
+  def vendor_status(conn, _) do
     order_item = OrderItem
       |> where([oi], not is_nil(oi.status))
-      |> Repo.get_by!(vendor_token: vt)
+      |> Repo.get_by!(vendor_token: conn.assigns.vendor_token)
       |> Repo.preload(:product)
 
     render(conn, order_item: order_item)
   end
 
-  defp handle(conn, status, %{"vendor_token" => vt}) do
-    order_item = OrderItem |> Repo.get_by!(vendor_token: vt)
+  defp handle(conn, status, _) do
+    order_item = OrderItem |> Repo.get_by!(vendor_token: conn.assigns.vendor_token)
     {flash_type, flash_message} = change_item_status(order_item, status)
 
     conn
@@ -72,7 +73,7 @@ defmodule Grid.OrderStatusController do
     html = Phoenix.View.render_to_string(Grid.EmailView, "request_accepted_vendor.html", order_item: order_item)
 
     Postmark.email(
-      Vendor.email(order_item.product.vendor),
+      order_item.product.vendor.notification_email,
       html,
       "Request Confirmed - #{order_item.order.user.name}",
       "Vendor Accepted"

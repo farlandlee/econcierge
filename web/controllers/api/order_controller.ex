@@ -6,8 +6,7 @@ defmodule Grid.Api.OrderController do
     CartError,
     Coupon,
     Order,
-    User,
-    Vendor
+    User
   }
   alias Grid.Plugs.RequireParams
 
@@ -91,7 +90,7 @@ defmodule Grid.Api.OrderController do
     html = Phoenix.View.render_to_string(Grid.EmailView, "request_received_vendor.html", order_item: oi)
 
     Postmark.email(
-      Vendor.email(oi.product.vendor),
+      oi.product.vendor.notification_email,
       html,
       "New Booking Request - #{oi.product.name}",
       "Vendor Notice"
