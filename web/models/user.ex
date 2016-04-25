@@ -1,6 +1,8 @@
 defmodule Grid.User do
   use Grid.Web, :model
 
+  alias Grid.Models.Validations
+
   schema "users" do
     field :name, :string
     field :email, :string
@@ -23,6 +25,6 @@ defmodule Grid.User do
   def changeset(model, params \\ :empty) do
     model
     |> cast(params, @required_fields, @optional_fields)
-    |> validate_format(:email, ~r/(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)/)
+    |> Validations.validate_email
   end
 end

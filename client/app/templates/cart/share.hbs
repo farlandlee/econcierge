@@ -1,0 +1,25 @@
+{{#foundation-modal class="cart share-cart" onClose=(route-action "back")}}
+  <h2 class="page-title">Share Your Cart</h2>
+  <p class="page-subtitle">
+    Use the link below to share your cart.
+  </p>
+  <hr>
+  <div class="row align-center">
+    <div class="column small-12 medium-9">
+      <input disabled type="text" value={{shareUrl}}>
+    </div>
+    <div class="column small-12 medium-9">
+      {{#copy-button class="button large expanded"
+        clipboardText=shareUrl
+        success="copied"
+      }}
+        {{#if success}}
+          Copied!
+        {{else}}
+          Copy
+        {{/if}}
+        <i class="fa fa-clipboard"></i>
+      {{/copy-button}}
+    </div>
+  </div>
+{{/foundation-modal}}

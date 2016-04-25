@@ -32,7 +32,7 @@ defmodule Grid.ErrorView do
   end
 
   def render("404.json", _assigns) do
-    %{errors: [%{status: 404, errorType: "NotFoundError", message: "Not found"}]}
+    %{errors: [%{status: 404, type: "NotFoundError", message: "Not found"}]}
   end
 
   def render("500.json", %{view_template: "500.json"}) do
@@ -53,6 +53,14 @@ defmodule Grid.ErrorView do
       product: cart_error.product,
       type: "CartError",
       status: status
+    }
+  end
+
+  def render("exception.json", %{error: %Ecto.NoResultsError{}}) do
+    %{
+      message: "Not found",
+      type: "NotFoundError",
+      status: 404
     }
   end
 
@@ -80,13 +88,9 @@ defmodule Grid.ErrorView do
     |> List.flatten
   end
 
-  def template_not_found("exception.json", %{error: %{__struct__: s}}) do
-    type = s
-      |> to_string
-      |> Phoenix.Naming.resource_name
-      |> Phoenix.Naming.camelize
+  def template_not_found("exception.json", %{error: _}) do
     %{
-      type: type,
+      type: "ServerError",
       message: "An unknown error has occurred",
       status: 500
     }

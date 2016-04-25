@@ -125,5 +125,4 @@ defmodule Grid.OrderItem do
       add_error(changeset, :quantities, "Quantity Item Is Invalid!")
     end
   end
-
 end

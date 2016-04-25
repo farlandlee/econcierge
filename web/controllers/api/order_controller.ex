@@ -9,17 +9,9 @@ defmodule Grid.Api.OrderController do
     User,
     Vendor
   }
+  alias Grid.Plugs.RequireParams
 
-  plug :require_param, "stripe_token"
-  plug :require_param, "user"
-  plug :require_param, "cart"
-
-  defp require_param(conn, required_key) do
-    unless conn.params[required_key] do
-      raise Phoenix.MissingParamError, key: required_key
-    end
-    conn
-  end
+  plug RequireParams, ~w(stripe_token user cart)
 
   def process_cart(conn, %{"stripe_token" => stripe_token, "cart" => cart, "user" => user}) do
     coupon = validate_coupon!(conn.params["coupon"])

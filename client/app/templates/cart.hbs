@@ -4,11 +4,11 @@
     <p class="page-subtitle">Please review the items below and make any necessary changes.</p>
   </div>
   <div class="column small-12 medium-3 text-center medium-text-right">
-    {{#if (gt bookings.length 0)}}
-      {{link-to "Proceed to Checkout" 'cart.checkout' class="button large"}}
-    {{else}}
-      <button class="button large disabled" disabled>Proceed to Checkout</button>
-    {{/if}}
+    {{#link-to 'cart.share' class="button small" disabledWhen=(lte bookings.length 0)}}
+      <i class="fa fa-share-square-o"></i>
+      Share Your Cart
+    {{/link-to}}
+    {{link-to "Proceed to Checkout" 'cart.checkout' class="button large" disabledWhen=(lte bookings.length 0)}}
   </div>
 </div>
 <main class="row cart align-center expanded">
@@ -72,11 +72,11 @@
 </main>
 <div class="row cart-below">
   <div class="column small-12 medium-3 medium-offset-9 text-center medium-text-right">
-    {{#if (gt bookings.length 0)}}
-      {{link-to "Proceed to Checkout" 'cart.checkout' class="button large"}}
-    {{else}}
-      <button class="button large disabled" disabled>Proceed to Checkout</button>
-    {{/if}}
+    {{link-to "Proceed to Checkout" 'cart.checkout' class="button large" disabledWhen=(lte bookings.length 0)}}
+    {{#link-to 'cart.share' class="button small" disabledWhen=(lte bookings.length 0)}}
+      <i class="fa fa-share-square-o"></i>
+      Share Your Cart
+    {{/link-to}}
   </div>
 </div>
 {{outlet}}

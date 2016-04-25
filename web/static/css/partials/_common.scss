@@ -126,6 +126,11 @@ a.full-box-link {
   right: 0;
   top: 0;
   z-index:0;
+  &.centering {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }
 
 .booking-button {
