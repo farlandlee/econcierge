@@ -1,0 +1,11 @@
+<div class="spinner"></div>
+<ul class="orbit-container lightgallery">
+  <button class="orbit-previous"><span class="show-for-sr">Previous Slide</span><i class="fi flaticon-arrow-left" aria-hidden="true"></i></button>
+  <button class="orbit-next"><span class="show-for-sr">Next Slide</span><i class="fi flaticon-arrow-right" aria-hidden="true"></i></button>
+  {{#each images as |image|}}
+  <li class="orbit-slide" data-src="{{image.full}}">
+    <i class="fi flaticon-photo-gallery photo-gallery-button"></i>
+    <img class="orbit-image" src="{{image.large}}" alt="{{image.alt}}" title="{{image.title}}">
+  </li>
+  {{/each}}
+</ul>

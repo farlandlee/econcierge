@@ -20,6 +20,10 @@ export default DS.Model.extend({
   // list of integer ids, see activity.js
   amenityOptions: DS.attr(),
 
+  // images
+  // defaultImage: DS.attr(),
+  images: DS.attr(),
+
   minDefaultPrice: computed('defaultPrice.amounts.@each.min_quantity', {
     get() {
       let quantitySort = this.get('defaultPrice').amounts.sortBy('min_quantity');

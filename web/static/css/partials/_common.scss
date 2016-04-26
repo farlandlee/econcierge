@@ -430,3 +430,12 @@ a.more-info {
   line-height: 1;
   color: #5EAD82;
 }
+
+.spinner {
+  position: absolute;
+  top: 50%;
+  margin-top: -1em;
+  left: 50%;
+  margin-left: -1em;
+  @include spinner(2em);
+}
