@@ -1,22 +1,98 @@
 .explore {
-  display: flex;
-  flex-flow: row;
+  @include breakpoint (medium) {
+    display: flex;
+    flex-flow: row;
+  }
   .explore-left,
   .explore-right {
     height:100vh;
     overflow-y: scroll;
   }
   .explore-left {
-    flex: 0 0 320px;
-    padding: 2rem 1.8rem;
-    margin-top: -1px;
-    border: 2px groove $offwhite;
-    border-left: none;
-    border-bottom: none;
+    visibility:hidden;
+    position: absolute;
+    z-index:-1;
+    .fa.fa-chevron-up, .fa.fa-chevron-down {
+      color: $medium-gray;
+    }
+    p {
+      margin-bottom: 0;
+    }
+    label {
+      display: table-cell;
+      text-align: right;
+    }
+    .input-group {
+      margin: 0;
+    }
+    &.open {
+      visibility: visible;
+      position: absolute;
+      z-index: 100;
+      top: 41px;
+      left:0;
+      right: 0;
+      background-color: $light-gray;
+      .product-filters-header {
+        background-color: #19120A;
+        color: #fff;
+        width: 100%;
+        margin: 0;
+        position: fixed;
+        z-index: 10;
+        padding: 1rem 2rem;
+        font-weight: normal;
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        .filters-label {
+          text-transform: capitalize;
+          text-decoration: none;
+          font-weight: normal;
+          text-align: center;
+        }
+        .filter-close-button {
+          color: $primary-color;
+          cursor: pointer;
+        }
+      }
+      .calendar-container {
+        .flatpickr-calendar {
+          margin: 0 auto;
+        }
+      }
+      .clear-filters {
+        width: 90%;
+        margin: 78px auto 15px;
+        border-radius: 0;
+        display: block;
+        background-color: $white;
+        color: $black;
+        border: 1px solid $primary-color;
+      }
+      .product-filters {
+        padding: 2rem;
+        background-color: $offwhite;
+      }
+    }
+    @include breakpoint (medium) {
+      visibility: visible;
+      z-index: 0;
+      flex: 0 0 320px;
+      padding: 2rem 1.8rem;
+      margin-top: -1px;
+      border: 2px groove $offwhite;
+      border-left: none;
+      border-bottom: none;
+      position: relative;
+    }
   }
   .explore-right {
-    flex: 3 1;
     background-color: $offwhite;
+    @include breakpoint (medium) {
+      flex: 3 1;
+      width: calc(100vw - 320px);
+    }
   }
 }
 .no-footer {

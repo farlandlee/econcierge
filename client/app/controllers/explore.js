@@ -5,7 +5,7 @@ import {
 } from 'client/utils/time';
 import {toSet, flatten} from 'client/utils/fn';
 
-const {computed, isEmpty} = Ember;
+const {computed, isEmpty, $} = Ember;
 
 // See the 'times' property
 const arbitraryTimes = [
@@ -301,6 +301,10 @@ export default Ember.Controller.extend({
         timeFilter: [],
         date: null
       });
+    },
+
+    closeFilters () {
+      $('.explore-left').removeClass('open');
     }
   }
 });

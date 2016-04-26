@@ -1,9 +1,11 @@
 .activity-navigator-bar {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 
   height: 40vh;
+  max-height: 533px;
 
   transition: all 0.5s;
 
@@ -21,32 +23,65 @@
     margin-bottom: 0;
     border-bottom: 0;
     padding: 0;
+    flex: 1 1 auto;
     p {
       text-transform: uppercase;
       font-weight: $global-weight-bold;
+      margin-bottom: 0;
+      @include breakpoint (large) {
+        margin-bottom: 16px;
+      }
     }
     .full-overlay-select-opener {
       padding: 0;
     }
     .current {
-      font-size: 2em;
+      font-size: 1em;
       text-decoration: none;
-      border-bottom: 2px solid;
-      &::after {
-        font-size: 3.2rem;
+      border-bottom: 1px solid;
+      &:after {
+        font-size: 1.6rem;
         top: 0;
-        margin-top: -0.6rem;
+        margin-top: 0.4rem;
+      }
+      @include breakpoint (large) {
+        font-size: 2em;
+        text-decoration: none;
+        border-bottom: 2px solid;
+        &:after {
+          font-size: 3.2rem;
+          top: 0;
+          margin-top: -0.6rem;
+        }
       }
     }
   }
+  .filter-button {
+    cursor: pointer;
+    color: $white;
+    flex: 1 0 auto;
+    text-align: center;
+    font-weight: $global-weight-bold;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    &:before {
+      display: block;
+      font-size: 1.2rem;
+    }
+  }
 }
+
 .scrolled {
   position: relative;
   .top-elements {
     position: fixed;
-    top: 61px;
+    top: 41px;
     z-index: 10;
-    width: calc( 100vw - 320px);
+    width: 100%;
+    @include breakpoint (large) {
+      width: calc( 100vw - 320px);
+      top: 61px;
+    }
   }
   .activity-navigator-bar{
     width: inherit;
@@ -55,24 +90,37 @@
     background-color: $primary-color;
     color: $white;
     padding: 0.5rem 1rem;
-    .select-activity {
-      p {
-        display: inline-block;
-        margin: 0;
-        text-transform: none;
-        font-weight: normal;
-        & + div {
-          display: inline-block;
-          float: none;
-        }
-      }
+    p {
+      font-size: 12px;
+      line-height: 1.2;
     }
     .current {
       font-size: 1.2rem;
-      border-bottom: 0;
       &:after {
         font-size: 1.6rem;
-        margin-top: 0.4rem;
+        margin-top: 0.2rem;
+      }
+    }
+    @include breakpoint (large) {
+      .select-activity {
+        p {
+          display: inline-block;
+          margin: 0;
+          line-height: 1.6;
+          font-size: 1rem;
+          text-transform: none;
+          font-weight: normal;
+          & + div {
+            display: inline-block;
+            float: none;
+          }
+        }
+      }
+      .current {
+        border-bottom: 0;
+        &:after {
+          margin-top: 0.4rem;
+        }
       }
     }
   }
@@ -85,10 +133,12 @@
       margin: 0;
     }
   }
-  .product-sort {
-    position: relative;
-    top: -48px;
-    z-index: 20;
-    color: $white;
+  @include breakpoint ( large ) {
+    .product-sort {
+      position: relative;
+      top: -48px;
+      z-index: 20;
+      color: $white;
+    }
   }
 }

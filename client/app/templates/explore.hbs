@@ -1,12 +1,14 @@
 <div class="explore">
   <div class="explore-left">
     <header class="product-filters-header row align-justify">
-      <h3 class="filters-label">Filters:</h3>
-      <button class="clear hollow button small" {{action "clearFilters"}}>Clear</button>
+      <h3 class="filters-label">Filters</h3>
+      <div class="hide-for-medium filter-close-button" {{action "closeFilters"}}>Close</div>
+      <button class="clear hollow button small show-for-medium" {{action "clearFilters"}}>Clear</button>
     </header>
+    <button class="button hide-for-medium clear-filters" {{action "clearFilters"}}>Clear All</button>
     <ul class="product-filters">
     {{!----- date -------}}
-    {{#grid-accordion tagName="li" class="filter" as |accordion|}}
+    {{#grid-accordion tagName="li" class="filter calendar-container" as |accordion|}}
       <h4 onClick={{action accordion.toggle}}>
         Pick A Date
         {{chevron-icon direction=(if accordion.isExpanded 'up' 'down')}}
@@ -134,9 +136,9 @@
       </div>
     </div>
 
-    <main class="row align-center products align-stretch">
+    <main class="align-center products align-stretch">
       {{#item-sorter items=dateFilteredProducts by=currentSortOrder as |product|}}
-        <div class="columns small-11 medium-5 large-3">
+        <div class="product-card-outer">
           {{new-product-card product=product}}
         </div>
         {{else}}
