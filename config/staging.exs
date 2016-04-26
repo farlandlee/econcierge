@@ -10,7 +10,7 @@ config :grid, Grid.Endpoint,
 config :grid,
   tripadvisor_api_key: {:system, "TRIPADVISOR_API_KEY"},
   booking_emails_bcc: "dev@outpostjh.com",
-  notify_vendors: false
+  send_external_emails: false
 
 # Do not print debug messages in production
 config :logger,

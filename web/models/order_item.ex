@@ -77,7 +77,9 @@ defmodule Grid.OrderItem do
 
   def maybe_assign_vendor_token(changeset) do
     case get_field(changeset, :vendor_token) do
-      nil -> put_change(changeset, :vendor_token, UUID.uuid4(:hex))
+      nil ->
+        vendor_token = UUID.uuid4(:hex) |> String.slice(0..7)
+        put_change(changeset, :vendor_token, vendor_token)
       _ -> changeset
     end
   end

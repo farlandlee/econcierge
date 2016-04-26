@@ -116,15 +116,4 @@ defmodule Grid.Vendor do
     |> validate_number(:tripadvisor_rating, less_than_or_equal_to: 5.0, greater_than_or_equal_to: 0.0)
     |> validate_number(:tripadvisor_reviews_count, greater_than_or_equal_to: 0.0)
   end
-
-  ############
-  ## Helper ##
-  ############
-
-  def email(vendor) do
-    case Grid.fetch_env(:notify_vendors) do
-      {:ok, true} -> vendor.notification_email
-      _ -> ""
-    end
-  end
 end

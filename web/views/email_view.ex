@@ -13,6 +13,14 @@ defmodule Grid.EmailView do
     |> Calendar.Strftime.strftime!("%I:%M%P")
   end
 
+  def date_time_string(stamp) do
+    ~E"""
+    <%= date_string(stamp) %>
+    <span class="small" style="font-size: 11px;">at</span>
+    <%= time_string(stamp) %>
+    """
+  end
+
   def duration_string(stamp) do
     ~E"""
     <%= div(stamp, 60) %>:<%= rem(stamp, 60) |> to_string |> String.rjust(2, ?0) %>

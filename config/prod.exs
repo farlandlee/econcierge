@@ -20,7 +20,7 @@ config :grid, Grid.Endpoint,
 config :grid,
   tripadvisor_api_key: {:system, "TRIPADVISOR_API_KEY"},
   booking_emails_bcc: "book@outpostjh.com",
-  notify_vendors: true,
+  send_external_emails: true,
   prerender_service_url: "https://service.prerender.io",
   prerender_service_token: System.get_env("PRERENDER_TOKEN")
 

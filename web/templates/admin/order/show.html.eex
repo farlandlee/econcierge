@@ -44,7 +44,8 @@
   <table class="table">
     <thead>
       <tr>
-        <th>Order Item ID</th>
+        <th>#</th>
+        <th>Reference ID</th>
         <th>Vendor</th>
         <th>Experience</th>
         <th>Product</th>
@@ -60,6 +61,7 @@
       <%= for order_item <- @order.order_items do %>
         <tr>
           <td><%= order_item.id %></td>
+          <td><%= order_item.vendor_token %></td>
           <td><%= order_item.product.vendor.name %></td>
           <td><%= order_item.product.experience.name %></td>
           <td><%= order_item.product.name %></td>

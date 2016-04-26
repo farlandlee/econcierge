@@ -51,8 +51,10 @@ defmodule Grid.Admin.OrderControllerTest do
     assert response =~ user.phone
 
     # Order item
-    assert response =~ "Order Item ID"
+    assert response =~ "#"
     assert response =~ "#{order_item.id}"
+    assert response =~ "Reference ID"
+    assert response =~ "#{order_item.vendor_token}"
     assert response =~ "Vendor"
     assert response =~ product.vendor.name
     assert response =~ "Experience"
@@ -74,5 +76,20 @@ defmodule Grid.Admin.OrderControllerTest do
     assert_error_sent 404, fn ->
       get conn, admin_order_path(conn, :show, -1)
     end
+  end
+
+  test "finds an order item by reference id", %{conn: conn, order_item: order_item} do
+    conn = get conn, admin_order_path(conn, :find_order_item, %{vendor_token: order_item.vendor_token})
+    assert redirected_to(conn) == admin_order_path(conn, :show, order_item.order_id)
+  end
+
+  test "finds an order item by a legacy/longer reference id", %{conn: conn, order_item: order_item} do
+    conn = get conn, admin_order_path(conn, :find_order_item, %{vendor_token: order_item.vendor_token <> "xxxxxxxxx"})
+    assert redirected_to(conn) == admin_order_path(conn, :show, order_item.order_id)
+  end
+
+  test "does not find order item by reference id", %{conn: conn} do
+    conn = get conn, admin_order_path(conn, :find_order_item, %{vendor_token: "xyz"})
+    assert redirected_to(conn) == admin_dashboard_path(conn, :index)
   end
 end

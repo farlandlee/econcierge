@@ -1,1 +1,19 @@
 <p class="lead">Welcome, <%= @current_user.name %></p>
+
+<div class="row"</div>
+  <div class="col-md-6">
+    <div class="panel panel-default">
+      <div class="panel-heading">Lookup Order Item</div>
+      <div class="panel-body">
+        <form action="<%= admin_order_path(@conn, :find_order_item) %>" method="GET">
+          <div class="input-group">
+            <input type="text" name="vendor_token" id="vendor_token" class="form-control" placeholder="Enter Order Item Reference ID..." />
+            <span class="input-group-btn">
+              <button class="btn btn-default" type="submit">Find</button>
+            </span>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
