@@ -1,7 +1,8 @@
 import Ember from 'ember';
+import {parseDate} from 'client/utils/time';
 
 const {
-  RSVP: {all}
+  RSVP: {all, hash}
 } = Ember;
 
 export default Ember.Route.extend({
@@ -31,6 +32,9 @@ export default Ember.Route.extend({
     controller.setProperties(model);
     let activityAmenities = this.modelFor('explore').activity.get('amenities');
     controller.set('activityAmenities', activityAmenities);
+    controller.set('activities', this.store.peekAll('activity'));
+    let { activity, category } = this.modelFor('explore');
+    controller.setProperties({activity, category});
   },
 
   renderTemplate (controller, model) {
