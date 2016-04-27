@@ -59,8 +59,6 @@ export default Ember.Controller.extend({
   // route assigned properties
   products: null,
   date: null,
-  // all possible amenities for this activity
-  activityAmenities: null,
 
   /* the set of vendors whose products are on display */
   vendors: computed('products.@each.vendor', {
@@ -75,13 +73,13 @@ export default Ember.Controller.extend({
   }),
 
   /* the activity amenities filtered down to just those for this product set */
-  amenities: computed('activityAmenities.[]', 'products.[]', {
+  amenities: computed('activity.amenities.[]', 'products.[]', {
     get () {
       let productOptions = this.get('products')
         .mapBy('amenityOptions')
         .reduce(flatten, []); // has dupes, but that's OK! we're just using it for filtering
 
-      return this.get('activityAmenities').map(({id, name, options}) => {
+      return this.get('activity.amenities').map(({id, name, options}) => {
         // filter the options down to those represented by product options
         options = options.filter(o => {
           return productOptions.contains(o.id);
