@@ -1,8 +1,129 @@
 <div class="explore">
   <div class="explore-left">
-    {{outlet "explore-left"}}
+    <header class="product-filters-header row align-justify">
+      <h3 class="filters-label">Filters:</h3>
+      <button class="clear hollow button small" {{action "clearFilters"}}>Clear</button>
+    </header>
+    <ul class="product-filters">
+    {{!----- date -------}}
+    {{#grid-accordion tagName="li" class="filter" as |accordion|}}
+      <h4 onClick={{action accordion.toggle}}>
+        Pick A Date
+        {{chevron-icon direction=(if accordion.isExpanded 'up' 'down')}}
+      </h4>
+
+      {{#grid-accordion-body isExpanded=accordion.isExpanded}}
+        {{#if date}}
+        <div class="row align-center">
+          <button class="text-center" {{action "changeDate" null}}>
+            Clear Date <i class="fa fa-remove"></i>
+          </button>
+        </div>
+        {{/if}}
+        {{product-date-picker products=filteredProducts date=date changeDate=(action 'changeDate')}}
+      {{/grid-accordion-body}}
+    {{/grid-accordion}}
+    {{!----- time -------}}
+    {{#grid-accordion tagName="li" class="filter" as |accordion|}}
+      <h4 onClick={{action accordion.toggle}}>
+        Start Time
+        {{#if timeFilter.length}}
+        ({{timeFilter.length}})
+        {{/if}}
+        {{chevron-icon direction=(if accordion.isExpanded 'up' 'down')}}
+      </h4>
+
+      {{#grid-accordion-body isExpanded=accordion.isExpanded}}
+        {{filter-selector
+          clearButtonLabel="All Times"
+          options=times valuePath="value"
+          selectedValues=timeFilter
+          onSelect=(action "toggleFilter" timeFilter)
+          clear=(action "clearFilter" "timeFilter")
+        }}
+      {{/grid-accordion-body}}
+    {{/grid-accordion}}
+    {{!----- vendor -------}}
+    {{#grid-accordion tagName="li" class="filter" as |accordion|}}
+      <h4 onClick={{action accordion.toggle}}>
+        Vendors
+        {{#if vendorFilter.length}}
+        ({{vendorFilter.length}})
+        {{/if}}
+        {{chevron-icon direction=(if accordion.isExpanded 'up' 'down')}}
+      </h4>
+
+      {{#grid-accordion-body isExpanded=accordion.isExpanded}}
+        {{filter-selector
+          clearButtonLabel="All Vendors"
+          options=vendors valuePath="slug"
+          selectedValues=vendorFilter
+          onSelect=(action "toggleFilter" vendorFilter)
+          clear=(action "clearFilter" "vendorFilter")
+        }}
+      {{/grid-accordion-body}}
+    {{/grid-accordion}}
+    {{!----- amenities -------}}
+    {{#each activity.amenities as |amenity|}}
+    {{#grid-accordion tagName="li" class="filter" as |accordion|}}
+      <h4 onClick={{action accordion.toggle}}>
+        {{amenity.name}}
+        {{selectedAmenityOptionCount amenity.options amenityOptionFilter}}
+        {{chevron-icon direction=(if accordion.isExpanded 'up' 'down')}}
+      </h4>
+
+      {{#grid-accordion-body isExpanded=accordion.isExpanded}}
+        {{filter-selector
+          clearButtonLabel="All"
+          options=amenity.options valuePath="id"
+          selectedValues=amenityOptionFilter
+          onSelect=(action "toggleFilter" amenityOptionFilter)
+          clear=(action "clearAmenityFilter" amenity)
+        }}
+      {{/grid-accordion-body}}
+    {{/grid-accordion}}
+    {{/each}}
+    </ul>
   </div>
   <div class="explore-right">
+    <div class="top-elements">
+      {{activity-navigator-bar activities=activities currentActivity=activity currentCategory=category}}
+      <div class="row product-bar align-justify">
+        <div class="column product-count">
+          <p>
+            Showing <span>{{dateFilteredProducts.length}}</span>
+            result{{if (not-eq dateFilteredProducts.length 1) 's'}}
+          </p>
+        </div>
+        <div class="column product-sort text-right">
+          <span>
+            Sort By:
+          </span>
+          <button type="button" data-toggle="product-sorter" onClick={{action 'toggleDisplaySort'}}>
+            {{sort}}
+            {{chevron-icon direction=(if displaySort 'up' 'down')}}
+          </button>
+          {{#foundation-dropdown id="product-sorter" class="product-sorter-dropdown"
+            show=displaySort onClose=(action 'hideSort')
+          }}
+            {{product-sorter
+              onSelect=(action "updateSortParam")
+              sort=sort}}
+          {{/foundation-dropdown}}
+        </div>
+      </div>
+    </div>
+
+    <main class="row align-center products align-stretch">
+      {{#item-sorter items=dateFilteredProducts by=currentSortOrder as |product|}}
+        <div class="columns small-11 medium-5 large-3">
+          {{new-product-card product=product}}
+        </div>
+        {{else}}
+        <p>There are no products available on this date.  Please select a different activity or date using the calendar above.</p>
+      {{/item-sorter}}
+    </main>
+
     {{outlet}}
   </div>
 </div>

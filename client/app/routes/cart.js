@@ -60,15 +60,6 @@ export default Ember.Route.extend(ResetScrollMixin, RouteTitleMixin, RouteDescri
 
     removeBooking (booking) {
       return booking.destroyRecord();
-    },
-
-    error ({errors, isAdapterError}, transition) {
-      // a product was unpublished.
-      // clearing the cart is better than never being able to go to the cart again
-      if (isAdapterError && errors.isAny('status', 404)) {
-        let destroyAllBookings = this.store.peekAll('booking').map((b) => b.destroyRecord());
-        return all(destroyAllBookings).then(transition.retry);
-      }
     }
   }
 });

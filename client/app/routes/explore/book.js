@@ -31,7 +31,7 @@ export default Ember.Route.extend(NotFoundMixin, RouteTitleMixin, RouteDescripti
 
   actions: {
     goToProducts () {
-      this.transitionTo('explore.products');
+      this.transitionTo('explore');
     },
 
     book (product, {quantities, date, time}) {
