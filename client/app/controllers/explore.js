@@ -101,6 +101,20 @@ export default Ember.Controller.extend({
     }
   }),
 
+  arbitraryTimes: computed('times.@each.value', {
+    get () {
+      let times = this.get('times');
+      let isApplicableArbitraryTime = (arbitraryTime) => {
+        let inThisArbitraryTime = inArbitraryTime(arbitraryTime);
+        return times.any(inThisArbitraryTime) && !times.every(inThisArbitraryTime);
+      };
+
+      let aTimes = arbitraryTimes.filter(isApplicableArbitraryTime);
+      this._cleanTimeFilter(times.concat(aTimes));
+      return aTimes;
+    }
+  }),
+
   times: computed('products.@each.startTimes', {
     get () {
       let toTimeFilter = (t) => {
@@ -118,13 +132,6 @@ export default Ember.Controller.extend({
         .map(toTimeFilter)
         .sortBy('value');
 
-      let isApplicableArbitraryTime = (arbitraryTime) => {
-        let inThisArbitraryTime = inArbitraryTime(arbitraryTime);
-        return times.any(inThisArbitraryTime) && !times.every(inThisArbitraryTime);
-      };
-
-      times = arbitraryTimes.filter(isApplicableArbitraryTime).concat(times);
-      this._cleanTimeFilter(times);
       return times;
     }
   }),

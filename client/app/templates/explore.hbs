@@ -34,13 +34,33 @@
       </h4>
 
       {{#grid-accordion-body isExpanded=accordion.isExpanded}}
+      {{!-- arbitrary times --}}
         {{filter-selector
           clearButtonLabel="All Times"
-          options=times valuePath="value"
+          clear=(action "clearFilter" "timeFilter")
+          smartClearButton=false
+          options=arbitraryTimes valuePath="value"
           selectedValues=timeFilter
           onSelect=(action "toggleFilter" timeFilter)
-          clear=(action "clearFilter" "timeFilter")
         }}
+        {{!-- all other times, hidden unless there are no applicable arbitaryTimes --}}
+        {{#grid-accordion isExpanded=(eq arbitraryTimes.length 0) tagName='' as |timeAccordion|}}
+          {{#grid-accordion-body isExpanded=timeAccordion.isExpanded}}
+            {{filter-selector
+              smartClearButton=false
+              options=times valuePath="value"
+              selectedValues=timeFilter
+              onSelect=(action "toggleFilter" timeFilter)
+            }}
+          {{/grid-accordion-body}}
+          <button onClick={{action timeAccordion.toggle}}>
+            {{#liquid-if timeAccordion.isExpanded use="toDown"}}
+            Show less...
+            {{else}}
+            Show more...
+            {{/liquid-if}}
+          </button>
+        {{/grid-accordion}}
       {{/grid-accordion-body}}
     {{/grid-accordion}}
     {{!----- vendor -------}}

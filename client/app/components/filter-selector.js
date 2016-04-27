@@ -9,13 +9,19 @@ export default Ember.Component.extend({
   labelPath: 'name',
   valuePath: null,
   selectedValues: null,
+  // see isFiltering for use
+  smartClearButton: true,
 
-  isFiltering: computed('valuePath', 'selectedValues.[]', 'options.[]', {
+  isFiltering: computed('valuePath', 'selectedValues.[]', 'options.[]', 'smartClearButton', {
     get () {
-      let {valuePath, selectedValues} = this.getProperties('valuePath', 'selectedValues');
-      let optionValues = this.get('options').mapBy(valuePath);
+      if (this.get('smartClearButton')) {
+        let {valuePath, selectedValues} = this.getProperties('valuePath', 'selectedValues');
+        let optionValues = this.get('options').mapBy(valuePath);
 
-      return selectedValues.any(v => optionValues.contains(v));
+        return selectedValues.any(v => optionValues.contains(v));
+      } else {
+        return this.get('selectedValues').length > 0;
+      }
     }
   }),
 
