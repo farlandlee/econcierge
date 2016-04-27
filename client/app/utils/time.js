@@ -41,7 +41,8 @@ export const dayOfTheWeek = (date) => {
   }
 };
 
-export const startTimeFilterForDate = function startTimeFilterForDate (date) {
+export const startTimeAvailableForDate = function startTimeAvailableForDate (date) {
+  date = toMoment(date);
   return function startTimeMatchesDate (startTime) {
     let {start_date, end_date} = startTime;
     if (date.isSameOrAfter(start_date) && date.isSameOrBefore(end_date)) {

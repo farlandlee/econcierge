@@ -1,32 +1,17 @@
 import Ember from 'ember';
-import {parseDate} from 'client/utils/time';
 
 const {
-  RSVP: {all, hash}
+  RSVP: {all}
 } = Ember;
 
 export default Ember.Route.extend({
-  queryParams: {
-    date: {
-      refreshModel: true
-    }
-  },
-
   model ({date}) {
-    if (date && !parseDate(date).isValid()) {
-      this.transitionTo({queryParams: {date: undefined}});
-    }
-
     let experience = this.modelFor('explore.experience');
 
-    let productsQuery = this.store.query('product', {
-      experience_id: experience.id,
-      date: date
-    });
-
-    return hash({
-      products: productsQuery,
-      date: date
+    return this.store.query('product', {
+      experience_id: experience.id
+    }).then(products => {
+      return {products, date};
     });
   },
 
