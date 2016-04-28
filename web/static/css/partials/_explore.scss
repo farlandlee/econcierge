@@ -28,7 +28,7 @@
     &.open {
       visibility: visible;
       position: absolute;
-      z-index: 100;
+      z-index: 99; // one less than the header
       top: 41px;
       left:0;
       right: 0;

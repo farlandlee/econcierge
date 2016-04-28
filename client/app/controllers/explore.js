@@ -5,7 +5,13 @@ import {
 } from 'client/utils/time';
 import {toSet, flatten} from 'client/utils/fn';
 
-const {computed, isEmpty, $} = Ember;
+const {
+  $,
+  computed,
+  observer,
+  isEmpty,
+  run: {throttle}
+} = Ember;
 
 // See the 'times' property
 const arbitraryTimes = [
@@ -164,6 +170,15 @@ export default Ember.Controller.extend({
     this.set('timeFilter', timeFilter);
   },
 
+  _updatedFilters: observer('dateFilteredProducts.[]', function () {
+    throttle(this, this._resetProductScroll, 200);
+  }),
+
+  _resetProductScroll () {
+    debugger;
+    $('.explore-right').animate({scrollTop: 0}, 'fast');
+  },
+
   filteredProducts: computed('products.[]', 'vendorFilter.[]', 'amenityOptionFilter.[]', 'timeFilter.[]', 'date', {
     get () {
       let filters = this.getProperties('vendorFilter', 'amenityOptionFilter', 'timeFilter');
@@ -301,6 +316,10 @@ export default Ember.Controller.extend({
         timeFilter: [],
         date: null
       });
+    },
+
+    openFilters () {
+      $('.explore-left').addClass('open').scrollTop(0);
     },
 
     closeFilters () {

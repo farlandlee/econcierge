@@ -9,32 +9,24 @@ export default Ember.Component.extend({
 
   didInsertElement() {
     this._super(...arguments);
+    let $window = $(window);
 
     let parent = $('.explore-right');
-    let scrollDist = $(window).height() * 0.35;
 
-    parent.scroll(function(){
-      if(parent.scrollTop() > scrollDist) {
+    parent.scroll(function () {
+      // .35 is based on the 40vh that the image takes up
+      if (parent.scrollTop() > $window.height() * 0.35) {
         parent.addClass('scrolled');
-      }
-      else {
+      } else {
         parent.removeClass('scrolled');
       }
     });
 
     // handle window resize / turning device
-    $(window).resize(function(){
-      let windowWidth = $( window ).width();
-      if(windowWidth > 639) {
+    $window.resize(function () {
+      if ($window.width() > 639) {
         $('.explore-left').removeClass('open');
       }
     });
-
-  },
-
-  actions: {
-    openFilters () {
-      $('.explore-left').addClass('open');
-    }
   }
 });

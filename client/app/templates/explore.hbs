@@ -109,7 +109,12 @@
   </div>
   <div class="explore-right">
     <div class="top-elements">
-      {{activity-navigator-bar activities=activities currentActivity=activity currentCategory=category}}
+      {{activity-navigator-bar
+        activities=activities
+        currentActivity=activity
+        currentCategory=category
+        openFilters=(action "openFilters")
+      }}
       <div class="row product-bar align-justify">
         <div class="column product-count">
           <p>
