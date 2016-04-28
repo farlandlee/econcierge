@@ -1,6 +1,8 @@
 defmodule Grid.Season do
   use Grid.Web, :model
 
+  alias Grid.Models.Validations
+
   schema "seasons" do
     field :name,          :string
 
@@ -32,6 +34,8 @@ defmodule Grid.Season do
     |> cast(params, @required_fields, @optional_fields)
     |> update_change(:name, &String.strip/1)
     |> validate_length(:name, min: 1, max: 255)
+    |> Validations.validate_date(:start_date)
+    |> Validations.validate_date(:end_date)
     |> validate_date_range
   end
 

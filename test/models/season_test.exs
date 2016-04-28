@@ -43,6 +43,12 @@ defmodule Grid.SeasonTest do
     assert_raise(Ecto.NoResultsError, fn ->
       Season.first_from_date(date_after_season) |> Repo.one!
     end)
+  end
 
+  test "invalid date" do
+    attrs = %{@invalid_attrs | end_date: "2016-06-31"}
+    changeset = Season.changeset(%Season{}, attrs)
+    refute changeset.valid?
+    assert changeset.errors == [end_date: "Invalid date"]
   end
 end
