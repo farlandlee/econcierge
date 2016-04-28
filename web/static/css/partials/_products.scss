@@ -28,6 +28,7 @@ $bookings-blue: #77BAF0;
   @extend .no-bullet;
   margin-bottom: 0;
   clear: both;
+  font-size: 0.8rem;
   .filter {
     margin-bottom: 1rem;
     &:not(:first-child) {
@@ -35,9 +36,29 @@ $bookings-blue: #77BAF0;
       padding-top: 1rem;
     }
     h4 {
+      font-size: 0.8rem;
+      font-weight: bold;
       cursor: pointer;
       i {
         float: right;
+      }
+    }
+  }
+  .flatpickr-wrapper {
+    .flatpickr-calendar {
+      font-size: 12px;
+      max-width: 224px;
+      .flatpickr-months {
+        font-size: 120%;
+      }
+      table {
+        td {
+          .flatpickr-day {
+            line-height: 24px;
+            max-width:24px;
+            height:24px;
+          }
+        }
       }
     }
   }
