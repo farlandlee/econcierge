@@ -5,8 +5,11 @@
   }
   .explore-left,
   .explore-right {
-    height:100vh;
+    height: calc(100vh - 41px);
     overflow-y: scroll;
+    @include breakpoint(large) {
+      height: calc(100vh - 61px);
+    }
   }
   .explore-left {
     visibility:hidden;
