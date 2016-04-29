@@ -7,6 +7,7 @@
     <tr>
       <th>Name</th>
       <th>Description</th>
+      <th>Photo Cards</th>
 
       <th></th>
     </tr>
@@ -16,6 +17,7 @@
     <tr>
       <td><%= link activity.name, to: admin_activity_path(@conn, :show, activity) %></td>
       <td><%= activity.description %></td>
+      <td><%= photo_card_icon(activity.use_product_photo_card) %></td>
 
       <td class="text-right">
         <div class="dropdown actions">

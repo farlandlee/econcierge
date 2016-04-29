@@ -2,7 +2,7 @@ defmodule Grid.Admin.ActivityControllerTest do
   use Grid.ConnCase
 
   alias Grid.Activity
-  @valid_attrs %{name: "some content", description: "some content"}
+  @valid_attrs %{name: "some content", description: "some content", use_product_photo_card: true}
   @invalid_attrs %{name: "", description: ""}
 
   setup do

@@ -7,6 +7,7 @@ defmodule Grid.Activity do
     field :name, :string
     field :description, :string
     field :slug, :string
+    field :use_product_photo_card, :boolean, default: false
 
     belongs_to :default_image, {"activity_images", Image}
     has_many :images, {"activity_images", Image}, foreign_key: :assoc_id
@@ -24,7 +25,7 @@ defmodule Grid.Activity do
   end
 
   @required_fields ~w(name description)
-  @optional_fields ~w(slug default_image_id)
+  @optional_fields ~w(slug default_image_id use_product_photo_card)
 
   @doc """
   Creates a changeset based on the `model` and `params`.

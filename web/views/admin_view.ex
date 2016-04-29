@@ -44,4 +44,10 @@ defmodule Grid.AdminView do
     param = Inflex.parameterize(target, "_")
     link target, to: "#" <> param, class: "grid-tab"
   end
+
+  def icon(class) do
+    ~E"""
+    <span class="glyphicon glyphicon-<%= class %>"></span>
+    """
+  end
 end

@@ -17,6 +17,7 @@ defmodule Grid.Api.ActivityView do
       name: activity.name,
       description: activity.description,
       slug: activity.slug,
+      use_product_photo_card: activity.use_product_photo_card,
       default_image: render_one(activity.default_image, Grid.Api.ImageView, "image.json"),
       amenities: render_many(activity.amenities, AmenityView, "amenity.json")
     }
