@@ -25,7 +25,7 @@
 
   <div class="form-group">
     <%= label f, :expiration_date, class: "control-label" %>
-    <%= date_select f, :expiration_date, class: "form-control" %>
+    <%= text_input f, :expiration_date, class: "date_picker", type: "date"%>
     <%= error_tag f, :expiration_date %>
   </div>
 

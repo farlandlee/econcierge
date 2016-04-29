@@ -5,4 +5,22 @@ defmodule Grid.Models.Validations do
   def validate_email(changeset, key \\ :email) do
     validate_format(changeset, key, @email_regex)
   end
+
+  def validate_date(changeset, field) do
+    case get_field(changeset, field) do
+      nil ->
+        changeset
+      date ->
+        do_validate_date(changeset, field, date)
+    end
+  end
+
+  defp do_validate_date(changeset, field, date) do
+    case Ecto.Date.to_erl(date) |> Calendar.Date.from_erl do
+      {:error, _} ->
+        add_error(changeset, field, "Invalid date")
+      _ ->
+        changeset
+    end
+  end
 end

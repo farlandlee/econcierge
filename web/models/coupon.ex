@@ -1,6 +1,8 @@
 defmodule Grid.Coupon do
   use Grid.Web, :model
 
+  alias Grid.Models.Validations
+
   schema "coupons" do
     field :code, :string
     field :percent_off, :integer
@@ -53,6 +55,7 @@ defmodule Grid.Coupon do
     |> unique_constraint(:code)
     |> validate_length(:code, min: 5)
     |> update_change(:code, &normalize_code/1)
+    |> Validations.validate_date(:expiration_date)
     |> validate_format(:code, ~r/^([A-Z0-9_]+)$/, message: "can only contain letters, numbers, and underscores. spaces are automatically converted")
     |> validate_number(:max_usage_count, greater_than: 0)
     |> validate_number(:percent_off, greater_than: 0, less_than_or_equal_to: 100)
