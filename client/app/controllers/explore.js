@@ -5,7 +5,13 @@ import {
 } from 'client/utils/time';
 import {toSet, flatten} from 'client/utils/fn';
 
-const {computed, isEmpty} = Ember;
+const {
+  $,
+  computed,
+  observer,
+  isEmpty,
+  run: {throttle}
+} = Ember;
 
 // See the 'times' property
 const arbitraryTimes = [
@@ -55,13 +61,11 @@ export default Ember.Controller.extend({
 
   sort: 'Price',
   displaySort: false,
+  displayFilterSort: false,
 
   // route assigned properties
-  experienceName: null,
   products: null,
   date: null,
-  // all possible amenities for this activity
-  activityAmenities: null,
 
   /* the set of vendors whose products are on display */
   vendors: computed('products.@each.vendor', {
@@ -76,13 +80,13 @@ export default Ember.Controller.extend({
   }),
 
   /* the activity amenities filtered down to just those for this product set */
-  amenities: computed('activityAmenities.[]', 'products.[]', {
+  amenities: computed('activity.amenities.[]', 'products.[]', {
     get () {
       let productOptions = this.get('products')
         .mapBy('amenityOptions')
         .reduce(flatten, []); // has dupes, but that's OK! we're just using it for filtering
 
-      return this.get('activityAmenities').map(({id, name, options}) => {
+      return this.get('activity.amenities').map(({id, name, options}) => {
         // filter the options down to those represented by product options
         options = options.filter(o => {
           return productOptions.contains(o.id);
@@ -104,6 +108,20 @@ export default Ember.Controller.extend({
     }
   }),
 
+  arbitraryTimes: computed('times.@each.value', {
+    get () {
+      let times = this.get('times');
+      let isApplicableArbitraryTime = (arbitraryTime) => {
+        let inThisArbitraryTime = inArbitraryTime(arbitraryTime);
+        return times.any(inThisArbitraryTime) && !times.every(inThisArbitraryTime);
+      };
+
+      let aTimes = arbitraryTimes.filter(isApplicableArbitraryTime);
+      this._cleanTimeFilter(times.concat(aTimes));
+      return aTimes;
+    }
+  }),
+
   times: computed('products.@each.startTimes', {
     get () {
       let toTimeFilter = (t) => {
@@ -121,19 +139,10 @@ export default Ember.Controller.extend({
         .map(toTimeFilter)
         .sortBy('value');
 
-      let isApplicableArbitraryTime = (arbitraryTime) => {
-        let inThisArbitraryTime = inArbitraryTime(arbitraryTime);
-        return times.any(inThisArbitraryTime) && !times.every(inThisArbitraryTime);
-      };
-
-      times = arbitraryTimes.filter(isApplicableArbitraryTime).concat(times);
-      this._cleanTimeFilter(times);
       return times;
     }
   }),
 
-  // 'vendor' || {{amenity.name}} || 'time' || ''
-  displayFilter: '',
   // [vendorSlug, vendorSlug, ...]
   vendorFilter: [],
   // [amenityOptionId, amenityOptionId, ...]
@@ -160,6 +169,14 @@ export default Ember.Controller.extend({
     let timeFilter = this.get('timeFilter');
     timeFilter = timeFilter.filter(time => validTimes.contains(time));
     this.set('timeFilter', timeFilter);
+  },
+
+  _updatedFilters: observer('dateFilteredProducts.[]', function () {
+    throttle(this, this._resetProductScroll, 200);
+  }),
+
+  _resetProductScroll () {
+    $('.explore-right').animate({scrollTop: 0}, 'fast');
   },
 
   filteredProducts: computed('products.[]', 'vendorFilter.[]', 'amenityOptionFilter.[]', 'timeFilter.[]', 'date', {
@@ -247,23 +264,6 @@ export default Ember.Controller.extend({
   }),
 
   actions: {
-    hideFilter (filter) {
-      let current = this.get('displayFilter');
-      if (current === filter) {
-        this.set('displayFilter', null);
-      }
-    },
-
-    toggleDisplayFilter (filter, event) {
-      event.preventDefault(); // stop it foundation!
-      let current = this.get('displayFilter');
-      if (current === filter) {
-        this.set('displayFilter', null);
-      } else {
-        this.set('displayFilter', filter);
-      }
-    },
-
     clearFilter (filterName) {
       this.set(filterName, []);
     },
@@ -287,22 +287,18 @@ export default Ember.Controller.extend({
       }
     },
 
-    removeFilter (filter, value) {
-      filter.removeObject(value);
+    hideSort (sortControl) {
+      this.set(sortControl, false);
     },
 
-    hideSort () {
-      this.set('displaySort', false);
-    },
-
-    toggleDisplaySort () {
+    toggleDisplaySort (sortControl) {
       event.preventDefault();
-      this.toggleProperty('displaySort');
+      this.toggleProperty(sortControl);
     },
 
-    updateSortParam (value) {
+    updateSortParam (sortControl, value) {
       this.set('sort', value);
-      this.toggleProperty('displaySort'); // hide dropdown after click
+      this.toggleProperty(sortControl); // hide dropdown after click
     },
 
     changeDate (date) {
@@ -310,6 +306,24 @@ export default Ember.Controller.extend({
         date = format(date);
       }
       this.set('date', date);
+    },
+
+    clearFilters () {
+      this.setProperties({
+        displayFilter: '',
+        vendorFilter: [],
+        amenityOptionFilter: [],
+        timeFilter: [],
+        date: null
+      });
+    },
+
+    openFilters () {
+      $('.explore-left').addClass('open').scrollTop(0);
+    },
+
+    closeFilters () {
+      $('.explore-left').removeClass('open');
     }
   }
 });

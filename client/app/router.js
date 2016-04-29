@@ -22,12 +22,7 @@ Router.map(function () {
   this.route('shared-cart', {path: 'shared_cart/:uuid'});
 
   this.route('explore', {path: ':activity_slug/:category_slug'}, function () {
-    this.route('default-experience', {path: '/'});
-    this.route('experience', {path: ':experience_slug'}, function () {
-      this.route('products', {path: '/'}, function () {
-        this.route('book', {path: '/book/:product_id'});
-      });
-    });
+    this.route('book', {path: '/book/:product_id'});
   });
 
   this.route('error404', {path: '/*path'});

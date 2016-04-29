@@ -20,8 +20,7 @@ export default Ember.Route.extend(ResetScrollMixin, RouteTitleMixin, RouteDescri
     return hash({
       products: all(bookings.mapBy('product')),
       categories: all(bookings.mapBy('category')),
-      activities: all(bookings.mapBy('activity')),
-      experiences: all(bookings.mapBy('experience'))
+      activities: all(bookings.mapBy('activity'))
     });
   },
 
@@ -29,7 +28,6 @@ export default Ember.Route.extend(ResetScrollMixin, RouteTitleMixin, RouteDescri
     this._super(...arguments);
     controller.set('bookings', bookings);
     controller.set('sort', ['date:asc']);
-    controller.set('showVendor', false);
   },
 
   actions: {
@@ -62,15 +60,6 @@ export default Ember.Route.extend(ResetScrollMixin, RouteTitleMixin, RouteDescri
 
     removeBooking (booking) {
       return booking.destroyRecord();
-    },
-
-    error ({errors, isAdapterError}, transition) {
-      // a product was unpublished.
-      // clearing the cart is better than never being able to go to the cart again
-      if (isAdapterError && errors.isAny('status', 404)) {
-        let destroyAllBookings = this.store.peekAll('booking').map((b) => b.destroyRecord());
-        return all(destroyAllBookings).then(transition.retry);
-      }
     }
   }
 });

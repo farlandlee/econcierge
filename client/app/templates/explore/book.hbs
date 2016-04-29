@@ -7,26 +7,10 @@
   {{/if}}
   <section class="row align-right">
     <div class="columns small-12 medium-6">
-      {{#if showVendor}}
       <h4 class="subheader">
-        Vendor
+        Activity
       </h4>
-      <p>{{product.vendor.name}}</p>
-      {{#unless product.pickup}}
-      <p class="meeting-address">
-        {{#with product.meetingLocation as |loc|}}
-        {{loc.address1}}{{#if loc.address2}} , {{loc.address2}}{{/if}}
-        <br>
-        {{loc.city}}, {{loc.state}} {{loc.zip}}
-        {{/with}}
-      </p>
-      {{/unless}}
-      {{else}}
-      <h4 class="subheader">
-        Experience
-      </h4>
-      <p>{{product.experience.name}}</p>
-      {{/if}}
+      <p>{{activity.name}} - {{category.name}}</p>
     </div>
     <div class="columns small-12 medium-6">
       <div class="row">
@@ -34,16 +18,6 @@
       </div>
     </div>
   </section>
-  {{#if showVendor}}
-  <section class="row">
-    <div class="columns">
-      <h4 class="subheader">
-        Experience
-      </h4>
-      <p>{{product.experience.name}}</p>
-    </div>
-  </section>
-  {{/if}}
   <section class="row">
     <div class="columns">
       <h4 class="subheader">

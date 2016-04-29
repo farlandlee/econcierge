@@ -8,13 +8,18 @@ export default DS.Model.extend({
   product: DS.belongsTo('product'),
   // through product... stored here so we don't have to chain preloads, can do them all at once
   activity: DS.belongsTo('activity'),
-  experience: DS.belongsTo('experience'),
   category: DS.belongsTo('category'),
   date: DS.attr(),
   // {id: id, time: string}
   startTime: DS.attr(),
   // list of {id: price.id, quantity: integer, cost: integer}
   quantities: DS.attr(),
+
+  image: computed('activity.image.full', 'category.image.full', {
+    get () {
+      return this.get('category.image') || this.get('activity.image');
+    }
+  }),
 
   total: computed('quantities.@each.{quantity,id}', {
     get () {

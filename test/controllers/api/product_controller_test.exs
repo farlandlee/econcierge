@@ -1,6 +1,11 @@
 defmodule Grid.Api.ProductControllerTest do
   use Grid.ConnCase
 
+  alias Grid.{
+    Experience,
+    Product
+  }
+
   setup %{conn: conn} do
     {:ok, conn: put_req_header(conn, "accept", "application/json")}
   end
@@ -17,8 +22,15 @@ defmodule Grid.Api.ProductControllerTest do
     Factory.create(:amount, price: price)
 
     Factory.create_product_image(assoc_id: p.id, postion: 1)
+    # Create a category for the kid
+    exp = Repo.get!(Experience, p.experience_id)
+    category = Factory.build(:category, activity_id: exp.activity_id) |> Repo.insert!
+    Factory.build(:experience_category, experience_id: exp.id, category_id: category.id) |> Repo.insert!
 
-    p = Repo.update!(Grid.Product.default_price_changeset(p, price.id))
+    p = Repo.get!(Product, p.id) # the preloads are weird. this fixes it.
+      |> Product.default_price_changeset(price.id)
+      |> Repo.update!
+      |> Repo.preload([:categories])
 
     {:ok, product: p, start_time: st, season: s}
   end
@@ -44,8 +56,9 @@ defmodule Grid.Api.ProductControllerTest do
     refute unpublished_product.id in resp_ids
   end
 
-  test "index filters by experience", %{conn: conn, product: product} do
-    conn = get conn, api_product_path(conn, :index, experience_id: product.experience_id)
+  test "index filters by category", %{conn: conn, product: product} do
+    [%{id: cat_id}] = product.categories
+    conn = get conn, api_product_path(conn, :index, category_id: cat_id)
     response = json_response(conn, 200)
     products = response["products"]
     assert products
@@ -53,7 +66,7 @@ defmodule Grid.Api.ProductControllerTest do
 
     assert product.id == hd(products)["id"]
 
-    conn = get conn, api_product_path(conn, :index, experience_id: -1)
+    conn = get conn, api_product_path(conn, :index, category_id: -1)
     response = json_response(conn, 200)
     products = response["products"]
     assert products

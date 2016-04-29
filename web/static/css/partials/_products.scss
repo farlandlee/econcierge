@@ -1,122 +1,103 @@
 $bookings-blue: #77BAF0;
 .products-loading {
-  background: linear-gradient(to bottom, $white 30%, $black);
+  background: $white;
   padding-top: 4rem;
-  min-height: 60vh;
   font-size: 1.6rem;
 }
-.product-bar {
-  max-width: rem-calc(1440);
-  border-bottom: 1px solid #eee;
-  padding: 1rem;
-  .fa {
-    color: $medium-gray;
-  }
-  p {
-    margin-bottom: 0;
-  }
-  label {
-    display: table-cell;
-    text-align: right;
-  }
-  .input-group {
+
+.product-filters-header {
+  margin-bottom: 2rem;
+  width: 104%;
+  margin-left: -2%;
+  .filters-label {
     margin: 0;
+    font-weight: $global-weight-bold;
+    text-transform: uppercase;
+    text-decoration: underline;
+    margin-right: 1rem;
   }
-  .chosen-single,
-  .full-overlay-select {
-    height: 1.2rem;
-    font-size: 1rem;
-    line-height: 1.8;
-    &:after {
-      font-size: 1.6rem;
+  .clear {
+    margin: 0;
+    text-transform: uppercase;
+    border-radius: 0;
+    padding: .5em 1em;
+  }
+}
+
+.product-filters {
+  @extend .no-bullet;
+  margin-bottom: 0;
+  clear: both;
+  font-size: 0.8rem;
+  .filter {
+    margin-bottom: 1rem;
+    &:not(:first-child) {
+      border-top: 1px solid $gray;
+      padding-top: 1rem;
+    }
+    h4 {
+      font-size: 0.8rem;
+      font-weight: bold;
+      cursor: pointer;
+      i {
+        float: right;
+      }
     }
   }
-  .product-filters {
-    @extend .no-bullet;
-    margin-bottom: 0;
-    & > li {
-      display: inline-block;
-      margin-right: 1rem;
-    }
-  }
-  .product-filters-bar {
-    .filters-label {
-      float: left;
-      font-weight: $global-weight-bold;
-      text-transform: uppercase;
-      text-decoration: underline;
-      margin-right: 1rem;
-    }
-    .product-filter-dropdown {
-      // draw a triangle on the dropdown
-      &::before, &::after {
-        content: "";
-        position: absolute;
-        width: 0;
-        height: 0;
-        border-style: solid;
-        border-color: transparent;
-        border-top: 0;
+  .flatpickr-wrapper {
+    .flatpickr-calendar {
+      font-size: 12px;
+      max-width: 224px;
+      .flatpickr-months {
+        font-size: 120%;
       }
-      // triangle border
-      &::before {
-        top: -11px;
-        left: 21px;
-        /* If 1px darken stroke slightly */
-        border-bottom-color: $medium-gray;
-        border-width: 11px;
-      }
-      // triangle fill
-      &::after {
-        top: -10px;
-        left: 22px;
-        border-bottom-color: white;
-        // 1px smaller than border draws a
-        // 1px border!
-        border-width: 10px;
-      }
-    }
-    .flatpickr-wrapper {
-      // visibility determined by dropdown
-      &.inline .flatpickr-calendar {
-        visibility: inherit;
-      }
-      .flatpickr-calendar {
-        border: none;
+      table {
+        td {
+          .flatpickr-day {
+            line-height: 24px;
+            max-width:24px;
+            height:24px;
+          }
+        }
       }
     }
   }
 }
-.product-count {
-  padding-bottom: 0.5rem;
-  p {
-    width: 100%;
-    span {
-      color: $primary-color;
-      font-weight: $global-weight-bold;
+
+.product-bar {
+  padding-top: 1rem;
+  transition: all 0.5s;
+  .product-count {
+    padding-bottom: 0.5rem;
+    p {
+      width: 100%;
+      span {
+        color: $primary-color;
+        font-weight: $global-weight-bold;
+      }
     }
   }
 }
+
 .products {
-  > .columns {
-    margin: 1rem 1rem;
+  background-color: $offwhite;
+  padding-bottom: 10rem;
+  padding-top: 0.5rem;
+  display:flex;
+  flex-wrap: wrap;
+  .product-card-outer {
+    margin: 15px;
     position: relative;
     background-color: $white;
     border-radius: 12px;
     padding-left: 0;
     padding-right: 0;
     flex-shrink: 1;
-    min-width: 340px;
-    max-width:340px;
-    @include breakpoint (medium) {
-      margin: 1rem 1.5rem;
-    }
-    @include breakpoint (large) {
-      margin: 1rem 2rem;
-
-    }
+    border-radius: 2px;
   }
 }
+
+
 .product {
   max-width: 100%;
   width: 340px;
@@ -125,10 +106,14 @@ $bookings-blue: #77BAF0;
   flex: 0 2 340px;
   position: relative;
   padding-bottom: 88px;
+  border-radius: 0;
   .product-header,
   .product-body,
   .product-footer {
     margin: 0;
+  }
+  .product-details {
+    padding-right: 0;
   }
 
   .fi {
@@ -171,6 +156,16 @@ $bookings-blue: #77BAF0;
   }
   .product-body {
     padding: 1rem;
+    > .column,
+    > .columns {
+      padding-left: 0.5rem;
+      padding-right: 0.5rem;
+    }
+  }
+
+  .product-title {
+    text-transform: capitalize;
+    padding-top: 0.9rem;
   }
   .product-name {
     text-transform: uppercase;
@@ -185,8 +180,9 @@ $bookings-blue: #77BAF0;
   }
   .product-description {
     line-height: 1.2;
-    margin-bottom: 2rem;
-    min-height: 80px;
+    margin-bottom: 0;
+    height: 100px;
+    overflow:hidden;
     p:last-of-type {
       margin-bottom: 0;
     }
@@ -202,18 +198,55 @@ $bookings-blue: #77BAF0;
     line-height: 1.8rem;
   }
   .price {
-    font-size: 1.6rem;
     letter-spacing: 1px;
     text-align: right;
+    float:right;
+    font-weight: normal;
+    color: $white;
+    background-color: $primary-color;
+    font-size: 1.3rem;
+    padding: 0.5rem;
+    line-height: 1;
+    margin: 0;
+    margin-right: -0.55rem;
+    min-width: 100%;
+    span {
+      font-size: 0.4rem;
+      text-transform: lowercase;
+    }
   }
-  .more-prices {
-    text-align: center;
-    margin-top: -8px;
-    margin-bottom: 17px;
-    a {
-      color: $bookings-blue;
-      font-size: .9em;
-      text-decoration: underline;
+  .photo-gallery {
+    list-style: none;
+    margin: 6px -0.5rem 0 0;
+    clear: right;
+    float: right;
+    position: relative;
+    text-align:right;
+    li {
+      display: inline-block;
+      width: 28px;
+      height: 28px;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      margin: 0 -1.5px;
+      position: relative;
+      cursor: pointer;
+      &.photo-gallery-caption {
+        position: absolute;
+        z-index: 10;
+        color: $white;
+        font-size: 0.7rem;
+        width: 100%;
+        padding: 6px 0 6px 3px;
+        text-align:left;
+        .fa {
+          margin-right:3px;
+        }
+      }
+      &.hidden {
+        display: none;
+      }
     }
   }
   .product-footer {
@@ -266,17 +299,22 @@ $bookings-blue: #77BAF0;
   }
 }
 
-.duration,
-.age-restriction,
-.location,
 .product-icons {
   &.fi {
     text-align:center;
     color: $medium-gray;
-  	font-size: 0.8rem;
+    font-size: 0.7rem;
+    .gold {
+      color: #f7e53b;
+    }
+    .fa {
+      &:before {
+        font-size: 0.9rem;
+      }
+    }
     &:before {
       margin-bottom: 0.5rem;
-      font-size: 1.2rem;
+      font-size: 1.4rem;
       display: block;
       text-align:center;
     }
@@ -288,8 +326,7 @@ $bookings-blue: #77BAF0;
   cursor: pointer;
   right: 30px;
   left: auto !important;
-
-  &::before, &::after {
+  &:before, &:after {
     content: "";
     position: absolute;
     width: 0;

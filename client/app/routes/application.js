@@ -3,6 +3,8 @@ import RouteTitleMixin from 'client/mixins/route-title';
 
 const initialTitle = window.document.title;
 
+const {RSVP} = Ember;
+
 export default Ember.Route.extend(RouteTitleMixin, {
   model () {
     return this.store.findAll('activity');
@@ -16,5 +18,14 @@ export default Ember.Route.extend(RouteTitleMixin, {
   title (tokens) {
     tokens.push(initialTitle);
     return tokens.join(' | ');
+  },
+
+  error ({errors, isAdapterError}, transition) {
+    // a product was unpublished.
+    // clearing the cart is better than never being able to go to the cart again
+    if (isAdapterError && errors.isAny('status', 404)) {
+      let destroyAllBookings = this.store.peekAll('booking').map((b) => b.destroyRecord());
+      return RSVP.all(destroyAllBookings).then(transition.retry);
+    }
   }
 });

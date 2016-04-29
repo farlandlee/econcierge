@@ -12,7 +12,6 @@ export default DS.Model.extend({
   defaultPrice: DS.attr(),
 
   vendor: DS.belongsTo('vendor'),
-  experience: DS.belongsTo('experience'),
 
   meetingLocation: DS.attr(),
   prices: DS.attr(),

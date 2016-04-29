@@ -22,7 +22,7 @@
 </div>
 <div class="row product-body">
   <div class="product-name column small-12">
-    <p>{{link-to product.name "explore.experience.products.book" product}}</p>
+    <p>{{link-to product.name "explore.book" product}}</p>
   </div>
   {{product-icons product=product}}
   <div class="product-description column small-12">
@@ -32,12 +32,12 @@
   {{price-display price=product.defaultPrice}}
   {{#if (gt product.prices.length 1)}}
   <div class="columns small-12 more-prices">
-    {{link-to "Complete Price List" "explore.experience.products.book" product}}
+    {{link-to "Complete Price List" "explore.book" product}}
   </div>
   {{/if}}
 </div>
 <div class="row product-footer text-center">
   <div class="column">
-    <p class="request-to-book">{{link-to "Click To Book" "explore.experience.products.book" product}}</p>
+    <p class="request-to-book">{{link-to "Click To Book" "explore.book" product}}</p>
   </div>
 </div>

@@ -8,7 +8,7 @@ moduleForModel('booking', 'Unit | Serializer | booking', {
     'model:booking',
     'model:product',
     'model:activity',
-    'model:experience',
+    
     'model:category'
   ]
 });

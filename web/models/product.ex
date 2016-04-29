@@ -54,10 +54,12 @@ defmodule Grid.Product do
     from p in query, where: p.published == true
   end
 
-  def for_experience(query \\ __MODULE__, id)
-  def for_experience(query, nil), do: query
-  def for_experience(query, id) do
-    from p in query, where: p.experience_id == ^id
+  def for_category(query \\ __MODULE__, id)
+  def for_category(query, nil), do: query
+  def for_category(query, id) do
+    from p in query,
+      join: c in assoc(p, :categories),
+        where: c.id == ^id
   end
 
   def for_date(query \\ __MODULE__, date)

@@ -26,17 +26,16 @@ export default Ember.Route.extend(NotFoundMixin, RouteTitleMixin, RouteDescripti
   setupController (controller, product) {
     this._super(...arguments);
     controller.set('product', product);
-    controller.set('showVendor', false);
+    controller.setProperties(this.modelFor('explore'));
   },
 
   actions: {
     goToProducts () {
-      this.transitionTo('explore.experience.products');
+      this.transitionTo('explore');
     },
 
     book (product, {quantities, date, time}) {
       let {category, activity} = this.modelFor('explore');
-      let experience = this.modelFor('explore.experience');
       time = {
         time: time.starts_at_time,
         id: time.id
@@ -44,7 +43,6 @@ export default Ember.Route.extend(NotFoundMixin, RouteTitleMixin, RouteDescripti
 
       let booking = this.store.createRecord('booking', {
         activity: activity,
-        experience: experience,
         category: category,
         product: product,
         date: date,
