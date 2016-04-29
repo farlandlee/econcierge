@@ -31,6 +31,22 @@
       <button class="clear hollow button small show-for-medium" {{action "clearFilters"}}>Clear</button>
     </header>
     <button class="button hide-for-medium clear-filters" {{action "clearFilters"}}>Clear All</button>
+    <div class="product-sort hide-for-medium">
+      <span>
+        Sort By:
+      </span>
+      <button type="button" data-toggle="product-sorter-filter" onClick={{action 'toggleDisplaySort' 'displayFilterSort'}}>
+        {{sort}}
+        {{chevron-icon direction=(if displayFilterSort 'up' 'down')}}
+      </button>
+      {{#foundation-dropdown id="product-sorter-filter" class="product-sorter-dropdown"
+        show=displayFilterSort onClose=(action 'hideSort' 'displayFilterSort')
+      }}
+        {{product-sorter
+          onSelect=(action "updateSortParam" "displayFilterSort")
+          sort=sort}}
+      {{/foundation-dropdown}}
+    </div>
     <ul class="product-filters">
     {{!----- date -------}}
     {{#grid-accordion tagName="li" class="filter calendar-container" as |accordion|}}
@@ -141,28 +157,29 @@
         openFilters=(action "openFilters")
       }}
       <div class="row product-bar align-justify">
-        <div class="column product-count">
+        <div class="column small-9 medium-6 product-count">
           <p>
             Showing <span>{{dateFilteredProducts.length}}</span>
             result{{if (not-eq dateFilteredProducts.length 1) 's'}}
           </p>
         </div>
-        <div class="column product-sort text-right">
+        <div class="column medium-6 product-sort text-right show-for-medium">
           <span>
             Sort By:
           </span>
-          <button type="button" data-toggle="product-sorter" onClick={{action 'toggleDisplaySort'}}>
+          <button type="button" data-toggle="product-sorter" onClick={{action 'toggleDisplaySort' 'displaySort'}}>
             {{sort}}
             {{chevron-icon direction=(if displaySort 'up' 'down')}}
           </button>
           {{#foundation-dropdown id="product-sorter" class="product-sorter-dropdown"
-            show=displaySort onClose=(action 'hideSort')
+            show=displaySort onClose=(action 'hideSort' 'displaySort')
           }}
             {{product-sorter
-              onSelect=(action "updateSortParam")
+              onSelect=(action "updateSortParam" "displaySort")
               sort=sort}}
           {{/foundation-dropdown}}
         </div>
+        <div class="column small-3 filter-button flaticon-filters fi hide-for-medium" {{action 'openFilters'}}>Filters</div>
       </div>
     </div>
 

@@ -61,6 +61,7 @@ export default Ember.Controller.extend({
 
   sort: 'Price',
   displaySort: false,
+  displayFilterSort: false,
 
   // route assigned properties
   products: null,
@@ -286,18 +287,18 @@ export default Ember.Controller.extend({
       }
     },
 
-    hideSort () {
-      this.set('displaySort', false);
+    hideSort (sortControl) {
+      this.set(sortControl, false);
     },
 
-    toggleDisplaySort () {
+    toggleDisplaySort (sortControl) {
       event.preventDefault();
-      this.toggleProperty('displaySort');
+      this.toggleProperty(sortControl);
     },
 
-    updateSortParam (value) {
+    updateSortParam (sortControl, value) {
       this.set('sort', value);
-      this.toggleProperty('displaySort'); // hide dropdown after click
+      this.toggleProperty(sortControl); // hide dropdown after click
     },
 
     changeDate (date) {

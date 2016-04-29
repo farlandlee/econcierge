@@ -326,8 +326,7 @@ $bookings-blue: #77BAF0;
   cursor: pointer;
   right: 30px;
   left: auto !important;
-
-  &::before, &::after {
+  &:before, &:after {
     content: "";
     position: absolute;
     width: 0;

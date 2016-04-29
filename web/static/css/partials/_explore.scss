@@ -78,6 +78,26 @@
         background-color: $offwhite;
       }
     }
+    .product-sort {
+      background-color: $primary-color;
+      padding: 0.8rem 2rem;
+      margin-bottom: 1rem;
+      color: $white;
+      display: flex;
+      button {
+        flex: 1 1 auto;
+        text-align: left;
+        padding-left: 0.5rem;
+        i {
+          float: right;
+          &.fa.fa-chevron-down,
+          &.fa.fa-chevron-up {
+            color: $white;
+          }
+
+        }
+      }
+    }
     @include breakpoint (medium) {
       visibility: visible;
       z-index: 0;
@@ -96,8 +116,101 @@
       flex: 3 1;
       width: calc(100vw - 320px);
     }
+    .product-sort {
+      position: relative;
+    }
+    .product-sorter-dropdown {
+      top: 30px !important;
+    }
+    &.scrolled {
+      position: relative;
+      padding-top:40vh;
+      .top-elements {
+        position: fixed;
+        top: 41px;
+        z-index: 10;
+        width: 100%;
+        @include breakpoint (medium) {
+          width: calc( 100vw - 320px);
+        }
+        @include breakpoint (large) {
+          top: 61px;
+        }
+      }
+      .activity-navigator-bar{
+        width: inherit;
+        height: auto;
+        background-image: none !important;
+        background-color: $primary-color;
+        color: $white;
+        padding: 0.5rem 1rem;
+        p {
+          font-size: 12px;
+          line-height: 1.2;
+        }
+        .current {
+          font-size: 1.2rem;
+          &:after {
+            font-size: 1.6rem;
+            margin-top: 0.2rem;
+          }
+        }
+        @include breakpoint (large) {
+          .select-activity {
+            p {
+              display: inline-block;
+              margin: 0;
+              line-height: 1.6;
+              font-size: 1rem;
+              text-transform: none;
+              font-weight: normal;
+              & + div {
+                display: inline-block;
+                float: none;
+              }
+            }
+          }
+          .current {
+            border-bottom: 0;
+            &:after {
+              margin-top: 0.4rem;
+            }
+          }
+        }
+      }
+      .product-bar {
+        background-color: $offwhite;
+        margin: 0;
+        padding-top: 0.5rem;
+        max-width: 100%;
+        p {
+          margin: 0;
+        }
+      }
+      .product-sort {
+        @include breakpoint ( large ) {
+          top: -48px;
+          z-index: 20;
+          color: $white;
+        }
+      }
+    }
+  }
+  .filter-button {
+    cursor: pointer;
+    color: $primary-color;
+    flex: 1 0 auto;
+    text-align: center;
+    font-weight: $global-weight-bold;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    &:before {
+      display: block;
+      font-size: 1.2rem;
+    }
   }
 }
+
 .no-footer {
   .page {
     margin-bottom: 0;
