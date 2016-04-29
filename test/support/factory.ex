@@ -122,7 +122,8 @@ defmodule Grid.Factory do
     %Activity{
       name: sequence(:name, &"activity-#{&1}"),
       description: "Something fun!",
-      slug: sequence(:slug, &"activity-#{&1}")
+      slug: sequence(:slug, &"activity-#{&1}"),
+      use_product_photo_card: true
     }
   end
 

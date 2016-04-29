@@ -28,6 +28,7 @@ defmodule Grid.Api.ActivityControllerTest do
     assert resp_activity["name"] == activity.name
     assert resp_activity["description"] == activity.description
     assert resp_activity["slug"] == activity.slug
+    assert resp_activity["use_product_photo_card"] == activity.use_product_photo_card
   end
 
   test "no entries with published products in index", %{conn: conn} do
