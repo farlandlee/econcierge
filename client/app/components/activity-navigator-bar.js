@@ -20,9 +20,12 @@ export default Ember.Component.extend({
 
     let parent = $('.explore-right');
 
+    let windowHeight = $window.height();
+
     parent.scroll(function () {
       // .35 is based on the 40vh that the image takes up
-      if (parent.scrollTop() > $window.height() * 0.35) {
+      // if .products is not taller than the window, then the flickering header issue occurs
+      if (parent.scrollTop() > windowHeight * 0.35 && $('.products').outerHeight() > windowHeight) {
         parent.addClass('scrolled');
       } else {
         parent.removeClass('scrolled');
@@ -31,6 +34,7 @@ export default Ember.Component.extend({
 
     // handle window resize / turning device
     $window.resize(function () {
+      windowHeight = $window.height();
       if ($window.width() > 639) {
         $('.explore-left').removeClass('open');
       }
