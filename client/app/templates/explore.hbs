@@ -126,7 +126,8 @@
       {{/grid-accordion-body}}
     {{/grid-accordion}}
     {{/each}}
-    {{!----- vendor -------}}
+    {{!----- vendor, don't show if there's only one -------}}
+    {{#if (gt vendors.length 1)}}
     {{#grid-accordion isExpanded=false tagName="li" class="filter" as |accordion|}}
       <h4 onClick={{action accordion.toggle}}>
         Vendors
@@ -146,6 +147,7 @@
         }}
       {{/grid-accordion-body}}
     {{/grid-accordion}}
+    {{/if}}
     </ul>
   </div>
   <div class="explore-right">
@@ -154,7 +156,6 @@
         activities=activities
         currentActivity=activity
         currentCategory=category
-        openFilters=(action "openFilters")
       }}
       <div class="row product-bar align-justify">
         <div class="column small-9 medium-6 product-count">
