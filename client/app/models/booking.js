@@ -15,6 +15,12 @@ export default DS.Model.extend({
   // list of {id: price.id, quantity: integer, cost: integer}
   quantities: DS.attr(),
 
+  image: computed('activity.image.full', 'category.image.full', {
+    get () {
+      return this.get('category.image') || this.get('activity.image');
+    }
+  }),
+
   total: computed('quantities.@each.{quantity,id}', {
     get () {
       let product = this.get('product');

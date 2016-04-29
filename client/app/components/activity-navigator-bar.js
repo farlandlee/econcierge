@@ -1,11 +1,18 @@
 import Ember from 'ember';
 
-const { $ } = Ember;
+const {
+  $, computed
+} = Ember;
 
 export default Ember.Component.extend({
   tagName: 'nav',
-
   classNames: 'activity-nav',
+
+  image: computed('currentActivity.image', 'currentCategory.image', {
+    get () {
+        return this.get('currentCategory.image') || this.get('currentActivity.image');
+    }
+  }),
 
   didInsertElement() {
     this._super(...arguments);
