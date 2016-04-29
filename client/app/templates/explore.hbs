@@ -1,3 +1,28 @@
+{{!-- the invisible nav menu that pops up --}}
+<div id="full-overlay-select-list-container" class="full-overlay-select-list-container">
+  <ul>
+    <li>
+      {{!-- print out a sublist of categories for the active activity --}}
+      {{link-to currentActivity.name 'categories' currentActivity.slug}}
+      <ul>
+      {{#item-sorter items=currentActivity.categories as |category|}}
+        <li>
+          {{link-to category.name 'explore' currentActivity.slug category.slug activeClass="selected"}}
+        </li>
+      {{/item-sorter}}
+      </ul>
+    </li>
+    {{!-- print out all the other activities --}}
+    {{#item-sorter items=activities as |activity|}}
+    {{#unless (eq activity.id currentActivity.id)}}
+    <li>
+      {{link-to activity.name 'categories' activity.slug}}
+    </li>
+    {{/unless}}
+    {{/item-sorter}}
+  </ul>
+  <div class="full-overlay-black-overlay"></div>
+</div>
 <div class="explore">
   <div class="explore-left">
     <header class="product-filters-header row align-justify">

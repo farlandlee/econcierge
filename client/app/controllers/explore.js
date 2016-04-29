@@ -175,7 +175,6 @@ export default Ember.Controller.extend({
   }),
 
   _resetProductScroll () {
-    debugger;
     $('.explore-right').animate({scrollTop: 0}, 'fast');
   },
 
