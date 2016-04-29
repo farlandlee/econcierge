@@ -446,6 +446,10 @@
 
                 <%= render "_vendor_accepted_row.html", title: "PRODUCT", value: @order_item.product.name %>
 
+                <%= if @order_item.product.internal_name do %>
+                  <%= render "_vendor_accepted_row.html", title: "VENDOR DESCRIPTION", value: @order_item.product.internal_name %>
+                <% end %>
+
                 <%= render "_vendor_accepted_row.html", title: "DATE &amp; TIME", value: date_time_string(@order_item.activity_at) %>
 
                 <table class="row main" style="border-spacing: 0; border-collapse: collapse; vertical-align: top; text-align: left; width: 100%; position: relative; display: block; padding: 0px;">

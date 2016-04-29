@@ -428,6 +428,10 @@
 
                 <%= render "_vendor_received_row.html", title: "PRODUCT", value: @order_item.product.name %>
 
+                <%= if @order_item.product.internal_name do %>
+                  <%= render "_vendor_received_row.html", title: "VENDOR DESCRIPTION", value: @order_item.product.internal_name %>
+                <% end %>
+
                 <%= render "_vendor_received_row.html", title: "DURATION", value: duration_string(@order_item.product.duration) %>
 
                 <%= render "_vendor_received_row.html", title: "LOCATION", value: location(@order_item.product) %>
