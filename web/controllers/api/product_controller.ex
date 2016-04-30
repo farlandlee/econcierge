@@ -31,6 +31,7 @@ defmodule Grid.Api.ProductController do
       :product_amenity_options,
       :meeting_location,
       :images,
+      :default_image,
       start_times: :season,
       prices: :amounts,
       default_price: :amounts

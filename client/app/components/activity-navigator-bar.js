@@ -14,23 +14,33 @@ export default Ember.Component.extend({
     }
   }),
 
+  usePhotoCards: computed('currentActivity.useProductPhotoCard', {
+    get () {
+      return this.get('currentActivity.useProductPhotoCard');
+    }
+  }),
+
   didInsertElement() {
     this._super(...arguments);
-    let $window = $(window);
 
-    let parent = $('.explore-right');
+    let $window = $(window);
 
     let windowHeight = $window.height();
 
-    parent.scroll(function () {
-      // .35 is based on the 40vh that the image takes up
-      // if .products is not taller than the window, then the flickering header issue occurs
-      if (parent.scrollTop() > windowHeight * 0.35 && $('.products').outerHeight() > windowHeight) {
-        parent.addClass('scrolled');
-      } else {
-        parent.removeClass('scrolled');
-      }
-    });
+    if(!this.get('usePhotoCards')) {
+
+      let parent = $('.explore-right');
+
+      parent.scroll(function () {
+        // .35 is based on the 40vh that the image takes up
+        // if .products is not taller than the window, then the flickering header issue occurs
+        if (parent.scrollTop() > windowHeight * 0.35 && $('.products').outerHeight() > windowHeight) {
+          parent.addClass('scrolled');
+        } else {
+          parent.removeClass('scrolled');
+        }
+      });
+    }
 
     // handle window resize / turning device
     $window.resize(function () {
