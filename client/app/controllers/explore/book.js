@@ -29,7 +29,7 @@ export default Ember.Controller.extend({
     }
   }),
 
-  firstImage: computed('images.[]', {
+  firstImage: computed('product.images.[]', {
     get () {
       return this.get('product.images').get('firstObject');
     }
