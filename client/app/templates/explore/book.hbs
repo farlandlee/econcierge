@@ -2,8 +2,14 @@
   <section class="row column">
       <h3>{{product.name}}</h3>
   </section>
-  {{#if product.images}}
-  {{foundation-orbit images=product.images}}
+  {{#if addSlideshow}}
+    {{foundation-orbit images=product.images isLarge=true useLightGallery=true}}
+  {{else if addSingleImage}}
+    <section class="row expanded single-image">
+      <div data-src="{{firstImage.full}}">
+        <img src="{{firstImage.large}}" >
+      </div>
+    </section>
   {{/if}}
   <section class="row align-right">
     <div class="columns small-12 medium-6">

@@ -137,7 +137,8 @@
       max-width: 718px;
     }
   }
-  .orbit-container {
+  .orbit-container,
+  .single-image {
     min-width: 100%;
     max-height: 160px;
     // needed to keep the slideshow displaying after being opened, closed, then opened again

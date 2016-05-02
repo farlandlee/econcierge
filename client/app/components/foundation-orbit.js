@@ -14,9 +14,16 @@ export default Ember.Component.extend({
     };
     new Foundation.Orbit(el, options);
 
-    this.$('.lightgallery').lightGallery({
-      selector: ".orbit-slide",
-      download: false
+    if(this.get('useLightGallery')) {
+      this.$('.lightgallery').lightGallery({
+        selector: ".orbit-slide",
+        download: false
+      });
+    }
+    // prevent clicking next and previous from opening link if images are linked
+    // see product cards to booking modal for example
+    this.$('.orbit-next, .orbit-previous').click(function(e) {
+      e.stopPropagation();
     });
   }
 });
