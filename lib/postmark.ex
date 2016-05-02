@@ -24,6 +24,8 @@ defmodule Postmark do
 
     options = if Grid.fetch_env!(:send_external_emails) do
       Map.put(options, "To", to)
+    else
+      options
     end
 
     content = Poison.encode!(options)
