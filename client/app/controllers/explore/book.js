@@ -15,5 +15,23 @@ export default Ember.Controller.extend({
     set (_k, value) {
       return value;
     }
+  }),
+
+  addSlideshow: computed('product.images.[]', {
+    get () {
+      return this.get('product.images').length > 1;
+    }
+  }),
+
+  addSingleImage: computed('product.images.[]', {
+    get () {
+      return this.get('product.images').length === 1;
+    }
+  }),
+
+  firstImage: computed('images.[]', {
+    get () {
+      return this.get('product.images').get('firstObject');
+    }
   })
 });
