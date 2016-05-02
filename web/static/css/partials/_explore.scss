@@ -110,92 +110,6 @@
       position: relative;
     }
   }
-  .explore-right {
-    background-color: $offwhite;
-    @include breakpoint (medium) {
-      flex: 3 1;
-      width: calc(100vw - 320px);
-    }
-    .product-sort {
-      position: relative;
-    }
-    .product-sorter-dropdown {
-      top: 30px !important;
-    }
-    &.scrolled {
-      position: relative;
-      padding-top:40vh;
-      .top-elements {
-        position: fixed;
-        top: 41px;
-        z-index: 10;
-        width: 100%;
-        @include breakpoint (medium) {
-          width: calc( 100vw - 320px);
-        }
-        @include breakpoint (large) {
-          top: 61px;
-        }
-      }
-      .activity-navigator-bar{
-        width: inherit;
-        height: auto;
-        background-image: none !important;
-        background-color: $primary-color;
-        color: $white;
-        padding: 0.5rem 1rem;
-        p {
-          font-size: 12px;
-          line-height: 1.2;
-        }
-        .current {
-          font-size: 1.2rem;
-          &:after {
-            font-size: 1.6rem;
-            margin-top: 0.2rem;
-          }
-        }
-        @include breakpoint (large) {
-          .select-activity {
-            p {
-              display: inline-block;
-              margin: 0;
-              line-height: 1.6;
-              font-size: 1rem;
-              text-transform: none;
-              font-weight: normal;
-              & + div {
-                display: inline-block;
-                float: none;
-              }
-            }
-          }
-          .current {
-            border-bottom: 0;
-            &:after {
-              margin-top: 0.4rem;
-            }
-          }
-        }
-      }
-      .product-bar {
-        background-color: $offwhite;
-        margin: 0;
-        padding-top: 0.5rem;
-        max-width: 100%;
-        p {
-          margin: 0;
-        }
-      }
-      .product-sort {
-        @include breakpoint ( large ) {
-          top: -48px;
-          z-index: 20;
-          color: $white;
-        }
-      }
-    }
-  }
   .filter-button {
     cursor: pointer;
     color: $primary-color;
@@ -207,6 +121,59 @@
     &:before {
       display: block;
       font-size: 1.2rem;
+    }
+  }
+}
+
+.explore-right {
+  background-color: $offwhite;
+  @include breakpoint (medium) {
+    flex: 3 1;
+    width: calc(100vw - 320px);
+  }
+  .product-sort {
+    position: relative;
+  }
+  .product-sorter-dropdown {
+    top: 30px !important;
+  }
+  &.scrolled,
+  .photo-cards & {
+    position: relative;
+    padding-top:40vh;
+    .top-elements {
+      position: fixed;
+      top: 41px;
+      z-index: 10;
+      width: 100%;
+      @include breakpoint (medium) {
+        width: calc( 100vw - 320px);
+      }
+      @include breakpoint (large) {
+        top: 61px;
+      }
+    }
+    .product-bar {
+      background-color: $offwhite;
+      margin: 0;
+      padding-top: 0.5rem;
+      max-width: 100%;
+      p {
+        margin: 0;
+      }
+    }
+    .product-sort {
+      @include breakpoint ( large ) {
+        top: -48px;
+        z-index: 20;
+        color: $white;
+      }
+    }
+  }
+  .photo-cards & {
+    padding-top: 137px - 15px;
+    @include breakpoint (medium) {
+      padding-top:80px;
     }
   }
 }

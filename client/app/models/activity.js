@@ -11,5 +11,6 @@ export default DS.Model.extend({
   defaultImage: DS.attr(),
   image: alias('defaultImage'),
   // [{id, name, options: [{id, name}]}]
-  amenities: DS.attr()
+  amenities: DS.attr(),
+  useProductPhotoCard: DS.attr(),
 });

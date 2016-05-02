@@ -36,22 +36,61 @@
       padding: 0;
     }
     .current {
-      font-size: 1em;
+      font-size: 0.8rem;
       text-decoration: none;
       border-bottom: 1px solid;
       &:after {
-        font-size: 1.6rem;
+        font-size: 1.2rem;
         top: 0;
         margin-top: 0.4rem;
+        text-align: right;
       }
       @include breakpoint (large) {
-        font-size: 2em;
+        font-size: 2rem;
         text-decoration: none;
         border-bottom: 2px solid;
         &:after {
-          font-size: 3.2rem;
+          font-size: 2.4rem;
           top: 0;
-          margin-top: -0.6rem;
+          margin-top: 0rem;
+        }
+      }
+    }
+  }
+  .scrolled &,
+  .photo-cards & {
+    width: inherit;
+    height: auto;
+    background-image: none !important;
+    background-color: $primary-color;
+    color: $white;
+    padding: 0.5rem 1rem;
+    p {
+      font-size: 12px;
+      line-height: 1.2;
+    }
+    @include breakpoint (large) {
+      .select-activity {
+        p {
+          display: inline-block;
+          margin: 0;
+          line-height: 1.6;
+          font-size: 1.2rem;
+          text-transform: none;
+          font-weight: normal;
+          & + div {
+            display: inline-block;
+            float: none;
+          }
+        }
+      }
+      .current {
+        border-bottom: 0;
+        font-size: 1.2rem;
+        &:after {
+          font-size: 1.6rem;
+          margin-top: .4rem;
+          text-align: left;
         }
       }
     }

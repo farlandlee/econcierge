@@ -20,7 +20,7 @@ export default DS.Model.extend({
   amenityOptions: DS.attr(),
 
   // images
-  // defaultImage: DS.attr(),
+  defaultImage: DS.attr(),
   images: DS.attr(),
 
   minDefaultPrice: computed('defaultPrice.amounts.@each.min_quantity', {

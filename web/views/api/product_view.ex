@@ -34,6 +34,7 @@ defmodule Grid.Api.ProductView do
       vendor: product.vendor_id,
       experience: product.experience_id,
       default_price: render_one(default_price, PriceView, "price.json"),
+      default_image: render_one(product.default_image, ImageView, "image.json"),
 
       meeting_location: render_one(product.meeting_location, LocationView, "location.json"),
       prices: render_many(product.prices, PriceView, "price.json"),

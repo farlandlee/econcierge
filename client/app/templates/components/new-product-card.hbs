@@ -1,3 +1,25 @@
+{{#if activity.useProductPhotoCard}}
+<div class="row product-header has-image" style="background-image: url({{product.defaultImage.full}})">
+  <div class="product-details column small-4 align-self-bottom shrink">
+    {{new-price-display price=product.defaultPrice}}
+  </div>
+</div>
+<div class="row product-body align-bottom">
+  <div class="product-name column small-12">
+    <p class="product-title">{{#link-to "explore.book" product}}{{product.name}}{{/link-to}}</p>
+    <div class="product-activity">
+      <div class="activity-label">Activity:</div>
+      <div class="full-overlay-select-opener" >{{activity.name}} - {{category.name}}</div>
+    </div>
+  </div>
+  {{new-product-icons product=product}}
+</div>
+<div class="row product-footer text-center">
+  <div class="column">
+    <p class="request-to-book">{{link-to "Learn More" "explore.book" product}}</p>
+  </div>
+</div>
+{{else}}
 <div class="row product-header">
   <div class="product-name column small-8">
     <p class="product-title">{{#link-to "explore.book" product}}{{product.name}}{{/link-to}}</p>
@@ -21,3 +43,4 @@
     <p class="request-to-book">{{link-to "Click To Book" "explore.book" product}}</p>
   </div>
 </div>
+{{/if}}
