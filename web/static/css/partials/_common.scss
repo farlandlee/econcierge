@@ -439,3 +439,8 @@ a.more-info {
   margin-left: -1em;
   @include spinner(2em);
 }
+
+.block-link {
+  width: 100%;
+  display: block;
+}
