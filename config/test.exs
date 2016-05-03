@@ -10,6 +10,9 @@ config :grid, Grid.Endpoint,
 # Print only warnings and errors during test
 config :logger, level: :warn
 
+# Just log rollbax errors
+config :rollbax, enabled: :log
+
 # Configure your database
 config :grid, Grid.Repo,
   adapter: Ecto.Adapters.Postgres,
