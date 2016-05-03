@@ -1,22 +1,22 @@
 {{#if activity.useProductPhotoCard}}
-
-  {{#link-to "explore.book" product}}
   <div class="row product-header">
     {{#if addSlideshow}}
       {{foundation-orbit images=product.images isMedium=true useLightGallery=false}}
     {{else if addSingleImage}}
-      <img src="{{product.defaultImage.medium}}" >
+      {{#link-to "explore.book" product}}
+        <img src="{{product.defaultImage.medium}}" >
+      {{/link-to}}
     {{else}}
-      <div class="missing-photo">
-        <i class="fa fa-camera" aria-hidden="true"></i>
-      </div>
+      {{#link-to "explore.book" product}}
+        <div class="missing-photo">
+          <i class="fa fa-camera" aria-hidden="true"></i>
+        </div>
+      {{/link-to}}
     {{/if}}
     <div class="product-details column small-4 align-self-bottom shrink">
       {{new-price-display price=product.defaultPrice}}
     </div>
   </div>
-  {{/link-to}}
-
   <div class="row product-body align-bottom">
     <div class="product-name column small-12">
       <p class="product-title">{{#link-to "explore.book" product}}{{product.name}}{{/link-to}}</p>
