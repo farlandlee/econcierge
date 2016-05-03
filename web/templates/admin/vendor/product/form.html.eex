@@ -12,6 +12,16 @@
   </div>
 
   <div class="form-group">
+    <%= label f, :internal_name, "Internal Vendor Name", class: "control-label" %>
+    <%= text_input f, :internal_name, class: "form-control" %>
+    <%= error_tag f, :internal_name %>
+    <span id="helpBlock" class="help-block">
+      This is the product name specific to the vendor. Customers do not see this name, it
+      is only included in the Vendor Email correspondence.
+    </span>
+  </div>
+
+  <div class="form-group">
     <%= label f, :description, "Back of Card Description", class: "control-label" %>
     <%= textarea f, :description, class: "form-control tinymce", rows: 5 %>
     <%= error_tag f, :description %>

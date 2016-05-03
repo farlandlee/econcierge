@@ -7,6 +7,7 @@ defmodule Grid.Product do
     field :description, :string
     field :short_description, :string
     field :name, :string
+    field :internal_name, :string
     field :published, :boolean, default: false
     field :pickup, :boolean, default: true
     field :duration, :integer, default: 0
@@ -98,7 +99,7 @@ defmodule Grid.Product do
 
   @creation_fields ~w(vendor_id experience_id)a
   @required_fields ~w(description name published duration)a
-  @optional_fields ~w(pickup experience_id meeting_location_id short_description default_image_id)a
+  @optional_fields ~w(pickup experience_id meeting_location_id short_description default_image_id internal_name)a
 
   @doc """
   Creates a changeset based on the `model` and `params`.
@@ -111,6 +112,8 @@ defmodule Grid.Product do
     |> cast(params, @required_fields, @optional_fields)
     |> update_change(:name, &String.strip/1)
     |> validate_length(:name, min: 1, max: 255)
+    |> update_change(:internal_name, &String.strip/1)
+    |> validate_length(:internal_name, max: 255)
     |> update_change(:description, &String.strip/1)
     |> validate_length(:description, min: 1)
     |> validate_number(:duration, greater_than: 0)

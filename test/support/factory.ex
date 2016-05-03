@@ -181,6 +181,7 @@ defmodule Grid.Factory do
   def factory(:product) do
     %Product{
       name: sequence(:name, &"product-#{&1}"),
+      internal_name: sequence(:internal_name, &"product-internal-#{&1}"),
       description: sequence(:description, &"product-description-#{&1}"),
       vendor: build(:vendor),
       experience: build(:experience),
