@@ -1,5 +1,11 @@
 defmodule Grid.Router do
   use Grid.Web, :router
+  use Plug.ErrorHandler
+
+  # Reports the exception and re-raises it
+  defp handle_errors(conn, %{kind: _kind, reason: reason, stack: stack}) do
+    Rollbax.report(reason, stack, %{params: conn.params})
+  end
 
   alias Grid.Plugs
 
