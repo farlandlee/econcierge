@@ -33,7 +33,6 @@ export default Ember.Route.extend(NotFoundMixin, {
     return hash({
       activity: this.store.findRecord('activity', b.activity),
       category: this.store.findRecord('category', b.category),
-      experience: this.store.findRecord('experience', b.experience),
       product: this.store.findRecord('product', b.product),
       quantities: b.quantities,
       startTime: b.startTime,

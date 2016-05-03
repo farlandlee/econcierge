@@ -34,6 +34,9 @@ config :logger, :console, format: "[$level] $message\n"
 # and calculating stacktraces is usually expensive.
 config :phoenix, :stacktrace_depth, 20
 
+# Just log rollbax errors
+config :rollbax, enabled: :log
+
 # Configure your database
 config :grid, Grid.Repo,
   adapter: Ecto.Adapters.Postgres,

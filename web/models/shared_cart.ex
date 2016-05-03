@@ -42,7 +42,6 @@ defmodule Grid.SharedCart do
   #     "activity" => "1",
   #     "category" => "2",
   #     "date" => "2016-04-25",
-  #     "experience" => "2",
   #     "product" => "7",
   #     "quantities" => [%{"cost" => 100, "id" => 13, "quantity" => 1}],
   #     "startTime" => %{"id" => 7, "time" => "00:00:00"}
@@ -54,7 +53,7 @@ defmodule Grid.SharedCart do
     |> validate_booking_start_times(booking)
   end
 
-  @required_booking_keys ~w(activity category date experience product quantities startTime)
+  @required_booking_keys ~w(activity category date product quantities startTime)
   defp validate_booking_has_all_keys(changeset, booking) do
     Enum.reduce(@required_booking_keys, changeset, fn req_key, changeset ->
       if Map.has_key? booking, req_key do
