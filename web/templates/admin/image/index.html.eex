@@ -10,7 +10,7 @@
     </tr>
   </thead>
   <tbody>
-  <%= for image <- @images do %>
+  <%= for image <- @images |> Enum.sort_by(&(&1.position)) do %>
     <tr>
       <td><%= img image, version: :thumb, class: "img-responsive" %></td>
       <td><%= link image.filename, to: image_path(@image_path, [@conn, :show] ++ @ancestors ++ [image]) %></td>
