@@ -39,7 +39,7 @@ defmodule Grid.Api.ProductView do
       meeting_location: render_one(product.meeting_location, LocationView, "location.json"),
       prices: render_many(product.prices, PriceView, "price.json"),
       start_times: render_many(product.start_times, StartTimeView, "start_time.json"),
-      images: render_many(product.images, ImageView, "image.json"),
+      images: render_many(product.images, ImageView, "image.json") |> Enum.sort_by(&(&1.position)),
       amenity_options: Enum.map(product.product_amenity_options, &(&1.amenity_option_id))
     }
   end
