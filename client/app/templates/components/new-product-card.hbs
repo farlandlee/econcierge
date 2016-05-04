@@ -1,59 +1,23 @@
-{{#if activity.useProductPhotoCard}}
-  <div class="row product-header">
-    {{#if addSlideshow}}
-      {{foundation-orbit images=product.images isMedium=true useLightGallery=false}}
-    {{else if addSingleImage}}
-      {{#link-to "explore.book" product}}
-        <img src="{{product.defaultImage.medium}}" >
-      {{/link-to}}
-    {{else}}
-      {{#link-to "explore.book" product class="block-link"}}
-        <div class="missing-photo">
-          <i class="fa fa-camera" aria-hidden="true"></i>
-        </div>
-      {{/link-to}}
+<div class="row product-header">
+  <div class="product-name column small-8">
+    <p class="product-title">{{product.name}}</p>
+  </div>
+  <div class="product-details column small-4">
+    {{new-price-display price=product.defaultPrice}}
+    {{#if product.images}}
+    {{product-images images=product.images}}
     {{/if}}
-    <div class="product-details column small-4 align-self-bottom shrink">
-      {{new-price-display price=product.defaultPrice}}
-    </div>
   </div>
-  <div class="row product-body align-bottom">
-    <div class="product-name column small-12">
-      <p class="product-title">{{#link-to "explore.book" product}}{{product.name}}{{/link-to}}</p>
-      <div class="product-activity">
-        <div class="activity-label">Activity:</div>
-        <div class="activity-category" >{{activity.name}} - {{category.name}}</div>
-      </div>
-    </div>
-    {{new-product-icons product=product}}
+</div>
+<div class="row product-body align-bottom">
+  {{new-product-icons product=product}}
+  <div class="product-description column small-12">
+    {{{product.short_description}}}
+    <p>Read More &hellip;</p>
   </div>
-  <div class="row product-footer text-center">
-    <div class="column">
-      <p class="request-to-book">{{link-to "Learn More" "explore.book" product}}</p>
-    </div>
+</div>
+<div class="row product-footer text-center">
+  <div class="column">
+    <p class="request-to-book"><span>Click To Book</span></p>
   </div>
-{{else}}
-  <div class="row product-header">
-    <div class="product-name column small-8">
-      <p class="product-title">{{#link-to "explore.book" product}}{{product.name}}{{/link-to}}</p>
-    </div>
-    <div class="product-details column small-4">
-      {{new-price-display price=product.defaultPrice}}
-      {{#if product.images}}
-      {{product-images images=product.images}}
-      {{/if}}
-    </div>
-  </div>
-  <div class="row product-body align-bottom">
-    {{new-product-icons product=product}}
-    <div class="product-description column small-12">
-      {{{product.short_description}}}
-      <p>{{link-to "Read More" "explore.book" product}}</p>
-    </div>
-  </div>
-  <div class="row product-footer text-center">
-    <div class="column">
-      <p class="request-to-book">{{link-to "Click To Book" "explore.book" product}}</p>
-    </div>
-  </div>
-{{/if}}
+</div>

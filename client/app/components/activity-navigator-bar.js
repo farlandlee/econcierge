@@ -13,13 +13,7 @@ export default Ember.Component.extend({
         return this.get('currentCategory.image') || this.get('currentActivity.image');
     }
   }),
-
-  usePhotoCards: computed('currentActivity.useProductPhotoCard', {
-    get () {
-      return this.get('currentActivity.useProductPhotoCard');
-    }
-  }),
-
+  
   didInsertElement() {
     this._super(...arguments);
 
@@ -27,8 +21,7 @@ export default Ember.Component.extend({
 
     let windowHeight = $window.height();
 
-    if(!this.get('usePhotoCards')) {
-
+    if(!this.get('currentActivity.useProductPhotoCard')) {
       let parent = $('.explore-right');
 
       parent.scroll(function () {

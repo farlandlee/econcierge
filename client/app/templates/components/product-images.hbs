@@ -1,16 +1,16 @@
 <ul class="photo-gallery">
-    <li data-src="{{firstImage.full}}" class="lightgallery-item photo-gallery-caption">
-      <i class="fa fa-camera" aria-hidden="true"></i>photo gallery
-    </li>
-    <li style="background-image: url({{firstImage.thumb}})">
+  <li data-src="{{firstImage.full}}" class="lightgallery-item photo-gallery-caption">
+    <i class="fa fa-camera" aria-hidden="true"></i>photo gallery
+  </li>
+  <li style="background-image: url({{firstImage.thumb}})">
+    <div class="darken-overlay"></div>
+  </li>
+  {{#each nextTwoImages as |image|}}
+    <li data-src="{{image.full}}" class="lightgallery-item" style="background-image: url({{image.thumb}})">
       <div class="darken-overlay"></div>
     </li>
-    {{#each nextTwoImages as |image|}}
-      <li data-src="{{image.full}}" class="lightgallery-item" style="background-image: url({{image.thumb}})">
-        <div class="darken-overlay"></div>
-      </li>
-    {{/each}}
-    {{#each remainingImages as |image|}}
-      <li data-src="{{image.full}}" class="lightgallery-item hidden" ></li>
-    {{/each}}
+  {{/each}}
+  {{#each remainingImages as |image|}}
+    <li data-src="{{image.full}}" class="lightgallery-item hidden" ></li>
+  {{/each}}
 </ul>

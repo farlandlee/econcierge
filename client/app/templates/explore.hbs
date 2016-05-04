@@ -186,10 +186,14 @@
 
     <main class="align-center products align-stretch">
       {{#item-sorter items=dateFilteredProducts by=currentSortOrder as |product|}}
-        <div class="product-card-outer">
-          {{new-product-card product=product activity=activity category=category}}
-        </div>
-        {{else}}
+        {{#link-to "explore.book" product class="product-card-outer"}}
+          {{#if activity.useProductPhotoCard}}
+            {{product-photo-card product=product category=category}}
+          {{else}}
+            {{new-product-card product=product}}
+          {{/if}}
+        {{/link-to}}
+      {{else}}
         <p>There are no products available on this date.  Please select a different activity or date using the calendar above.</p>
       {{/item-sorter}}
     </main>

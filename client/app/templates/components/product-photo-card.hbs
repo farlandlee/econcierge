@@ -1,0 +1,27 @@
+<div class="row product-header">
+  {{#if product.defaultImage}}
+    <img src="{{product.defaultImage.medium}}" alt="{{product.defaultImage.alt}}" title="{{product.defaultImage.title}}">
+  {{else}}
+    <div class="missing-photo">
+      <i class="fa fa-camera" aria-hidden="true"></i>
+    </div>
+  {{/if}}
+  <div class="product-details column small-4 align-self-bottom shrink">
+    {{new-price-display price=product.defaultPrice}}
+  </div>
+</div>
+<div class="row product-body align-bottom">
+  <div class="product-name column small-12">
+    <p class="product-title">{{product.name}}</p>
+    <div class="product-activity">
+      <div class="activity-label">Activity:</div>
+      <div class="activity-category" >{{category.displayName}}</div>
+    </div>
+  </div>
+  {{new-product-icons product=product}}
+</div>
+<div class="row product-footer text-center">
+  <div class="column">
+    <p class="request-to-book"><span>Learn More</span></p>
+  </div>
+</div>
