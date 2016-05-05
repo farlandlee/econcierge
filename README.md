@@ -133,3 +133,9 @@ Tip #2: Manual deploy does not automatically run migrations
 ```sh
 heroku run mix ecto.migrate --remote heroku-staging
 ```
+
+#### Copying production data to staging
+
+```sh
+heroku pg:backups restore $(heroku pg:backups public-url --app outpost-grid) DATABASE_URL --app outpost-grid-staging
+```
