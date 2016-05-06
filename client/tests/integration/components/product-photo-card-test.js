@@ -15,12 +15,8 @@ test('it renders', function(assert) {
     },
     name: 'Product Name'
   });
-  this.set('category', {
-    displayName: 'a category name'
-  });
   this.render(hbs`{{product-photo-card product=product category=category}}`);
 
   assert.equal(this.$('img').attr('alt'), 'alt!');
   assert.equal(this.$('.product-title').text(), 'Product Name');
-  assert.equal(this.$('.activity-category').text(), 'a category name');
 });
