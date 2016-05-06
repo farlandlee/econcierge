@@ -3,7 +3,7 @@
       <h3>{{product.name}}</h3>
   </section>
   {{#if addSlideshow}}
-    {{foundation-orbit images=product.images isLarge=true useLightGallery=true}}
+    {{foundation-orbit images=product.images size='large' useLightGallery=true}}
   {{else if addSingleImage}}
     <section class="row expanded single-image">
       <div data-src="{{firstImage.full}}">

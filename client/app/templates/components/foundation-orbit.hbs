@@ -1,5 +1,5 @@
 <div class="spinner"></div>
-<ul class="orbit-container {{if useLightGallery "lightgallery"}}">
+<ul class="orbit-container">
   <button class="orbit-previous"><span class="show-for-sr">Previous Slide</span><i class="fi flaticon-arrow-left" aria-hidden="true"></i></button>
   <button class="orbit-next"><span class="show-for-sr">Next Slide</span><i class="fi flaticon-arrow-right" aria-hidden="true"></i></button>
   {{#each images as |image|}}
@@ -7,13 +7,7 @@
     {{#if useLightGallery}}
       <i class="fi flaticon-photo-gallery photo-gallery-button"></i>
     {{/if}}
-    {{#if isMedium}}
-      <img class="orbit-image" src="{{image.medium}}" alt="{{image.alt}}" title="{{image.title}}">
-    {{else if isLarge}}
-      <img class="orbit-image" src="{{image.large}}" alt="{{image.alt}}" title="{{image.title}}">
-    {{else}}
-      <img class="orbit-image" src="{{image.full}}" alt="{{image.alt}}" title="{{image.title}}">
-    {{/if}}
+    <img class="orbit-image" src="{{get image size}}" alt="{{image.alt}}" title="{{image.title}}">
   </li>
   {{/each}}
 </ul>

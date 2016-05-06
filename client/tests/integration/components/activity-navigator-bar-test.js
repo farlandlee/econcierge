@@ -7,24 +7,13 @@ moduleForComponent('activity-navigator-bar', 'Integration | Component | activity
 
 test('it renders', function(assert) {
   this.setProperties({
-    activity: {
-      id: 'act-id',
-      name: 'act name',
-      slug: 'act-slug',
-      categories: []
-    },
     category: {
       name: 'cat name',
-      slug: 'cat-slug'
-    },
-    activities: []
+      slug: 'cat-slug',
+      displayName: 'act name - cat name'
+    }
   });
-  this.render(hbs`
-    {{activity-navigator-bar
-      activities=activities
-      currentActivity=activity
-      currentCategory=category}}
-  `);
+  this.render(hbs`{{activity-navigator-bar currentCategory=category}}`);
 
   assert.equal(this.$('.select-activity p').text().trim(), 'Activity:');
   assert.equal(this.$('.current').text().trim(), 'act name - cat name');

@@ -1,11 +1,5 @@
 $bookings-blue: #77BAF0;
 $card-width: 340px;
-.products-loading {
-  background: $white;
-  padding-top: 4rem;
-  font-size: 1.6rem;
-}
-
 .product-filters-header {
   margin-bottom: 2rem;
   width: 104%;
@@ -95,6 +89,9 @@ $card-width: 340px;
     padding-right: 0;
     flex-shrink: 1;
     border-radius: 2px;
+    &:hover {
+      color: inherit;
+    }
   }
 }
 
@@ -294,7 +291,7 @@ $card-width: 340px;
     }
   }
   .request-to-book {
-    a {
+    span {
       color: $bookings-blue;
       display: inline-block;
       text-align: left;
