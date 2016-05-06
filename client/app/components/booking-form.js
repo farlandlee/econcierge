@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import Quantity, {amountForQuantity} from 'client/models/quantity';
 
-const {Component, computed} = Ember;
+const {Component, computed, $} = Ember;
 
 export default Component.extend({
   classNames: 'booking-form',
@@ -41,6 +41,33 @@ export default Component.extend({
       });
     });
     this.set('quantities', quantities);
+  },
+
+  didInsertElement () {
+    this._super(...arguments);
+    let el = this.$();
+    let contentContainer = $('.content-container');
+    let windowWidth = $(window).width();
+    let contentContainerHeight = contentContainer.outerHeight();
+    let elHeight = el.outerHeight();
+
+    //if sidebar is taller than content increase height to match;
+    if(elHeight > contentContainerHeight && windowWidth > 1024 ) {
+      contentContainer.css('padding-bottom',elHeight - contentContainerHeight);
+    }
+
+    $(window).resize(function(){
+      windowWidth = $(window).width();
+      contentContainerHeight = contentContainer.outerHeight();
+      elHeight = el.outerHeight();
+      if(elHeight > contentContainerHeight && windowWidth > 1024 ) {
+        contentContainer.css('padding-bottom',elHeight - contentContainerHeight);
+      }
+      else if(windowWidth < 1025){
+        contentContainer.removeAttr('style');
+      }
+    });
+
   },
 
   actions: {

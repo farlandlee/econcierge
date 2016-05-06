@@ -1,28 +1,29 @@
-{{#unless hasBlock}}
-<label>
-  {{price.name}}
-  {{foundation-tooltip tipText=price.description}}
-</label>
-{{/unless}}
+
 <div class="input-group body-count">
+  {{#unless hasBlock}}
+  <label>
+    {{price.name}}
+    {{foundation-tooltip tipText=price.description}}
+  </label>
+  {{/unless}}
   <div onclick={{action "decrement"}} class="input-group-button">
-    <span class="fa fa-minus-square"></span>
+    <span class="fi flaticon-circle-minus"></span>
   </div>
 
   {{input value=quantity type="number" class="input-group-field"}}
 
   <div onclick={{action "increment"}} class="input-group-button">
-    <span class="fa fa-plus-square"></span>
+    <span class="fi flaticon-circle-plus"></span>
   </div>
-</div>
-{{#if showAmountLabel}}
-<div class="amount-label text-center">
-  ${{amount.amount}} per
-  {{#if (gt price.people_count 1)}}
-    {{price.people_count}} people
-  {{else}}
-    person
+  {{#if showAmountLabel}}
+  <div class="amount-label">
+    ${{amount.amount}} per
+    {{#if (gt price.people_count 1)}}
+      {{price.people_count}} people
+    {{else}}
+      person
+    {{/if}}
+  </div>
   {{/if}}
+  {{yield cost amount}}
 </div>
-{{/if}}
-{{yield cost amount}}
