@@ -6,6 +6,7 @@ const {
 } = Ember;
 
 export default ProductCard.extend({
+  classNames: 'product photo-card',
   category: null, // for display activity/category name
 
   addSlideshow: computed('product.images.[]', {
@@ -13,7 +14,7 @@ export default ProductCard.extend({
       return this.get('product.images').length > 1;
     }
   }),
-  
+
   addSingleImage: computed('product.images.[]', {
     get () {
       return this.get('product.images').length === 1;

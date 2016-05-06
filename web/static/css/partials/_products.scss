@@ -103,6 +103,7 @@ $card-width: 340px;
   margin: 0;
   flex: 0 2 auto;
   position: relative;
+  padding-bottom: 88px;
   border-radius: 0;
   .product-header,
   .product-body,
@@ -145,6 +146,12 @@ $card-width: 340px;
     > .columns {
       padding-left: 0.5rem;
       padding-right: 0.5rem;
+    }
+  }
+
+  &:hover {
+    .product-title {
+      text-decoration: underline;
     }
   }
 
@@ -289,6 +296,7 @@ $card-width: 340px;
       margin: 0;
     }
   }
+
   .request-to-book {
     span {
       color: $bookings-blue;
@@ -316,6 +324,10 @@ $card-width: 340px;
       }
     }
   }
+}
+
+.photo-card {
+  padding-bottom: 0;
 }
 
 .photo-gallery-thumbs {
