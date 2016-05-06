@@ -1,0 +1,39 @@
+{{#if (gt product.images.length 1)}}
+  {{foundation-orbit images=product.images size='large' useLightGallery=true}}
+{{else}}
+  <section class="row expanded single-image">
+    <div data-src="{{product.defaultImage.full}}">
+      <img src="{{product.defaultImage.large}}" >
+    </div>
+  </section>
+{{/if}}
+<section class="row">
+    <h3 class="column">{{product.name}}</h3>
+</section>
+<section class="row align-right">
+  <div class="columns small-12 medium-6">
+    <h4 class="subheader">
+      Activity:
+    </h4>
+    <p>{{product.activity.name}}</p>
+  </div>
+  <div class="columns small-12 medium-6">
+    <div class="row">
+      {{product-icons product=product}}
+    </div>
+  </div>
+</section>
+<section class="row">
+  <div class="columns">
+    <p>{{{product.description}}}</p>
+  </div>
+</section>
+<section class="row">
+  <div class="columns">
+    <h4 class="subheader">
+      Cancellation Policy
+    </h4>
+    <p>100% refund up to {{product.vendor.cancellationPolicyDays}} days before the trip.</p>
+  </div>
+</section>
+{{booking-form product=product date=date submit=(route-action "book" product)}}

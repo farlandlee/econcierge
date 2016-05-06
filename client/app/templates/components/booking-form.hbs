@@ -1,9 +1,7 @@
 <section class="trip-details">
   <header>
-    <button type="button" class="button hollow button-back" onclick={{action "previous"}}>Back</button>
     <h3 class="text-center">Enter Your Trip Details</h3>
   </header>
-{{#if (eq step 0)}}
   <div class="row align-left body-count">
     <div class="columns shrink">
       {{amount-quantity-input price=product.defaultPrice quantities=quantities onChange=(action "updateQuantity" product.defaultPrice) showAmountLabel=true}}
@@ -16,37 +14,41 @@
     {{/unless}}
     {{/each}}
   </div>
-{{/if}}
-{{#if (eq step 1)}}
+  <hr>
   <div class="row align-center date-selection">
     <div class="columns small-12 medium-6 date">
       <label>Select a date</label>
       {{product-date-picker product=product date=date changeDate=(action "updateDate")}}
     </div>
   </div>
-  {{#if date}}
+  <hr>
   <div class="row align-center time-selection">
     <div class="columns small-12 medium-6 time">
       {{time-selector date=date times=product.startTimes onChange=(action "updateTime")}}
     </div>
   </div>
-  {{/if}}
-{{/if}}
 </section>
-
-<section class="row align-justify align-bottom booking-footer">
-  <div class="column small-12 text-center">
-    <button onclick={{action "next"}} type="button" class="{{unless canProceed "disabled hollow"}} button primary large button-next">
-      {{#if (eq step 0)}}
-      Next: Choose a {{if date 'time' 'date'}}
-      {{/if}}
-      {{#if (eq step 1)}}
-      Add to cart
-      {{/if}}
-    </button>
+<section class="booking-totals">
+  {{#each quantities as |quantity|}}
+  {{#if quantity.quantity}}
+  <div class="row align-justify">
+    <span class="column">
+      {{quantity.quantity}} &times; {{get (find-by product.prices 'id' quantity.id) 'name'}}
+    </span>
+    <span class="column text-right">
+      ${{quantity.cost}}
+    </span>
   </div>
-  <div class="booking-total text-center">
-    <span class="book-total-amount">${{total}}</span>
-    <div class="book-total-label">Total</div>
+  <hr class="column">
+  {{/if}}
+  {{/each}}
+  <div class="row align-justify">
+    <span class="column">Total</span>
+    <span class="column text-right">${{total}}</span>
   </div>
+</section>
+<section class="column small-12 text-center">
+  <button onclick={{action "submit"}} type="button" class="{{unless canProceed "disabled hollow"}} button primary large button-next">
+    Add to cart
+  </button>
 </section>

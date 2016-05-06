@@ -18,7 +18,7 @@
         <ul class="menu">
           <li><a class="telephone-cta" href="tel:3076904790"><span>Questions? Call Us!</span><span>307.690.4790</span></a></li>
           <li><a class="button hollow" href="http://www.outpostjh.com/list-your-house-with-outpost/">List Your Property</a></li>
-          <li><a href="<%= explore_path(Grid.Endpoint, :index, ["cart"]) %>" class="flaticon-cart fi shopping-cart">&nbsp;</a></li>
+          <li><%= link to: explore_path(Grid.Endpoint, :index, ["cart"]), class: "flaticon-cart fi shopping-cart" do %>&nbsp;<% end %></li>
         </ul>
       </div>
     </div>

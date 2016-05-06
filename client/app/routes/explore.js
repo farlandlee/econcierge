@@ -3,6 +3,7 @@ import NotFoundMixin from 'client/mixins/not-found';
 import ResetScrollMixin from 'client/mixins/reset-scroll';
 import RouteTitleMixin from 'client/mixins/route-title';
 import {parseDate} from 'client/utils/time';
+import {isNumber} from 'client/utils/math';
 
 const {$, RSVP} = Ember;
 
@@ -20,8 +21,12 @@ export default Ember.Route.extend(NotFoundMixin, ResetScrollMixin, RouteTitleMix
   },
 
   model ({activity_slug, category_slug, date}) {
+    //@TODO remove this once categories die a fiery death
+    if (isNumber(category_slug)) {
+      return this.replaceWith('product', activity_slug, category_slug);
+    }
     if (date && !parseDate(date).isValid()) {
-      this.transitionTo({queryParams: {date: undefined}});
+      return this.replaceWith({queryParams: {date: undefined}});
     }
 
     let activities = this.store.peekAll('activity');

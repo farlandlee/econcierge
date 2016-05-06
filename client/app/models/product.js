@@ -11,6 +11,7 @@ export default DS.Model.extend({
   duration: DS.attr('number'),
   defaultPrice: DS.attr(),
 
+  activity: DS.belongsTo('activity'),
   vendor: DS.belongsTo('vendor'),
 
   meetingLocation: DS.attr(),

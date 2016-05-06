@@ -4,34 +4,30 @@ import Quantity, {amountForQuantity} from 'client/models/quantity';
 const {Component, computed} = Ember;
 
 export default Component.extend({
+  classNames: 'booking-form',
   product: null,
   date: null,
 
-  step: 0,
   total: 0,
   quantities: null,
   time: null,
 
-  canProceed: computed('step', 'total', 'time', 'quantities.@each.quantity', 'product.prices.[]', {
+  canProceed: computed('total', 'time', 'quantities.@each.quantity', 'product.prices.[]', {
     get () {
-      if (!this.get('total')) {
+      // has a total, time, and date
+      let {total, time, date} = this.getProperties('total', 'time', 'date');
+      if (!total || !date || !time) {
         return false;
       }
-
-      let step = this.get('step');
       // All prices have valid quantities
-      if (step === 0) {
-        let quantities = this.get('quantities');
-        let priceHasValidQuantity = (price) => {
-          let {amounts, id} = price;
-          let {quantity} = quantities.findBy('id', id);
-          return !!amountForQuantity(amounts, quantity);
-        };
-        return this.get('product.prices').every(priceHasValidQuantity);
-      } else {
-        // Choose a date and time (step 1)
-        return !!this.get('date') && !!this.get('time');
-      }
+      let quantities = this.get('quantities');
+      let priceHasValidQuantity = (price) => {
+        let {amounts, id} = price;
+        let {quantity} = quantities.findBy('id', id);
+        return !!amountForQuantity(amounts, quantity);
+      };
+
+      return this.get('product.prices').every(priceHasValidQuantity);
     }
   }),
 
@@ -69,23 +65,10 @@ export default Component.extend({
       this.set('time', time);
     },
 
-    next () {
+    submit () {
       if (this.get('canProceed')) {
-        let step = this.get('step');
-        if (step === 0) {
-          this.incrementProperty('step');
-        }
-        if (step === 1) {
-          let properties = this.getProperties('quantities', 'time', 'date');
-          this.attrs.submit(properties);
-        }
-      }
-    },
-
-    previous () {
-      let step = this.incrementProperty('step', -1);
-      if (step < 0) {
-        this.attrs.cancel();
+        let properties = this.getProperties('quantities', 'time', 'date');
+        this.attrs.submit(properties);
       }
     }
   }

@@ -186,7 +186,7 @@
 
     <main class="align-center products align-stretch">
       {{#item-sorter items=dateFilteredProducts by=currentSortOrder as |product|}}
-        {{#link-to "explore.book" product class="product-card-outer"}}
+        {{#link-to "product" product class="product-card-outer"}}
           {{#if activity.useProductPhotoCard}}
             {{product-photo-card product=product category=category}}
           {{else}}

@@ -2,7 +2,7 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
-  classNames: ['reveal','booking-modal'],
+  classNames: ['reveal','grid-modal'],
 
   didInsertElement () {
     let el = this.$();

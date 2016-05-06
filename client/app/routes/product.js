@@ -2,6 +2,9 @@ import Ember from 'ember';
 import NotFoundMixin from 'client/mixins/not-found';
 import RouteTitleMixin from 'client/mixins/route-title';
 import RouteDescriptionMixin from 'client/mixins/route-meta-description';
+import {isNumber} from 'client/utils/math';
+
+const {RSVP} = Ember;
 
 export default Ember.Route.extend(NotFoundMixin, RouteTitleMixin, RouteDescriptionMixin, {
   titleToken (product) {
@@ -12,42 +15,58 @@ export default Ember.Route.extend(NotFoundMixin, RouteTitleMixin, RouteDescripti
     return product.get('description');
   },
 
-  model (params) {
-    let {product_id} = params;
-    let product = this.store.peekRecord('product', product_id);
+  serialize (product) {
+    return {
+      activity_slug: product.get('activity.slug'),
+      product_id: product.get('id')
+    };
+  },
 
-    if (!product) {
+  model ({product_id, activity_slug}) {
+    // @TODO remove this check once we kill categories and have
+    // a unique path prefix for product route.
+    if (!isNumber(product_id)) {
+      return this.replaceWith('explore', activity_slug, product_id);
+    }
+    // end @TODO
+    if (!this.store.peekAll('activity').findBy('slug', activity_slug)) {
       return this.throwNotFound();
+    }
+
+    let product = this.store.peekRecord('product', product_id);
+    if (!product) {
+      product = this.store.findRecord('product', product_id);
     }
 
     return product;
   },
 
+  afterModel (product) {
+    return RSVP.hash({
+      activity: product.get('activity'),
+      vendor: product.get('vendor')
+    });
+  },
+
   setupController (controller, product) {
     this._super(...arguments);
     controller.set('product', product);
-    controller.setProperties(this.modelFor('explore'));
   },
 
   actions: {
-    goToProducts () {
-      this.transitionTo('explore');
-    },
-
     book (product, {quantities, date, time}) {
-      let {category, activity} = this.modelFor('explore');
-      time = {
+      let activity = product.get('activity');
+      let startTime = {
         time: time.starts_at_time,
         id: time.id
       };
 
       let booking = this.store.createRecord('booking', {
-        activity: activity,
-        category: category,
-        product: product,
-        date: date,
-        startTime: time,
-        quantities: quantities
+        activity,
+        date,
+        product,
+        quantities,
+        startTime
       });
 
       return booking.save().then(booking => {
