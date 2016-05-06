@@ -21,9 +21,8 @@ Router.map(function () {
 
   this.route('shared-cart', {path: 'shared_cart/:uuid'});
 
-  this.route('product', {path: ':activity_slug/:product_id'});
   this.route('explore', {path: ':activity_slug/:category_slug'});
-
+  this.route('product', {path: ':activity_slug/experience/:product_id'});
 
   this.route('error404', {path: '/*path'});
 });

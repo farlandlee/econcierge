@@ -2,7 +2,6 @@ import Ember from 'ember';
 import NotFoundMixin from 'client/mixins/not-found';
 import RouteTitleMixin from 'client/mixins/route-title';
 import RouteDescriptionMixin from 'client/mixins/route-meta-description';
-import {isNumber} from 'client/utils/math';
 
 const {RSVP} = Ember;
 
@@ -23,11 +22,6 @@ export default Ember.Route.extend(NotFoundMixin, RouteTitleMixin, RouteDescripti
   },
 
   model ({product_id, activity_slug}) {
-    // @TODO remove this check once we kill categories and have
-    // a unique path prefix for product route.
-    if (!isNumber(product_id)) {
-      return this.replaceWith('explore', activity_slug, product_id);
-    }
     // end @TODO
     if (!this.store.peekAll('activity').findBy('slug', activity_slug)) {
       return this.throwNotFound();

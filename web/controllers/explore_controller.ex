@@ -13,4 +13,8 @@ defmodule Grid.ExploreController do
   end
 
   def shared_cart(conn, params), do: index(conn, params)
+
+  def legacy_book_redirect(conn, %{"a_slug" => a_slug, "p_id" => p_id}) do
+    redirect(conn, to: explore_path(conn, :index, [a_slug, "experience", p_id]))
+  end
 end
