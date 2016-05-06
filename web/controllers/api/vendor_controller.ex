@@ -3,9 +3,9 @@ defmodule Grid.Api.VendorController do
 
   alias Grid.Vendor
 
-  def index(conn, _) do
+  def index(conn, params) do
     vendors = Vendor.having_published_products
-      |> Repo.all
+      |> Repo.all_in_ids(params["ids"])
       |> Repo.preload(:default_image)
 
     render(conn, "index.json", vendors: vendors)

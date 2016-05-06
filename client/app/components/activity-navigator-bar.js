@@ -1,19 +1,15 @@
 import Ember from 'ember';
 
 const {
-  $, computed
+  $
 } = Ember;
 
 export default Ember.Component.extend({
   tagName: 'nav',
   classNames: 'activity-nav',
 
-  image: computed('currentActivity.image', 'currentCategory.image', {
-    get () {
-        return this.get('currentCategory.image') || this.get('currentActivity.image');
-    }
-  }),
-  
+  activity: null,
+
   didInsertElement() {
     this._super(...arguments);
 
@@ -21,7 +17,7 @@ export default Ember.Component.extend({
 
     let windowHeight = $window.height();
 
-    if(!this.get('currentActivity.useProductPhotoCard')) {
+    if(!this.get('activity.useProductPhotoCard')) {
       let parent = $('.explore-right');
 
       parent.scroll(function () {

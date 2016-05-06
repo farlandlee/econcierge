@@ -34,6 +34,7 @@ defmodule Grid.Api.ProductView do
       activity: product.activity.id,
       vendor: product.vendor_id,
       experience: product.experience_id,
+      categories: Enum.map(product.categories, &(&1.id)),
       default_price: render_one(default_price, PriceView, "price.json"),
       default_image: render_one(product.default_image, ImageView, "image.json"),
 

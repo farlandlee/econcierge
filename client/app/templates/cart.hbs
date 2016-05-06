@@ -31,7 +31,7 @@
         <img src="{{booking.image.medium}}" alt="">
       </div>
       <div class="columns small-12 xlarge-9 booking-data">
-        <h2>{{link-to booking.product.name 'product' booking.product}}</h2>
+        <h2>{{link-to booking.product.name 'activity.product' booking.activity booking.product}}</h2>
         <div class="row">
           <dl class="columns dl-horizontal small-12 medium-6 large-4">
             <dt>Date</dt><dd>{{moment-format booking.date 'MMMM D, YYYY'}}</dd>

@@ -3,6 +3,7 @@ import {
   formatTime, format,
   startTimeAvailableForDate
 } from 'client/utils/time';
+import {sortFieldToString} from 'client/components/product-sorter';
 import {toSet, flatten} from 'client/utils/fn';
 
 const {
@@ -41,13 +42,6 @@ const inArbitraryTime = ({start, end}) => {
     productTime = productTime.value || productTime;
     return productTime >= start && productTime <= end;
   };
-};
-
-export const sortFieldToString = {
-  "Price" : ["minDefaultPrice:asc"],
-  "Rating" : ["vendor.tripadvisorRating:desc"],
-  "Trip Name" : ["name:asc"],
-  "Trip Duration" : ["duration:asc"]
 };
 
 export default Ember.Controller.extend({

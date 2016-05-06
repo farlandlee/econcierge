@@ -1,24 +1,10 @@
 {{!-- the invisible nav menu that pops up --}}
 <div id="full-overlay-select-list-container" class="full-overlay-select-list-container">
   <ul>
-    <li>
-      {{!-- print out a sublist of categories for the active activity --}}
-      {{link-to activity.name 'categories' activity.slug}}
-      <ul>
-      {{#item-sorter items=activity.categories as |category|}}
-        <li>
-          {{link-to category.name 'explore' activity.slug category.slug activeClass="selected"}}
-        </li>
-      {{/item-sorter}}
-      </ul>
-    </li>
-    {{!-- print out all the other activities --}}
     {{#item-sorter items=activities as |otherActivity|}}
-    {{#unless (eq otherActivity.id activity.id)}}
     <li>
-      {{link-to otherActivity.name 'categories' otherActivity.slug}}
+      {{link-to otherActivity.name 'activity' otherActivity activeClass="selected"}}
     </li>
-    {{/unless}}
     {{/item-sorter}}
   </ul>
   <div class="full-overlay-black-overlay"></div>
@@ -48,6 +34,29 @@
       {{/foundation-dropdown}}
     </div>
     <ul class="product-filters">
+
+    {{!----- category drilldown -------}}
+    {{#if (gt activity.categories.length 1)}}
+    {{#grid-accordion tagName="li" class="filter" as |accordion|}}
+      <h4 onClick={{action accordion.toggle}}>
+        Category
+        {{chevron-icon direction=(if accordion.isExpanded 'up' 'down')}}
+      </h4>
+
+      {{#grid-accordion-body isExpanded=accordion.isExpanded}}
+      <ul class="filter-list">
+        <li class="filter-option">
+          {{link-to 'All' 'activity.explore' ''}}
+        </li>
+        {{#each activity.categories as |category|}}
+        <li class="filter-option">
+          {{link-to category.name 'activity.explore' category.slug}}
+        </li>
+        {{/each}}
+      </ul>
+      {{/grid-accordion-body}}
+    {{/grid-accordion}}
+    {{/if}}
     {{!----- date -------}}
     {{#grid-accordion tagName="li" class="filter calendar-container" as |accordion|}}
       <h4 onClick={{action accordion.toggle}}>
@@ -152,11 +161,7 @@
   </div>
   <div class="explore-right">
     <div class="top-elements">
-      {{activity-navigator-bar
-        activities=activities
-        currentActivity=activity
-        currentCategory=category
-      }}
+      {{activity-navigator-bar activity=activity}}
       <div class="row product-bar align-justify">
         <div class="column small-9 medium-6 product-count">
           <p>
@@ -186,9 +191,9 @@
 
     <main class="align-center products align-stretch">
       {{#item-sorter items=dateFilteredProducts by=currentSortOrder as |product|}}
-        {{#link-to "product" product class="product-card-outer"}}
+        {{#link-to 'activity.product' product class="product-card-outer"}}
           {{#if activity.useProductPhotoCard}}
-            {{product-photo-card product=product category=category}}
+            {{product-photo-card product=product}}
           {{else}}
             {{new-product-card product=product}}
           {{/if}}

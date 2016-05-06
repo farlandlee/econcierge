@@ -7,8 +7,17 @@ const Router = Ember.Router.extend(RouterTitleMixin, {
 });
 
 Router.map(function () {
+  this.route('legacyCategoriesRedirect', {path: '/:activity_slug/categories'});
+  this.route('legacyBookRedirect', {path: '/:activity_slug/:category_slug/book/:product_id'});
+  this.route('legacyBookRedirect', {path: '/:activity_slug/:category_slug/:exp_slug/book/:product_id'});
+
   this.route('activities');
-  this.route('categories', {path: ':activity_slug/categories'});
+  
+  this.route('activity', {path: '/:activity_slug'}, function () {
+    this.route('index', {path: '/'}); // redirects to explore with no category
+    this.route('explore', {path: '/:category_slug'});
+    this.route('product', {path: '/experience/:product_id'});
+  });
 
   this.route('booked', {path: '/booked/:booking_id'});
 
@@ -20,9 +29,6 @@ Router.map(function () {
   this.route('orderComplete');
 
   this.route('shared-cart', {path: 'shared_cart/:uuid'});
-
-  this.route('explore', {path: ':activity_slug/:category_slug'});
-  this.route('product', {path: ':activity_slug/experience/:product_id'});
 
   this.route('error404', {path: '/*path'});
 });

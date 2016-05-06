@@ -6,7 +6,7 @@ const {
 } = Ember;
 
 export default Ember.Controller.extend({
-  explore: inject.controller(),
+  explore: inject.controller('activity.explore'),
   // essentially a one way binding on explore.date
   date: computed('explore.date', {
     get () {

@@ -11,8 +11,9 @@ defmodule Grid.Api.ProductController do
     products = Product.published
       |> Product.for_date(conn.assigns.date)
       |> Product.for_category(params["category_id"])
+      |> Product.for_activity(params["activity_id"])
       |> distinct(true)
-      |> Repo.all
+      |> Repo.all_in_ids(params["ids"])
       |> preload
       |> filter_check
 
@@ -33,6 +34,7 @@ defmodule Grid.Api.ProductController do
       :meeting_location,
       :images,
       :default_image,
+      :categories,
       start_times: :season,
       prices: :amounts,
       default_price: :amounts

@@ -7,7 +7,6 @@ const {
 
 export default ProductCard.extend({
   classNames: 'product photo-card',
-  category: null, // for display activity/category name
 
   addSlideshow: computed('product.images.[]', {
     get () {

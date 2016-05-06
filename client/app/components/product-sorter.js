@@ -1,5 +1,11 @@
 import Ember from 'ember';
-import {sortFieldToString} from 'client/controllers/explore';
+
+export const sortFieldToString = {
+  "Price" : ["minDefaultPrice:asc"],
+  "Rating" : ["vendor.tripadvisorRating:desc"],
+  "Trip Name" : ["name:asc"],
+  "Trip Duration" : ["duration:asc"]
+};
 
 const options = Object.keys(sortFieldToString);
 

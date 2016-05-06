@@ -3,10 +3,7 @@
     <p class="product-title">{{product.name}}</p>
   </div>
   <div class="product-details column small-4">
-    {{new-price-display price=product.defaultPrice}}
-    {{#if product.images}}
-    {{product-images images=product.images}}
-    {{/if}}
+    <p class="price"><span>from</span> ${{product.minDefaultPrice}}</p>
   </div>
 </div>
 <div class="row product-body align-bottom">

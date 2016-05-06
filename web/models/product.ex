@@ -63,6 +63,14 @@ defmodule Grid.Product do
         where: c.id == ^id
   end
 
+  def for_activity(query \\ __MODULE__, id)
+  def for_activity(query, nil), do: query
+  def for_activity(query, id) do
+    from p in query,
+      join: a in assoc(p, :activity),
+        where: a.id == ^id
+  end
+
   def for_date(query \\ __MODULE__, date)
   def for_date(query, nil), do: query
   def for_date(query, %Ecto.Date{} = date) do

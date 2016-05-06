@@ -13,6 +13,7 @@ export default DS.Model.extend({
 
   activity: DS.belongsTo('activity'),
   vendor: DS.belongsTo('vendor'),
+  categories: DS.hasMany('category'),
 
   meetingLocation: DS.attr(),
   prices: DS.attr(),

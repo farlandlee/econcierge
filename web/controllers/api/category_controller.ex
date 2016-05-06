@@ -6,7 +6,7 @@ defmodule Grid.Api.CategoryController do
   def index(conn, params) do
     categories = Category.by_activity(params["activity_id"])
       |> Category.having_published_products
-      |> Repo.all
+      |> Repo.all_in_ids(params["ids"])
       |> Repo.preload(:image)
 
     render(conn, "index.json", categories: categories)
