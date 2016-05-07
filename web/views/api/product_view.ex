@@ -31,6 +31,7 @@ defmodule Grid.Api.ProductView do
       pickup: product.pickup,
       duration: product.duration,
 
+      activity: product.activity.id,
       vendor: product.vendor_id,
       experience: product.experience_id,
       default_price: render_one(default_price, PriceView, "price.json"),

@@ -21,7 +21,7 @@ export default Ember.Route.extend(NotFoundMixin, ResetScrollMixin, RouteTitleMix
 
   model ({activity_slug, category_slug, date}) {
     if (date && !parseDate(date).isValid()) {
-      this.transitionTo({queryParams: {date: undefined}});
+      return this.replaceWith({queryParams: {date: undefined}});
     }
 
     let activities = this.store.peekAll('activity');

@@ -3,9 +3,18 @@ import RouteTitleMixin from 'client/mixins/route-title';
 
 const initialTitle = window.document.title;
 
-const {RSVP} = Ember;
+const {$, RSVP} = Ember;
 
 export default Ember.Route.extend(RouteTitleMixin, {
+  // hijack all server rendered explore links
+  init () {
+    $('a[href*="/explore"]').on('click', e => {
+      e.preventDefault();
+      let [, path] = e.target.href.split("/explore");
+      this.transitionTo(path);
+    });
+  },
+
   model () {
     return this.store.findAll('activity');
   },

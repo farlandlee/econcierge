@@ -32,5 +32,5 @@ test('it renders', function(assert) {
     submit=(action "submit")
   }}`);
 
-  assert.equal(this.$('h3.text-center').text().trim(), 'Enter Your Trip Details');
+  assert.equal(this.$('.booking-form-header').text().trim(), 'Book this experience');
 });

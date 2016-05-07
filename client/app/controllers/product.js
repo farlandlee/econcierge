@@ -17,21 +17,9 @@ export default Ember.Controller.extend({
     }
   }),
 
-  addSlideshow: computed('product.images.[]', {
+  backstretchImage: computed('product.defaultImage', {
     get () {
-      return this.get('product.images').length > 1;
-    }
-  }),
-
-  addSingleImage: computed('product.images.[]', {
-    get () {
-      return this.get('product.images').length === 1;
-    }
-  }),
-
-  firstImage: computed('product.images.[]', {
-    get () {
-      return this.get('product.images').get('firstObject');
+      return this.get('product.defaultImage.large');
     }
   })
 });

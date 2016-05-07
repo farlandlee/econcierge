@@ -42,10 +42,14 @@ Creation date: 15/02/2016 23:28
 .flaticon-calendar:before { content: "\f103"; }
 .flaticon-cart:before { content: "\f104"; }
 .flaticon-checkmark:before { content: "\f105"; }
-.flaticon-duration:before { content: "\f106"; }
-.flaticon-filters:before { content: "\f107"; }
-.flaticon-location:before { content: "\f108"; }
-.flaticon-photo-gallery:before { content: "\f109"; }
+.flaticon-circle-minus:before { content: "\f106"; }
+.flaticon-circle-plus:before { content: "\f107"; }
+.flaticon-duration:before { content: "\f108"; }
+.flaticon-filters:before { content: "\f109"; }
+.flaticon-location:before { content: "\f10a"; }
+.flaticon-minus:before { content: "\f10b"; }
+.flaticon-photo-gallery:before { content: "\f10c"; }
+.flaticon-plus:before { content: "\f10d"; }
 
 $font-Flaticon-adult-child: "\f100";
 $font-Flaticon-arrow-left: "\f101";
@@ -53,7 +57,11 @@ $font-Flaticon-arrow-right: "\f102";
 $font-Flaticon-calendar: "\f103";
 $font-Flaticon-cart: "\f104";
 $font-Flaticon-checkmark: "\f105";
-$font-Flaticon-duration: "\f106";
-$font-Flaticon-filters: "\f107";
-$font-Flaticon-location: "\f108";
-$font-Flaticon-photo-gallery: "\f109";
+$font-Flaticon-circle-minus: "\f106";
+$font-Flaticon-circle-plus: "\f107";
+$font-Flaticon-duration: "\f108";
+$font-Flaticon-filters: "\f109";
+$font-Flaticon-location: "\f10a";
+$font-Flaticon-minus: "\f10b";
+$font-Flaticon-photo-gallery: "\f10c";
+$font-Flaticon-plus: "\f10d";

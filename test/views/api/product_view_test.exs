@@ -1,7 +1,11 @@
 defmodule Grid.Api.ProductViewTest do
   use Grid.ConnCase, async: true
 
-  alias Grid.Api.ProductView
+  alias Grid.Product
+  alias Grid.Api.{
+    ProductController,
+    ProductView
+  }
 
   setup do
     st = %{product: p, season: s} = Factory.create_start_time(
@@ -14,14 +18,14 @@ defmodule Grid.Api.ProductViewTest do
     price = Factory.create(:price, product: p)
     Factory.create(:amount, price: price)
 
-    p = Repo.update!(Grid.Product.default_price_changeset(p, price.id))
+    p = Repo.update!(Product.default_price_changeset(p, price.id))
+    # preloads get funky, so just load from nothing
+    product = Repo.get(Product, p.id) |> ProductController.preload
 
-    {:ok, product: p, start_time: st, season: s}
+    {:ok, product: product, start_time: st, season: s}
   end
 
   test "render product", %{product: product} do
-    product = product |> Grid.Api.ProductController.preload
-
     rendered_product = ProductView.render("product.json", %{product: product})
 
     # Fields taken verbatim
@@ -53,12 +57,13 @@ defmodule Grid.Api.ProductViewTest do
     # Belongs to, preloaded
     assert rendered_product.meeting_location == nil
     assert rendered_product.default_price.id == product.default_price_id
+    assert rendered_product.activity == product.activity.id
 
     # Has many fields, preloaded
     for k <- ~w(prices start_times)a do
       assert Enum.count(rendered_product[k]) == Enum.count(Map.get(product, k))
     end
-    
+
     # product_amenity_options -> amenity_options
     assert Enum.count(rendered_product.amenity_options) == Enum.count(product.product_amenity_options)
   end

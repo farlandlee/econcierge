@@ -1,0 +1,177 @@
+.booking-form {
+  position: relative;
+  top: 0;
+  border: 1px solid $medium-gray;
+  background-color: $white;
+  @include breakpoint (large) {
+    top: -2rem - rem_calc(41);
+    position: absolute;
+  }
+  header {
+    background-color: rgba(60,63,64,0.9);
+    border: 0;
+    color: #fff;
+    height: 40px;
+    padding: 10px 20px;
+    text-transform: capitalize;
+    width: 100%;
+    z-index: 1001;
+    font-size: 20px;
+    line-height: 20px;
+    margin-bottom: 0;
+  }
+  label {
+    font-size: 1rem;
+    text-align: left;
+    margin-bottom: .4rem;
+    position: relative;
+    .has-tip {
+      border-bottom: none;
+      font-size: .8em;
+      position: absolute;
+      top: 0;
+      .questionmark {
+        margin-left: 5px;
+        color: white;
+        .circle-fill {
+          color: $dark-gray;
+        }
+      }
+    }
+  }
+  p {
+    margin-bottom: 0;
+  }
+  section {
+    margin-bottom: 1rem;
+  }
+  .date-selection, .time-selection {
+    margin-bottom: 2rem;
+    label{
+      text-align: left;
+      font-size: 1rem;
+      font-weight: bold;
+      font-family: 'Helvetica Neue';
+    }
+    .flatpickr-calendar {
+      margin: 0 auto;
+      border: 1px solid $medium-gray;
+      table {
+        td {
+          &.selected,
+          &.selected:hover {
+            .flatpickr-day {
+              background-color: $primary-color;
+              border-color: $primary-color;
+            }
+          }
+        }
+      }
+    }
+    .time {
+      .ember-view {
+        max-width:256px;
+        margin: 0 auto;
+      }
+    }
+  }
+  .meeting-address {
+    color: $dark-gray;
+    font-weight: 100;
+    font-size: 0.75rem;
+    margin-bottom: 0;
+  }
+  input {
+    border-color: $medium-gray;
+    border-radius: 6px;
+  }
+  .datepicker {
+    width: 140px;
+    border: 1px solid $medium-gray;
+    border-radius: 6px;
+    height: 40px;
+    line-height: 38px;
+    position: relative;
+    &::after {
+      @include down-arrow();
+      color: $medium-gray;
+      right: 0;
+      font-size: 2rem;
+      line-height: 38px;
+      height: 38px;
+    }
+  }
+  .body-count-container {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0 20px;
+    justify-content: center;
+    h2 {
+      flex: 1 0 100%;
+    }
+    .body-count.input-group {
+      flex: 1 1 50%;
+      flex-wrap: wrap;
+      justify-content: center;
+      text-align: center;
+      @include breakpoint (medium ) {
+        flex: 1 1 25%;
+      }
+      @include breakpoint (large ) {
+        flex: 1 0 152px;
+      }
+      label,
+      .amount-label {
+        flex: 1 0 100%;
+        text-align: center;
+        font-size: 0.9rem;
+        font-weight: 100;
+      }
+      .amount-label {
+        margin-top: 0.5rem;
+      }
+    }
+    .input-group-field {
+      margin: 0 0.5rem;
+    }
+  }
+}
+.body-count {
+  min-width:131px;
+  .flaticon-circle-minus, .flaticon-circle-plus {
+    color: $primary-color;
+    &:hover {
+      color: $secondary-color;
+    }
+    &:before {
+      font-size: 40px;
+      //margin-top: -3px;
+      display: inline-block;
+      font-weight: 100;
+      cursor: pointer;
+      border-radius: 6px;
+    }
+  }
+  input {
+    border-color: $medium-gray;
+    border-radius: 6px;
+    &[type=number] {
+      -moz-appearance: textfield;
+    }
+  }
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+  }
+  .input-group-field {
+    padding-left: rem-calc(16);
+    max-width: rem-calc(46);
+    min-width: rem-calc(46);
+    width: rem-calc(46);
+    margin: 0 1rem;
+  }
+  .input-group-button {
+    width: auto;
+  }
+}

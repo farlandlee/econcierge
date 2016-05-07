@@ -28,6 +28,7 @@ defmodule Grid.Api.ProductController do
 
   def preload(products) do
     Repo.preload(products, [
+      :activity,
       :product_amenity_options,
       :meeting_location,
       :images,
