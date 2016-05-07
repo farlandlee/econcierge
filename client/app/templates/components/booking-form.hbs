@@ -1,29 +1,27 @@
-<section class="trip-details">
-  <header>
-    <h3 class="text-center">Enter Your Trip Details</h3>
+<section>
+  <header class="booking-form-header">
+    Book this experience
   </header>
-  <div class="row align-left body-count">
-    <div class="columns shrink">
-      {{amount-quantity-input price=product.defaultPrice quantities=quantities onChange=(action "updateQuantity" product.defaultPrice) showAmountLabel=true}}
-    </div>
+  <div class="body-count-container">
+    <h2>Number of Participants</h2>
+    {{amount-quantity-input price=product.defaultPrice quantities=quantities onChange=(action "updateQuantity" product.defaultPrice) showAmountLabel=true}}
     {{#each product.prices as |price|}}
-    {{#unless (eq price.id product.defaultPrice.id)}}
-    <div class="columns shrink">
-      {{amount-quantity-input price=price quantities=quantities onChange=(action "updateQuantity" price) showAmountLabel=true}}
-    </div>
-    {{/unless}}
+      {{#unless (eq price.id product.defaultPrice.id)}}
+        {{amount-quantity-input price=price quantities=quantities onChange=(action "updateQuantity" price) showAmountLabel=true}}
+      {{/unless}}
     {{/each}}
   </div>
   <hr>
-  <div class="row align-center date-selection">
-    <div class="columns small-12 medium-6 date">
-      <label>Select a date</label>
+  <div class="date-selection">
+    <div class="columns small-12 date">
+      <label>Date</label>
       {{product-date-picker product=product date=date changeDate=(action "updateDate")}}
     </div>
   </div>
   <hr>
-  <div class="row align-center time-selection">
-    <div class="columns small-12 medium-6 time">
+  <div class="align-center time-selection">
+    <div class="columns small-12 time">
+      <label>Time</label>
       {{time-selector date=date times=product.startTimes onChange=(action "updateTime")}}
     </div>
   </div>
@@ -31,20 +29,20 @@
 <section class="booking-totals">
   {{#each quantities as |quantity|}}
   {{#if quantity.quantity}}
-  <div class="row align-justify">
-    <span class="column">
+  <div class="row align-spaced">
+    <span class="column small-4">
       {{quantity.quantity}} &times; {{get (find-by product.prices 'id' quantity.id) 'name'}}
     </span>
-    <span class="column text-right">
+    <span class="column text-right small-4">
       ${{quantity.cost}}
     </span>
   </div>
   <hr class="column">
   {{/if}}
   {{/each}}
-  <div class="row align-justify">
-    <span class="column">Total</span>
-    <span class="column text-right">${{total}}</span>
+  <div class="row align-spaced">
+    <span class="column small-4">Total</span>
+    <span class="column text-right small-4">${{total}}</span>
   </div>
 </section>
 <section class="column small-12 text-center">
