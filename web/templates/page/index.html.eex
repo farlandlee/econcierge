@@ -55,7 +55,7 @@
             </a>
           </div>
           <div class="column small-12 medium-4">
-            <a href="<%= explore_path(@conn, :index, ["wildlife_tours", "full_day_wildlife_tour", "full_day_grand_teton_national_park", "book", "396"]) %>">
+            <a href="<%= explore_path(@conn, :index, ["wildlife_tours", "full_day_wildlife_tour", "book", "396"]) %>">
               <div class="single-wide wildlife-tours-cta">
                 <div class="darken-overlay"></div>
                 <div class="overlay-text">

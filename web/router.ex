@@ -72,6 +72,7 @@ defmodule Grid.Router do
     # put "/orders/:customer_token/cancel/:id", OrderController, :cancel
 
     scope "/explore" do
+      get "/:a_slug/:c_slug/:e_slug/book/:p_id", ExploreController, :legacy_book_redirect
       get "/:a_slug/:c_slug/book/:p_id", ExploreController, :legacy_book_redirect
       get "/shared_cart/:uuid", ExploreController, :shared_cart
       get "/*path", ExploreController, :index
