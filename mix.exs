@@ -4,7 +4,7 @@ defmodule Grid.Mixfile do
   def project do
     [app: :grid,
      version: "0.0.1",
-     elixir: "1.2.2",
+     elixir: "~> 1.2",
      elixirc_options: [{:warnings_as_errors, true}],
      elixirc_paths: elixirc_paths(Mix.env),
      compilers: [:phoenix] ++ Mix.compilers,
