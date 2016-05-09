@@ -32,7 +32,6 @@ export default Ember.Route.extend(NotFoundMixin, {
   _loadBookingAssocs (b) {
     return hash({
       activity: this.store.findRecord('activity', b.activity),
-      category: this.store.findRecord('category', b.category),
       product: this.store.findRecord('product', b.product),
       quantities: b.quantities,
       startTime: b.startTime,
