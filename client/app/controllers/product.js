@@ -15,11 +15,5 @@ export default Ember.Controller.extend({
     set (_k, value) {
       return value;
     }
-  }),
-
-  backstretchImage: computed('product.defaultImage', {
-    get () {
-      return this.get('product.defaultImage.large');
-    }
   })
 });
