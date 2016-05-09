@@ -1,38 +1,33 @@
 <div class="product-page">
-  <header class="row expanded">
-    {{#if (gt product.images.length 1)}}
-      <section>
-        {{foundation-orbit images=product.images size='large' useLightGallery=true}}
-      </section>
-    {{else}}
-      <section class="header-image" style="background-image: url({{product.image.full}})">
-        <img src="{{product.image.full}}" alt="{{product.image.full}}">
-      </section>
-    {{/if}}
-  </header>
-  <div class="row content-container">
-    <section class="column small-12 large-8 product-title">
-      <h1 class="column small-12">{{product.name}}</h1>
-      <p class="column small-12">Activity: <span class="activity-name">{{product.activity.name}}</span></p>
-      <div class="column small-12">
-        <div class="row align-bottom">
-          {{new-product-icons product=product shrink=true}}
+  {{better-product-images images=product.images image=product.image}}
+  <div class="content-container">
+    <div class="row">
+      <section class="column small-12 large-8 product-title">
+        <h1 class="column small-12">{{product.name}}</h1>
+        <div class="column small-12">
+          <div class="row align-bottom">
+            {{new-product-icons product=product shrink=true}}
+          </div>
         </div>
+      </section>
+      <section class="column small-12 large-4">
+        {{booking-form product=product date=date submit=(route-action "book" product)}}
+      </section>
+    </div>
+    <div class="product-description-wrapper">
+      <div class="row">
+        <section class="column small-12 large-8 product-description">
+          <div class="column small-12">
+            {{{product.description}}}
+          </div>
+        </section>
+        <section class="column small-12 large-8 product-description">
+          <div class="column small-12">
+            <h2>Cancellation Policy</h2>
+            <p>100% refund up to {{product.vendor.cancellationPolicyDays}} days before the trip.</p>
+          </div>
+        </section>
       </div>
-    </section>
-    <section class="column small-12 large-4">
-      {{booking-form product=product date=date submit=(route-action "book" product)}}
-    </section>
-    <section class="column small-12 large-8 product-description">
-      <div class="column small-12">
-        {{{product.description}}}
-      </div>
-    </section>
-    <section class="column small-12 large-8 product-description">
-      <div class="column small-12">
-        <h2>Cancellation Policy</h2>
-        <p>100% refund up to {{product.vendor.cancellationPolicyDays}} days before the trip.</p>
-      </div>
-    </section>
+    </div>
   </div>
 </div>

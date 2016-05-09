@@ -7,13 +7,13 @@
   </label>
   {{/unless}}
   <div onclick={{action "decrement"}} class="input-group-button">
-    <span class="fi flaticon-circle-minus {{if (eq quantity minimum) 'disabled'}}"></span>
+    <span class="fi flaticon-minus {{if (eq quantity minimum) 'disabled'}}"></span>
   </div>
 
   {{input value=quantity type="number" class="input-group-field"}}
 
   <div onclick={{action "increment"}} class="input-group-button">
-    <span class="fi flaticon-circle-plus {{if (and maximum (eq quantity maximum)) 'disabled'}}"></span>
+    <span class="fi flaticon-plus {{if (and maximum (eq quantity maximum)) 'disabled'}}"></span>
   </div>
   {{#if showAmountLabel}}
   <div class="amount-label">
