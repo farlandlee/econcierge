@@ -16,7 +16,8 @@ config :grid,
   booking_emails_bcc: "matthew@outpostjh.com, jhopple@gmail.com",
   send_external_emails: false,
   prerender_service_url: "http://localhost:3000",
-  prerender_service_token: nil
+  prerender_service_token: nil,
+  prerender_enabled: true
 
 # Configures the endpoint
 config :grid, Grid.Endpoint,
