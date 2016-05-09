@@ -127,18 +127,6 @@ $card-width: 340px;
     img {
       max-height: 227px;
     }
-    .missing-photo {
-      width: 100%;
-      height: 227px;
-      background-color: $light-gray;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      i {
-        font-size: 10rem;
-        color: darken($light-gray, 15%);
-      }
-    }
   }
   .product-body {
     padding: 1rem;

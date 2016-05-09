@@ -5,10 +5,8 @@
         {{foundation-orbit images=product.images size='large' useLightGallery=true}}
       </section>
     {{else}}
-      <section data-src="{{product.defaultImage.full}}">
-        {{#jquery-backstretch images=backstretchImage}}
-          <div class="single-image">&nbsp;</div>
-        {{/jquery-backstretch}}
+      <section class="header-image" style="background-image: url({{product.image.full}})">
+        <img src="{{product.image.full}}" alt="{{product.image.full}}">
       </section>
     {{/if}}
   </header>

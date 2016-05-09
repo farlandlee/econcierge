@@ -1,11 +1,5 @@
 <div class="row product-header">
-  {{#if product.defaultImage}}
-    <img src="{{product.defaultImage.medium}}" alt="{{product.defaultImage.alt}}" title="{{product.defaultImage.title}}">
-  {{else}}
-    <div class="missing-photo">
-      <i class="fa fa-camera" aria-hidden="true"></i>
-    </div>
-  {{/if}}
+  <img src="{{product.image.medium}}" alt="{{product.image.alt}}" title="{{product.image.title}}">
   <div class="product-details column small-4 align-self-bottom shrink">
     {{new-price-display price=product.defaultPrice}}
   </div>

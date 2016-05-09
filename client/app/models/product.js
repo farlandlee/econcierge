@@ -23,6 +23,11 @@ export default DS.Model.extend({
   // images
   defaultImage: DS.attr(),
   images: DS.attr(),
+  image: computed('defaultImage', 'activity.image', {
+    get () {
+      return this.get('defaultImage') || this.get('activity.image');
+    }
+  }),
 
   minDefaultPrice: computed('defaultPrice.amounts.@each.min_quantity', {
     get() {
