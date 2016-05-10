@@ -19,12 +19,8 @@ defmodule Grid.Api.VendorView do
 
       cancellation_policy_days: vendor.cancellation_policy_days,
 
-      tripadvisor_url: vendor.tripadvisor_url,
-      tripadvisor_review_url: vendor.tripadvisor_review_url,
       tripadvisor_rating: vendor.tripadvisor_rating,
-      tripadvisor_rating_image_url: vendor.tripadvisor_rating_image_url,
-      tripadvisor_reviews_count: vendor.tripadvisor_reviews_count,
-
+  
       default_image: render_one(vendor.default_image, Grid.Api.ImageView, "image.json")
     }
   end

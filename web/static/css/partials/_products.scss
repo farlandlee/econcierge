@@ -124,9 +124,6 @@ $card-width: 340px;
     border-bottom: 2px solid $offwhite;
     padding: 1rem 0.5rem;
     height: auto;
-    img {
-      max-height: 227px;
-    }
   }
   .product-body {
     padding: 1rem;
@@ -166,15 +163,42 @@ $card-width: 340px;
       background-repeat: no-repeat;
       min-height: ($card-width * 2 / 3); //3:2 aspect ratio
       position: relative;
+      .product-image {
+        max-height: 227px;
+      }
       .product-details {
         padding: 0;
-        margin-left: 0;
+        margin-right: 0;
         position: absolute;
-        left:0;
+        right: 0;
+        left: 0;
         bottom: 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .vendor-icon {
+          margin-left: 1rem;
+          border-radius: 50%;
+          width: 3.5rem;
+        }
         .price {
+          margin-right: 0;
+          //safari is lame
+          min-width: 0;
           text-align: left;
           float: none;
+        }
+        &.no-image {
+          // only the price is visible, so reverse things so it sits proper.
+          flex-direction: row-reverse;
+          .vendor-icon {
+            display: none;
+          }
+          .price  {
+            // move up to keep aligned with cards that
+            // do have images
+            margin-bottom: 1.25rem;
+          }
         }
       }
       .orbit {
