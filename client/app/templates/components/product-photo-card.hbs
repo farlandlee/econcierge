@@ -1,6 +1,7 @@
 <div class="row product-header">
-  <img src="{{product.image.medium}}" alt="{{product.image.alt}}" title="{{product.image.title}}">
-  <div class="product-details column small-4 align-self-bottom shrink">
+  <img class="product-image" src="{{product.image.medium}}" alt="{{product.image.alt}}" title="{{product.image.title}}">
+  <div class="product-details {{unless product.vendor.image.thumb 'no-image'}}">
+    <img class="vendor-icon" src="{{product.vendor.image.thumb}}" alt="{{product.vendor.image.alt}}">
     {{new-price-display price=product.defaultPrice}}
   </div>
 </div>
