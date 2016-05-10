@@ -143,6 +143,15 @@
     &:hover {
       color: $secondary-color;
     }
+    &.disabled {
+      color: $medium-gray;
+      &:hover {
+        &:before {
+          cursor: not-allowed;
+        }
+        color: $medium-gray;
+      }
+    }
     &:before {
       font-size: 40px;
       //margin-top: -3px;
