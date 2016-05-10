@@ -133,6 +133,17 @@ a.full-box-link {
   }
 }
 
+.darken-overlay-hover {
+  background: transparent;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index:0;
+  transition-duration: 0.5s;
+}
+
 .booking-button {
   position:absolute;
   bottom: 1.0rem;
@@ -443,4 +454,13 @@ a.more-info {
 .block-link {
   width: 100%;
   display: block;
+}
+
+.large-shrink {
+  @include breakpoint(large) {
+    -webkit-flex: 0 0 auto;
+    -ms-flex: 0 0 auto;
+    flex: 0 0 auto;
+    max-width: 100%;
+  }
 }

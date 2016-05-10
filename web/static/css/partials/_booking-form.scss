@@ -4,6 +4,7 @@
   border: 1px solid $medium-gray;
   background-color: $white;
   @include breakpoint (large) {
+    max-width: 356px;
     top: -2rem - rem_calc(41);
     position: absolute;
   }
@@ -15,7 +16,6 @@
     padding: 10px 20px;
     text-transform: capitalize;
     width: 100%;
-    z-index: 1001;
     font-size: 20px;
     line-height: 20px;
     margin-bottom: 0;
@@ -51,7 +51,7 @@
       text-align: left;
       font-size: 1rem;
       font-weight: bold;
-      font-family: 'Helvetica Neue';
+      color: $dark-gray;
     }
     .flatpickr-calendar {
       margin: 0 auto;
@@ -105,7 +105,6 @@
     display: flex;
     flex-wrap: wrap;
     padding: 0 20px;
-    justify-content: center;
     h2 {
       flex: 1 0 100%;
     }
@@ -114,51 +113,81 @@
       flex-wrap: wrap;
       justify-content: center;
       text-align: center;
-      @include breakpoint (medium ) {
-        flex: 1 1 25%;
-      }
-      @include breakpoint (large ) {
-        flex: 1 0 152px;
-      }
       label,
       .amount-label {
         flex: 1 0 100%;
         text-align: center;
-        font-size: 0.9rem;
+        font-size: 0.7rem;
         font-weight: 100;
       }
       .amount-label {
         margin-top: 0.5rem;
       }
+      .input-group-field {
+        margin: 0 0.5rem;
+      }
+      @include breakpoint (medium ) {
+        flex: 1 1 25%;
+      }
+      @include breakpoint (large) {
+        flex: 0 0 50%;
+        margin-bottom: 2rem;
+        min-width: 100px;
+        .input-group-field,
+        .input-group-button {
+          font-size: 12px;
+          height: 20px;
+          line-height: 20px;
+          vertical-align:middle;
+        }
+        .flaticon-minus,
+        .flaticon-plus {
+          &:before {
+            font-size: 12px;
+            height: 20px;
+            line-height: 20px;
+          }
+        }
+        label,
+        .amount-label {
+          margin: 0;
+        }
+      }
     }
-    .input-group-field {
-      margin: 0 0.5rem;
+    @include breakpoint (large) {
+      margin-bottom: -1.5rem;
     }
   }
 }
 .body-count {
   min-width:131px;
-  .flaticon-circle-minus, .flaticon-circle-plus {
-    color: $primary-color;
-    &:hover {
-      color: $secondary-color;
-    }
-    &.disabled {
-      color: $medium-gray;
-      &:hover {
-        &:before {
-          cursor: not-allowed;
-        }
-        color: $medium-gray;
-      }
-    }
+  .flaticon-minus, .flaticon-plus {
     &:before {
-      font-size: 40px;
-      //margin-top: -3px;
+      font-size: 20px;
+      padding: 0 6px;
+      height: 32px;
+      line-height: 32px;
       display: inline-block;
-      font-weight: 100;
       cursor: pointer;
       border-radius: 6px;
+      color: $white;
+      background-color: $dark-gray;
+    }
+    &:hover {
+      &:before {
+        background-color: $secondary-color;
+      }
+    }
+    &.disabled {
+      &:before {
+        background-color: $light-gray;
+      }
+      &:hover {
+        &:before {
+          background-color: $light-gray;
+          cursor: not-allowed;
+        }
+      }
     }
   }
   input {
@@ -174,11 +203,14 @@
       margin: 0;
   }
   .input-group-field {
-    padding-left: rem-calc(16);
-    max-width: rem-calc(46);
-    min-width: rem-calc(46);
-    width: rem-calc(46);
-    margin: 0 1rem;
+    padding: 0;
+    max-width: rem-calc(32);
+    min-width: rem-calc(32);
+    width: rem-calc(32);
+    margin: 0 0.5rem;
+    font-size: 0.9rem;
+    text-align:center;
+    line-height: rem-calc(30);
   }
   .input-group-button {
     width: auto;

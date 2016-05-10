@@ -13,6 +13,7 @@ function inflect(count, word) {
 export default Ember.Component.extend({
   tagName: '',
   product: null,
+  shrink: false,
 
   duration: computed('product.duration', {
     get () {

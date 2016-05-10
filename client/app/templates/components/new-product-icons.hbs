@@ -1,15 +1,15 @@
-<div class="column small-3 {{if shrink "shrink"}}">
+<div class="column small-3 medium-4 {{if shrink "large-shrink"}}">
   <p class="duration fi flaticon-duration product-icons">{{duration}}</p>
 </div>
 {{!-- <div class="column small-12 large-4">
   <p class="age-restriction fi flaticon-adult-child">6+ Years</p>
 </div> --}}
-<div class="column small-5 {{if shrink "shrink"}}">
+<div class="column small-4 medium-4 {{if shrink "large-shrink"}}">
   <p class="location fi flaticon-location product-icons">
     {{if product.pickup "Pick Up" "Meet At Location"}}
   </p>
 </div>
-<div class="column small-4 {{if shrink "shrink"}}">
+<div class="column small-5 medium-4 {{if shrink "large-shrink"}}">
   <p class="vendor-rating product-icons fi">
     {{#if product.vendor.tripadvisorRating}}
       {{rating}}<br>

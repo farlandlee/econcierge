@@ -1,0 +1,17 @@
+<header class="row expanded header-image {{if images "header-gallery"}}" style="background-image: url({{image.full}})" {{action "showLightGallery"}}>
+  {{#if images}}
+    <ul class="photos-source lightgallery">
+      {{#each images as |photo|}}
+        <li data-src="{{photo.full}}" >
+          <img src="{{photo.thumb}}" />
+        </li>
+      {{/each}}
+    </ul>
+    <div class="photo-gallery-hover row">
+      <span class="fi flaticon-photo-gallery column shrink"></span>
+      <span class="hover-text column expand">Click for more images</span>
+    </div>
+    <div class="darken-overlay-hover"></div>
+  {{/if}}
+  <img src="{{image.full}}" alt="{{image.alt}}">
+</header>
