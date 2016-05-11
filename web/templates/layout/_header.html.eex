@@ -8,20 +8,26 @@
       <div class="top-bar-left">
         <ul class="menu" >
           <li class="logo"><a href="/">Outpost</a></li>
+          <%= unless assigns[:kiosk] do %>
           <li><a href="http://www.outpostjh.com/rentals/">Lodging</a></li>
           <li><%= link "Activities", to: explore_path(Grid.Endpoint, :index, ["activities"]), class: assigns[:activities_class] %></li>
           <li><a href="http://itswhatwedohere.com">Journal</a></li>
           <li><a href="http://www.outpostjh.com/about/">About Us</a></li>
+          <% end %>
         </ul>
       </div>
       <div class="top-bar-right">
         <ul class="menu">
           <li><a class="telephone-cta" href="tel:3076904790"><span>Questions? Call Us!</span><span>307.690.4790</span></a></li>
+          <%= unless assigns[:kiosk] do %>
           <li><a class="button hollow" href="http://www.outpostjh.com/list-your-house-with-outpost/">List Your Property</a></li>
+          <% end %>
           <li><%= link to: explore_path(Grid.Endpoint, :index, ["cart"]), class: "flaticon-cart fi shopping-cart" do %>&nbsp;<% end %></li>
         </ul>
       </div>
     </div>
   </div>
+  <%= unless assigns[:kiosk] do %>
   <%= render "_how_it_works.html" %>
+  <% end %>
 </header>
