@@ -13,8 +13,8 @@ defmodule Grid.Plugs.AssignAvailableActivities do
       join: p in assoc(a, :products),
       where: p.published == true,
       distinct: true,
-      order_by: :name
-    )
+      order_by: a.name
+    ) |> Enum.sort(&(&1.name < &2.name)) # Because postgres sorts differently on linux than max.
 
     assign(conn, :available_activities, activities)
   end
