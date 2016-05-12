@@ -98,6 +98,14 @@
         }
       }
     }
+    .filter-list  {
+      .filter-option  {
+        .active {
+          font-weight: $global-weight-bold;
+          color: $anchor-color-hover;
+        }
+      }
+    }
     @include breakpoint (medium) {
       visibility: visible;
       z-index: 0;

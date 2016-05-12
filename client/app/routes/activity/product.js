@@ -21,17 +21,8 @@ export default Ember.Route.extend(NotFoundMixin, RouteTitleMixin, RouteDescripti
     };
   },
 
-  model ({product_id, activity_slug}) {
-    if (!this.store.peekAll('activity').findBy('slug', activity_slug)) {
-      return this.throwNotFound();
-    }
-
-    let product = this.store.peekRecord('product', product_id);
-    if (!product) {
-      product = this.store.findRecord('product', product_id);
-    }
-
-    return product;
+  model ({product_id}) {
+    return this.store.findRecord('product', product_id);
   },
 
   afterModel (product) {
