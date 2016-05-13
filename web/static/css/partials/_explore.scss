@@ -135,6 +135,7 @@
 
 .explore-right {
   background-color: $offwhite;
+  -webkit-overflow-scrolling: touch;
   @include breakpoint (medium) {
     flex: 3 1;
     width: calc(100vw - 320px);
