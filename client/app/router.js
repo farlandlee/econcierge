@@ -12,7 +12,7 @@ Router.map(function () {
   this.route('legacyBookRedirect', {path: '/:activity_slug/:category_slug/:exp_slug/book/:product_id'});
 
   this.route('activities');
-  
+
   this.route('activity', {path: '/:activity_slug'}, function () {
     this.route('index', {path: '/'}); // redirects to explore with no category
     this.route('explore', {path: '/:category_slug'});
