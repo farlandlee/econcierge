@@ -138,9 +138,17 @@
     }
   }
   .cart-error {
-    color: $alert-color;
-    font-size: .7em;
-    font-style:italic;
+    legend {
+      color: $alert-color;
+    }
+
+    .error-message {
+      font-style: italic;
+    }
+
+    a {
+      text-decoration: underline;
+    }
   }
   .cart-footer {
     .tou-disclaimer {

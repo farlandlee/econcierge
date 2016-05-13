@@ -6,12 +6,6 @@
 </p>
 <hr>
 <div class="row align-center">
-  {{#if cartErrors}}
-  <div class="row small-10">
-    <p class="cart-error column small-10 ">Sorry, we could not complete your order at this time.</p>
-  </div>
-  {{/if}}
-
   <fieldset class="fieldset columns small-10 credit-card">
     <legend>Credit Card</legend>
     <div class="row">
@@ -69,6 +63,22 @@
     <p>{{coupon.percent_off}}% discount applied.</p>
     {{/if}}
   </fieldset>
+  {{#if cartErrors}}
+  <fieldset class="fieldset columns small-10 cart-error">
+    <legend>Sorry, there were problems processing your order:</legend>
+
+    <ul>
+    {{#each cartErrors as |error|}}
+      <li>
+        <span class='error-message'>{{error.message}}</span> for
+        {{link-to error.productModel.name 'activity.product' error.productModel.activity error.productModel}}.
+        This item has been removed from your cart, please
+        {{link-to 'click here to re-book this product.' 'activity.product' error.productModel.activity error.productModel}}
+      </li>
+    {{/each}}
+    </ul>
+  </fieldset>
+  {{/if}}
 </div>
 <div class="row checkout-footer align-center">
   <p class="column small-8 tou-disclaimer">

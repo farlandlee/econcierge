@@ -157,7 +157,10 @@ export default Ember.Component.extend({
         if (error.type === 'ValidationError') {
           this.set('contactErrorMessage', 'Validation errors on contact information. Please check that your email is correct.');
         } else if (error.type === 'CartError') {
-          this.get('cart').forEach(i => i.destroyRecord());
+          let cartItem = this.get('cart').find(i => i.get('product.id') === error.product);
+          error.productModel = cartItem.get('product');
+          cartItem.destroyRecord();
+
           cartErrors.push(error);
         } else {
           // don't know what it is, throw up
