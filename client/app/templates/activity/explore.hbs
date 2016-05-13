@@ -189,7 +189,7 @@
       </div>
     </div>
 
-    <main class="align-center products align-stretch">
+    <main class="products {{if loading "loading"}} align-center align-stretch">
       {{#item-sorter items=dateFilteredProducts by=currentSortOrder as |product|}}
         {{#link-to 'activity.product' product class="product-card-outer"}}
           {{#if activity.useProductPhotoCard}}

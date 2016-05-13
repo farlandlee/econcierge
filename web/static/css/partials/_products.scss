@@ -80,6 +80,13 @@ $card-width: 340px;
   padding-top: 0.5rem;
   display:flex;
   flex-wrap: wrap;
+  transition: all .3s;
+  &.loading  {
+    transform: scale(0.95);
+    .product-card-outer  {
+      opacity: 0.5;
+    }
+  }
   .product-card-outer {
     margin: 15px;
     position: relative;
