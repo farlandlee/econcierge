@@ -30,10 +30,10 @@ export default DS.Model.extend({
     }
   }),
 
-  minDefaultPrice: computed('defaultPrice.amounts.@each.min_quantity', {
+  displayPrice: computed('defaultPrice.amounts.@each.min_quantity', {
     get() {
-      let quantitySort = this.get('defaultPrice').amounts.sortBy('min_quantity');
-      return quantitySort.objectAt(0).amount;
+      let lowestQuantity = this.get('defaultPrice').amounts.sortBy('min_quantity').objectAt(0);
+      return Math.ceil(lowestQuantity.amount);
     }
   })
 });
