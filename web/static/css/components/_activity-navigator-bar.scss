@@ -19,7 +19,7 @@
     padding-left: 3rem;
 	}
   .select-activity {
-    color: white;
+    color: $white;
     margin-bottom: 0;
     border-bottom: 0;
     padding: 0;
@@ -62,12 +62,15 @@
     width: inherit;
     height: auto;
     background-image: none !important;
-    background-color: $primary-color;
-    color: $white;
+    background-color: $white;
+    color: $black;
     padding: 0.5rem 1rem;
     p {
       font-size: 12px;
       line-height: 1.2;
+    }
+    .select-activity {
+      color: $black;
     }
     @include breakpoint (large) {
       .select-activity {
