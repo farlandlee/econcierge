@@ -6,18 +6,18 @@
 
   height: 40vh;
   max-height: 533px;
+  min-height: 65px;
 
-  transition: all 0.5s;
+  transition: height 0.5s, font-size: 0.5s;
 
   padding: 1rem;
-	@include breakpoint (large) {
-    padding-left: 3rem;
-	}
-
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-
+  @include breakpoint (large) {
+    min-height: 58px;
+    padding-left: 3rem;
+	}
   .select-activity {
     color: white;
     margin-bottom: 0;
