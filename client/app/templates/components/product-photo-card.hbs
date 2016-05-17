@@ -2,7 +2,7 @@
   <img class="product-image" src="{{product.image.medium}}" alt="{{product.image.alt}}" title="{{product.image.title}}">
   <div class="product-details {{unless product.vendor.image.thumb 'no-image'}}">
     <img class="vendor-icon" src="{{product.vendor.image.thumb}}" alt="{{product.vendor.image.alt}}">
-    <p class="price"><span>from</span> ${{product.minDefaultPrice}}</p>
+    <p class="price"><span>from</span> ${{product.displayPrice}}</p>
   </div>
 </div>
 <div class="row product-body align-bottom">

@@ -1,7 +1,7 @@
 import Ember from 'ember';
 
 export const sortFieldToString = {
-  "Price" : ["minDefaultPrice:asc"],
+  "Price" : ["displayPrice:asc"],
   "Rating" : ["vendor.tripadvisorRating:desc"],
   "Trip Name" : ["name:asc"],
   "Trip Duration" : ["duration:asc"]
