@@ -17,6 +17,17 @@ body {
 .off-canvas-content {
   min-height: 100vh;
 }
+.top-bar {
+  .top-bar-left {
+    flex: 1 1 65%;
+  }
+  .top-bar-right {
+    .menu {
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
+}
 .page {
   min-height: 100vh;
   /* equal to footer height */
@@ -258,12 +269,18 @@ a.full-box-link {
     &.wildlife-tours-cta {
       background-image: url('/images/wildlife-tours.jpg');
     }
+    &.staff-picks-cta {
+      background-image: url('/images/staff-picks.jpeg');
+    }
   }
   .double-wide {
     background: url(http://placehold.it/690x300) no-repeat center center;
     background-size: cover;
     &.rentals-cta {
-      background-image: url('/images/cabin.jpg');
+      background-image: url('/images/pearl-jackson.jpeg');
+    }
+    &.concierge-cta {
+      background-image: url('/images/concierge.jpeg');
     }
     &.fly-cta {
       background-image: url('/images/scenicflights.jpg');

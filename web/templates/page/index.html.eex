@@ -58,15 +58,15 @@
             </a>
           </div>
           <div class="column small-12 medium-4">
-            <a href="<%= explore_path(@conn, :index, ["wildlife_tours", "full_day_wildlife_tour", "book", "396"]) %>">
-              <div class="single-wide wildlife-tours-cta">
+            <a href="<%= explore_path(@conn, :index, ["staff_picks"]) %>">
+              <div class="single-wide staff-picks-cta">
                 <div class="darken-overlay"></div>
                 <div class="overlay-text">
-                  <p>Wildlife Safari</p>
-                  <p class="small">Visit Grand Teton National Park</p>
+                  <p>Outpost Staff Picks</p>
+                  <p class="small">Book Our Favorite Experiences</p>
                 </div>
                 <p class="booking-button">
-                    Request to Book
+                    Learn More
                 </p>
               </div>
             </a>
@@ -80,12 +80,12 @@
             </a>
           </div>
           <div class="column small-12 medium-8">
-            <a href="http://www.outpostjh.com/cavalry-gt-the-indian/">
-              <div class="double-wide teton-tiger-cta">
+            <a href="http://www.outpostjh.com/jackson-hole-concierge-services/">
+              <div class="double-wide concierge-cta">
                 <div class="darken-overlay"></div>
                 <div class="overlay-text">
-                  <p>Introducing Teton Tiger</p>
-                  <p class="small">Exotic Twists on Classic Drinks and Dishes</p>
+                  <p>Free Concierge Services</p>
+                  <p class="small">Tired of Researching &amp; Planning? We can Help</p>
                 </div>
                 <p class="booking-button">
                     Read More
