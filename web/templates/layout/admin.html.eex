@@ -72,6 +72,9 @@
             <li class="<%= nav_class(@conn, Grid.Admin.CouponController) %>">
               <%= link "Coupons", to: admin_coupon_path(@conn, :index) %>
             </li>
+            <li class="<%= nav_class(@conn, Grid.Admin.KioskController) %>">
+              <%= link "Kiosks", to: admin_kiosk_path(@conn, :index) %>
+            </li>
           </ul>
         </div>
         <div class="col-xs-10 col-sm-10 col-xs-offset-2 col-sm-offset-2 col-md-10 col-md-offset-2 main">

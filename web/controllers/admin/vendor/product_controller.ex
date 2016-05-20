@@ -1,6 +1,8 @@
 defmodule Grid.Admin.Vendor.ProductController do
   use Grid.Web, :controller
 
+  import Grid.Models.ManyToMany
+
   alias Grid.Plugs
 
   alias Grid.Activity
@@ -42,7 +44,7 @@ defmodule Grid.Admin.Vendor.ProductController do
     {:ok, conn} = Repo.transaction(fn ->
       case Repo.insert(changeset) do
         {:ok, product} ->
-          manage_amenitities(product, product_params["amenity_option_id"])
+          manage_associated(product, :product_amenity_options, :amenity_option_id, product_params["amenity_option_id"])
 
           conn
           |> put_flash(:info, "Product created successfully.")
@@ -85,7 +87,7 @@ defmodule Grid.Admin.Vendor.ProductController do
     {:ok, conn} = Repo.transaction(fn ->
       case Repo.update(changeset) do
         {:ok, product} ->
-          manage_amenitities(product, product_params["amenity_option_id"])
+          manage_associated(product, :product_amenity_options, :amenity_option_id, product_params["amenity_option_id"])
 
           conn
           |> put_flash(:info, "Product updated successfully.")
@@ -226,24 +228,5 @@ defmodule Grid.Admin.Vendor.ProductController do
     do: Repo.get(Activity, activity_id)
   defp load_activity(%Plug.Conn{assigns: %{product: p}}),
     do: assoc(p, :activity) |> Repo.one
-
-  ## Manage Amenities
-
-  defp manage_amenitities(product, nil), do:
-    manage_amenitities(product, [])
-
-  defp manage_amenitities(product, ids) do
-    Repo.delete_all(assoc(product, :product_amenity_options))
-
-    ids = Enum.filter(ids, fn
-      "false" -> false
-      _ -> true
-    end)
-
-    for s_id <- ids, {id, ""} = Integer.parse(s_id) do
-      build_assoc(product, :product_amenity_options, %{amenity_option_id: id})
-      |> Repo.insert!
-    end
-  end
 
 end

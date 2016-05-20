@@ -1,0 +1,41 @@
+<%= link to: admin_kiosk_path(@conn, :new), class: "btn btn-success header-action" do  %>
+  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add kiosk
+<% end %>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Sub domain</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for kiosk <- @kiosks do %>
+    <tr>
+      <td><%= kiosk.name %></td>
+      <td><%= kiosk.sub_domain %></td>
+
+      <td class="text-right">
+        <div class="dropdown actions">
+          <button class="btn btn-xs btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+            Actions <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-right">
+            <li>
+              <%= link "Show", to: admin_kiosk_path(@conn, :show, kiosk), class: "show" %>
+            </li>
+            <li>
+              <%= link "Edit", to: admin_kiosk_path(@conn, :edit, kiosk), class: "edit" %>
+            </li>
+            <li>
+              <%= link "Delete", to: admin_kiosk_path(@conn, :delete, kiosk), method: :delete, data: [confirm: "Are you sure?"], class: "delete" %>
+            </li>
+          </ul>
+        </div>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>

@@ -15,6 +15,7 @@ defmodule Grid.Factory do
     Coupon,
     Experience,
     ExperienceCategory,
+    Kiosk,
     Location,
     Order,
     Price,
@@ -57,6 +58,13 @@ defmodule Grid.Factory do
       state: Enum.random(Grid.USStates.codes()),
       zip: sequence(:address, &"zip-#{&1}"),
       vendor: build(:vendor)
+    }
+  end
+
+  def factory(:kiosk) do
+    %Kiosk{
+      name: sequence(:name, &"kiosk-#{&1}"),
+      sub_domain: sequence(:sub_domain, &"subdomain-#{&1}")
     }
   end
 

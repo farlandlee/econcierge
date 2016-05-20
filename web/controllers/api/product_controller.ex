@@ -12,6 +12,7 @@ defmodule Grid.Api.ProductController do
       |> Product.for_date(conn.assigns.date)
       |> Product.for_category(params["category_id"])
       |> Product.for_activity(params["activity_id"])
+      |> kiosk_filter(Map.get(conn.assigns, :kiosk, nil))
       |> distinct(true)
       |> Repo.all_in_ids(params["ids"])
       |> preload
@@ -29,6 +30,7 @@ defmodule Grid.Api.ProductController do
 
   def preload(products) do
     Repo.preload(products, [
+      :vendor,
       :activity,
       :product_amenity_options,
       :meeting_location,
@@ -57,5 +59,15 @@ defmodule Grid.Api.ProductController do
         _ -> false
       end
     end)
+  end
+
+  defp kiosk_filter(query, nil), do: query
+  defp kiosk_filter(query, kiosk) do
+    vendor_ids = Enum.map(kiosk.kiosk_sponsors, &(&1.vendor_id))
+    activity_ids = Enum.map(kiosk.vendor_activities, &(&1.activity_id))
+
+    from p in query,
+      join: a in assoc(p, :activity),
+      where: not a.id in ^activity_ids or p.vendor_id in ^vendor_ids
   end
 end

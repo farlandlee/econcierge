@@ -1,0 +1,4 @@
+<%= render "form.html", changeset: @changeset,
+                        vendors: @vendors,
+                        action: admin_kiosk_path(@conn, :update, @kiosk),
+                        back: admin_kiosk_path(@conn, :index) %>

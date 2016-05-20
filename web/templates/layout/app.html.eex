@@ -14,9 +14,9 @@
   <body>
     <div class="off-canvas-wrapper">
       <div class="off-canvas-wrapper-inner" data-off-canvas-wrapper>
-        <%= render "_off_canvas_menu.html" %>
+        <%= render "_off_canvas_menu.html", assigns %>
         <div class="off-canvas-content" data-off-canvas-content>
-          <%= render "_header.html" %>
+          <%= render "_header.html", assigns %>
 
           <%= render @view_module, @view_template, assigns %>
 

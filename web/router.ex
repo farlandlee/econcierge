@@ -21,10 +21,12 @@ defmodule Grid.Router do
     plug :protect_from_forgery
     plug :put_secure_browser_headers
     plug Plugs.AssignUser
+    plug Plugs.Kiosk
   end
 
   pipeline :api do
     plug :accepts, ["json"]
+    plug Plugs.Kiosk
   end
 
   pipeline :admin do
@@ -129,6 +131,7 @@ defmodule Grid.Router do
     get "/users", UserController, :index
 
     resources "/coupons", CouponController
+    resources "/kiosks", KioskController
 
     get "/orders/find_order_item", OrderController, :find_order_item
     resources "/orders", OrderController, [only: [:index, :show]]

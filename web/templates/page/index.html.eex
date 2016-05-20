@@ -1,6 +1,8 @@
 <div class="full-overlay-select-list-container home" id="full-overlay-select-list-container">
   <ul>
+    <%= unless assigns[:kiosk] do %>
     <li><%= link "Lodging", to: "http://www.outpostjh.com/rentals/" %></li>
+    <% end %>
     <li><%= link "All Activities", to: explore_path(@conn, :index, ["activities"]), class: "selected" %></li>
     <%= for activity <- @available_activities do %>
       <li><%= link activity.name, to: explore_path(@conn, :index, [activity.slug, "categories"]) %></li>
@@ -39,6 +41,7 @@
         <div class="section-subtitle small-12 column">Search, discover and book the various activities offered in Jackson Hole.</div>
       </div>
     </header>
+    <%= unless assigns[:kiosk] do %>
     <div class="row overlays align-center">
       <div class="small-12 large-11 columns">
         <div class="row align-center align-stretch">
@@ -177,5 +180,6 @@
     <div class="row column text-center">
       <a href="http://www.outpostjh.com/itswhatwedohere" class="bottom-link">View All Jackson Hole Lifestyle Articles</a>
     </div>
+    <% end %>
   </section>
 </div>

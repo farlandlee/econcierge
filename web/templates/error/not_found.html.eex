@@ -15,7 +15,7 @@
   <body>
     <div class="off-canvas-wrapper">
       <div class="off-canvas-wrapper-inner" data-off-canvas-wrapper>
-        <%= render Grid.LayoutView, "_off_canvas_menu.html" %>
+        <%= render Grid.LayoutView, "_off_canvas_menu.html", assigns %>
         <div class="off-canvas-content" data-off-canvas-content>
           <%= render Grid.LayoutView, "_header.html" %>
 
@@ -29,7 +29,7 @@
             </div>
           </div>
 
-          <%= render Grid.LayoutView, "_footer.html" %>
+          <%= render Grid.LayoutView, "_footer.html", assigns %>
         </div>
         <%= render Grid.LayoutView, "_footer_scripts.html" %>
       </div>

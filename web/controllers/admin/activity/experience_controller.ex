@@ -5,6 +5,7 @@ defmodule Grid.Admin.Activity.ExperienceController do
   alias Grid.Category
 
   import Ecto.Query
+  import Grid.Models.ManyToMany
 
   plug Grid.Plugs.PageTitle, title: "Experience"
   plug :scrub_params, "experience" when action in [:create, :update]
@@ -104,18 +105,6 @@ defmodule Grid.Admin.Activity.ExperienceController do
       to: admin_activity_path(conn, :show, conn.assigns.activity,
         tab: "experiences"
     ))
-  end
-
-  defp manage_associated(experience, relation, key, nil), do:
-    manage_associated(experience, relation, key, [])
-
-  defp manage_associated(experience, relation, key, ids) do
-    Repo.delete_all(assoc(experience, relation))
-
-    for s_id <- ids, {id, ""} = Integer.parse(s_id) do
-      build_assoc(experience, relation, Map.put(%{}, key, id))
-      |> Repo.insert!
-    end
   end
 
 

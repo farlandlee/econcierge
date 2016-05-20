@@ -139,3 +139,14 @@ heroku run mix ecto.migrate --remote heroku-staging
 ```sh
 heroku pg:backups restore $(heroku pg:backups public-url --app outpost-grid) DATABASE_URL --app outpost-grid-staging
 ```
+
+#### Kiosk whitelist domains
+
+* <subdomain>.outpostjh.com
+* s3.amazonaws.com
+* js.stripe.com
+* maps.google.com, goo.gl/maps, www.google-analytics.com
+* app.purechat.com
+* use.typekit.net
+* www.expeditedssl.com
+* *.cloudfront.net (rollbar)
