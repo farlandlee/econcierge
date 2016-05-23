@@ -21,6 +21,7 @@ defmodule Grid.Factory do
     Price,
     Product,
     Season,
+    Slide,
     StartTime,
     User,
     Vendor,
@@ -65,6 +66,17 @@ defmodule Grid.Factory do
     %Kiosk{
       name: sequence(:name, &"kiosk-#{&1}"),
       sub_domain: sequence(:sub_domain, &"subdomain-#{&1}")
+    }
+  end
+
+  def factory(:slide) do
+    %Slide{
+      title_label: sequence(:title_label, &"title_label-#{&1}"),
+      title: sequence(:title, &"slide-#{&1}"),
+      photo_url: sequence(:photo_url, &"http://test.com/#{&1}.jpeg"),
+      action_label: sequence(:action_label, &"action_label-#{&1}"),
+      action_link: sequence(:action_link, &"http://test.com/book_#{&1}"),
+      kiosk: build(:kiosk)
     }
   end
 

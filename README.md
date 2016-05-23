@@ -140,13 +140,27 @@ heroku run mix ecto.migrate --remote heroku-staging
 heroku pg:backups restore $(heroku pg:backups public-url --app outpost-grid) DATABASE_URL --app outpost-grid-staging
 ```
 
-#### Kiosk whitelist domains
+#### Kiosk Setup
 
-* <subdomain>.outpostjh.com
-* s3.amazonaws.com
-* js.stripe.com
-* maps.google.com, goo.gl/maps, www.google-analytics.com
-* app.purechat.com
-* use.typekit.net
-* www.expeditedssl.com
-* *.cloudfront.net (rollbar)
+* Add new kiosk in outpost admin: https://book.outpostjh.com/admin/kiosks
+* Install Kiosk Pro Lite from Appstore
+  - Launch Kiosk Pro Lite
+  - Change homepage to - <subdomain>.outpostjh.com
+  - Turn off ipad status bar and address bar
+  - Set Allowed domains to:
+    * <subdomain>.outpostjh.com
+    * s3.amazonaws.com
+    * js.stripe.com
+    * maps.google.com, goo.gl/maps, www.google-analytics.com
+    * app.purechat.com
+    * use.typekit.net
+    * www.expeditedssl.com
+    * *.cloudfront.net (rollbar)
+
+* Setup Guided Access - Settings / General / Accessibility
+  - Turn on Guided Access
+  - Set Accessiblity Shortcut to "Guided Access" and set program to Kiosk Pro Lite
+* Setup Restrictions - Settings / General / Restrictions
+  - Disallow all built in apps
+* Launch Kiosk Pro Lite and enable guided access by triple-clicking the home button.
+  - Triple-click again and enter passcode to exit

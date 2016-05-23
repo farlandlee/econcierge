@@ -14,3 +14,30 @@
   <dd><%= Grid.AdminView.pretty_name_list(@kiosk.vendors) %></dd>
 
 </dl>
+
+<div>
+  <ul class="nav nav-tabs">
+    <li role="presentation">
+      <%= tab_link "Slides" %>
+      </a>
+    </li>
+  </ul>
+
+  <div class="tab-content">
+    <section role="tabpanel" class="tab-pane" id="slides">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <%= link to: admin_kiosk_slide_path(@conn, :new, @kiosk), class: "btn btn-xs btn-success pull-right" do %>
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Slide
+          <% end %>
+          <h3 class="panel-title">Slides</h3>
+        </div>
+        <%= render Grid.Admin.Kiosk.SlideView, "index.html",
+        conn: @conn,
+        kiosk: @kiosk,
+        slides: @kiosk.slides
+        %>
+      </div>
+    </section>
+  </div>
+</div>

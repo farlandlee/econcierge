@@ -59,6 +59,10 @@ defmodule Grid.Router do
     plug Plugs.AssignModel, model: Grid.Amenity, param: "amenity_id"
     plug Plugs.Breadcrumb, resource: Grid.Amenity
   end
+  pipeline :assign_kiosk do
+    plug Plugs.AssignModel, model: Grid.Kiosk, param: "kiosk_id"
+    plug Plugs.Breadcrumb, resource: Grid.Kiosk
+  end
 
   scope "/", Grid do
     pipe_through :browser
@@ -131,7 +135,11 @@ defmodule Grid.Router do
     get "/users", UserController, :index
 
     resources "/coupons", CouponController
-    resources "/kiosks", KioskController
+    resources "/kiosks", KioskController, [alias: Kiosk] do
+      pipe_through :assign_kiosk
+
+      resources "/slides", SlideController
+    end
 
     get "/orders/find_order_item", OrderController, :find_order_item
     resources "/orders", OrderController, [only: [:index, :show]]

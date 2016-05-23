@@ -8,6 +8,7 @@ defmodule Grid.Kiosk do
     has_many :kiosk_sponsors, Grid.KioskSponsor
     has_many :vendors, through: [:kiosk_sponsors, :vendor]
     has_many :vendor_activities, through: [:kiosk_sponsors, :vendor, :vendor_activities]
+    has_many :slides, Grid.Slide
 
     timestamps
   end
