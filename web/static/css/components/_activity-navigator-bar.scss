@@ -72,6 +72,17 @@
     .select-activity {
       color: $black;
     }
+    @include breakpoint (medium) {
+      .current {
+        border-bottom: 0;
+        font-size: 1.2rem;
+        &:after {
+          font-size: 1.6rem;
+          margin-top: 0.4rem;
+          text-align: left;
+        }
+      }
+    }
     @include breakpoint (large) {
       .select-activity {
         p {
@@ -88,12 +99,8 @@
         }
       }
       .current {
-        border-bottom: 0;
-        font-size: 1.2rem;
         &:after {
-          font-size: 1.6rem;
-          margin-top: .4rem;
-          text-align: left;
+          margin-top: 0.5rem;
         }
       }
     }

@@ -1,6 +1,7 @@
 .kiosk {
-  .page {
-    padding-top: 0;
+  .title-bar {
+    background-color: transparent;
+    border: 0;
   }
   .top-bar,
   .top-bar ul {
@@ -11,18 +12,18 @@
     }
   }
   .top-bar-right {
+    display:block;
     .menu {
       display:flex;
       justify-content: flex-end;
     }
   }
-  @include breakpoint( medium ) {
-    .page {
-  		margin-bottom: 0;
-      &:after {
-        height: 0;
-      }
-  	}
+  .page {
+    padding-top: 0;
+    margin-bottom: 0;
+    &:after {
+      height: 0;
+    }
   }
   section {
     &.home-main {
@@ -58,6 +59,7 @@
   top: 0 !important;
   left: 0 !important;
   position:absolute;
+  max-width: 100%;
   .orbit-container {
     min-height: 100vh;
     max-height: 100vh;
