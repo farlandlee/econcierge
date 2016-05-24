@@ -12,7 +12,7 @@ export default function ($) {
     };
     let orbit = new Foundation.Orbit(el, opt);
 
-    $('.how-it-works-button-outer').addClass('hidden');
+    $('.how-it-works-button-outer, .purechat-widget').addClass('hidden');
 
     $.fn.swipeEvents = function() {
       return this.each(function() {
