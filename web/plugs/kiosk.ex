@@ -18,7 +18,7 @@ defmodule Grid.Plugs.Kiosk do
     case Grid.Repo.get_by(Grid.Kiosk, sub_domain: sub_domain) do
       nil -> nil
       kiosk ->
-        Grid.Repo.preload(kiosk, [:kiosk_sponsors, :vendor_activities])
+        Grid.Repo.preload(kiosk, [:kiosk_sponsors, :vendor_activities, :slides])
     end
   end
 end

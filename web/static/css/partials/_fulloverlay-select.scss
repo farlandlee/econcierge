@@ -160,7 +160,8 @@ $arrow_color: $white;
       }
     }
   }
-  &.home {
+  &.home,
+  &.kiosk {
     @include breakpoint(medium) {
       li {
         width: 100%;

@@ -1,3 +1,4 @@
+<%= unless assigns[:kiosk] do %>
 <footer class="page-footer">
   <div class="row expanded">
     <div class="small-12 medium-3 columns text-center">
@@ -11,9 +12,7 @@
         <a href="http://outpostjh.com">Outpost Jackson Hole</a> &bull; <a href="https://goo.gl/maps/PndaX" target="_blank" >70 s. king street jackson, wyoming 83001</a> &bull;
         <a href="tel:3075904790"><span class="flaticon-telephone5"></span>(307) 690-4790</a> &bull;
         <a href="mailto:info@outpostjh.com"><span class="flaticon-envelope54"></span>info@outpostjh.com</a>
-        <%= unless assigns[:kiosk] do %>
         <div class="outpost-login"><div><a href="http://www.outpostjh.com/owners-portal/" >Owner Login</a></div></div>
-        <% end %>
       </div>
     </div>
     <div class="small-12 medium-3 columns">
@@ -28,3 +27,4 @@
     </div>
   </div>
 </footer>
+<% end %>
