@@ -69,6 +69,7 @@ defmodule Grid.Router do
 
     get "/", PageController, :index
     get "/about/terms", PageController, :tou
+    get "/slideshow", PageController, :slideshow
 
     get "/vendors", VendorController, :index
 

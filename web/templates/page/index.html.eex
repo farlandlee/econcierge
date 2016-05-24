@@ -34,6 +34,7 @@
       </div>
     </div>
   </section>
+  <%= unless assigns[:kiosk] do %>
   <section class="home-middle">
     <header class="row align-center">
       <div class="column small-12 large-10">
@@ -41,7 +42,6 @@
         <div class="section-subtitle small-12 column">Search, discover and book the various activities offered in Jackson Hole.</div>
       </div>
     </header>
-    <%= unless assigns[:kiosk] do %>
     <div class="row overlays align-center">
       <div class="small-12 large-11 columns">
         <div class="row align-center align-stretch">
@@ -180,6 +180,6 @@
     <div class="row column text-center">
       <a href="http://www.outpostjh.com/itswhatwedohere" class="bottom-link">View All Jackson Hole Lifestyle Articles</a>
     </div>
-    <% end %>
   </section>
+  <% end %>
 </div>

@@ -1,0 +1,31 @@
+<div class="orbit kiosk-slideshow" id="kiosk-orbit" role="region" aria-label="Book Activities in Jackson Hole" >
+  <div class="slide-to-activities">
+    <%= link to: explore_path(@conn, :index, ["activities"]), class: "button", id: "link-all-activities" do %>
+    Swipe down for All Activities<span class="fi flaticon-arrow-down-thick"></span>
+    <% end %>
+  </div>
+  <ul class="orbit-container">
+    <button class="orbit-previous fi flaticon-arrow-left"><span class="show-for-sr">Previous Slide</span></button>
+    <button class="orbit-next fi flaticon-arrow-right"><span class="show-for-sr">Next Slide</span></button>
+    <%= for slide <- @kiosk.slides do %>
+    <li class="orbit-slide" style="background-image: url(<%= slide.photo_url %>)">
+      <img src="<%= slide.photo_url %>" />
+      <a href="<%= slide.action_link %>">
+        <%= if slide.title do %>
+          <div class="orbit-caption">
+            <%= if slide.title_label do %>
+              <header><%= slide.title_label %></header>
+            <% end %>
+            <main>
+              <p><%= slide.title %></p>
+              <span class="button action-button"><%= slide.action_label %></span>
+            </main>
+          </div>
+        <% else %>
+            <div class="button lower-right action-button"><%= slide.action_label %></div>
+        <% end %>
+      </a>
+    </li>
+    <% end %>
+  </ul>
+</div>

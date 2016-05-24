@@ -11,7 +11,7 @@
     <%= render "_head_scripts.html" %>
   </head>
 
-  <body>
+  <body<%= if assigns[:kiosk], do: ~E( class="kiosk") %>>
     <div class="off-canvas-wrapper">
       <div class="off-canvas-wrapper-inner" data-off-canvas-wrapper>
         <%= render "_off_canvas_menu.html", assigns %>

@@ -30,8 +30,6 @@ body {
 }
 .page {
   min-height: 100vh;
-  /* equal to footer height */
-
   padding-top: 42px;
 	@include breakpoint( medium ) {
 		margin-bottom: -180px;
@@ -82,7 +80,7 @@ body {
 }
 
 .hidden {
-  display: none;
+  display: none !important;
 }
 
 .error-404 {
