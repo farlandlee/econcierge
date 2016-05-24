@@ -44,18 +44,18 @@ defmodule Grid.Admin.KioskController do
   end
 
   def show(conn, _) do
-    kiosk = conn.assigns[:kiosk]
+    kiosk = conn.assigns.kiosk |> Repo.preload(:slides)
     render(conn, "show.html", kiosk: kiosk)
   end
 
   def edit(conn, _) do
-    kiosk = conn.assigns[:kiosk]
+    kiosk = conn.assigns.kiosk
     changeset = Kiosk.changeset(kiosk)
     render(conn, "edit.html", kiosk: kiosk, changeset: changeset)
   end
 
   def update(conn, %{"kiosk" => kiosk_params}) do
-    kiosk = conn.assigns[:kiosk]
+    kiosk = conn.assigns.kiosk
     changeset = Kiosk.changeset(kiosk, kiosk_params)
 
     case Repo.update(changeset) do
@@ -71,7 +71,7 @@ defmodule Grid.Admin.KioskController do
   end
 
   def delete(conn, _) do
-    Repo.delete!(conn.assigns[:kiosk])
+    Repo.delete!(conn.assigns.kiosk)
 
     conn
     |> put_flash(:info, "Kiosk deleted successfully.")
@@ -89,7 +89,7 @@ defmodule Grid.Admin.KioskController do
   end
 
   def preload_assocs(conn, _) do
-    kiosk = conn.assigns[:kiosk]
+    kiosk = conn.assigns.kiosk
       |> Repo.preload([:vendors])
 
     assign(conn, :kiosk, kiosk)

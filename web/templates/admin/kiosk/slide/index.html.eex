@@ -1,0 +1,43 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th>Photo Url</th>
+      <th>Button Link</th>
+      <th>Button Text</th>
+      <th>Title</th>
+      <th>Title Label</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for slide <- @slides do %>
+    <tr>
+      <td><%= slide.photo_url %></td>
+      <td><%= slide.action_link %></td>
+      <td><%= slide.action_label %></td>
+      <td><%= slide.title %></td>
+      <td><%= slide.title_label %></td>
+
+      <td class="text-right">
+        <div class="dropdown actions">
+          <button class="btn btn-xs btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+            Actions <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-right">
+            <li>
+              <%= link "Show", to: admin_kiosk_slide_path(@conn, :show, @kiosk, slide), class: "show" %>
+            </li>
+            <li>
+              <%= link "Edit", to: admin_kiosk_slide_path(@conn, :edit, @kiosk, slide), class: "edit" %>
+            </li>
+            <li>
+              <%= link "Delete", to: admin_kiosk_slide_path(@conn, :delete, @kiosk, slide), method: :delete, data: [confirm: "Are you sure?"], class: "delete" %>
+            </li>
+          </ul>
+        </div>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>

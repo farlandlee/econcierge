@@ -6,6 +6,11 @@ defmodule Grid.Models.Validations do
     validate_format(changeset, key, @email_regex)
   end
 
+  @url_regex ~r/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/
+  def validate_url(changeset, key \\ :url) do
+    validate_format(changeset, key, @url_regex)
+  end
+
   def validate_date(changeset, field) do
     case get_field(changeset, field) do
       nil ->

@@ -14,7 +14,7 @@
   <tbody>
 <%= for kiosk <- @kiosks do %>
     <tr>
-      <td><%= kiosk.name %></td>
+      <td><%= link kiosk.name, to: admin_kiosk_path(@conn, :show, kiosk) %></td>
       <td><%= kiosk.sub_domain %></td>
 
       <td class="text-right">
@@ -23,9 +23,6 @@
             Actions <span class="caret"></span>
           </button>
           <ul class="dropdown-menu dropdown-menu-right">
-            <li>
-              <%= link "Show", to: admin_kiosk_path(@conn, :show, kiosk), class: "show" %>
-            </li>
             <li>
               <%= link "Edit", to: admin_kiosk_path(@conn, :edit, kiosk), class: "edit" %>
             </li>

@@ -1,0 +1,24 @@
+<%= link to: admin_kiosk_slide_path(@conn, :edit, @kiosk, @slide), class: "btn btn-primary header-action" do %>
+  <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Edit slide
+<% end %>
+
+<dl class="dl-horizontal">
+
+  <dt>Photo url</dt>
+  <dd><%= @slide.photo_url %></dd>
+
+  <dt>Action link</dt>
+  <dd><%= @slide.action_link %></dd>
+
+  <dt>Action label</dt>
+  <dd><%= @slide.action_label %></dd>
+
+  <dt>Title</dt>
+  <dd><%= @slide.title %></dd>
+
+  <dt>Title label</dt>
+  <dd><%= @slide.title_label %></dd>
+</dl>
+
+<h3>Photo Preview</h3>>
+<img src="<%= @slide.photo_url %>" />
