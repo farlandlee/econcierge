@@ -3,8 +3,16 @@ defmodule Grid.Router do
   use Plug.ErrorHandler
 
   #Reports the exception and re-raises it
-  defp handle_errors(conn, %{kind: kind, reason: reason, stack: stack}) do
-    Rollbax.report(reason, stack, %{params: conn.params})
+  defp handle_errors(conn = %{status: status}, %{kind: kind, reason: reason, stack: stack}) do
+    message = Exception.format(:error, reason, stack)
+
+    level = cond do
+      status >= 500 -> :error
+      status >= 400 -> :warning
+      true -> :info
+    end
+
+    Rollbax.Client.emit(level, message, %{params: conn.params})
     Plug.Conn.WrapperError.reraise(conn, kind, reason)
   end
 
