@@ -12,8 +12,6 @@ export default function ($) {
     };
     let orbit = new Foundation.Orbit(el, opt);
 
-    $('.how-it-works-button-outer, .purechat-widget').addClass('hidden');
-
     $.fn.swipeEvents = function() {
       return this.each(function() {
 
@@ -34,13 +32,13 @@ export default function ($) {
           var touches = event.originalEvent.touches;
           if (touches && touches.length) {
             var deltaY = startY - touches[0].pageY;
-            if (deltaY >= 50) {
+            if (deltaY >= 100) {
               $this.trigger("swipeUp");
             }
-            if (deltaY <= -50) {
+            if (deltaY <= -100) {
               $this.trigger("swipeDown");
             }
-            if (Math.abs(deltaY) >= 50) {
+            if (Math.abs(deltaY) >= 100) {
               $this.off('touchmove', touchmove);
             }
           }

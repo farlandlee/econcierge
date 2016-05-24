@@ -7,6 +7,6 @@ defmodule Grid.PageController do
   def tou(conn, _), do: render(conn)
 
   def slideshow(conn = %{assigns: %{kiosk: _kiosk}}, _), do:
-    render(conn, "slideshow.html")
+    render(conn, "slideshow.html", hide_purechat: true)
   def slideshow(conn, _), do: redirect(conn, to: page_path(conn, :index))
 end
