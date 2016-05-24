@@ -16,7 +16,7 @@
       </div>
     </div>
     <div class="small-12 medium-3 columns">
-      <%= if @is_home do %>
+      <%= if assigns[:is_home] do %>
       <% # @TODO make this only appear on home and experience pages, not other explore pages %>
       <div class="row align-stretch align-center tripadvisor-logo text-center small-collapse">
         <div class="columns small-7 medium-10 large-7">Ratings and Reviews powered by</div>
