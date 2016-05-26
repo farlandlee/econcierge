@@ -99,6 +99,12 @@ $arrow_color: $white;
 
 .full-overlay-select-list-container {
   // List and options
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  right:0;
+  height: 100vh;
   > ul {
     background: transparent;
     padding: 0;
@@ -106,35 +112,32 @@ $arrow_color: $white;
     opacity: 0;
     color: $white;
     pointer-events: none;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    right:0;
+
     transform-origin: 50% 0;
     transform: scale(.75) translateY(- $input_height / 2);
     transition: all .6s cubic-bezier(0.5, 0, 0, 1.25), opacity .25s ease-out;
-
+    position: relative;
+    top: 10px;
+    left: 1%;
+    display:flex;
+    flex-direction: column;
+    @include breakpoint ( medium ) {
+      top: 50px;
+      left: 80px;
+    }
+    @include breakpoint ( large ) {
+      top: 70px;
+    }
     &:hover a:not(:hover) {
       background-color: transparent !important;
     }
     li {
       list-style: none;
-    }
-    > li {
-      position: relative;
-      top: 10px;
-      left: 1%;
-      @include breakpoint ( medium ) {
-        top: 50px;
-        left: 80px;
-    	}
-      @include breakpoint ( large ) {
-        top: 70px;
-    	}
+      flex: 1 1 auto;
+      //max-width:375px;
     }
     a,span {
-      display:block;
+      display:inline-block;
       cursor: pointer;
       font-weight: 400;
       font-size: 1.6rem;
@@ -163,23 +166,20 @@ $arrow_color: $white;
   &.home,
   &.kiosk {
     @include breakpoint(medium) {
-      li {
-        width: 100%;
+      ul {
         top: 304px;
-        left: 0;
-        a {
-          padding-left: 45%;
-        }
+        left: 45%;
       }
     }
     @include breakpoint(large) {
-      li {
+      ul {
         top: 326px;
       }
     }
   }
   &.open {
     @extend :active;
+    z-index: 1000;
     .current {
       &:after {
         transform: rotate(-180deg);
@@ -194,11 +194,6 @@ $arrow_color: $white;
     .full-overlay-black-overlay {
       opacity: 1;
       z-index: 999;
-    }
-    & + div {
-      position: fixed;
-      z-index: 10;
-      min-width: 100vw;
     }
   }
 }
