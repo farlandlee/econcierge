@@ -38,7 +38,7 @@
       </div>
     </div>
 
-    <%= render Grid.LayoutView, "_footer_scripts.html" %>
+    <%= render Grid.LayoutView, "_footer_scripts.html", spa: true %>
     <script src="<%= static_path(@conn, "/explore/assets/vendor.js") %>"></script>
     <script src="<%= static_path(@conn, "/explore/assets/client.js") %>"></script>
 
