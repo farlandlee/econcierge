@@ -29,6 +29,7 @@
           padding-top: 0;
           padding-bottom: 0;
           text-transform: uppercase;
+          padding: 0 1rem;
           &:hover, &.active {
             border-bottom: 4px solid $primary-color;
           }
