@@ -3,10 +3,6 @@ export default function ($) {
   let el = $('#kiosk-orbit');
   if(el.length) {
     let opt = {
-      animInFromLeft: "fade-in",
-      animInFromRight: "fade-in",
-      animOutToLeft: "fade-out",
-      animOutToRight: "fade-out",
       autoPlay: true,
       infiniteWrap: true
     };
