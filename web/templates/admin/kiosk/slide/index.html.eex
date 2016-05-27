@@ -1,6 +1,7 @@
 <table class="table">
   <thead>
     <tr>
+      <th>Slide ID</th>
       <th>Photo Url</th>
       <th>Button Link</th>
       <th>Button Text</th>
@@ -13,6 +14,7 @@
   <tbody>
 <%= for slide <- @slides do %>
     <tr>
+      <td><%= slide.id %></td>
       <td><%= slide.photo_url %></td>
       <td><%= slide.action_link %></td>
       <td><%= slide.action_label %></td>
