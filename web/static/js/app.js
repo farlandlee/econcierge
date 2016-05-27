@@ -21,12 +21,10 @@
 import fulloverlaySelect from "./fulloverlay-select";
 import howItWorks from "./how-it-works";
 import kioskSlideshow from "./kiosk-slideshow";
-import "./track-slide-click";
 
 jQuery(function($){
   $(document).foundation();
   howItWorks($);
   fulloverlaySelect($);
   kioskSlideshow($);
-  trackSlideClick($);
 });
