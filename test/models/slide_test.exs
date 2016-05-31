@@ -3,7 +3,7 @@ defmodule Grid.SlideTest do
 
   alias Grid.Slide
 
-  @valid_attrs %{action_link: "http://test.com/book", action_label: "Book!", photo_url: "http://test.com/a.jpeg", title: "some content", title_label: "some content"}
+  @valid_attrs %{name: "Slide!", action_link: "http://test.com/book", action_label: "Book!", photo_url: "http://test.com/a.jpeg", title: "some content", title_label: "some content"}
   @invalid_attrs %{}
 
   test "changeset with valid attributes" do

@@ -2,7 +2,7 @@ defmodule Grid.Admin.Kiosk.SlideControllerTest do
   use Grid.ConnCase
 
   alias Grid.Slide
-  @valid_attrs %{action_link: "http://test.com/book-it", action_label: "Book", photo_url: "http://test.com/image.jpeg", title: "some content", title_label: "some content"}
+  @valid_attrs %{name: "Slide Name", action_link: "http://test.com/book-it", action_label: "Book", photo_url: "http://test.com/image.jpeg", title: "some content", title_label: "some content"}
   @invalid_attrs %{action_label: nil}
 
   setup do

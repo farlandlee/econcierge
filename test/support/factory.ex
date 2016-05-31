@@ -71,6 +71,7 @@ defmodule Grid.Factory do
 
   def factory(:slide) do
     %Slide{
+      name: sequence(:title_label, &"name-#{&1}"),
       title_label: sequence(:title_label, &"title_label-#{&1}"),
       title: sequence(:title, &"slide-#{&1}"),
       photo_url: sequence(:photo_url, &"http://test.com/#{&1}.jpeg"),

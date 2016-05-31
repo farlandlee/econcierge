@@ -3,10 +3,9 @@ $('a.slide').click(function (event) {
 
   let url = $(this).attr('href');
   let slideId = $(this).attr('data-slide-id');
-  let kiosk = $(this).attr('data-kiosk');
 
   if (typeof ga === 'function') {
-    ga('send', 'event', kiosk, 'ad click', slideId, {
+    ga('send', 'event', 'Kiosk Slideshow', 'Slide Click', slideId, {
       'hitCallback': () => { window.location = url; }
     });
   } else {
