@@ -4,6 +4,9 @@
 
 <dl class="dl-horizontal">
 
+  <dt>Slide Name</dt>
+  <dd><%= @slide.name %></dd>
+
   <dt>Photo url</dt>
   <dd><%= @slide.photo_url %></dd>
 
@@ -20,5 +23,5 @@
   <dd><%= @slide.title_label %></dd>
 </dl>
 
-<h3>Photo Preview</h3>>
-<img src="<%= @slide.photo_url %>" />
+<h3>Photo Preview</h3>
+<img src="<%= @slide.photo_url %>" width="100%"/>

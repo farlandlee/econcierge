@@ -4,6 +4,7 @@ defmodule Grid.Slide do
   alias Grid.Models.Validations
 
   schema "slides" do
+    field :name, :string
     field :photo_url, :string
     field :action_label, :string
     field :action_link, :string
@@ -14,7 +15,7 @@ defmodule Grid.Slide do
     timestamps
   end
 
-  @required_fields ~w(photo_url action_link action_label)
+  @required_fields ~w(name photo_url action_link action_label)
   @optional_fields ~w(title title_label )
 
   @doc """
@@ -26,6 +27,8 @@ defmodule Grid.Slide do
   def changeset(model, params \\ :empty) do
     model
     |> cast(params, @required_fields, @optional_fields)
+    |> update_change(:name, &String.strip/1)
+    |> validate_length(:name, max: 255)
     |> update_change(:photo_url, &String.strip/1)
     |> validate_length(:photo_url, max: 255)
     |> Validations.validate_url(:photo_url)

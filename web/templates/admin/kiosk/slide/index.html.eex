@@ -1,23 +1,16 @@
 <table class="table">
   <thead>
     <tr>
-      <th>Photo Url</th>
-      <th>Button Link</th>
-      <th>Button Text</th>
-      <th>Title</th>
-      <th>Title Label</th>
-
+      <th>Slide ID</th>
+      <th>Slide Name</th>
       <th></th>
     </tr>
   </thead>
   <tbody>
 <%= for slide <- @slides do %>
     <tr>
-      <td><%= slide.photo_url %></td>
-      <td><%= slide.action_link %></td>
-      <td><%= slide.action_label %></td>
-      <td><%= slide.title %></td>
-      <td><%= slide.title_label %></td>
+      <td><%= link "#{slide.id}", to: admin_kiosk_slide_path(@conn, :show, @kiosk, slide) %></td>
+      <td><%= link slide.name, to: admin_kiosk_slide_path(@conn, :show, @kiosk, slide) %></td>
 
       <td class="text-right">
         <div class="dropdown actions">

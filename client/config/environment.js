@@ -12,6 +12,9 @@ module.exports = function(environment) {
         // e.g. 'with-controller': true
       }
     },
+    googleAnalytics: {
+      webPropertyId: process.env.GOOGLE_TRACKING_ID
+    },
 
     stripePublishableKey: process.env.STRIPE_PUBLISHABLE_KEY,
 
@@ -49,12 +52,6 @@ module.exports = function(environment) {
     ENV.APP.LOG_VIEW_LOOKUPS = false;
 
     ENV.APP.rootElement = '#ember-testing';
-  }
-
-  if (environment === 'production') {
-    ENV.googleAnalytics = {
-      webPropertyId: 'UA-54750019-2'
-    };
   }
 
   return ENV;

@@ -10,6 +10,9 @@ defmodule Grid.Admin.Kiosk.SlideController do
   @assign_model_actions [:show, :edit, :update, :delete]
   plug Plugs.AssignModel, Slide when action in @assign_model_actions
 
+  plug Plugs.Breadcrumb, index: Slide
+  plug Plugs.Breadcrumb, [show: Slide] when action in [:show, :edit]
+
   def index(conn, _) do
     redirect(conn, to: admin_kiosk_path(conn, :show, conn.assigns.kiosk, tab: "slides"))
   end

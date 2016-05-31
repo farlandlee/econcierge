@@ -6,6 +6,14 @@
   <% end %>
 
   <div class="form-group">
+    <%= label f, :name, class: "control-label" do %>
+      Internal Name
+    <% end %>
+    <%= text_input f, :name, class: "form-control" %>
+    <%= error_tag f, :name %>
+  </div>
+
+  <div class="form-group">
     <%= label f, :photo_url, class: "control-label" %>
     <%= text_input f, :photo_url, class: "form-control" %>
     <%= error_tag f, :photo_url %>

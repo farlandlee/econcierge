@@ -7,6 +7,8 @@ config :grid, Grid.Endpoint,
   server: false,
   send_external_emails: false
 
+config :grid, google_tracking_id: "none" # Because test doesn't seem to have acces to ENV variables
+
 # Print only warnings and errors during test
 config :logger, level: :warn
 
