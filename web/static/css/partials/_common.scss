@@ -34,7 +34,7 @@ body {
 	@include breakpoint( medium ) {
 		margin-bottom: -180px;
 	}
-  @include breakpoint(large) {
+  @include breakpoint(xlarge) {
     padding-top: 61px;
   }
   &:after {
@@ -55,8 +55,7 @@ body {
 
 .top-row {
   padding-top: 10px;
-  // Only affects medium screens and larger
-  @include breakpoint(large) {
+  @include breakpoint(xlarge) {
     padding-top: 20px;
   }
 }
