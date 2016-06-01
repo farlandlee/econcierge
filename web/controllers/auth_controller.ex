@@ -14,7 +14,12 @@ defmodule Grid.AuthController do
   end
 
   def login(conn, %{"provider" => "google"}) do
-    redirect conn, external: Google.authorize_url!(scope: "email profile")
+    auth_url = Google.authorize_url!(
+      scope: "email profile https://www.googleapis.com/auth/analytics.readonly",
+      access_type: "offline" # won't ask unless we re-prompt with `prompt: "consent"`
+    )
+
+    redirect conn, external: auth_url
   end
   def login(conn, _), do: invalid_provider(conn)
 
@@ -35,6 +40,7 @@ defmodule Grid.AuthController do
 
       conn
       |> put_session(:user_id, user.id)
+      |> put_session(:ga_access_token, user_params["ga_token"])
       |> delete_session(:redirected_from)
       |> configure_session(renew: true)
       |> redirect(to: redirect_to)

@@ -1,0 +1,39 @@
+<%= link to: admin_slide_path(@conn, :new), class: "btn btn-success header-action" do  %>
+  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Slide
+<% end %>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Slide Name</th>
+      <th>Clicks</th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for slide <- @slides do %>
+    <tr>
+      <td><%= link slide.name, to: admin_slide_path(@conn, :show, slide) %></td>
+      <td><%= @analytics[Integer.to_string(slide.id)] %></td>
+
+      <td class="text-right">
+        <div class="dropdown actions">
+          <button class="btn btn-xs btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+            Actions <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-right">
+            <li>
+              <%= link "Show", to: admin_slide_path(@conn, :show, slide), class: "show" %>
+            </li>
+            <li>
+              <%= link "Edit", to: admin_slide_path(@conn, :edit, slide), class: "edit" %>
+            </li>
+            <li>
+              <%= link "Delete", to: admin_slide_path(@conn, :delete, slide), method: :delete, data: [confirm: "Are you sure?"], class: "delete" %>
+            </li>
+          </ul>
+        </div>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>

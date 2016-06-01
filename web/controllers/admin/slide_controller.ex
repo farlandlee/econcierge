@@ -1,5 +1,7 @@
-defmodule Grid.Admin.Kiosk.SlideController do
+defmodule Grid.Admin.SlideController do
   use Grid.Web, :controller
+
+  import Ecto.Query
 
   alias Grid.Slide
   alias Grid.Plugs
@@ -14,7 +16,21 @@ defmodule Grid.Admin.Kiosk.SlideController do
   plug Plugs.Breadcrumb, [show: Slide] when action in [:show, :edit]
 
   def index(conn, _) do
-    redirect(conn, to: admin_kiosk_path(conn, :show, conn.assigns.kiosk, tab: "slides"))
+    slides = Slide
+      |> order_by(:name)
+      |> Repo.all
+
+    token = conn.assigns.ga_access_token
+    view_id = Grid.fetch_env!(:ga_view_id)
+
+    case GoogleAnalytics.load_slide_clicks(token, view_id) do
+      a when map_size(a) == 0 ->
+        conn
+        |> put_flash(:info, "You do not currently have access to Google Analytics.")
+        |> render("index.html", slides: slides, analytics: a)
+      a ->
+        render(conn, "index.html", slides: slides, analytics: a)
+    end
   end
 
   def new(conn, _) do
@@ -23,13 +39,13 @@ defmodule Grid.Admin.Kiosk.SlideController do
   end
 
   def create(conn, %{"slide" => slide_params}) do
-    changeset = Slide.creation_changeset(slide_params, conn.assigns.kiosk.id)
+    changeset = Slide.changeset(%Slide{}, slide_params)
 
     case Repo.insert(changeset) do
       {:ok, _slide} ->
         conn
         |> put_flash(:info, "Slide created successfully.")
-        |> redirect(to: admin_kiosk_path(conn, :show, conn.assigns.kiosk))
+        |> redirect(to: admin_slide_path(conn, :index))
       {:error, changeset} ->
         render(conn, "new.html", changeset: changeset)
     end
@@ -54,7 +70,7 @@ defmodule Grid.Admin.Kiosk.SlideController do
       {:ok, _slide} ->
         conn
         |> put_flash(:info, "Slide updated successfully.")
-        |> redirect(to: admin_kiosk_path(conn, :show, conn.assigns.kiosk))
+        |> redirect(to: admin_slide_path(conn, :index))
       {:error, changeset} ->
         render(conn, "edit.html", slide: slide, changeset: changeset)
     end
@@ -65,6 +81,6 @@ defmodule Grid.Admin.Kiosk.SlideController do
 
     conn
     |> put_flash(:info, "Slide deleted successfully.")
-    |> redirect(to: admin_kiosk_path(conn, :show, conn.assigns.kiosk))
+    |> redirect(to: admin_slide_path(conn, :index))
   end
 end

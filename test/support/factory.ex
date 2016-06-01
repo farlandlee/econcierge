@@ -76,8 +76,7 @@ defmodule Grid.Factory do
       title: sequence(:title, &"slide-#{&1}"),
       photo_url: sequence(:photo_url, &"http://test.com/#{&1}.jpeg"),
       action_label: sequence(:action_label, &"action_label-#{&1}"),
-      action_link: sequence(:action_link, &"http://test.com/book_#{&1}"),
-      kiosk: build(:kiosk)
+      action_link: sequence(:action_link, &"http://test.com/book_#{&1}")
     }
   end
 

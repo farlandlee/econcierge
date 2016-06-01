@@ -12,6 +12,7 @@ defmodule Grid.Admin.KioskController do
 
   @assign_model_actions [:show, :edit, :update, :delete]
   plug :assign_vendors when action in [:create, :new, :update, :edit]
+  plug :assign_slides when action in [:create, :new, :update, :edit]
   plug Plugs.AssignModel, Kiosk when action in @assign_model_actions
   plug :preload_assocs when action in [:show, :edit, :update]
 
@@ -34,6 +35,7 @@ defmodule Grid.Admin.KioskController do
     case Repo.insert(changeset) do
       {:ok, kiosk} ->
         manage_associated(kiosk, :kiosk_sponsors, :vendor_id, kiosk_params["vendor_id"])
+        manage_associated(kiosk, :kiosk_slides, :slide_id, kiosk_params["slide_id"])
 
         conn
         |> put_flash(:info, "Kiosk created successfully.")
@@ -61,6 +63,7 @@ defmodule Grid.Admin.KioskController do
     case Repo.update(changeset) do
       {:ok, kiosk} ->
         manage_associated(kiosk, :kiosk_sponsors, :vendor_id, kiosk_params["vendor_id"])
+        manage_associated(kiosk, :kiosk_slides, :slide_id, kiosk_params["slide_id"])
 
         conn
         |> put_flash(:info, "Kiosk updated successfully.")
@@ -88,9 +91,17 @@ defmodule Grid.Admin.KioskController do
     assign(conn, :vendors, vendors)
   end
 
+  def assign_slides(conn, _) do
+    slides = Grid.Slide
+      |> order_by(:name)
+      |> Repo.all()
+
+    assign(conn, :slides, slides)
+  end
+
   def preload_assocs(conn, _) do
     kiosk = conn.assigns.kiosk
-      |> Repo.preload([:vendors])
+      |> Repo.preload([:vendors, :slides])
 
     assign(conn, :kiosk, kiosk)
   end

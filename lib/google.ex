@@ -12,7 +12,8 @@ defmodule Google do
       redirect_uri: Helpers.auth_url(Grid.Endpoint, :callback, "google"),
       site: "https://accounts.google.com",
       authorize_url: "https://accounts.google.com/o/oauth2/auth",
-      token_url: "https://accounts.google.com/o/oauth2/token"
+      token_url: "https://accounts.google.com/o/oauth2/token",
+      access_type: "offline"
     ])
   end
 
@@ -33,6 +34,8 @@ defmodule Google do
       |> Map.fetch!(:body)
 
     user
+    |> Map.put("ga_token", token.access_token)
+    |> Map.put("ga_refresh_token", token.refresh_token) # TODO: add this to user db
     |> Map.put("image", user["picture"])
     |> Map.delete("picture")
   end
