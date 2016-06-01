@@ -4,6 +4,7 @@ export default function ($) {
   if(el.length) {
     let opt = {
       autoPlay: true,
+      timerDelay: 3000,
       infiniteWrap: true
     };
     let orbit = new Foundation.Orbit(el, opt);
