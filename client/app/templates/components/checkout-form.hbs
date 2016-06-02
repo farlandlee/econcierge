@@ -10,11 +10,6 @@
     <legend>Credit Card</legend>
     <div class="row">
       <div class="columns small-7">
-        {{input value=ccName name="ccname" placeholder="Name on Card *"}}
-      </div>
-    </div>
-    <div class="row">
-      <div class="columns small-7">
         {{input value=ccNumber name="ccnumber" placeholder="Credit Card Number *"}}
       </div>
     </div>
@@ -24,9 +19,6 @@
       </div>
       <div class="columns">
         {{input value=ccYear name="ccyear" placeholder="Exp. Year (yy) *" maxlength="2"}}
-      </div>
-      <div class="columns">
-        {{input value=ccCode name="cccode" placeholder="CVC Security Code *" maxlength="4"}}
       </div>
     </div>
     {{#if cardErrorMessage}}

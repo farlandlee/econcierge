@@ -16,11 +16,9 @@ const devData = {
   email: "fake-email@outpostjh.com",
   name: "Fake Dev",
   phone: "123-456-7890",
-  ccName: "Fake Dev",
   ccNumber: "4242424242424242",
   ccMonth: "12",
-  ccYear: "20",
-  ccCode: "123"
+  ccYear: "20"
 };
 
 export default Ember.Component.extend({
@@ -39,16 +37,12 @@ export default Ember.Component.extend({
   phoneNotEmpty: notEmpty('phone'),
 
   ccNumber: null,
-  ccName: null,
   ccMonth: null,
   ccYear: null,
-  ccCode: null,
 
   ccNumberNotEmpty: notEmpty('ccNumber'),
-  ccNameNotEmpty: notEmpty('ccName'),
   ccMonthNotEmpty: notEmpty('ccMonth'),
   ccYearNotEmpty: notEmpty('ccYear'),
-  ccCodeNotEmpty: notEmpty('ccCode'),
 
   init () {
     this._super(...arguments);
@@ -58,11 +52,11 @@ export default Ember.Component.extend({
   },
 
   userValid: and('emailNotEmpty', 'nameNotEmpty', 'phoneNotEmpty'),
-  cardValid: and('ccNumberNotEmpty', 'ccNameNotEmpty', 'ccMonthNotEmpty', 'ccYearNotEmpty', 'ccCodeNotEmpty'),
+  cardValid: and('ccNumberNotEmpty', 'ccMonthNotEmpty', 'ccYearNotEmpty'),
   valid: and('cardValid', 'userValid'),
 
   errorMessage: computed('emailNotEmpty', 'nameNotEmpty', 'phoneNotEmpty',
-    'ccNumberNotEmpty', 'ccNameNotEmpty', 'ccMonthNotEmpty', 'ccYearNotEmpty', 'ccCodeNotEmpty',
+    'ccNumberNotEmpty', 'ccMonthNotEmpty', 'ccYearNotEmpty',
   {
     // after a property has changed, clear message
     get () {return '';},
@@ -99,10 +93,7 @@ export default Ember.Component.extend({
       // stripe required fields
       number: this.get('ccNumber'),
       exp_month: this.get('ccMonth'),
-      exp_year: this.get('ccYear'),
-      // stripe optional fields
-      cvc: this.get('ccCode'),
-      name: this.get('ccName')
+      exp_year: this.get('ccYear')
     };
 
     this.set('processing', true);
