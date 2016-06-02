@@ -10,11 +10,9 @@ test('it renders', function(assert) {
 
   assert.equal(this.$('.credit-card legend').text().trim(), 'Credit Card');
 
-  assert.ok(this.$('input[name="ccname"]').length);
   assert.ok(this.$('input[name="ccnumber"]').length);
   assert.ok(this.$('input[name="ccmonth"]').length);
   assert.ok(this.$('input[name="ccyear"]').length);
-  assert.ok(this.$('input[name="cccode"]').length);
 
   assert.equal(this.$('.contact-information legend').text().trim(), 'Contact Information');
   // renders inputs
