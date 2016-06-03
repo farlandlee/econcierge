@@ -318,6 +318,7 @@ export default Ember.Controller.extend({
 
     closeFilters () {
       $('.explore-left').removeClass('open');
+      $('body').css('overflow','auto');
     }
   }
 });

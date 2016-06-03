@@ -3,121 +3,6 @@
     display: flex;
     flex-flow: row;
   }
-  .explore-left,
-  .explore-right {
-    height: calc(100vh - 41px);
-    overflow-y: scroll;
-    @include breakpoint(xlarge) {
-      height: calc(100vh - 61px);
-    }
-  }
-  .explore-left {
-    visibility:hidden;
-    position: absolute;
-    z-index:-1;
-    .fa.fa-chevron-up, .fa.fa-chevron-down {
-      color: $medium-gray;
-    }
-    p {
-      margin-bottom: 0;
-    }
-    label {
-      display: table-cell;
-      text-align: right;
-    }
-    .input-group {
-      margin: 0;
-    }
-    &.open {
-      visibility: visible;
-      position: absolute;
-      z-index: 99; // one less than the header
-      top: 41px;
-      left:0;
-      right: 0;
-      background-color: $light-gray;
-      .product-filters-header {
-        background-color: #19120A;
-        color: #fff;
-        width: 100%;
-        margin: 0;
-        position: fixed;
-        z-index: 10;
-        padding: 1rem 2rem;
-        font-weight: normal;
-        display: flex;
-        justify-content: space-between;
-        align-items: baseline;
-        .filters-label {
-          text-transform: capitalize;
-          text-decoration: none;
-          font-weight: normal;
-          text-align: center;
-        }
-        .filter-close-button {
-          color: $primary-color;
-          cursor: pointer;
-        }
-      }
-      .calendar-container {
-        .flatpickr-calendar, .liquid-accordion {
-          margin: 0 auto;
-        }
-      }
-      .clear-filters {
-        width: 90%;
-        margin: 78px auto 15px;
-        border-radius: 0;
-        display: block;
-        background-color: $white;
-        color: $black;
-        border: 1px solid $primary-color;
-      }
-      .product-filters {
-        padding: 2rem;
-        background-color: $offwhite;
-      }
-    }
-    .product-sort {
-      background-color: $primary-color;
-      padding: 0.8rem 2rem;
-      margin-bottom: 1rem;
-      color: $white;
-      display: flex;
-      button {
-        flex: 1 1 auto;
-        text-align: left;
-        padding-left: 0.5rem;
-        i {
-          float: right;
-          &.fa.fa-chevron-down,
-          &.fa.fa-chevron-up {
-            color: $white;
-          }
-
-        }
-      }
-    }
-    .filter-list  {
-      .filter-option  {
-        .active {
-          font-weight: $global-weight-bold;
-          color: $anchor-color-hover;
-        }
-      }
-    }
-    @include breakpoint (medium) {
-      visibility: visible;
-      z-index: 0;
-      flex: 0 0 320px;
-      padding: 2rem 1.8rem;
-      margin-top: -1px;
-      border: 2px groove $offwhite;
-      border-left: none;
-      border-bottom: none;
-      position: relative;
-    }
-  }
   .filter-button {
     cursor: pointer;
     color: $primary-color;
@@ -133,12 +18,128 @@
   }
 }
 
+.explore-left {
+  -webkit-overflow-scrolling: touch;
+  visibility:hidden;
+  z-index:-1;
+  height: calc(100vh - 41px);
+  overflow-y: auto;
+  position:absolute;
+  top: 41px;
+  .fa.fa-chevron-up, .fa.fa-chevron-down {
+    color: $medium-gray;
+  }
+  p {
+    margin-bottom: 0;
+  }
+  label {
+    display: table-cell;
+    text-align: right;
+  }
+  .input-group {
+    margin: 0;
+  }
+  &.open {
+    visibility: visible;
+    position: fixed;
+    z-index: 99; // one less than the header
+    left:0;
+    right: 0;
+    background-color: $light-gray;
+    .product-filters-header {
+      background-color: #19120A;
+      color: #fff;
+      width: 100%;
+      margin: 0;
+      position: fixed;
+      z-index: 10;
+      padding: 1rem 2rem;
+      font-weight: normal;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      .filters-label {
+        text-transform: capitalize;
+        text-decoration: none;
+        font-weight: normal;
+        text-align: center;
+      }
+      .filter-close-button {
+        color: $primary-color;
+        cursor: pointer;
+      }
+    }
+    .calendar-container {
+      .flatpickr-calendar, .liquid-accordion {
+        margin: 0 auto;
+      }
+    }
+    .clear-filters {
+      width: 90%;
+      margin: 78px auto 15px;
+      border-radius: 0;
+      display: block;
+      background-color: $white;
+      color: $black;
+      border: 1px solid $primary-color;
+    }
+    .product-filters {
+      padding: 2rem;
+      background-color: $offwhite;
+    }
+  }
+  .product-sort {
+    background-color: $primary-color;
+    padding: 0.8rem 2rem;
+    margin-bottom: 1rem;
+    color: $white;
+    display: flex;
+    button {
+      flex: 1 1 auto;
+      text-align: left;
+      padding-left: 0.5rem;
+      i {
+        float: right;
+        &.fa.fa-chevron-down,
+        &.fa.fa-chevron-up {
+          color: $white;
+        }
+
+      }
+    }
+  }
+  .filter-list  {
+    .filter-option  {
+      .active {
+        font-weight: $global-weight-bold;
+        color: $anchor-color-hover;
+      }
+    }
+  }
+  @include breakpoint (medium) {
+    visibility: visible;
+    z-index: 1;
+    width: 320px;
+    padding: 2rem 1.8rem;
+    margin-top: -1px;
+    top: 61px;
+    border: 2px groove $offwhite;
+    border-left: none;
+    border-bottom: none;
+    position: fixed;
+    overflow-y: auto;
+  }
+  @include breakpoint(large) {
+    height: calc(100vh - 61px);
+  }
+}
+
 .explore-right {
   background-color: $offwhite;
   -webkit-overflow-scrolling: touch;
   @include breakpoint (medium) {
-    flex: 3 1;
-    width: calc(100vw - 320px);
+    width: 100%;
+    margin-left: 320px;
   }
   .product-sort {
     position: relative;
@@ -178,6 +179,9 @@
         color: $black;
       }
     }
+  }
+  &.small-padding {
+    padding-top:120px;
   }
   .photo-cards & {
     padding-top: 137px - 15px;
