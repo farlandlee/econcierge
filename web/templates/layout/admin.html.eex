@@ -76,7 +76,7 @@
               <%= link "Kiosks", to: admin_kiosk_path(@conn, :index) %>
             </li>
             <li class="<%= nav_class(@conn, Grid.Admin.SlideController) %>">
-              <%= link "Slide", to: admin_slide_path(@conn, :index) %>
+              <%= link "Slides", to: admin_slide_path(@conn, :index) %>
             </li>
           </ul>
         </div>
