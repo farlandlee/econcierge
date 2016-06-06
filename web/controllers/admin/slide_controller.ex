@@ -24,10 +24,10 @@ defmodule Grid.Admin.SlideController do
     view_id = Grid.fetch_env!(:ga_view_id)
 
     case GoogleAnalytics.load_slide_clicks(token, view_id) do
-      a when map_size(a) == 0 ->
+      a when map_size(a) == 0 -> # Re-authenticate
         conn
-        |> put_flash(:info, "You do not currently have access to Google Analytics.")
-        |> render("index.html", slides: slides, analytics: a)
+        |> put_session(:redirected_from, conn.request_path)
+        |> redirect(to: auth_path(conn, :login, "google"))
       a ->
         render(conn, "index.html", slides: slides, analytics: a)
     end
