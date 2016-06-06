@@ -10,13 +10,12 @@ defmodule Grid.Slide do
     field :action_link, :string
     field :title, :string
     field :title_label, :string
-    belongs_to :kiosk, Grid.Kiosk
 
     timestamps
   end
 
   @required_fields ~w(name photo_url action_link action_label)
-  @optional_fields ~w(title title_label )
+  @optional_fields ~w(title title_label)
 
   @doc """
   Creates a changeset based on the `model` and `params`.
@@ -41,12 +40,5 @@ defmodule Grid.Slide do
     |> validate_length(:title, max: 255)
     |> update_change(:title_label, &String.strip/1)
     |> validate_length(:title_label, max: 255)
-  end
-
-  def creation_changeset(params, kiosk_id) do
-    %__MODULE__{}
-    |> changeset(params)
-    |> cast(%{kiosk_id: kiosk_id}, [:kiosk_id], [])
-    |> foreign_key_constraint(:kiosk_id)
   end
 end

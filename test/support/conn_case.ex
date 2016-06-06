@@ -48,6 +48,7 @@ defmodule Grid.ConnCase do
       }
       Phoenix.ConnTest.conn()
       |> Plug.Conn.assign(:current_user, user)
+      |> Plug.Conn.assign(:ga_access_token, "xxx")
     end
 
     {:ok, conn: conn}
@@ -57,5 +58,6 @@ defmodule Grid.ConnCase do
     conn
     |> Phoenix.ConnTest.recycle()
     |> Plug.Conn.assign(:current_user, conn.assigns.current_user)
+    |> Plug.Conn.assign(:ga_access_token, "xxx")
   end
 end

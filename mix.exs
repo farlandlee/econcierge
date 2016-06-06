@@ -86,7 +86,7 @@ defmodule Grid.Mixfile do
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
       "ecto.seed": ["run priv/repo/seeds.exs"],
-      "s": [&source_env/1, &ember_build/1, "phoenix.server"]
+      "s": [&ember_build/1, "phoenix.server"]
     ]
   end
 
@@ -120,13 +120,6 @@ defmodule Grid.Mixfile do
     spawn_link fn ->
       # I can't believe how easy and awesome this is. <3 erlang processes
       cmd("cd client && ./node_modules/ember-cli/bin/ember build --watch")
-    end
-  end
-
-  defp source_env(_) do
-    if Mix.env == :dev do
-      Mix.Shell.IO.info([:yellow, "source .env"])
-      Mix.Shell.IO.cmd("source .env")
     end
   end
 
