@@ -10,7 +10,7 @@
     <%= for slide <- @kiosk.slides do %>
     <li class="orbit-slide" style="background-image: url(<%= slide.photo_url %>)">
       <img src="<%= slide.photo_url %>" />
-      <a href="<%= slide.action_link %>" class="slide" data-category="Kiosk:<%= @kiosk.id %>:Slideshow" data-slide-id="<%= slide.id %>">
+      <a href="<%= kiosk_url(@kiosk, slide.action_link) %>" class="slide" data-category="Kiosk:<%= @kiosk.id %>:Slideshow" data-slide-id="<%= slide.id %>">
         <%= if slide.title do %>
           <div class="orbit-caption">
             <%= if slide.title_label do %>

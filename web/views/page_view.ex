@@ -8,4 +8,8 @@ defmodule Grid.PageView do
 
     examples <> ", etc."
   end
+
+  def kiosk_url(kiosk, action_link) do
+    String.replace(action_link, "{{kiosk}}", kiosk.sub_domain)
+  end
 end

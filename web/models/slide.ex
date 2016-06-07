@@ -1,8 +1,6 @@
 defmodule Grid.Slide do
   use Grid.Web, :model
 
-  alias Grid.Models.Validations
-
   schema "slides" do
     field :name, :string
     field :photo_url, :string
@@ -30,12 +28,10 @@ defmodule Grid.Slide do
     |> validate_length(:name, max: 255)
     |> update_change(:photo_url, &String.strip/1)
     |> validate_length(:photo_url, max: 255)
-    |> Validations.validate_url(:photo_url)
     |> update_change(:action_label, &String.strip/1)
     |> validate_length(:action_label, max: 255)
     |> update_change(:action_link, &String.strip/1)
     |> validate_length(:action_link, max: 255)
-    |> Validations.validate_url(:action_link)
     |> update_change(:title, &String.strip/1)
     |> validate_length(:title, max: 255)
     |> update_change(:title_label, &String.strip/1)
