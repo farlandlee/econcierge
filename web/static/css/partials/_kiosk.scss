@@ -1,14 +1,17 @@
 .kiosk {
-  .title-bar {
-    background-color: transparent;
-    border: 0;
-  }
-  .top-bar,
-  .top-bar ul {
-    background-color: transparent;
-    border-bottom: 0;
-    a {
-      color: $white;
+  @extend .no-footer;
+  &:not(.opaque-header) {
+    .title-bar {
+      background-color: transparent;
+      border: 0;
+    }
+    .top-bar,
+    .top-bar ul {
+      background-color: transparent;
+      border-bottom: 0;
+      a {
+        color: $white;
+      }
     }
   }
   .top-bar-right {
@@ -16,13 +19,6 @@
     .menu {
       display:flex;
       justify-content: flex-end;
-    }
-  }
-  .page {
-    padding-top: 0;
-    margin-bottom: 0;
-    &:after {
-      height: 0;
     }
   }
   section {
@@ -37,20 +33,21 @@
   .slide-to-activities {
     position: absolute;
     z-index: 1000;
-    width: 200px;
+    width: 280px;
+    margin: 0;
     left: 50%;
+    margin-left: -140px;
     text-align: center;
-    margin-left: -100px;
     .button {
       border-radius: 0;
-      padding-bottom: 2px;
-      min-width: 214px;
-      .fi {
-        padding-top: 4px;
-        display:block;
-        font-size: 1.4rem;
-      }
+      border-bottom-right-radius: 12px;
+      border-bottom-left-radius: 12px;
+      font-size: 1.4rem;
+      width: 100%;
     }
+  }
+  .home.page {
+    padding-top: 0;
   }
 }
 
@@ -72,6 +69,9 @@
       height: 100vh;
       img {
         visibility: hidden;
+      }
+      a.slide {
+        display: block;
       }
     }
   }

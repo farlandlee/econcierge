@@ -15,7 +15,7 @@
     <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
     {{content-for "head-footer"}}
   </head>
-  <body>
+  <body<%= if assigns[:kiosk], do: ~E( class="kiosk opaque-header") %>>
     <div class="off-canvas-wrapper">
       <div class="off-canvas-wrapper-inner" data-off-canvas-wrapper>
         <%= render Grid.LayoutView, "_off_canvas_menu.html", assigns %>
