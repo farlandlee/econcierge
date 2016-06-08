@@ -3,7 +3,10 @@ defmodule Grid.PageController do
 
   plug Grid.Plugs.AssignAvailableActivities
 
-  def index(conn, _), do: render(conn, "index.html", is_home: false)
+  def index(conn, _) do
+    articles = Wordpress.load_concierge_articles()
+    render(conn, "index.html", is_home: false, articles: articles)
+  end
   def tou(conn, _), do: render(conn)
 
   def slideshow(conn = %{assigns: %{kiosk: _kiosk}}, _), do:
