@@ -38,8 +38,8 @@
   <section class="home-middle">
     <header class="row align-center">
       <div class="column small-12 large-10">
-        <div class="section-title small-12 column">Introducing: eConcierge</div>
-        <div class="section-subtitle small-12 column">Search, discover and book the various activities offered in Jackson Hole.</div>
+        <div class="section-title small-12 column">Jackson Hole Trip Planners</div>
+        <div class="section-subtitle small-12 column">Search, discover and book experiences or simply ask. Contact us for advice!</div>
       </div>
     </header>
     <div class="row overlays align-center">
@@ -84,7 +84,7 @@
               <div class="double-wide concierge-cta">
                 <div class="darken-overlay"></div>
                 <div class="overlay-text">
-                  <p>Free Concierge Services</p>
+                  <p>Free Trip Planning Services</p>
                   <p class="small">Tired of Researching &amp; Planning? We can Help</p>
                 </div>
                 <p class="booking-button">
