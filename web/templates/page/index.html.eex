@@ -156,7 +156,7 @@
       <% end %>
     </div>
     <div class="row column text-center">
-      <a href="http://www.outpostjh.com/trip-planning" class="bottom-link">View All Jackson Hole Trip Planning Articles</a>
+      <a href="http://www.outpostjh.com/trip-planning" class="bottom-link"><%= Grid.ContentView.get("Homepage", "View All Articles Link Text", "View All Jackson Hole Trip Planning Articles") %></a>
     </div>
   </section>
   <% end %>
