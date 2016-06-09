@@ -57,6 +57,9 @@
             <li class="<%= nav_class(@conn, Grid.Admin.DashboardController) %>">
               <%= link "Dashboard", to: admin_dashboard_path(@conn, :index) %>
             </li>
+            <li class="<%= nav_class(@conn, Grid.Admin.ContentItemController) %>">
+              <%= link "Content Management", to: admin_content_item_path(@conn, :index) %>
+            </li>
             <li class="<%= nav_class(@conn, Grid.Admin.ActivityController) %>">
               <%= link "Activities", to: admin_activity_path(@conn, :index) %>
             </li>

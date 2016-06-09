@@ -12,6 +12,7 @@ defmodule Grid.Factory do
     Amenity,
     AmenityOption,
     Category,
+    ContentItem,
     Coupon,
     Experience,
     ExperienceCategory,
@@ -39,6 +40,14 @@ defmodule Grid.Factory do
       max_usage_count: nil,
       percent_off: 10 + random(80),
       disabled: false
+    }
+  end
+
+  def factory(:content_item) do
+    %ContentItem{
+      context: sequence(:context, &"context_#{&1}"),
+      name: sequence(:name, &"name_#{&1}"),
+      content: sequence(:content, &"content_#{&1}")
     }
   end
 
