@@ -245,58 +245,6 @@ a.full-box-link {
 
 }
 
-.overlays {
-  .column {
-    position:relative;
-    margin-bottom: 0.9375rem * 2;
-    margin-top: 0;
-		&:last-of-type {
-			margin-bottom: 0;
-		}
-  }
-  p {
-    margin-bottom: 0;
-  }
-  .single-wide {
-    background: url(http://placehold.it/330x300) no-repeat center center;
-    background-size: cover;
-    &.snowmobiling-cta {
-      background-image: url('/images/snowmobile.jpg');
-    }
-    &.wildlife-tours-cta {
-      background-image: url('/images/wildlife-tours.jpg');
-    }
-    &.staff-picks-cta {
-      background-image: url('/images/StaffPicks.jpg');
-    }
-  }
-  .double-wide {
-    background: url(http://placehold.it/690x300) no-repeat center center;
-    background-size: cover;
-    &.rentals-cta {
-      background-image: url('/images/pearl-jackson.jpeg');
-    }
-    &.concierge-cta {
-      background-image: url('/images/FreeTripPlanningServices.jpg');
-    }
-    &.fly-cta {
-      background-image: url('/images/scenicflights.jpg');
-    }
-    &.snowshoeing-cta {
-      background-image: url('/images/snowshoeing.jpg');
-    }
-    &.teton-tiger-cta {
-      background-image: url('/images/teton-tiger.jpg');
-    }
-  }
-  .single-wide,
-  .double-wide {
-    height: 300px;
-    position: relative;
-    background-size: cover;
-  }
-
-}
 .overlay-text {
   @include center-content();
   font-size: 1.2rem;
