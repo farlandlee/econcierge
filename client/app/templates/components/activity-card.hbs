@@ -1,10 +1,10 @@
 <div class="columns small-12 medium-6 large-4">
-  <div class="row align-middle text-center align-stretch" style="background-image: url('{{activity.defaultImage.full}}');">
+  <div class="row text-center activity-card" style="background-image: url('{{activity.defaultImage.medium}}');">
+    <div class="darken-overlay"></div>
     {{#link-to 'activity' activity class="element-container"}}
-        <div class="darken-overlay"></div>
-        <p class="element-name column small-12">{{activity.name}}</p>
-        <p class="element-description column small-12">{{activity.description}}</p>
-        <p class="lower-right column small-12">click to continue</p>
+      <p class="element-name">{{activity.name}}</p>
+      <p class="element-description">{{activity.description}}</p>
+      <p class="element-cta">click to continue</p>
     {{/link-to}}
   </div>
 </div>
