@@ -10,7 +10,8 @@ defmodule Grid.ContentItem do
   end
 
   @creation_fields ~w(context name)
-  @required_fields ~w(content)
+  @optional_fields ~w(content)
+  @required_fields ~w()
 
   @doc """
   Creates a changeset based on the `model` and `params`.
@@ -20,7 +21,7 @@ defmodule Grid.ContentItem do
   """
   def changeset(model, params \\ :empty) do
     model
-    |> cast(params, @required_fields, [])
+    |> cast(params, @required_fields, @optional_fields)
   end
 
   def creation_changeset(context, name, content) do

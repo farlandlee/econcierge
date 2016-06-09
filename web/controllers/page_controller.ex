@@ -7,6 +7,7 @@ defmodule Grid.PageController do
     articles = Wordpress.load_concierge_articles()
     render(conn, "index.html", is_home: false, articles: articles)
   end
+  
   def tou(conn, _), do: render(conn)
 
   def slideshow(conn = %{assigns: %{kiosk: _kiosk}}, _), do:
