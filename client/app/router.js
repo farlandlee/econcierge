@@ -1,9 +1,9 @@
 import Ember from 'ember';
 import config from 'client/config/environment';
 import {RouterTitleMixin} from 'client/mixins/route-title';
-import GooglePageViewMixin from './mixins/google-pageview';
+import TrackPageViewMixin from 'client/mixins/track-pageview';
 
-const Router = Ember.Router.extend(RouterTitleMixin, GooglePageViewMixin, {
+const Router = Ember.Router.extend(RouterTitleMixin, TrackPageViewMixin, {
   location: config.locationType
 });
 
