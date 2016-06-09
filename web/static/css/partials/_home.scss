@@ -274,8 +274,15 @@ section {
       max-width:200px;
       padding: 40px 60px 20px;
       box-sizing: border-box;
+      .lead {
+        order: 1;
+      }
       .push-down {
         margin-bottom: auto;
+        order: 2;
+      }
+      .bottom {
+        order: 3;
       }
       @include breakpoint(medium) {
         padding: 40px 10px 20px;
