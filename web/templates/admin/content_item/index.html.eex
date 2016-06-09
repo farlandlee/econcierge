@@ -1,0 +1,33 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th>Context</th>
+      <th>Name</th>
+      <th>Content</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for content_item <- @content_items do %>
+    <tr>
+      <td><%= content_item.context %></td>
+      <td><%= content_item.name %></td>
+      <td><%= content_item.content %></td>
+
+      <td class="text-right">
+        <div class="dropdown actions">
+          <button class="btn btn-xs btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+            Actions <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-right">
+            <li>
+              <%= link "Edit", to: admin_content_item_path(@conn, :edit, content_item), class: "edit" %>
+            </li>
+          </ul>
+        </div>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>

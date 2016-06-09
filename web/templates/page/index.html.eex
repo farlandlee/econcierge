@@ -17,7 +17,9 @@
       <div class="small-12 columns search-bar" >
         <div class="row small-collapse align-center expanded">
           <div class="small-12 columns">
-            <div class="search-label">Book Your Adventure <span>in Jackson Hole</span></div>
+            <div class="search-label">
+              <%= Grid.ContentView.get("Homepage", "Search Title", "Book Your Adventure in Jackson Hole") %>
+            </div>
           </div>
           <div class="small-12 medium-10 large-8 columns form-group">
             <label for="activity[id]">Explore</label>
@@ -38,8 +40,12 @@
   <section class="home-middle">
     <header class="row align-center">
       <div class="column small-12 large-10">
-        <div class="section-title small-12 column">Jackson Hole Trip Planners</div>
-        <div class="section-subtitle small-12 column">Search, discover and book experiences or simply ask. Contact us for advice!</div>
+        <div class="section-title small-12 column">
+          <%= Grid.ContentView.get("Homepage", "Intro Title", "Jackson Hole Trip Planners") %>
+        </div>
+        <div class="section-subtitle small-12 column">
+          <%= Grid.ContentView.get("Homepage", "Intro Tagline", "Search, discover and book experiences or simply ask. Contact us for advice!") %>
+        </div>
       </div>
     </header>
     <div class="row overlays align-center">
@@ -100,8 +106,12 @@
   <section class="home-bottom">
     <header class="row align-center">
       <div class="column small-12 large-10">
-        <div class="section-title small-12 column">Things to Do in Jackson Hole</div>
-        <div class="section-subtitle small-12 column">Contact us for any questions at all!</div>
+        <div class="section-title small-12 column">
+          <%= Grid.ContentView.get("Homepage", "Articles Title", "Things to Do in Jackson Hole") %>
+        </div>
+        <div class="section-subtitle small-12 column">
+          <%= Grid.ContentView.get("Homepage", "Articles Tagline", "Contact us for any questions at all!") %>
+        </div>
       </div>
     </header>
     <div class="row align-center align-stretch" data-equalizer data-equalize-on="medium">
