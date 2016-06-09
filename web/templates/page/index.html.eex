@@ -45,6 +45,30 @@
     <div class="row overlays align-center">
       <div class="small-12 large-11 columns">
         <div class="row align-center align-stretch">
+          <div class="column small-12 medium-4 large-5">
+            <a target="_blank" href="https://www.google.com/maps/place/Outpost/@43.4787252,-110.7627985,17z/data=!3m1!4b1!4m5!3m4!1s0x53531a42ec7bbce7:0xa4c2b12be99be183!8m2!3d43.4787252!4d-110.7606098">
+              <div class="cta-card map-cta">
+                <div class="darken-overlay-hover"></div>
+                <p class="booking-button">View Map</p>
+              </div>
+            </a>
+          </div>
+          <div class="column small-12 medium-8 large-7">
+            <div class="cta-card contact-us-cta">
+              <div class="overlay-text">
+                <p class="lead">Contact Us for Advice!</p>
+                <p class="small">You can either search and book experiences on your own, or we can help you to plan your itinerary.</p>
+                <div class="row">
+                  <a class="small small-6" href="tel:3076904790"><span class="home-telephone">307.690.4790</span></a>
+                  <a class="small small-6" href="mailto:concierge@outpostjh.com"><span class="home-email">concierge@outpostjh.com</span></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="small-12 large-11 columns">
+        <div class="row align-center align-stretch">
           <div class="column small-12 medium-8">
             <a href="http://www.outpostjh.com/rentals/">
               <div class="double-wide rentals-cta">

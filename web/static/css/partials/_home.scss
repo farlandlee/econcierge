@@ -187,3 +187,137 @@ section {
     }
   }
 }
+
+.overlays {
+  .column {
+    position:relative;
+    margin-bottom: 0.9375rem * 2;
+    margin-top: 0;
+		&:last-of-type {
+			margin-bottom: 0;
+		}
+  }
+  .single-wide,
+  .double-wide,
+  .cta-card {
+    height: 300px;
+    position: relative;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+  p {
+    margin-bottom: 0;
+  }
+  .single-wide {
+    background-image: url(http://placehold.it/330x300);
+    &.snowmobiling-cta {
+      background-image: url('/images/snowmobile.jpg');
+    }
+    &.wildlife-tours-cta {
+      background-image: url('/images/wildlife-tours.jpg');
+    }
+    &.staff-picks-cta {
+      background-image: url('/images/StaffPicks.jpg');
+    }
+  }
+  .double-wide {
+    background-image: url(http://placehold.it/690x300);
+    &.rentals-cta {
+      background-image: url('/images/pearl-jackson.jpeg');
+    }
+    &.concierge-cta {
+      background-image: url('/images/FreeTripPlanningServices.jpg');
+    }
+    &.fly-cta {
+      background-image: url('/images/scenicflights.jpg');
+    }
+    &.snowshoeing-cta {
+      background-image: url('/images/snowshoeing.jpg');
+    }
+    &.teton-tiger-cta {
+      background-image: url('/images/teton-tiger.jpg');
+    }
+  }
+  .map-cta {
+    background-color: $light-gray;
+    background-image: url('/images/Map_cropped.jpg');
+    background-size: contain;
+    @include breakpoint(medium) {
+      background-size: cover;
+    }
+    @include breakpoint(large) {
+      background-size: cover;
+    }
+    &:hover {
+      cursor: pointer;
+      .darken-overlay-hover {
+        background: rgba(0,0,0,.35);
+      }
+    }
+  }
+  .contact-us-cta {
+    background-color: #EFEFEF;
+    color: $medium-gray;
+    height: auto;
+    min-height: 300px;
+    p,
+    span {
+      color: $medium-gray;
+    }
+    .overlay-text {
+      height: auto;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      width: 100%;
+      max-width:200px;
+      padding: 40px 60px 20px;
+      box-sizing: border-box;
+      > div {
+        margin-top: auto;
+      }
+      @include breakpoint(medium) {
+        padding: 40px 10px 20px;
+      }
+      @include breakpoint(large) {
+        padding: 40px 60px 20px;
+      }
+    }
+    .lead {
+      color: $dark-gray;
+      font-size: 2rem;
+      text-transform: none;
+      font-weight: $global-weight-normal;
+      margin-top: 0;
+      padding-bottom: 20px;
+    }
+    .small {
+      font-weight: $global-weight-normal;
+    }
+  }
+  .home-telephone,
+  .home-email {
+    &:before {
+      display: block;
+      content: ' ';
+      background-repeat: no-repeat;
+      width: 100%;
+      background-size: contain;
+      background-position: center;
+      height: 60px;
+      margin: 10px auto;
+    }
+  }
+  .home-telephone {
+    &:before {
+      background-image: url('/images/smartphone-1.png');
+    }
+  }
+  .home-email {
+    &:before {
+      background-image: url('/images/mail.png');
+    }
+  }
+
+}
