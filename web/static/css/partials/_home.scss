@@ -274,8 +274,8 @@ section {
       max-width:200px;
       padding: 40px 60px 20px;
       box-sizing: border-box;
-      > div {
-        margin-top: auto;
+      .push-down {
+        margin-bottom: auto;
       }
       @include breakpoint(medium) {
         padding: 40px 10px 20px;

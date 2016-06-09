@@ -63,7 +63,7 @@
             <div class="cta-card contact-us-cta">
               <div class="overlay-text">
                 <p class="lead">Contact Us for Advice!</p>
-                <p class="small">You can either search and book experiences on your own, or we can help you to plan your itinerary.</p>
+                <p class="small push-down">You can either search and book experiences on your own, or we can help you to plan your itinerary.</p>
                 <div class="row">
                   <a class="small small-6" href="tel:3076904790"><span class="home-telephone">307.690.4790</span></a>
                   <a class="small small-6" href="mailto:concierge@outpostjh.com"><span class="home-email">concierge@outpostjh.com</span></a>
