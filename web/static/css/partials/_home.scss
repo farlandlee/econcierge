@@ -260,7 +260,10 @@ section {
     background-color: #EFEFEF;
     color: $medium-gray;
     height: auto;
-    min-height: 300px;
+    min-height: 350px;
+    @include breakpoint(medium) {
+      min-height: 300px;
+    }
     p,
     span {
       color: $medium-gray;
@@ -272,7 +275,7 @@ section {
       height: 100%;
       width: 100%;
       max-width:200px;
-      padding: 40px 60px 20px;
+      padding: 40px 30px 20px;
       box-sizing: border-box;
       .lead {
         order: 1;
@@ -283,6 +286,12 @@ section {
       }
       .bottom {
         order: 3;
+        margin-left: -30px;
+        margin-right: -30px;
+        @include breakpoint(medium) {
+          margin-left: 0px;
+          margin-right: 0px;
+        }
       }
       @include breakpoint(medium) {
         padding: 40px 10px 20px;
