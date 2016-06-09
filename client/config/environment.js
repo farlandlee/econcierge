@@ -12,9 +12,6 @@ module.exports = function(environment) {
         // e.g. 'with-controller': true
       }
     },
-    googleAnalytics: {
-      webPropertyId: process.env.GOOGLE_TRACKING_ID
-    },
 
     stripePublishableKey: process.env.STRIPE_PUBLISHABLE_KEY,
 
