@@ -31,10 +31,33 @@ section {
   .column {
     > a {
       &:not(.bottom-link) {
-        margin-bottom: 3rem;
-        padding-bottom: 3rem;
-        border-bottom: 1px solid $light-gray;
+        margin-bottom: rem-calc(30);
         display: block;
+        .lead {
+          margin: 20px 0 10px;
+          color: $black;
+          font-size: 1rem;
+          text-transform: uppercase;
+          font-weight: bold;
+        }
+        .subheader {
+          padding-bottom: rem-calc(16);
+          color: $black;
+          font-size: 14px;
+          line-height: 20px;
+          font-weight: 600;
+        }
+        .article-link {
+          padding-top: rem-calc(10);
+          border-top: 1px solid #eee;
+          font-size: 14px;
+          color: $primary-color;
+        }
+        &:hover {
+          .article-link {
+            color: $secondary-color;
+          }
+        }
       }
       &.bottom-link {
         display: block;

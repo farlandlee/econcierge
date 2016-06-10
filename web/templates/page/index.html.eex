@@ -145,6 +145,7 @@
             <img src="<%= article["featured_image_url"] %>" alt="<%= get_in(article, ["title", "rendered"]) |> raw %>">
             <p class="lead"><%= get_in(article, ["title", "rendered"]) |> raw %></p>
             <p class="subheader"><%= raw(article["_outpost_subtitle"]) %></p>
+            <p class="article-link">Learn More</p>
           </a>
         </div>
       <% end %>
