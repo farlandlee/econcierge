@@ -239,15 +239,19 @@ section {
       background-image: url('/images/teton-tiger.jpg');
     }
   }
+  .column.custom-column-map {
+    flex: 0 0 rem-calc(482)+(0.9375rem*2);
+  }
+  .column.custom-column-contact {
+    flex: 0 0 rem-calc(728)-(0.9375rem*2);
+  }
   .map-cta {
     background-color: $light-gray;
-    background-image: url('/images/Map_cropped.jpg');
-    background-size: contain;
-    @include breakpoint(medium) {
-      background-size: cover;
-    }
-    @include breakpoint(large) {
-      background-size: cover;
+    max-height: 300px;
+    height: auto;
+    img {
+      height: auto;
+      max-height: 100%;
     }
     &:hover {
       cursor: pointer;
