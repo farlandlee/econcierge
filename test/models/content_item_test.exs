@@ -3,16 +3,16 @@ defmodule Grid.ContentItemTest do
 
   alias Grid.ContentItem
 
-  @valid_attrs %{content: "some content", context: "some content", name: "some content"}
+  @valid_attrs %{name: "some content"}
   @invalid_attrs %{}
+
+  test "creation changeset" do
+    changeset = ContentItem.creation_changeset("test", "test", "test")
+    assert changeset.valid?
+  end
 
   test "changeset with valid attributes" do
     changeset = ContentItem.changeset(%ContentItem{}, @valid_attrs)
     assert changeset.valid?
-  end
-
-  test "changeset with invalid attributes" do
-    changeset = ContentItem.changeset(%ContentItem{}, @invalid_attrs)
-    refute changeset.valid?
   end
 end

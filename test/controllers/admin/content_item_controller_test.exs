@@ -25,10 +25,4 @@ defmodule Grid.Admin.ContentItemControllerTest do
     assert redirected_to(conn) == admin_content_item_path(conn, :index)
     assert Repo.get_by(ContentItem, @valid_attrs)
   end
-
-  test "does not update chosen resource and renders errors when data is invalid", %{conn: conn} do
-    content_item = Repo.insert! %ContentItem{}
-    conn = put conn, admin_content_item_path(conn, :update, content_item), content_item: @invalid_attrs
-    assert html_response(conn, 200) =~ "Edit Content Item"
-  end
 end
