@@ -9,7 +9,7 @@
     <li class="menu-text"><a href="http://www.outpostjh.com/trip-planning/">Trip Planning</a></li>
     <li class="menu-text"><a href="http://www.outpostjh.com/itswhatwedohere">Journal</a></li>
     <li class="menu-text"><a href="http://www.outpostjh.com/about/">About Us</a></li>
-    <li class="menu-text"><a href="http://www.outpostjh.com/list-your-house-with-outpost/">List Your Property</a></li>
+    <li class="menu-text"><a href="http://www.outpostjh.com/property-management/">List Your Property</a></li>
     <% end %>
     <li class="menu-text"><%= link to: explore_path(Grid.Endpoint, :index, ["cart"]), class: "flaticon-cart fi" do %>&nbsp;<% end %></li>
   </ul>
