@@ -15,7 +15,7 @@
             <li><%= link "Activities", to: explore_path(Grid.Endpoint, :index, ["activities"]), class: assigns[:activities_class] %></li>
             <li><a href="http://www.outpostjh.com/trip-planning/">Trip Planning</a></li>
             <li><a href="http://itswhatwedohere.com">Journal</a></li>
-            <li><a href="http://www.outpostjh.com/about/">About Us</a></li>
+            <li><a href="http://www.outpostjh.com/outpost/">About Us</a></li>
           <% end %>
         </ul>
       </div>
